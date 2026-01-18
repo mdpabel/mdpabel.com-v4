@@ -1,0 +1,288 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ComponentWrapper from '../components/component-wrapper.astro';
+import { siteData } from '../data/siteData';
+
+// 1. Helper Logic (Runs at build time)
+function calculateYearsSince(startDate: Date): number {
+  const currentDate = new Date();
+  const timeDiff = currentDate.getTime() - startDate.getTime();
+  const millisecondsInYear = 1000 * 60 * 60 * 24 * 365.25;
+  const years = timeDiff / millisecondsInYear;
+  return Math.floor(years) + (years % 1 >= 0.5 ? 0.5 : 0);
+}
+
+// 2. SEO Setup
+const seo = {
+  title: 'About MD Pabel | Full Stack Developer & WordPress Security Expert',
+  description: 'Discover MD Pabel, founder of 3Zero Digital, with 7+ years in full-stack development and WordPress security. Over 4500 hacked sites recovered, 3200+ projects completed, serving 2300+ clients globally.',
+  image: '/me.webp' // Assumes me.webp is in your 'public' folder
+};
+
+// 3. JSON-LD Data
+const sameAs = [
+  siteData?.profiles?.linkedin,
+  siteData?.profiles?.github,
+  siteData?.profiles?.leetcode,
+  siteData?.profiles?.companyHouse,
+  'https://www.researchgate.net/publication/395318263_Real-time_Full-Stack_University_Bus_Tracking_System_Based_on_IoT',
+].filter(Boolean);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': 'https://www.mdpabel.com/#person',
+      name: 'MD Pabel',
+      jobTitle: 'Full Stack Developer & WordPress Security Expert',
+      image: 'https://www.mdpabel.com/images/me.webp',
+      url: 'https://www.mdpabel.com',
+      affiliation: {
+        '@type': 'Organization',
+        name: '3Zero Digital',
+      },
+      sameAs,
+    },
+    {
+      '@type': 'Chapter',
+      name: 'Real-time Full-Stack University Bus Tracking System Based on IoT',
+      url: 'https://www.researchgate.net/publication/395318263_Real-time_Full-Stack_University_Bus_Tracking_System_Based_on_IoT',
+      datePublished: '2024',
+      isPartOf: {
+        '@type': 'Book',
+        name: 'Intelligent Networks and Systems: Advanced Technologies and Applications',
+        publisher: { '@type': 'Organization', name: 'Routledge' },
+        datePublished: '2024',
+        url: 'https://www.routledge.com/Intelligent-Networks-and-Systems-Advanced-Technologies-and-Applications/Siddique-Arefin-HaiderNoori-Kaiser/p/book/9781032643304',
+      },
+      author: { '@id': 'https://www.mdpabel.com/#person' },
+    },
+  ],
+};
+
+// 4. Icons (Raw SVGs to replace React Icons)
+const ICONS = {
+  github: "M11.3366 1.33333C5.64362 1.33333 1 6.07187 1 11.9167C1 16.5912 3.9655 20.556 8.07096 21.9667C8.58779 22.0645 8.77733 21.7336 8.77733 21.4489C8.77733 21.196 8.76875 20.5284 8.76358 19.6432C5.8845 20.2882 5.27683 18.2127 5.27683 18.2127C4.807 16.985 4.12871 16.6579 4.12871 16.6579C3.18908 16.0002 4.20108 16.0133 4.20108 16.0133C5.24054 16.0888 5.78775 17.1083 5.78775 17.1083C6.71167 18.7297 8.21213 18.2616 8.80229 17.9897C8.89621 17.3045 9.16475 16.8373 9.46083 16.5724C7.16275 16.3056 4.74667 15.396 4.74667 11.3342C4.74667 10.1773 5.15096 9.22734 5.81188 8.48777C5.70342 8.21989 5.34621 7.1415 5.91429 5.67484C5.91429 5.67484 6.78479 5.38883 8.76617 6.76288C9.59325 6.52739 10.4811 6.40994 11.3654 6.4055C12.2489 6.40994 13.1363 6.52739 13.9642 6.76288C15.9448 5.38883 16.8144 5.67484 16.8144 5.67484C17.3833 7.1415 17.0261 8.21989 16.9185 8.48777C17.5803 9.22734 17.9838 10.1773 17.9838 11.3342C17.9838 15.4053 15.5651 16.303 13.2619 16.5617C13.6338 16.8906 13.9651 17.5393 13.9651 18.5322C13.9651 19.9538 13.9522 21.0969 13.9522 21.4489C13.9522 21.7371 14.1391 22.0725 14.6641 21.9658C18.7669 20.5529 21.7333 16.5899 21.7333 11.9167C21.7333 6.07187 17.0789 1.33333 11.3366 1.33333Z",
+  linkedin: "M19.95 21V14.1622C19.95 10.8116 19.2263 8.23053 15.3112 8.23053C13.4288 8.23053 12.165 9.26353 11.6487 10.2435H11.595V8.55253H7.8825V21H11.7513V14.8235C11.7513 13.1975 12.06 11.6255 14.0725 11.6255C16.0563 11.6255 16.0825 13.4805 16.0825 14.9285V21H19.95ZM3.86875 6.52953C5.1075 6.52953 6.11125 5.51953 6.11125 4.27653C6.11125 3.03353 5.1075 2.02553 3.86875 2.02553C2.62875 2.02553 1.625 3.03353 1.625 4.27653C1.625 5.51953 2.62875 6.52953 3.86875 6.52953ZM1.93375 21H5.8025V8.55253H1.93375V21Z",
+  mail: "M3 3h18a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm17 4.238l-7.928 7.1L4 7.216V19h16V7.238zM4.511 5l7.55 6.627L19.62 5H4.511z"
+};
+---
+
+<Layout 
+  title={seo.title} 
+  description={seo.description}
+  image={seo.image}
+>
+  
+  {/* JSON-LD Injection */}
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
+
+  <ComponentWrapper class="pt-20">
+    
+    <div class="grid grid-cols-1 lg:grid-cols-2">
+      
+      {/* --- IMAGE SECTION --- */}
+      <div class="lg:ml-20">
+        <img
+          class="shadow-xl mx-auto lg:mx-0 rounded-2xl w-full max-w-[500px] object-cover aspect-square lg:rotate-3"
+          src="/me.webp" 
+          width="600"
+          height="1000"
+          alt="Me"
+        />
+      </div>
+
+      {/* --- CONTENT SECTION --- */}
+      {/* NOTE: lg:order-first puts this LEFT on Desktop, but 2nd in DOM (so Bottom on Mobile) */}
+      <div class="space-y-10 lg:order-first lg:row-span-2 py-10 lg:py-0">
+        <div>
+          <h1 class="mb-2 font-bold text-gray-900 dark:text-white text-3xl md:text-4xl">
+            MD Pabel.
+          </h1>
+          <h2 class="mb-6 font-bold text-gray-900 dark:text-white text-3xl">
+            I live in Bangladesh, where I solve problems with code and secure
+            websites.
+          </h2>
+        </div>
+        
+        <div class="space-y-4">
+          <p class="text-slate-700 dark:text-slate-300">
+            I’m MD Pabel, a Full Stack Web Developer and WordPress Security
+            Expert from Bangladesh — and the founder of 3Zero Digital. My
+            journey began in a small town with a passion for clean code and
+            secure systems. Since then, I’ve worked with over{' '}
+            {siteData.stats.clientsSatisfied} clients across{' '}
+            {siteData.stats.globalImpacts} of the globe, helping businesses
+            stay online, secure, and optimized. Whether it's recovering hacked
+            websites or building secure platforms from scratch, I bring
+            real-world experience to every project.
+          </p>
+          <p class="text-slate-700 dark:text-slate-300">
+            With a strong focus on{' '}
+            <b>
+              WordPress malware removal, site hardening, and full-stack
+              development
+            </b>
+            , I’ve personally cleaned over{' '}
+            {siteData.stats.hackedWebsitesFixed} infected websites. From
+            startups to enterprises, I’ve helped clients recover their online
+            presence, prevent cyber threats, and scale with confidence. My
+            work is built on trust, transparency, and a deep understanding of
+            how to blend performance with protection.
+          </p>
+          <p class="text-slate-700 dark:text-slate-300">
+            I believe that technology should not only innovate — it must also
+            protect. With {siteData.stats.experience.slice(0, 1)}+ years of
+            hands-on experience and over 800 DS/Algo problems solved, I bring
+            both technical depth and practical solutions to the table. At 3
+            Zero Digital, our mission is simple:{' '}
+            <b>0 Vulnerability, 0 Downtime, 0 Error</b> — and I work every day
+            to deliver on that promise.
+          </p>
+        </div>
+      </div>
+
+      {/* --- SOCIAL LINKS (Right Column, Below Image on Desktop) --- */}
+      <div class="flex justify-center lg:justify-start mt-8 lg:mt-0 lg:ml-20">
+        <ul class="space-y-4">
+          <li>
+            <a
+              href={siteData?.profiles?.github || '#'}
+              target={siteData?.profiles?.github ? '_blank' : undefined}
+              rel="noopener noreferrer"
+              class="group flex items-center space-x-4 font-medium text-slate-950 hover:text-black dark:hover:text-white dark:text-slate-300 text-sm transition"
+            >
+              <svg viewBox="0 0 24 24" class="fill-current w-5 h-5"><path d={ICONS.github}/></svg>
+              <span>Follow on GitHub</span>
+            </a>
+          </li>
+          <li class="pb-2">
+            <a
+              href={siteData?.profiles?.linkedin || '#'}
+              target={siteData?.profiles?.linkedin ? '_blank' : undefined}
+              rel="noopener noreferrer"
+              class="group flex items-center space-x-4 font-medium text-slate-950 hover:text-black dark:hover:text-white dark:text-slate-300 text-sm transition"
+            >
+               <svg viewBox="0 0 24 24" class="fill-current w-5 h-5"><path d={ICONS.linkedin}/></svg>
+              <span>Follow on LinkedIn</span>
+            </a>
+          </li>
+          <li class="pt-5 border-slate-300 dark:border-slate-600 border-t">
+            <a
+              href={`mailto:${siteData?.contact?.email || 'pabel7396@gmail.com'}`}
+              class="group flex items-center space-x-4 font-medium text-slate-950 hover:text-black dark:hover:text-white dark:text-slate-300 text-sm transition"
+            >
+               <svg viewBox="0 0 24 24" class="fill-current w-5 h-5"><path d={ICONS.mail}/></svg>
+              <span>{siteData?.contact?.email || 'pabel7396@gmail.com'}</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    {/* --- PLATFORM SCREENSHOTS (Commented out as in source) --- */}
+    {/* <PlatFormScreenshots title='left' /> */}
+
+    {/* --- REAL WORLD EXPERIENCE SECTION --- */}
+    <div class="space-y-4 mt-10">
+      <h2 class="mb-6 font-bold text-gray-900 dark:text-white text-3xl">
+        Real World Experience
+        <sup class="ml-4 text-slate-600 dark:text-slate-400 text-sm">
+          Last updated: 04 Aug 25
+        </sup>
+      </h2>
+      
+      {/* Using Grid for stats */}
+      <ul class="gap-x-8 gap-y-3 grid md:grid-cols-2">
+        {[
+          ['Real World Experience', siteData.stats.experience],
+          ['Project Success', siteData.stats.completedProjects],
+          ['Hacked Website Fixes', siteData.stats.hackedWebsitesFixed],
+          ['Clients', siteData.stats.clientsSatisfied],
+          ['Global Impact', siteData.stats.globalImpacts],
+          ['Websites Launched', siteData.stats.websiteLaunched]
+        ].map(([label, value]) => (
+          <li class="flex justify-between">
+            <span class="text-slate-700 dark:text-slate-300">{label}</span>
+            <span class="bg-slate-200 dark:bg-slate-800 px-3 rounded-full text-slate-950 dark:text-white">
+              {value}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    {/* --- SKILLS SECTION (LeetCode Image) --- */}
+    <div class="py-10">
+      <div class="space-y-4">
+        <div class="flex justify-center pt-4">
+          <img
+            width="500"
+            height="300"
+            alt="Leetcode MD Pabel"
+            src="https://leetcard.jacoblin.cool/mdpabel?theme=light&font=Karma"
+          />
+        </div>
+      </div>
+    </div>
+
+    {/* --- PUBLICATION SECTION --- */}
+    <div class="my-10">
+      <h2 class="mb-6 font-bold text-gray-900 dark:text-white text-3xl">
+        Publication
+      </h2>
+      <div class="bg-slate-50 dark:bg-slate-900 p-6 md:p-8 border border-slate-200 dark:border-slate-700 rounded-2xl">
+        <div class="space-y-2">
+          <h3 class="font-semibold text-slate-900 dark:text-white text-xl">
+            Real-time Full-Stack University Bus Tracking System Based on IoT
+          </h3>
+          <p class="text-slate-700 dark:text-slate-300">
+            In{' '}
+            <i>
+              Intelligent Networks and Systems: Advanced Technologies and
+              Applications
+            </i>
+            , Routledge, 2025.
+          </p>
+        </div>
+
+        <div class="gap-3 grid sm:grid-cols-2 mt-6">
+          <a
+            href="https://www.researchgate.net/publication/395318263_Real-time_Full-Stack_University_Bus_Tracking_System_Based_on_IoT"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex justify-center items-center bg-white hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700 px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-xl font-medium text-slate-900 dark:text-white text-sm transition"
+          >
+            View on ResearchGate
+          </a>
+          <a
+            href="https://www.routledge.com/Intelligent-Networks-and-Systems-Advanced-Technologies-and-Applications/Siddique-Arefin-HaiderNoori-Kaiser/p/book/9781032643304"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex justify-center items-center bg-slate-900 dark:bg-white hover:opacity-90 px-4 py-2 rounded-xl font-medium text-white dark:text-slate-900 text-sm transition"
+          >
+            View Book at Routledge
+          </a>
+        </div>
+
+        <dl class="gap-y-2 grid mt-6 text-slate-700 dark:text-slate-300 text-sm">
+          <div class="flex justify-between">
+            <dt class="font-medium">Publisher</dt>
+            <dd class="bg-slate-200 dark:bg-slate-800 px-3 rounded-full text-slate-950 dark:text-white">
+              Routledge
+            </dd>
+          </div>
+          <div class="flex justify-between">
+            <dt class="font-medium">Year</dt>
+            <dd class="bg-slate-200 dark:bg-slate-800 px-3 rounded-full text-slate-950 dark:text-white">
+              2024
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+  </ComponentWrapper>
+</Layout>

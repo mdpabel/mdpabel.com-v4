@@ -1,0 +1,29 @@
+{
+  "name": "mdpabel-astro",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "dev:bun": "bunx --bun astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/tailwind": "^6.0.2",
+    "@astrojs/vue": "^5.1.4",
+    "@fontsource-variable/source-serif-4": "^5.2.9",
+    "@lucide/astro": "^0.562.0",
+    "@types/he": "^1.2.3",
+    "astro": "^5.16.11",
+    "clsx": "^2.1.1",
+    "he": "^1.2.0",
+    "tailwind-merge": "^3.4.0",
+    "tailwindcss": "^3.4.19"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.19",
+    "prettier": "^3.8.0",
+    "prettier-plugin-tailwindcss": "^0.7.2"
+  }
+}

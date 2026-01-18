@@ -1,0 +1,79 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ComponentWrapper from '../../components/component-wrapper.astro';
+import SinglePost from '../../components/SinglePost.astro';
+import { wordpress, type WordPressPost } from '../../lib/wordpress';
+
+// 1. Generate Paths
+export async function getStaticPaths() {
+  const PER_PAGE = 10; 
+  let allPosts: WordPressPost[] = [];
+  let page = 1;
+  let totalPages = 1;
+
+  try {
+    // 1. Fetch first batch to get total pages count
+    const firstBatch = await wordpress.getPosts({
+      perPage: PER_PAGE,
+      page: 1,
+      _fields: ['slug', 'title', 'content', 'excerpt', 'date', 'featured_media', 'acf']
+    });
+    
+    allPosts = [...firstBatch.posts];
+    totalPages = firstBatch.totalPages;
+
+    // 2. Fetch remaining pages if they exist
+    if (totalPages > 1) {
+      for (let i = 2; i <= totalPages; i++) {
+        // Optional: add a tiny delay to avoid hitting rate limits
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        const nextBatch = await wordpress.getPosts({
+          perPage: PER_PAGE,
+          page: i,
+          _fields: ['slug', 'title', 'content', 'excerpt', 'date', 'featured_media', 'acf']
+        });
+        allPosts = [...allPosts, ...nextBatch.posts];
+      }
+    }
+  } catch (error) {
+    console.error("Error fetching paths:", error);
+  }
+
+  return allPosts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+
+// 2. SEO (Using processed properties directly)
+const seoTitle = `${post.title} | MD Pabel`;
+// Strip tags from excerpt string directly
+const seoDesc = post.excerpt.replace(/<[^>]*>?/gm, '').slice(0, 160);
+const seoImage = post.featuredImage?.url;
+
+// 3. Schema
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": post.title,
+  "image": seoImage,
+  "author": { "@type": "Person", "name": "MD Pabel" },
+  "datePublished": post.date,
+  "description": seoDesc
+};
+---
+
+<Layout 
+  title={seoTitle} 
+  description={seoDesc} 
+  image={seoImage}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} is:inline />
+  
+  <ComponentWrapper class="pb-20">
+    <SinglePost post={post} parentSlug="blog" />
+  </ComponentWrapper>
+</Layout>

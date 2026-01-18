@@ -1,0 +1,106 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ComponentWrapper from '../components/component-wrapper.astro';
+
+// Components
+import Hero from '../components/Hero.astro';
+import Pricing from '../components/Pricing.astro'; // ✅ Swapped back
+import PlatformScreenshots from '../components/PlatformScreenshots.astro';
+import BlogPosts from '../components/BlogPosts.astro';
+
+// ✅ IMPORT REAL DATA
+import { siteData } from '../data/siteData';
+
+// SEO Configuration
+const seo = {
+  title: 'WordPress Malware Removal Expert & Hacked Site Recovery - MD Pabel',
+  description: 'Hacked WordPress site? I provide expert manual malware removal, Google blacklist fix, and security hardening. 4,500+ sites recovered. No monthly fees.',
+  image: '/md-pabel.png',
+  keywords: [
+    'WordPress Malware Removal',
+    'Fix Hacked WordPress Site',
+    'Remove Japanese SEO Spam',
+    'WordPress Security Expert',
+    'Remove Malware from WordPress',
+    'Google Blacklist Removal',
+    'Web Security Specialist',
+    'Full Stack Developer',
+    'Secure Web Development',
+    ...siteData.skills.languages,
+    ...siteData.skills.security,
+  ].join(', ')
+};
+
+// JSON-LD Construction
+const sameAs = [
+  siteData.profiles.linkedin,
+  siteData.profiles.github,
+  siteData.profiles.leetcode,
+  siteData.profiles.companyHouse,
+  'https://www.researchgate.net/publication/395318263_Real-time_Full-Stack_University_Bus_Tracking_System_Based_on_IoT',
+].filter(Boolean);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: siteData.personal.name,
+  url: 'https://www.mdpabel.com',
+  image: siteData.personal.avatar,
+  jobTitle: 'WordPress Security Expert & Malware Removal Specialist',
+  description: seo.description,
+  worksFor: [
+    { '@type': 'Organization', name: 'Upwork' },
+    { '@type': 'Organization', name: 'Fiverr' },
+    { '@type': 'Organization', name: '3Zero Digital', sameAs: 'https://3zerodigital.com' },
+  ],
+  knowsAbout: [
+    'WordPress Security',
+    'Malware Removal',
+    'Cybersecurity',
+    'Ethical Hacking',
+    'Next.js',
+    'React',
+    'Node.js',
+  ],
+  sameAs,
+};
+---
+
+<Layout 
+  title={seo.title} 
+  description={seo.description}
+  image={seo.image}
+>
+  
+  {/* --- JSON-LD INJECTION (Zero JS Cost) --- */}
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
+
+  <ComponentWrapper>
+    
+    {/* 1. HERO SECTION */}
+    <Hero />
+
+    {/* 2. SERVICES / PRICING SECTION */}
+    {/* Note: In your previous message you sent a "Pricing" component code. 
+        If "ServiceSection" is different, make sure to create it. 
+        I am using Pricing here as the main service offering block. */}
+    <div class="mb-20">
+      <Pricing />
+    </div>
+
+    {/* 3. PLATFORM PROOF */}
+    <div class="mb-20">
+      <PlatformScreenshots title="center" />
+    </div>
+
+    {/* 4. BLOG POSTS */}
+    {/* This will fetch data at build time using the API we built */}
+    <BlogPosts 
+      title="Recent Malware Removal Case Studies"
+      mode="featured" 
+      limit={5}
+    />
+
+  </ComponentWrapper>
+
+</Layout>

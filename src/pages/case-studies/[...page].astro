@@ -1,0 +1,63 @@
+---
+import BlogPosts from '../../components/BlogPosts.astro'
+import ComponentWrapper from '../../components/component-wrapper.astro'
+import Layout from '../../layouts/Layout.astro'
+import { wordpress } from '../../lib/wordpress'
+
+// --- 1. Generate Static Paths ---
+export async function getStaticPaths() {
+  const PER_PAGE = 10;
+  
+  // Fetch metadata for 'case-study' to determine total pages
+  const { totalPages } = await wordpress.getPosts({
+    postType: 'case-study',
+    perPage: PER_PAGE,
+    page: 1,
+  });
+
+  // Generate paths for all pages
+  return Array.from({ length: totalPages }, (_, i) => {
+    const pageNum = i + 1;
+    return {
+      // Page 1 matches '/case-studies' (undefined param)
+      // Page 2 matches '/case-studies/2', etc.
+      params: { page: pageNum === 1 ? undefined : pageNum.toString() },
+    };
+  });
+}
+
+// --- 2. Extract current page from Params ---
+const { page } = Astro.params;
+const currentPage = page ? Number(page) : 1;
+
+// --- 3. Dynamic SEO Settings ---
+const isFirstPage = currentPage === 1;
+const baseUrl = "https://www.mdpabel.com/case-studies";
+
+const seoTitle = isFirstPage 
+  ? "Case Studies: WordPress Security & Development Success Stories" 
+  : `Case Studies - Page ${currentPage} | WordPress Success Stories`;
+
+const seoDesc = "Explore real-world case studies showcasing our WordPress security solutions, malware removal projects, and custom development work.";
+
+const canonicalURL = isFirstPage ? baseUrl : `${baseUrl}/${currentPage}`;
+---
+
+<Layout 
+  title={seoTitle} 
+  description={seoDesc}
+  image="/images/case-studies-opengraph-image.png"
+  canonical={canonicalURL}
+>
+  <ComponentWrapper class="pt-12">
+    <BlogPosts
+      postType="case-study"
+      rootSlug="case-studies"
+      page={currentPage}
+      limit={10}
+      title="Case Studies: Malware Removal & Success Stories"
+      shortDescription="Real-world examples of hacked site recoveries, security hardening, and development projects."
+      mode="all"
+    />
+  </ComponentWrapper>
+</Layout>

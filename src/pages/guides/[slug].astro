@@ -1,0 +1,41 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ComponentWrapper from '../../components/component-wrapper.astro';
+import SinglePost from '../../components/SinglePost.astro';
+import { wordpress } from '../../lib/wordpress';
+
+export async function getStaticPaths() {
+  const posts = await wordpress.getAllPosts({ postType: 'guide' }); 
+
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+
+// SEO
+const seoTitle = `${post.title} | MD Pabel`;
+const seoDesc = post.excerpt.replace(/<[^>]*>?/gm, '').slice(0, 160);
+const seoImage = post.featuredImage?.url;
+
+// Schema
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo", // Great for guides/tutorials
+  "headline": post.title,
+  "image": seoImage,
+  "author": { "@type": "Person", "name": "MD Pabel" },
+  "datePublished": post.date,
+  "description": seoDesc
+};
+---
+
+<Layout title={seoTitle} description={seoDesc} image={seoImage}>
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} is:inline />
+  
+  <ComponentWrapper class="pb-20">
+    <SinglePost post={post} parentSlug="guides" />
+  </ComponentWrapper>
+</Layout>

@@ -1,0 +1,168 @@
+---
+import { Rocket, Menu, X } from '@lucide/astro';
+import ComponentWrapper from './component-wrapper.astro';
+
+const links = [
+  { name: 'About', href: '/about' },
+  { name: 'Services', href: '/wordpress-malware-removal' },
+  { name: 'Blog', href: '/blog' },
+];
+---
+
+<header
+  id="main-header"
+  class="top-0 z-50 sticky inset-x-0 bg-white dark:bg-slate-900 w-full transition-colors duration-300"
+>
+  <div class="py-5 text-black">
+    <ComponentWrapper>
+      <nav class="flex justify-between items-center mx-auto">
+        
+        {/* --- LOGO --- */}
+        <div class="flex items-center gap-5">
+          <a
+            href="/"
+            aria-label="Home"
+            class="flex items-center font-medium text-black text-lg"
+          >
+            <div class="flex justify-center items-center bg-sky-600 dark:bg-white border border-slate-300 rounded w-8 h-8">
+              <Rocket class="w-5 h-5 text-white dark:text-slate-950" />
+            </div>
+          </a>
+
+          {/* --- DESKTOP NAV --- */}
+          <div class="hidden sm:flex items-center gap-5">
+            {links.map((link) => (
+              <a
+                href={link.href}
+                class="text-slate-950 hover:text-black dark:hover:text-white dark:text-slate-300 transition-colors"
+              >
+                {link.name}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* --- RIGHT SIDE ACTIONS (No Search) --- */}
+        <ul class="hidden sm:flex justify-end items-center gap-5 h-8">
+          <li class="transition-opacity duration-300">
+            <a
+              href="https://mdpabe1.substack.com/"
+              target="_blank"
+              class="text-slate-950 hover:text-black dark:hover:text-white dark:text-slate-300"
+            >
+              Newsletter
+            </a>
+          </li>
+          <li class="flex items-center gap-2">
+            <a
+              href="/hire-me"
+              class="flex justify-center items-center bg-sky-600 hover:bg-sky-700 dark:bg-slate-700 px-6 py-2 border border-slate-300 rounded-full w-32 h-8 font-medium text-white text-sm transition-all duration-300"
+            >
+              Hire Me
+            </a>
+          </li>
+        </ul>
+
+        {/* --- MOBILE HAMBURGER BUTTON --- */}
+        <div class="sm:hidden flex items-center gap-4">
+          <button
+            id="menu-open-btn"
+            aria-label="Open Menu"
+            class="sm:hidden block text-slate-950 hover:text-slate-700 dark:hover:text-white dark:text-slate-300 cursor-pointer"
+          >
+            <Menu class="w-5 h-5" />
+          </button>
+        </div>
+
+      </nav>
+    </ComponentWrapper>
+  </div>
+
+  {/* --- MOBILE MENU OVERLAY --- */}
+  <div
+    id="mobile-menu"
+    class="z-[999] fixed inset-0 flex flex-col justify-center items-center bg-white dark:bg-slate-900 p-6 transition-transform translate-x-full duration-300 ease-in-out"
+    aria-hidden="true"
+  >
+    <button
+      id="menu-close-btn"
+      aria-label="Close Menu"
+      class="top-6 right-6 absolute text-gray-300 hover:text-white cursor-pointer"
+    >
+      <X class="w-6 h-6" />
+    </button>
+
+    <ul class="flex flex-col items-center gap-4 w-full">
+      <div class="flex flex-col gap-2 w-full text-center">
+        {links.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="group flex justify-center items-center gap-4 hover:bg-slate-700/50 p-3 rounded-lg transition-colors duration-200 mobile-link"
+            >
+              <span class="font-medium text-slate-700 dark:text-slate-200 group-hover:text-white text-lg">
+                {link.name}
+              </span>
+            </a>
+          </li>
+        ))}
+      </div>
+
+      <li class="my-4 border-slate-400/60 border-t w-full"></li>
+
+      <div class="flex flex-col items-center gap-4">
+        <li>
+          <a
+            href="https://mdpabe1.substack.com/"
+            target="_blank"
+            class="block bg-slate-500 hover:bg-slate-600 px-6 py-2 rounded-full font-semibold text-white text-xl"
+          >
+            Newsletter
+          </a>
+        </li>
+        <li>
+          <a
+            href="/hire-me"
+            class="block bg-slate-500 hover:bg-slate-600 px-6 py-2 rounded-full font-semibold text-white text-xl"
+          >
+            Hire Me
+          </a>
+        </li>
+      </div>
+    </ul>
+  </div>
+</header>
+
+<script>
+  // 1. Select elements with type safety in mind
+  // These might be null if the DOM hasn't loaded or IDs change, so we handle that.
+  const header = document.getElementById('main-header');
+  const menu = document.getElementById('mobile-menu');
+  const openBtn = document.getElementById('menu-open-btn');
+  const closeBtn = document.getElementById('menu-close-btn');
+  const mobileLinks = document.querySelectorAll('.mobile-link');
+  
+  // 3. Mobile Menu Toggle
+  function toggleMenu(isOpen: boolean) {
+    if (!menu) return; // Guard clause
+
+    if (isOpen) {
+      menu.classList.remove('translate-x-full');
+      menu.classList.add('translate-x-0');
+      document.body.style.overflow = 'hidden'; // Lock body scroll
+    } else {
+      menu.classList.add('translate-x-full');
+      menu.classList.remove('translate-x-0');
+      document.body.style.overflow = ''; // Unlock body scroll
+    }
+  }
+
+  // 4. Event Listeners with Optional Chaining (?.)
+  // If openBtn is null, the code simply stops instead of crashing the site.
+  openBtn?.addEventListener('click', () => toggleMenu(true));
+  closeBtn?.addEventListener('click', () => toggleMenu(false));
+
+  mobileLinks.forEach((link) => {
+    link.addEventListener('click', () => toggleMenu(false));
+  });
+</script>

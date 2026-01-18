@@ -1,0 +1,116 @@
+---
+import { ChevronLeft, ChevronRight } from '@lucide/astro';
+
+interface Props {
+  totalPages: number;
+  currentPage: number;
+  total?: number;
+  perPage?: number;
+  baseUrl: string;
+}
+
+const { 
+  totalPages, 
+  currentPage, 
+  baseUrl = "/faq", // ✅ Default fallback added
+  total = 0, 
+  perPage = 10 
+} = Astro.props;
+
+// --- 1. Helper to generate URLs ---
+const createPageURL = (pageNumber: number) => {
+  // Ensure we are working with a string to avoid .replace errors
+  const base = String(baseUrl || ''); 
+  
+  if (pageNumber === 1) return base;
+  
+  const cleanBase = base.replace(/\/$/, '');
+  return `${cleanBase}/${pageNumber}`;
+};
+
+// --- 2. Calculate Page Range ---
+const maxVisiblePages = 5;
+const getPaginationRange = () => {
+  const totalVisible = Math.min(maxVisiblePages, totalPages);
+  let start = Math.max(1, currentPage - Math.floor(totalVisible / 2));
+  let end = Math.min(totalPages, start + totalVisible - 1);
+
+  if (end - start + 1 < totalVisible) {
+    start = Math.max(1, end - totalVisible + 1);
+  }
+  return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+};
+
+const pageNumbers = getPaginationRange();
+const isFirstPage = currentPage === 1;
+const isLastPage = currentPage === totalPages;
+
+const isVisibleOnMobile = (page: number) => {
+  return (
+    page === currentPage ||
+    page === 1 ||
+    page === totalPages ||
+    (page >= currentPage - 1 && page <= currentPage + 1)
+  );
+};
+
+// Styles
+const baseBtnStyle = "flex items-center justify-center gap-2 px-3 sm:px-4 py-2 rounded-lg border transition-colors";
+const activeStyle = "border-slate-400 dark:border-slate-500 bg-slate-200 dark:bg-slate-800 text-slate-950 dark:text-white font-semibold pointer-events-none";
+const inactiveStyle = "border-slate-300 dark:border-slate-700 text-slate-950 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:border-slate-400 dark:hover:border-slate-600";
+const disabledStyle = "pointer-events-none border-slate-200 dark:border-slate-800 text-slate-400 dark:text-slate-600 opacity-50";
+---
+
+{totalPages > 1 && (
+  <nav class="flex flex-col items-center gap-4 sm:gap-6 mt-12 w-full" aria-label="Pagination">
+    <div class="flex flex-wrap justify-center items-center gap-2">
+      
+      <a
+        href={isFirstPage ? undefined : createPageURL(currentPage - 1)}
+        class:list={[baseBtnStyle, isFirstPage ? disabledStyle : inactiveStyle]}
+        aria-disabled={isFirstPage}
+        tabindex={isFirstPage ? -1 : undefined}
+      >
+        <ChevronLeft class="w-4 h-4" />
+        <span class="hidden sm:inline">Previous</span>
+      </a>
+
+      <div class="flex items-center gap-2">
+        {pageNumbers.map((page) => {
+          const showMobile = isVisibleOnMobile(page);
+          return (
+            <a
+              href={createPageURL(page)}
+              class:list={[
+                "px-4 py-2 rounded-lg border transition-colors",
+                currentPage === page ? activeStyle : inactiveStyle,
+                showMobile ? 'block' : 'hidden sm:block'
+              ]}
+              aria-current={currentPage === page ? 'page' : undefined}
+            >
+              {page}
+            </a>
+          );
+        })}
+      </div>
+
+      <a
+        href={isLastPage ? undefined : createPageURL(currentPage + 1)}
+        class:list={[baseBtnStyle, isLastPage ? disabledStyle : inactiveStyle]}
+        aria-disabled={isLastPage}
+        tabindex={isLastPage ? -1 : undefined}
+      >
+        <span class="hidden sm:inline">Next</span>
+        <ChevronRight class="w-4 h-4" />
+      </a>
+
+    </div>
+
+    {total > 0 && (
+      <p class="text-slate-500 dark:text-slate-400 text-sm text-center">
+        Showing {(currentPage - 1) * perPage + 1} to{' '}
+        {Math.min(currentPage * perPage, total)} of {total} results
+      </p>
+    )}
+  </nav>
+)}

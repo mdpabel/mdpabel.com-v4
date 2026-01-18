@@ -1,0 +1,120 @@
+---
+import { CheckCircle } from '@lucide/astro';
+
+// 1. Define Plans Data (Static data doesn't need to be in the template)
+const plans = [
+  {
+    name: 'Free Malware Scan',
+    price: 'Free',
+    features: [
+      'Visual Inspection',
+      'Error Log Analysis',
+      'Hacked File Identification',
+      'Consultation on next steps',
+      'Hosting Suspension Advice',
+    ],
+    cta: 'Get Free Scan',
+    href: '/hire-me', // Added href explicitly
+    highlighted: false,
+  },
+  {
+    name: 'Complete WordPress Malware Cleanup',
+    price: '$89',
+    features: [
+      'Deep File & Database Scan',
+      'Manual Malware Removal',
+      'Backdoor & Shell Removal',
+      'Google "Red Warning" Removal',
+      'Security Hardening',
+      'Detailed Cleanup Report',
+    ],
+    cta: 'Fix My Site Now',
+    href: '/hire-me',
+    highlighted: true,
+  },
+  {
+    name: 'Malware Removal & Ongoing Maintenance',
+    price: '$389',
+    features: [
+      'Everything in Cleanup',
+      '1 Year Security Maintenance',
+      'Daily Cloud Backups',
+      'Real-time Uptime Monitoring',
+      'Monthly Health Reports',
+      'Priority Support',
+    ],
+    cta: 'Fix & Protect',
+    href: '/hire-me',
+    highlighted: false,
+  },
+];
+
+// 2. Define Button Styles
+// These mimic the shadcn/ui button styles you likely had
+const baseBtnStyle = "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 w-full";
+
+const primaryBtnStyle = "bg-slate-800 hover:bg-slate-700 dark:bg-slate-700 dark:hover:bg-slate-600 text-white";
+const outlineBtnStyle = "border border-slate-300 hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800 text-slate-900 dark:text-white bg-transparent";
+---
+
+<section id="pricing" class="mb-20">
+  
+  {/* --- HEADER --- */}
+  <h2 class="mb-4 font-bold text-gray-900 dark:text-white text-3xl text-center">
+    WordPress Security & Cleanup Services
+  </h2>
+  <p class="mb-12 text-slate-700 dark:text-slate-300 text-center">
+    No hidden fees. Fixed price for complete removal.
+  </p>
+
+  {/* --- PRICING GRID --- */}
+  <div class="gap-6 grid md:grid-cols-3 mx-auto max-w-5xl">
+    {plans.map((plan) => (
+      <div
+        class:list={[
+          "flex flex-col rounded-xl border p-8 transition-transform duration-300",
+          plan.highlighted
+            ? "relative scale-105 border-slate-800 shadow-xl dark:border-slate-300 z-10"
+            : "border-slate-300 shadow-sm dark:border-slate-700 bg-white dark:bg-transparent"
+        ]}
+      >
+        {/* BADGE (Best Value) */}
+        {plan.highlighted && (
+          <div class="-top-4 left-1/2 absolute bg-slate-800 dark:bg-slate-700 shadow-sm px-4 py-1 rounded-full font-bold text-white text-sm -translate-x-1/2">
+            Best Value
+          </div>
+        )}
+
+        {/* TITLE & PRICE */}
+        <h3 class="mb-4 font-semibold text-black dark:text-white text-xl text-center">
+          {plan.name}
+        </h3>
+        <div class="mb-6 font-bold text-black dark:text-white text-4xl text-center">
+          {plan.price}
+        </div>
+
+        {/* FEATURES LIST */}
+        <ul class="space-y-4 mb-8 grow">
+          {plan.features.map((feature) => (
+            <li class="flex items-start gap-3 text-slate-900 dark:text-slate-300">
+              <CheckCircle class="mt-0.5 w-5 h-5 text-sky-600 shrink-0" />
+              <span class="text-sm">{feature}</span>
+            </li>
+          ))}
+        </ul>
+
+        {/* CTA BUTTON */}
+        <a
+          href={plan.href}
+          class:list={[
+            baseBtnStyle,
+            plan.highlighted ? primaryBtnStyle : outlineBtnStyle
+          ]}
+        >
+          {plan.cta}
+        </a>
+
+      </div>
+    ))}
+  </div>
+</section>

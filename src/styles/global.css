@@ -1,0 +1,147 @@
+/* src/styles/global.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Your custom globals */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply antialiased; /* Makes fonts look thinner/sharper */
+}
+
+/* WORDPRESS START */
+
+.has-text-align-left {
+  @apply text-left;
+}
+
+.has-text-align-center {
+  @apply text-center;
+}
+
+.has-text-align-right {
+  @apply text-right;
+}
+
+.has-small-font-size {
+  @apply text-sm;
+}
+
+.has-large-font-size {
+  @apply text-4xl;
+}
+
+.has-x-large-font-size {
+  @apply text-5xl;
+}
+
+.has-xx-large-font-size {
+  @apply text-6xl;
+}
+
+.alignwide {
+  @apply relative px-4 w-screen;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  max-width: 100vw;
+}
+
+.alignfull {
+  @apply relative px-1 w-screen;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  max-width: 100vw;
+}
+
+.aligncenter {
+  @apply text-center;
+}
+
+.alignfull img,
+.alignwide img {
+  @apply w-full;
+}
+
+.alignleft,
+.alignright,
+.aligncenter,
+.is-resized {
+  @apply table mr-0 ml-0;
+}
+
+.alignleft > figcaption,
+.alignright > figcaption,
+.aligncenter > figcaption,
+.is-resized > figcaption {
+  @apply table-caption;
+
+  caption-side: bottom;
+}
+
+.alignleft {
+  @apply float-left mr-4;
+}
+
+.alignright {
+  @apply float-right ml-4;
+}
+
+.aligncenter {
+  @apply m-auto;
+}
+
+.wp-block-button a,
+.wp-block-file a.wp-block-file__button {
+  @apply bg-blue-500 px-4 py-2 text-white no-underline;
+}
+
+.wp-block-button a:hover,
+.wp-block-file a.wp-block-file__button:hover {
+  @apply bg-blue-400 cursor-pointer;
+}
+
+.wp-block-file a:first-of-type {
+  @apply mr-4;
+}
+
+.wp-block-cover {
+  @apply justify-center items-center grid bg-cover bg-center overflow-hidden;
+
+  min-height: 430px;
+}
+
+.wp-block-verse {
+  @apply font-sans;
+}
+
+.wp-block-media-text {
+  @apply gap-4 grid grid-cols-2;
+}
+
+.wp-block-columns {
+  @apply flex gap-4;
+}
+
+.has-base-color {
+  @apply text-zinc-50;
+}
+
+.has-base-background-color {
+  @apply bg-zinc-50;
+}
+
+.has-contrast-color {
+  @apply text-zinc-900;
+}
+
+.has-contrast-background-color {
+  @apply bg-zinc-900;
+}
+/* WORDPRESS END  */

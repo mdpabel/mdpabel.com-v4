@@ -1,0 +1,44 @@
+---
+// src/components/ThemeToggle.astro
+import { Sun, Moon } from '@lucide/astro'; // ✅ Renders as optimized inline SVG
+---
+
+<div class="flex items-center gap-2">
+  <Sun class="w-5 h-5 text-slate-500 dark:text-slate-400" />
+  
+  <label class="inline-flex relative items-center cursor-pointer" aria-label="Toggle dark mode">
+    <input 
+      type="checkbox" 
+      id="theme-checkbox" 
+      class="sr-only peer" 
+    />
+    <div class="peer after:top-[2px] after:absolute bg-slate-200 after:bg-white dark:bg-slate-700 peer-checked:bg-blue-600 after:border after:border-slate-300 peer-checked:after:border-white rounded-full after:rounded-full peer-focus:outline-none dark:peer-focus:ring-blue-800 peer-focus:ring-4 peer-focus:ring-blue-300 w-11 after:w-5 h-6 after:h-5 after:content-[''] after:transition-all peer-checked:after:translate-x-full after:start-[2px]"></div>
+  </label>
+
+  <Moon class="w-5 h-5 text-slate-500 dark:text-slate-300" />
+</div>
+
+<script>
+  // This script runs only once per page load
+  function setupThemeToggle() {
+    const checkbox = document.querySelector('#theme-checkbox') as HTMLInputElement;
+    const html = document.documentElement;
+
+    if (checkbox) {
+      // Sync checkbox state with actual class on <html>
+      checkbox.checked = html.classList.contains('dark');
+
+      checkbox.addEventListener('change', () => {
+        const isDark = checkbox.checked;
+        html.classList.toggle('dark', isDark);
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      });
+    }
+  }
+
+  // Initial setup
+  setupThemeToggle();
+
+  // Re-run setup after View Transition swaps
+  document.addEventListener('astro:after-swap', setupThemeToggle);
+</script>

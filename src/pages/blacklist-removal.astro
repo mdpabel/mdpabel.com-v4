@@ -1,0 +1,417 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ComponentWrapper from '../components/component-wrapper.astro';
+import {
+  CheckCircle,
+  ShieldAlert,
+  Star,
+  Activity,
+  AlertOctagon,
+  MailWarning,
+  Lock,
+  Search,
+  Zap,
+  Check,
+  XCircle,
+  ChevronDown,
+  CheckCircle2
+} from '@lucide/astro'; 
+
+// --- SEO Data ---
+const seoTitle = 'Domain Blacklist Removal Service | Fix "Deceptive Site Ahead"';
+const seoDesc = 'Professional malware cleanup and blacklist removal. We delist websites from Google, McAfee, Norton, ESET, Spamhaus, and 100+ security authorities.';
+
+// --- JSON-LD Schema ---
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Domain Blacklist Removal Service',
+  provider: {
+    '@type': 'Person',
+    name: 'MD Pabel',
+    url: 'https://www.mdpabel.com',
+  },
+  description: 'Professional removal of domains from Google Safe Browsing, McAfee, Norton, and 100+ antivirus blacklists.',
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Blacklist Removal Services',
+    itemListElement: [
+      {
+        '@type': 'Offer',
+        name: 'Standard Removal Request',
+        price: '15.00',
+        priceCurrency: 'USD',
+      },
+      {
+        '@type': 'Offer',
+        name: 'Full Malware Cleanup & Delist',
+        price: '149.00',
+        priceCurrency: 'USD',
+      },
+    ],
+  },
+};
+
+// --- DATA CONSTANTS ---
+const TOP_VENDORS = [
+  'Google Safe Browsing', 'McAfee SiteAdvisor', 'Norton Safe Web', 'Microsoft Defender',
+  'Bitdefender', 'ESET NOD32', 'Avast', 'AVG', 'Spamhaus', 'Barracuda', 'Sucuri',
+  'Kaspersky', 'Sophos', 'TrendMicro', 'Fortinet', 'PhishLabs', 'AlienVault', 'GData',
+  'VirusTotal', 'Quttera', 'Yandex', 'Bing', 'Symantec', 'Webroot', 'SentinelOne',
+  'CrowdStrike', 'Forcepoint',
+];
+
+const MORE_VENDORS = [
+  'Abusix', 'ADMINUSLabs', 'AegisLab', 'Ahnlab', 'AI Labs (Monitorapp)', 'Alibaba Cloud',
+  'AlphaMountain', 'AlphaSOC', 'Alyac', 'Antiy-AVL', 'ArcSight', 'AutoShun', 'Baidu',
+  'Bfore.Ai', 'Bkav', 'Certego', 'Chong Lua Dao', 'CINS Army', 'ClamAV', 'Clean-MX',
+  'Cloudflare', 'Cluster25', 'CMC Threat Intelligence', 'CRDF', 'CrowdSec', 'Cyan',
+  'Cybereason', 'Cyble', 'Cylance', 'Cynet', 'CyRadar', 'Deep Instinct', 'DNS8', 'Dr.Web',
+  'Elastic', 'Emsisoft', 'eScan', 'F-Prot', 'F-Secure', 'FireEye', 'Gridinsoft', 'Hacksoft',
+  'Hauri', 'Heimdal', 'Hoplite Industries', 'Ikarus', 'IPsum', 'Jiangmin', 'K7 Computing',
+  'Lionic', 'Lumu', 'Malbeacon', 'Malwarebytes', 'Malwares.com', 'MAX', 'MaxSecure',
+  'NANO Security', 'Netcraft', 'Panda Security', 'Phishing Database', 'Qihoo 360',
+  'QuickHeal', 'Rising', 'Sangfor', 'Scumware.org', 'SecureAge', 'Seclookup', 'Segasec',
+  'SOCRadar', 'Tencent', 'TheHacker', 'Trapmine', 'Trustlook', 'Trustwave', 'URLQuery',
+  'Varist', 'VBA32', 'Viettel Threat Intelligence', 'Vipre', 'VirIT', 'VirusDie',
+  'Xcitium (Comodo)', 'Zillya', 'ZoneAlarm',
+];
+
+// --- STYLES ---
+const primaryButtonClass = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-11 px-8 bg-sky-600 hover:bg-sky-700 text-white shadow-lg shadow-sky-200 dark:shadow-sky-900/20 tracking-tight";
+const outlineButtonClass = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-11 px-8 border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 dark:bg-slate-900 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800";
+---
+
+<Layout title={seoTitle} description={seoDesc}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
+
+  <ComponentWrapper class="relative py-16 md:py-24">
+    
+    {/* Decorative Gradient Background */}
+    <div class="top-0 left-0 -z-10 absolute w-full h-full overflow-hidden pointer-events-none">
+      <div class="-top-[20%] right-0 absolute bg-red-500/5 dark:bg-red-500/5 blur-3xl rounded-full w-[500px] h-[500px]"></div>
+      <div class="top-[10%] -left-[10%] absolute bg-sky-500/5 dark:bg-sky-500/5 blur-3xl rounded-full w-[400px] h-[400px]"></div>
+    </div>
+
+    {/* --- HERO SECTION --- */}
+    <section class="z-10 relative mb-20 text-center">
+      <div class="inline-flex items-center gap-2 bg-red-50 dark:bg-red-900/20 mb-8 px-4 py-1.5 border border-red-100 dark:border-red-800/50 rounded-full animate-fade-in-up">
+        <ShieldAlert class="w-4 h-4 text-red-600 dark:text-red-400" />
+        <span class="font-semibold text-red-900 dark:text-red-200 text-sm">
+          "Deceptive Site Ahead" Warning?
+        </span>
+      </div>
+
+      <h1 class="mb-6 font-bold text-gray-900 dark:text-white text-3xl md:text-4xl">
+        Domain Blacklist Removal <br class="hidden md:block" />
+        <span class="bg-clip-text bg-gradient-to-r from-sky-600 dark:from-sky-400 to-indigo-600 dark:to-indigo-400 text-transparent">
+          & Reputation Repair
+        </span>
+      </h1>
+
+      <p class="mx-auto mb-10 max-w-2xl text-slate-600 dark:text-slate-400 leading-relaxed">
+        I fix hacked websites and remove them from{' '}
+        <span class="font-semibold text-slate-900 dark:text-white">
+          Google, McAfee, Norton,
+        </span>{' '}
+        and{' '}
+        <span class="font-semibold text-slate-900 dark:text-white">
+          100+ other
+        </span>{' '}
+        security authorities.
+      </p>
+
+      <div class="flex sm:flex-row flex-col justify-center items-center gap-4">
+        <a href="#pricing" class={primaryButtonClass}>
+          Start Removal • From $15
+        </a>
+        <a href="/hire-me" class={outlineButtonClass}>
+          Check My Reputation
+        </a>
+      </div>
+    </section>
+
+    {/* --- SYMPTOMS --- */}
+    <section class="mb-24">
+      <div class="mx-auto mb-16 max-w-3xl text-center">
+        <h2 class="mb-4 font-bold text-gray-900 dark:text-white text-3xl md:text-4xl">
+          Is Your Domain Blacklisted?
+        </h2>
+        <p class="text-slate-600 dark:text-slate-400">
+          If you are seeing these signs, security vendors have flagged your IP or Domain.
+        </p>
+      </div>
+
+      <div class="gap-6 grid md:grid-cols-3">
+        {/* Item 1 */}
+        <div class="group bg-white dark:bg-slate-900 shadow-sm hover:shadow-lg p-8 border border-slate-200 hover:border-slate-300 dark:border-slate-800 dark:hover:border-slate-700 rounded-2xl transition-all duration-300">
+          <div class="flex justify-center items-center bg-red-50 dark:bg-red-900/20 mb-6 rounded-xl w-12 h-12 transition-colors">
+            <AlertOctagon class="w-6 h-6 text-red-500" />
+          </div>
+          <h3 class="mb-3 font-bold text-slate-900 dark:text-white text-xl">
+            The Red Warning Screen
+          </h3>
+          <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+            Visitors see "Deceptive Site Ahead" or "Suspected Phishing" warnings.
+          </p>
+        </div>
+
+        {/* Item 2 */}
+        <div class="group bg-white dark:bg-slate-900 shadow-sm hover:shadow-lg p-8 border border-slate-200 hover:border-slate-300 dark:border-slate-800 dark:hover:border-slate-700 rounded-2xl transition-all duration-300">
+          <div class="flex justify-center items-center bg-sky-50 dark:bg-sky-900/20 mb-6 rounded-xl w-12 h-12 transition-colors">
+            <Activity class="w-6 h-6 text-sky-500" />
+          </div>
+          <h3 class="mb-3 font-bold text-slate-900 dark:text-white text-xl">
+            Traffic Drop to Zero
+          </h3>
+          <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+            Google de-indexes blacklisted pages. Rankings disappear overnight.
+          </p>
+        </div>
+
+        {/* Item 3 */}
+        <div class="group bg-white dark:bg-slate-900 shadow-sm hover:shadow-lg p-8 border border-slate-200 hover:border-slate-300 dark:border-slate-800 dark:hover:border-slate-700 rounded-2xl transition-all duration-300">
+          <div class="flex justify-center items-center bg-amber-50 dark:bg-amber-900/20 mb-6 rounded-xl w-12 h-12 transition-colors">
+            <MailWarning class="w-6 h-6 text-amber-500" />
+          </div>
+          <h3 class="mb-3 font-bold text-slate-900 dark:text-white text-xl">
+            Emails Bouncing
+          </h3>
+          <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+            Your domain is on Spamhaus/Barracuda, sending emails to spam.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* --- VENDOR LIST --- */}
+    <section class="bg-slate-50 dark:bg-slate-900/50 -mx-4 md:-mx-8 mb-24 px-4 md:px-8 py-20 border border-slate-100 dark:border-slate-800 rounded-3xl">
+      <div class="mx-auto max-w-6xl text-center">
+        <div class="flex justify-center items-center gap-2 mb-6">
+          <Star class="fill-yellow-400 w-5 h-5 text-yellow-400" />
+          <span class="font-bold text-slate-900 dark:text-white">
+            Comprehensive Coverage
+          </span>
+        </div>
+        <h2 class="mb-8 font-bold text-gray-900 dark:text-white text-3xl md:text-4xl">
+          Supported Security Authorities
+        </h2>
+
+        {/* Visible Grid */}
+        <div class="flex flex-wrap justify-center gap-3 mb-4">
+          {TOP_VENDORS.map((vendor) => (
+            <span class="bg-white dark:bg-slate-800 shadow-sm px-4 py-2 border border-slate-200 hover:border-sky-400 dark:border-slate-700 rounded-lg font-medium text-slate-600 hover:text-sky-600 dark:hover:text-sky-400 dark:text-slate-300 text-sm transition-colors cursor-default select-none">
+              Remove {vendor}
+            </span>
+          ))}
+        </div>
+
+        {/* Details / Summary Dropdown */}
+        <details class="group">
+          <summary class="[&::-webkit-details-marker]:hidden inline-flex items-center gap-2 font-semibold text-sky-600 dark:text-sky-400 hover:underline cursor-pointer list-none">
+            <span>View All 100+ Vendors</span>
+            <ChevronDown class="w-4 h-4 group-open:rotate-180 transition-transform" />
+          </summary>
+
+          <div class="flex flex-wrap justify-center gap-3 slide-in-from-top-2 mt-6 pt-6 border-slate-200 dark:border-slate-700 border-t animate-in duration-300 fade-in">
+            {MORE_VENDORS.map((vendor) => (
+              <span class="bg-white dark:bg-slate-800 shadow-sm px-4 py-2 border border-slate-200 hover:border-sky-400 dark:border-slate-700 rounded-lg font-medium text-slate-600 hover:text-sky-600 dark:hover:text-sky-400 dark:text-slate-300 text-sm transition-colors cursor-default select-none">
+                Remove {vendor}
+              </span>
+            ))}
+          </div>
+        </details>
+      </div>
+    </section>
+
+    {/* --- PROCESS STEPS --- */}
+    <section class="mx-auto mb-24 max-w-4xl">
+      <div class="mb-16 text-center">
+        <h2 class="mb-4 font-bold text-gray-900 dark:text-white text-3xl md:text-4xl">
+          The Professional Removal Process
+        </h2>
+        <p class="text-slate-600 dark:text-slate-400">
+          To get unblocked, you must prove the infection is 100% gone.
+        </p>
+      </div>
+
+      <div class="relative gap-8 grid md:grid-cols-3">
+        {/* Connector Line */}
+        <div class="hidden md:block top-8 right-[15%] left-[15%] -z-10 absolute bg-slate-200 dark:bg-slate-800 h-0.5"></div>
+
+        {/* Step 1 */}
+        <div class="flex flex-col items-center bg-white dark:bg-slate-900/80 p-6 border border-slate-100 dark:border-slate-800 rounded-xl text-center">
+          <div class="z-10 flex justify-center items-center bg-white dark:bg-slate-900 shadow-sm mb-4 border-4 border-slate-50 dark:border-slate-800 rounded-full w-16 h-16">
+            <Search class="w-7 h-7 text-sky-600 dark:text-sky-400" />
+          </div>
+          <h3 class="mb-2 font-bold text-slate-900 dark:text-white">
+            1. Diagnostic Scan
+          </h3>
+          <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+            I identify which vendors flagged you and find the specific malware files.
+          </p>
+        </div>
+
+        {/* Step 2 */}
+        <div class="flex flex-col items-center bg-white dark:bg-slate-900/80 p-6 border border-slate-100 dark:border-slate-800 rounded-xl text-center">
+          <div class="z-10 flex justify-center items-center bg-white dark:bg-slate-900 shadow-sm mb-4 border-4 border-slate-50 dark:border-slate-800 rounded-full w-16 h-16">
+            <Lock class="w-7 h-7 text-sky-600 dark:text-sky-400" />
+          </div>
+          <h3 class="mb-2 font-bold text-slate-900 dark:text-white">
+            2. Clean & Patch
+          </h3>
+          <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+            Crucial Step: I remove the virus and patch the vulnerability so it doesn't return.
+          </p>
+        </div>
+
+        {/* Step 3 */}
+        <div class="flex flex-col items-center bg-white dark:bg-slate-900/80 p-6 border border-slate-100 dark:border-slate-800 rounded-xl text-center">
+          <div class="z-10 flex justify-center items-center bg-white dark:bg-slate-900 shadow-sm mb-4 border-4 border-slate-50 dark:border-slate-800 rounded-full w-16 h-16">
+            <CheckCircle class="w-7 h-7 text-sky-600 dark:text-sky-400" />
+          </div>
+          <h3 class="mb-2 font-bold text-slate-900 dark:text-white">
+            3. Dispute & Delist
+          </h3>
+          <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+            I submit technical "Clean Site" evidence to the vendors to expedite removal.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* --- PRICING --- */}
+    <section id="pricing" class="mb-24 scroll-mt-24">
+      <div class="mx-auto mb-12 max-w-3xl text-center">
+        <h2 class="mb-4 font-bold text-gray-900 dark:text-white text-3xl md:text-4xl">
+          Simple Pricing
+        </h2>
+        <p class="text-slate-600 dark:text-slate-400">
+          Choose based on whether your site is still infected or already clean.
+        </p>
+      </div>
+
+      <div class="items-start gap-8 grid md:grid-cols-2 mx-auto max-w-4xl">
+        
+        {/* Tier 1 */}
+        <div class="bg-white dark:bg-slate-900/80 p-8 border border-slate-200 hover:border-slate-300 dark:border-slate-800 rounded-2xl transition-colors">
+          <h3 class="mb-2 font-semibold text-slate-900 dark:text-white">
+            Submission Only
+          </h3>
+          <div class="mb-6 font-bold text-slate-900 dark:text-white text-3xl">
+            $15 <span class="font-normal text-slate-500 text-base">/ vendor</span>
+          </div>
+
+          <p class="mb-6 pb-6 border-slate-100 dark:border-slate-800 border-b text-slate-500 dark:text-slate-400 text-sm">
+            For clients who have <strong>already cleaned</strong> their site and just need help with the dispute paperwork.
+          </p>
+
+          <ul class="space-y-4 mb-8 text-slate-600 dark:text-slate-400 text-sm">
+            <li class="flex gap-2">
+              <Check class="w-4 h-4 text-sky-500" /> Submission to 1 Vendor
+            </li>
+            <li class="flex gap-2">
+              <Check class="w-4 h-4 text-sky-500" /> Professional Appeal Draft
+            </li>
+            <li class="flex gap-2">
+              <Check class="w-4 h-4 text-sky-500" /> Proof of Submission
+            </li>
+            <li class="flex gap-2 text-slate-400">
+              <XCircle class="w-4 h-4" /> <strong>No Malware Removal</strong>
+            </li>
+          </ul>
+          
+          <a href="/hire-me" class={`w-full ${outlineButtonClass}`}>
+            Select Submission Only
+          </a>
+        </div>
+
+        {/* Tier 2 (Highlighted) */}
+        <div class="z-10 relative bg-white dark:bg-slate-900 shadow-xl p-8 border border-sky-200 dark:border-sky-900 rounded-2xl ring-1 ring-sky-100 dark:ring-sky-900 scale-105">
+          <div class="-top-4 left-1/2 absolute bg-sky-600 px-3 py-1 rounded-full font-bold text-white text-xs uppercase -translate-x-1/2">
+            Best Value
+          </div>
+          <h3 class="mb-2 font-semibold text-sky-600 dark:text-sky-400">
+            Full Clean & Delist
+          </h3>
+          <div class="mb-6 font-bold text-slate-900 dark:text-white text-4xl">
+            $149 <span class="font-normal text-slate-500 text-base">/ site</span>
+          </div>
+
+          <p class="mb-6 pb-6 border-slate-100 dark:border-slate-800 border-b text-slate-500 dark:text-slate-400 text-sm">
+            I log in, remove the malware, patch the security, and handle <strong>ALL</strong> blacklist removals.
+          </p>
+
+          <ul class="space-y-4 mb-8 font-medium text-slate-700 dark:text-slate-200 text-sm">
+            <li class="flex gap-3">
+              <CheckCircle class="w-5 h-5 text-sky-600" /> <strong>Full Malware Removal</strong>
+            </li>
+            <li class="flex gap-3">
+              <CheckCircle class="w-5 h-5 text-sky-600" /> <strong>Removal from ALL Blacklists</strong>
+            </li>
+            <li class="flex gap-3">
+              <CheckCircle class="w-5 h-5 text-sky-600" /> Security Patching
+            </li>
+            <li class="flex gap-3">
+              <CheckCircle class="w-5 h-5 text-sky-600" /> 30-Day Guarantee
+            </li>
+          </ul>
+
+          <a href="/hire-me" class={`w-full ${primaryButtonClass}`}>
+            Fix My Site Completely
+          </a>
+        </div>
+      </div>
+    </section>
+
+    {/* --- FAQ --- */}
+    <section class="mx-auto mb-24 max-w-3xl">
+      <h2 class="mb-10 font-bold text-gray-900 dark:text-white text-3xl md:text-4xl text-center">
+        Common Questions
+      </h2>
+      <div class="space-y-4">
+        {/* FAQ 1 */}
+        <div class="bg-white dark:bg-slate-900/80 p-6 border border-slate-200 hover:border-slate-300 dark:border-slate-800 rounded-xl transition-colors">
+          <h3 class="mb-2 font-bold text-slate-900 dark:text-white">
+            How long does Google Blacklist removal take?
+          </h3>
+          <p class="text-slate-600 dark:text-slate-400 text-sm">
+            Google usually processes reviews within 24-72 hours via Search Console. Other vendors like McAfee can take 3-5 business days.
+          </p>
+        </div>
+        {/* FAQ 2 */}
+        <div class="bg-white dark:bg-slate-900/80 p-6 border border-slate-200 hover:border-slate-300 dark:border-slate-800 rounded-xl transition-colors">
+          <h3 class="mb-2 font-bold text-slate-900 dark:text-white">
+            Why did my site get blacklisted?
+          </h3>
+          <p class="text-slate-600 dark:text-slate-400 text-sm">
+            95% of the time, it's because of malware (phishing scripts, redirects, or spam). Security vendors block your site to protect their users.
+          </p>
+        </div>
+        {/* FAQ 3 */}
+        <div class="bg-white dark:bg-slate-900/80 p-6 border border-slate-200 hover:border-slate-300 dark:border-slate-800 rounded-xl transition-colors">
+          <h3 class="mb-2 font-bold text-slate-900 dark:text-white">
+            Do you guarantee removal?
+          </h3>
+          <p class="text-slate-600 dark:text-slate-400 text-sm">
+            With the $149 'Full Clean' package, YES. We guarantee removal because we ensure the site is 100% clean, which is the only requirement for delisting.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* --- FOOTER CTA --- */}
+    <section class="mt-24 text-center">
+      <div class="inline-flex items-center gap-2 mb-4 font-semibold text-red-600 dark:text-red-400 animate-pulse">
+        <Zap class="w-4 h-4" /> Every hour blacklisted = Lost Revenue
+      </div>
+      <h2 class="mb-6 font-bold text-slate-900 dark:text-white text-3xl md:text-4xl">
+        Get Your Reputation Back
+      </h2>
+      <a href="#pricing" class={`px-10 rounded-full ${primaryButtonClass}`}>
+        Start Recovery Now
+      </a>
+    </section>
+
+  </ComponentWrapper>
+</Layout>

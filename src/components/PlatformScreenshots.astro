@@ -1,0 +1,246 @@
+---
+import { ArrowRight, Star, CheckCircle } from '@lucide/astro';
+import ComponentWrapper from './component-wrapper.astro';
+import { cn } from '../lib/utils';
+import fiverrImg from "../assets/fiverr-screenshot.png"
+import upworkImg from "../assets/upwork-screenshot.png"
+import { Image } from 'astro:assets'
+
+// 1. Props Definition
+interface Props {
+  title?: 'center' | 'left' | 'right';
+}
+const { title = 'center' } = Astro.props;
+
+// 2. Mock Data (Replace with your real siteData import if you have it)
+const siteData = {
+  companies: {
+    freelance: [
+      { projects: '300+' }, // Fiverr Count
+      { projects: '100+' }, // Upwork Count
+    ]
+  }
+};
+
+// 3. SVG Paths for Brand Icons (Zero JS)
+const ICONS = {
+  fiverr: "M19.07 4.93h-2.58l-1.04 5.34h-.05L12.91 4.93h-2.58l3.66 12.06h2.89l2.19-12.06zM8.33 4.93H4.76v12.06h3.57V4.93zM21 16.99h-3.57V4.93H21v12.06zM2.86 8.5C1.28 8.5 0 9.78 0 11.36s1.28 2.86 2.86 2.86S5.72 12.94 5.72 11.36 4.44 8.5 2.86 8.5z",
+  upwork: "M14.65 9.07c-2.07 0-3.37 1.48-3.37 3.32v.56c0 1.94 1.41 3.23 3.37 3.23 2.07 0 3.37-1.48 3.37-3.32v-.56c0-1.94-1.41-3.23-3.37-3.23zM2.5 2.5v12.19c0 2.22 1.55 3.38 3.63 3.38 2.21 0 3.63-1.41 3.63-3.38V9.88h3.38v4.81c0 4.19-3.2 5.31-6.19 5.31-3.56 0-7-2.25-7-7.44V2.5H2.5zm19.5 6.57v.56c0 3.38-2.31 5.94-6.31 5.94-2.26 0-3.95-.91-4.9-2.03l-.43 1.53h-3.04V2.5h3.38v6.23c.89-.96 2.37-1.66 4.09-1.66 2.94 0 4.94 1.84 4.94 4.56v.56c0 2.72-2 4.56-4.94 4.56-1.72 0-3.2-.7-4.09-1.66v-2.01c.85 1.41 2.27 2.16 3.99 2.16 2.07 0 3.37-1.48 3.37-3.32v-.56c0-1.94-1.41-3.23-3.37-3.23-1.65 0-3.08.76-3.93 2.19L10.3 9.47c1.07-1.57 3.1-2.4 5.4-2.4 3.99 0 6.3 2.56 6.3 5.94v.56z"
+};
+
+---
+
+<ComponentWrapper class="px-0 pt-12 pb-20">
+  
+  {/* --- HEADER SECTION --- */}
+  <div class="mb-12">
+    <h2
+      class={cn(
+        'mb-4 font-bold text-slate-900 dark:text-white text-3xl md:text-4xl',
+        title === 'center' ? 'text-center' : title === 'left' ? 'text-left' : 'text-right'
+      )}
+    >
+      Proven Track Record
+    </h2>
+    <p
+      class={cn(
+        'max-w-3xl text-slate-600 dark:text-slate-400 text-lg',
+        title === 'center' ? 'mx-auto text-center' : title === 'left' ? 'text-left' : 'ml-auto text-right'
+      )}
+    >
+      I bring platform-vetted expertise directly to you. Save on platform
+      fees by working with me directly.
+    </p>
+  </div>
+
+  {/* --- CARDS GRID --- */}
+  <div class="gap-8 grid md:grid-cols-2 mb-12">
+    
+    {/* === FIVERR STATS === */}
+    <div class="relative flex flex-col justify-between bg-white dark:bg-slate-900/50 shadow-sm p-8 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
+      
+      {/* Background Texture Icon */}
+      <svg viewBox="0 0 24 24" class="-right-4 -bottom-4 -z-0 absolute fill-current w-32 h-32 text-slate-100 dark:text-slate-800/50 rotate-12 pointer-events-none">
+        <path d={ICONS.fiverr} />
+      </svg>
+
+      <div class="z-10 relative">
+        <div class="flex justify-between items-start mb-8">
+          <div class="flex items-center gap-3">
+            <div class="bg-green-50 dark:bg-green-900/20 p-2 rounded-lg">
+              <svg viewBox="0 0 24 24" class="fill-current w-8 h-8 text-[#1DBF73]">
+                <path d={ICONS.fiverr} />
+              </svg>
+            </div>
+            <div>
+              <div class="font-bold text-slate-900 dark:text-white text-xl leading-none">
+                Fiverr History
+              </div>
+              <div class="mt-1 font-medium text-slate-500 text-sm">
+                Vetted Performance
+              </div>
+            </div>
+          </div>
+          <span class="bg-green-100 dark:bg-green-900/30 px-3 py-1 border border-green-200 dark:border-green-800 rounded-full font-semibold text-[#1DBF73] text-xs uppercase tracking-wide">
+            Level 2 Seller
+          </span>
+        </div>
+
+        {/* STAT BOXES */}
+        <div class="gap-4 grid grid-cols-3 mb-6">
+          
+          {/* Rating */}
+          <div class="flex flex-col items-center bg-slate-50 dark:bg-slate-800 p-3 border border-slate-100 dark:border-slate-700 rounded-lg">
+            <div class="flex items-center gap-1 font-bold text-slate-700 dark:text-slate-200 text-2xl">
+              5.0 <Star class="fill-current w-3 h-3 text-yellow-500" />
+            </div>
+            <div class="mt-1 font-medium text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider">
+              Rating
+            </div>
+          </div>
+
+          {/* Orders (Highlighted) */}
+          <div class="flex flex-col items-center bg-slate-50 dark:bg-slate-800 p-3 border border-slate-100 dark:border-slate-700 rounded-lg">
+            <div class="flex items-center gap-1 font-bold text-slate-900 dark:text-white text-2xl">
+              {siteData.companies.freelance[0].projects}
+            </div>
+            <div class="mt-1 font-medium text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider">
+              Orders
+            </div>
+          </div>
+
+          {/* Success */}
+          <div class="flex flex-col items-center bg-slate-50 dark:bg-slate-800 p-3 border border-slate-100 dark:border-slate-700 rounded-lg">
+            <div class="flex items-center gap-1 font-bold text-slate-700 dark:text-slate-200 text-2xl">
+              98%
+            </div>
+            <div class="mt-1 font-medium text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider">
+              Success
+            </div>
+          </div>
+
+        </div>
+
+        {/* Screenshot Image */}
+        <div>
+          <Image
+            format="avif"
+            quality="mid"
+            src={fiverrImg}
+            alt="Fiverr screenshot"
+            width="1000"
+            height="800"
+            class="rounded-lg w-full h-auto"
+          />
+          <div class="flex items-center gap-2 pt-6 border-slate-100 dark:border-slate-800 border-t text-slate-500 dark:text-slate-400 text-sm">
+            <CheckCircle class="w-5 h-5 text-[#1DBF73]" />
+            <span class="font-medium">
+              Verified Malware Removal Expert
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* === UPWORK STATS === */}
+    <div class="relative flex flex-col justify-between bg-white dark:bg-slate-900/50 shadow-sm p-8 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
+      
+      {/* Background Texture Icon */}
+      <svg viewBox="0 0 24 24" class="-right-4 -bottom-4 -z-0 absolute fill-current w-32 h-32 text-slate-100 dark:text-slate-800/50 rotate-12 pointer-events-none">
+        <path d={ICONS.upwork} />
+      </svg>
+
+      <div class="z-10 relative">
+        <div class="flex justify-between items-start mb-8">
+          <div class="flex items-center gap-3">
+            <div class="bg-blue-50 dark:bg-blue-900/20 p-2 rounded-lg">
+              <svg viewBox="0 0 24 24" class="fill-current w-8 h-8 text-[#14A800]">
+                <path d={ICONS.upwork} />
+              </svg>
+            </div>
+            <div>
+              <div class="font-bold text-slate-900 dark:text-white text-xl leading-none">
+                Upwork History
+              </div>
+              <div class="mt-1 font-medium text-slate-500 text-sm">
+                Vetted Performance
+              </div>
+            </div>
+          </div>
+          <span class="bg-blue-50 dark:bg-blue-900/20 px-3 py-1 border border-blue-100 dark:border-blue-800 rounded-full font-semibold text-[#14A800] dark:text-blue-400 text-xs uppercase tracking-wide">
+            Top Rated
+          </span>
+        </div>
+
+        {/* STAT BOXES */}
+        <div class="gap-4 grid grid-cols-3 mb-6">
+          
+          {/* Rating */}
+          <div class="flex flex-col items-center bg-slate-50 dark:bg-slate-800 p-3 border border-slate-100 dark:border-slate-700 rounded-lg">
+            <div class="flex items-center gap-1 font-bold text-slate-700 dark:text-slate-200 text-2xl">
+              5.0 <Star class="fill-current w-3 h-3 text-yellow-500" />
+            </div>
+            <div class="mt-1 font-medium text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider">
+              Rating
+            </div>
+          </div>
+
+          {/* Jobs (Highlighted) */}
+          <div class="flex flex-col items-center bg-slate-50 dark:bg-slate-800 p-3 border border-slate-100 dark:border-slate-700 rounded-lg">
+            <div class="flex items-center gap-1 font-bold text-slate-900 dark:text-white text-2xl">
+              {siteData.companies.freelance[1].projects}
+            </div>
+            <div class="mt-1 font-medium text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider">
+              Jobs
+            </div>
+          </div>
+
+          {/* Success */}
+          <div class="flex flex-col items-center bg-slate-50 dark:bg-slate-800 p-3 border border-slate-100 dark:border-slate-700 rounded-lg">
+            <div class="flex items-center gap-1 font-bold text-slate-700 dark:text-slate-200 text-2xl">
+              100%
+            </div>
+            <div class="mt-1 font-medium text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider">
+              Success
+            </div>
+          </div>
+
+        </div>
+
+        {/* Screenshot Image */}
+        <div>
+          <Image
+            format="avif"
+            quality="mid"
+            src={upworkImg}
+            alt="Upwork screenshot"
+            width="1000"
+            height="800"
+            class="rounded-lg w-full h-auto"
+          />
+          <div class="flex items-center gap-2 pt-6 border-slate-100 dark:border-slate-800 border-t text-slate-500 dark:text-slate-400 text-sm">
+            <CheckCircle class="w-5 h-5 text-[#1DBF73]" />
+            <span class="font-medium">
+              Verified Malware Removal Expert
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {/* --- CALL TO ACTION --- */}
+  <div class="text-center">
+    <a
+      href="/wordpress-malware-removal"
+      class="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-200 shadow-lg px-8 py-2 rounded-full font-bold text-white dark:text-slate-900 text-lg hover:scale-105 transition-all"
+    >
+      Hire Me Directly
+      <ArrowRight class="w-5 h-5" />
+    </a>
+    <p class="mt-4 text-slate-500 text-sm">
+      Get the same 5-star service, without the platform fees.
+    </p>
+  </div>
+
+</ComponentWrapper>

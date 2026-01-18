@@ -1,0 +1,177 @@
+---
+// Zero-JS frontmatter. The work happens in the script below.
+---
+
+<div id="cta-container">
+  <button
+    id="cta-trigger"
+    class="hidden right-4 bottom-4 z-40 fixed flex justify-center items-center space-x-2 bg-white dark:bg-slate-800 shadow-lg py-2 border border-slate-300 dark:border-slate-700 rounded-full w-48 text-gray-900 dark:text-white text-sm hover:scale-105 transition-transform animate-bounce-slow cursor-pointer"
+  >
+    <span class="text-xl">🚨</span>
+    <span>Free Malware Scan</span>
+  </button>
+
+  <div id="cta-modal" class="hidden z-50 fixed inset-0 flex justify-center items-center bg-slate-900/40 opacity-0 backdrop-blur-sm transition-opacity duration-300 pointer-events-none">
+    <div id="modal-content" class="relative bg-white dark:bg-slate-900 shadow-2xl mx-4 p-6 border-2 border-slate-700 dark:border-slate-500 rounded-xl w-full max-w-md transition-transform translate-y-4 duration-300 transform">
+      <button id="cta-close-x" class="top-3 right-4 absolute text-gray-500 hover:text-black dark:hover:text-white dark:text-slate-400 text-xl">✕</button>
+      
+      <h2 class="mb-4 font-semibold text-gray-900 dark:text-white text-xl leading-tight">
+        🚨 Is your WordPress site hacked? Get a free malware scan
+      </h2>
+      
+      <form id="cta-form" class="space-y-4">
+        <div>
+          <label class="block mb-1.5 font-medium text-gray-500 dark:text-slate-400 text-sm">Email</label>
+          <input type="email" name="email" required placeholder="your@email.com" class="bg-white dark:bg-slate-800 px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 w-full text-gray-900 dark:text-white transition-all" />
+        </div>
+        
+        <div>
+          <label class="block mb-1.5 font-medium text-gray-500 dark:text-slate-400 text-sm">Website URL</label>
+          <input type="url" name="url" required placeholder="https://yourwebsite.com" class="bg-white dark:bg-slate-800 px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 w-full text-gray-900 dark:text-white transition-all" />
+        </div>
+
+        <div id="form-status" class="hidden py-2 font-medium text-sm"></div>
+
+        <div class="flex justify-end gap-3 pt-2">
+          <button type="button" id="cta-cancel" class="px-4 py-2 font-medium text-gray-500 hover:text-gray-800 dark:hover:text-white transition-colors">Cancel</button>
+          <button type="submit" id="cta-submit" class="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 px-6 py-2 rounded-full font-bold text-white transition-all">
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<style>
+  @keyframes bounce-slow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+  .animate-bounce-slow {
+    animation: bounce-slow 2s infinite ease-in-out;
+  }
+  /* Show utility classes */
+  #cta-modal.active {
+    display: flex !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+  #cta-modal.active #modal-content {
+    transform: translateY(0);
+  }
+</style>
+
+<script>
+  // Accessing your environment variable in Astro Client Side
+  const WP_URL = "https://cms.mdpabel.com"; 
+  const CONFIG = {
+    DISMISS_KEY: 'malwareScanDismissed',
+    DISMISS_DURATION: 24 * 60 * 60 * 1000,
+    POPUP_DELAY: 6500,
+    POST_PAGES: ['blog', 'case-studies', 'guides', 'malware-log'],
+    FORM_ID: '1514',
+    CF7_VERSION: '6.1.2'
+  };
+
+  function initCTA() {
+    const trigger = document.getElementById('cta-trigger');
+    const modal = document.getElementById('cta-modal');
+    const modalContent = document.getElementById('modal-content');
+    const form = document.getElementById('cta-form') as HTMLFormElement;
+    const msgDiv = document.getElementById('form-status');
+    const submitBtn = document.getElementById('cta-submit') as HTMLButtonElement;
+    
+    const pathname = window.location.pathname;
+    const currentPage = pathname.split('/')[1] || '';
+    const isPostPage = CONFIG.POST_PAGES.includes(currentPage);
+    const dismissedUntil = localStorage.getItem(CONFIG.DISMISS_KEY);
+    const isDismissed = dismissedUntil && Date.now() < parseInt(dismissedUntil);
+
+    // Show Logic
+    if (isPostPage && !isDismissed) {
+      setTimeout(() => openModal(), CONFIG.POPUP_DELAY);
+    } else {
+      trigger?.classList.remove('hidden');
+    }
+
+    function openModal() {
+      modal?.classList.add('active');
+      trigger?.classList.add('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal?.classList.remove('active');
+      trigger?.classList.remove('hidden');
+      document.body.style.overflow = '';
+      localStorage.setItem(CONFIG.DISMISS_KEY, (Date.now() + CONFIG.DISMISS_DURATION).toString());
+    }
+
+    // Event: Close on X or Cancel
+    document.getElementById('cta-close-x')?.addEventListener('click', closeModal);
+    document.getElementById('cta-cancel')?.addEventListener('click', closeModal);
+
+    // Event: Toggle Trigger
+    trigger?.addEventListener('click', openModal);
+
+    // Event: Click Outside Modal (Fix: Hide on outside section click)
+    modal?.addEventListener('mousedown', (e) => {
+      if (modalContent && !modalContent.contains(e.target as Node)) {
+        closeModal();
+      }
+    });
+
+    // Form Submission (Contact Form 7 API Implementation)
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      submitBtn.disabled = true;
+      submitBtn.innerText = 'Submitting...';
+      msgDiv!.classList.add('hidden');
+
+      const formData = new FormData(form);
+      const email = formData.get('email') as string;
+      const url = formData.get('url') as string;
+
+      // Building Payload exact as your action logic
+      const payload = new FormData();
+      payload.append('your-email', email);
+      payload.append('site-url', url);
+      payload.append('from-url', pathname);
+      payload.append('_wpcf7', CONFIG.FORM_ID);
+      payload.append('_wpcf7_version', CONFIG.CF7_VERSION);
+      payload.append('_wpcf7_locale', 'en_US');
+      payload.append('_wpcf7_unit_tag', `wpcf7-f${CONFIG.FORM_ID}-p0-o1`);
+      payload.append('_wpcf7_container_post', '0');
+
+      const apiEndPoint = `${WP_URL}/wp-json/contact-form-7/v1/contact-forms/${CONFIG.FORM_ID}/feedback`;
+
+      try {
+        const response = await fetch(apiEndPoint, {
+          method: 'POST',
+          body: payload,
+        });
+
+        const result = await response.json();
+
+        if (result.status === 'mail_sent') {
+          msgDiv!.innerText = 'Scan request submitted successfully.';
+          msgDiv!.className = 'text-green-600 block py-2 text-sm';
+          form.reset();
+          setTimeout(closeModal, 2000);
+        } else {
+          throw new Error(result.message || 'Submission failed.');
+        }
+      } catch (err) {
+        msgDiv!.innerText = 'Submission failed. Please try again.';
+        msgDiv!.className = 'text-red-600 block py-2 text-sm';
+        submitBtn.disabled = false;
+        submitBtn.innerText = 'Submit';
+      }
+    });
+  }
+
+  // Handle initial load and View Transitions
+  initCTA();
+  document.addEventListener('astro:after-swap', initCTA);
+</script>

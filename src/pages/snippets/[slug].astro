@@ -1,0 +1,134 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ComponentWrapper from '../../components/component-wrapper.astro';
+import { wordpress } from '../../lib/wordpress';
+import { Calendar, Clock, Code, ChevronLeft } from '@lucide/astro';
+
+// --- 1. Generate Static Paths ---
+export async function getStaticPaths() {
+  const { posts } = await wordpress.getPosts({
+    postType: 'snippet',
+    status: 'publish',
+    perPage: 100, // Adjust based on your total snippet count
+  });
+
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+// --- 2. Extract Data ---
+const { post } = Astro.props;
+const { slug } = Astro.params;
+
+if (!post) {
+  return Astro.redirect('/404');
+}
+
+// --- 3. SEO & Schema Logic ---
+const title = `${post.title} - Code Snippet | MD Pabel`;
+const description = post.acf?.description__usage_notes?.replace(/<[^>]*>/g, '') || 
+                    post.excerpt?.replace(/<[^>]*>/g, '') || 
+                    'Useful code snippet for developers.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareSourceCode',
+  name: post.title,
+  description: description,
+  codeSampleType: 'code snippet',
+  programmingLanguage: post.acf?.language || 'JavaScript',
+  datePublished: post.date,
+  url: `https://www.mdpabel.com/snippets/${slug}`,
+  author: {
+    '@type': 'Person',
+    name: post.author?.name || 'MD Pabel',
+  }
+};
+
+const readingTime = 5;
+---
+
+<Layout 
+  title={title} 
+  description={description}
+  canonical={`https://www.mdpabel.com/snippets/${slug}`}
+  image="/images/snippets-opengraph-image.png"
+>
+  <div class="bg-white dark:bg-slate-950 py-16 min-h-screen transition-colors">
+    <ComponentWrapper>
+      
+      {/* --- Back Navigation --- */}
+      <a 
+        href="/snippets" 
+        class="inline-flex items-center gap-2 mb-8 font-medium text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 dark:text-slate-400 text-sm transition-colors"
+      >
+        <ChevronLeft class="w-4 h-4" />
+        Back to Snippets
+      </a>
+
+      <article class="max-w-4xl">
+        {/* --- Header Section --- */}
+        <header class="mb-10">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="bg-blue-100 dark:bg-blue-500/20 px-3 py-1 rounded-full font-bold text-blue-700 dark:text-blue-400 text-xs uppercase tracking-widest">
+              {post.acf?.language || 'Utility'}
+            </span>
+          </div>
+
+          <h1 class="mb-6 font-bold text-slate-900 dark:text-white text-3xl md:text-5xl leading-tight">
+            <span set:html={post.title} />
+          </h1>
+
+          <div class="flex items-center gap-6 text-slate-500 dark:text-slate-500 text-sm">
+            <div class="flex items-center gap-1.5">
+              <Calendar class="w-4 h-4" />
+              <span>{new Date(post.date).toLocaleDateString()}</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <Clock class="w-4 h-4" />
+              <span>{readingTime} min read</span>
+            </div>
+          </div>
+        </header>
+
+        {/* --- Usage Notes / Description --- */}
+        {post.acf?.description__usage_notes && (
+          <div class="dark:prose-invert mb-12 max-w-none prose-headings:font-bold prose-p:leading-relaxed prose prose-slate">
+            <h2 class="flex items-center gap-2 mb-4 font-bold text-xl">
+              <Code class="w-5 h-5 text-blue-500" />
+              Usage Notes
+            </h2>
+            <div set:html={post.acf.description__usage_notes} />
+          </div>
+        )}
+
+        {/* --- Code Implementation --- */}
+        <div class="group relative">
+          <div class="-top-4 right-4 absolute bg-slate-800 px-3 py-1 border border-slate-700 rounded-md font-mono text-[10px] text-slate-400 uppercase tracking-widest">
+             {post.acf?.language || 'code'}
+          </div>
+          <pre class="bg-slate-900 dark:bg-black shadow-2xl p-6 md:p-8 border border-slate-800 rounded-2xl overflow-x-auto text-slate-200 text-sm md:text-base">
+            <code class="font-mono leading-relaxed" set:html={post.acf?.code_} />
+          </pre>
+        </div>
+      </article>
+
+    </ComponentWrapper>
+
+    {/* --- Structured Data --- */}
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </div>
+</Layout>
+
+
+<style is:global>
+  /* Ensure the generated pre tag from AstroCode fits our UI */
+  pre {
+    @apply !bg-transparent !m-0 !p-4 md:!p-6 overflow-x-auto text-sm md:text-base leading-relaxed;
+  }
+  code {
+    @apply font-mono;
+  }
+</style>
