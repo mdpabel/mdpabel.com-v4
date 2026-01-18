@@ -1,0 +1,47 @@
+# Cloudflare Pages Redirects
+# Format: /source /destination 301
+
+# --- Main Navigation Redirects ---
+/explore /blog 301
+/services /wordpress-security-maintenance-service 301
+/contact /hire-me 301
+
+# --- Service Page Consolidations ---
+/bd/wordpress-malware-removal /wordpress-malware-removal 301
+/custom-website-development /wordpress-malware-removal 301
+/fix-wordpress-errors /wordpress-malware-removal 301
+/malware-removal-guides /wordpress-malware-removal 301
+/services/fix-website-errors /wordpress-malware-removal 301
+/services/wordpress-malware-removal /wordpress-malware-removal 301
+/blacklist-removal-service /blacklist-removal 301
+
+# --- Legal & Misc ---
+/refund-policy / 301
+/terms / 301
+/privacy / 301
+/headless-wordpress-development / 301
+
+# --- Case Studies ---
+/case-studies/wordpress-hacked-how-i-restored-my-site-after-everything-was-deleted /case-studies/wordpress-hacked-how-i-restored-a-client-site-after-everything-was-deleted 301
+/wordpress-malware-case-study-removing-hidden-executable-files-after-a-bluehost-account-suspension /case-studies 301
+
+# --- Blog Post Redirections ---
+/blog/ai-powered-wordpress-attacks-in-2025-how-hackers-are-outsmarting-plugins-and-what-to-do /blog 301
+/blog/how-hackers-hide-backdoors-wordpress-examples-detection/ /blog 301
+/the-wp-security-phishing-plugin-analyzing-the-fake-wordpress-security-team-malware /blog 301
+/is-your-wordpress-site-showing-a-fake-im-not-a-robot-pop-up-you-have-the-hseo-malware /blog 301
+/how-we-removed-a-cloudflare-redirect-virus-massive-seo-spam-injection-from-a-hacked-wordpress-site /blog 301
+
+# --- Blog Path Corrections ---
+/how-to-fix-the-wordpress-white-screen-of-death-caused-by-zeura-malware /blog/how-to-fix-the-wordpress-white-screen-of-death-caused-by-zeura-malware 301
+/hidden-backdoors-fake-plugins-how-hackers-live-in-your-wordpress-dashboard /blog/hidden-backdoors-fake-plugins-how-hackers-live-in-your-wordpress-dashboard 301
+/can-a-jpg-file-contain-malware-uncovering-the-fake-image-backdoor /blog/can-a-jpg-file-contain-malware-uncovering-the-fake-image-backdoor 301
+/found-suspicious-code-in-functions-php-the-ghost-admin-hack-explained /blog/found-suspicious-code-in-functions-php-the-ghost-admin-hack-explained 301
+/how-hackers-hide-backdoors-in-wordpress-real-examples-detection /blog/how-hackers-hide-backdoors-in-wordpress-real-examples-detection 301
+/wordpress-redirecting-to-play-and-learn-or-click-allow-check-your-theme-headers-now /blog/wordpress-redirecting-to-play-and-learn-or-click-allow-check-your-theme-headers-now 301
+/wordpress-pharma-hack-fix-how-to-stop-pharmaceutical-spam-in-google /blog/wordpress-pharma-hack-fix-how-to-stop-pharmaceutical-spam-in-google 301
+/the-complete-guide-to-javascript-redirect-malware-detection-decoding-and-removal /blog/the-complete-guide-to-javascript-redirect-malware-detection-decoding-and-removal 301
+/how-to-scan-and-clean-your-wordpress-database-for-hidden-malware /blog/how-to-scan-and-clean-your-wordpress-database-for-hidden-malware 301
+/how-to-remove-fetch-malware-from-wordpress-database-sengatanlebah-jasabacklink /blog/how-to-remove-fetch-malware-from-wordpress-database-sengatanlebah-jasabacklink 301
+/best-managed-wordpress-hosting-providers-for-speed-security-2 /blog/best-managed-wordpress-hosting-providers-for-speed-security-2 301
+/case-study-cleaning-1162-infected-htaccess-files-on-bluehost-the-lockout-hack /blog/case-study-cleaning-1162-infected-htaccess-files-on-bluehost-the-lockout-hack 301

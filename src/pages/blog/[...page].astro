@@ -34,13 +34,17 @@ const currentPage = page ? Number(page) : 1;
 const isFirstPage = currentPage === 1;
 const baseUrl = "https://www.mdpabel.com/blog";
 
+// ✅ Fix 1: Dynamic Title (You already had this)
 const seoTitle = isFirstPage 
   ? "WordPress Blog & Insights: Security, Malware Removal & Error Fixing" 
-  : `Blog Insights - Page ${currentPage} | WordPress Security & Development`;
+  : `Blog Insights (Page ${currentPage}) | WordPress Security & Development`;
 
-const seoDesc = "Explore expert guides on WordPress security best practices, malware detection and removal, fixing common errors, and performance optimization.";
+// ✅ Fix 2: Dynamic Description (Prevents "Duplicate Description" errors)
+const seoDesc = isFirstPage
+  ? "Explore expert guides on WordPress security best practices, malware detection and removal, fixing common errors, and performance optimization."
+  : `Page ${currentPage} of the WordPress security archive. Browse articles on malware removal, site hardening, and development tutorials.`;
 
-// Canonical URL should be /blog for the first page and /blog/2 for others
+// ✅ Fix 3: Smart Canonical URL
 const canonicalURL = isFirstPage ? baseUrl : `${baseUrl}/${currentPage}`;
 ---
 

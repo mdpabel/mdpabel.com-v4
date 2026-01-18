@@ -36,9 +36,12 @@ const baseUrl = "https://www.mdpabel.com/guides";
 
 const seoTitle = isFirstPage 
   ? "WordPress Guides & Tutorials: Security, Malware Removal & Optimization" 
-  : `Guides & Tutorials - Page ${currentPage} | WordPress Security`;
+  : `Guides & Tutorials (Page ${currentPage}) | WordPress Security`;
 
-const seoDesc = "Explore step-by-step WordPress guides on security best practices, malware detection and removal, fixing common errors, and performance optimization.";
+// ✅ FIX: Dynamic description prevents duplicate meta errors
+const seoDesc = isFirstPage
+  ? "Explore step-by-step WordPress guides on security best practices, malware detection and removal, fixing common errors, and performance optimization."
+  : `Page ${currentPage} of our WordPress tutorials archive. Browse step-by-step guides on security, malware removal, and error troubleshooting.`;
 
 const canonicalURL = isFirstPage ? baseUrl : `${baseUrl}/${currentPage}`;
 ---

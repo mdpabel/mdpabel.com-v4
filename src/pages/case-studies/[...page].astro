@@ -36,9 +36,12 @@ const baseUrl = "https://www.mdpabel.com/case-studies";
 
 const seoTitle = isFirstPage 
   ? "Case Studies: WordPress Security & Development Success Stories" 
-  : `Case Studies - Page ${currentPage} | WordPress Success Stories`;
+  : `Case Studies (Page ${currentPage}) | WordPress Success Stories`;
 
-const seoDesc = "Explore real-world case studies showcasing our WordPress security solutions, malware removal projects, and custom development work.";
+// ✅ FIX: Dynamic description prevents duplicate meta description errors
+const seoDesc = isFirstPage
+  ? "Explore real-world case studies showcasing our WordPress security solutions, malware removal projects, and custom development work."
+  : `Page ${currentPage} of our case studies archive. Read real-world examples of recovered hacked sites and security hardening projects.`;
 
 const canonicalURL = isFirstPage ? baseUrl : `${baseUrl}/${currentPage}`;
 ---
