@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://3ad74d3c.mdpabel-com-v4.pages.dev',
+  site: 'https://www.mdpabel.com',
   // Add this integrations array
   integrations: [critters(), sitemap()],
 
