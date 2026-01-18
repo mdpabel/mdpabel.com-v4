@@ -5,15 +5,9 @@ import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://mdpabel.com',
+  site: 'https://3ad74d3c.mdpabel-com-v4.pages.dev',
   // Add this integrations array
   integrations: [critters(), sitemap()],
-
-  // ✅ NEW: Global Prefetch Configuration
-  prefetch: {
-    prefetchAll: true, // Automatically prefetch all internal links
-    defaultStrategy: 'hover', // 'hover' | 'tap' | 'viewport' | 'load'
-  },
 
   image: {
     domains: ['cms.mdpabel.com'],
