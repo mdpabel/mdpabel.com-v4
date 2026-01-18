@@ -2,9 +2,19 @@ import { defineConfig } from 'astro/config';
 import critters from 'astro-critters';
 import tailwindcss from '@tailwindcss/vite';
 
+import sitemap from '@astrojs/sitemap';
+
 export default defineConfig({
+  site: 'https://mdpabel.com',
   // Add this integrations array
-  integrations: [critters()],
+  integrations: [critters(), sitemap()],
+
+  // ✅ NEW: Global Prefetch Configuration
+  prefetch: {
+    prefetchAll: true, // Automatically prefetch all internal links
+    defaultStrategy: 'hover', // 'hover' | 'tap' | 'viewport' | 'load'
+  },
+
   image: {
     domains: ['cms.mdpabel.com'],
   },

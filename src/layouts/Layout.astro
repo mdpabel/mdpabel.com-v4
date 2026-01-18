@@ -3,6 +3,7 @@ import Header from '../components/Header.astro';
 import '../styles/global.css';
 import Footer from '../components/Footer.astro'; 
 import FloatingCTA from '../components/FloatingCTA.astro';
+import { ClientRouter } from 'astro:transitions';
 
 // 1. Import the font package
 import '@fontsource-variable/source-serif-4';
@@ -22,7 +23,9 @@ const {
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/png" href="/icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
     <title>{title}</title>
+    <ClientRouter fallback="none" />
 
 
     <script is:inline>
