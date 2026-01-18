@@ -1,25 +1,21 @@
 import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
 import critters from 'astro-critters';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   // Add this integrations array
-  integrations: [
-    tailwind({
-      // specialized config options can go here, usually empty is fine
-      applyBaseStyles: false, // Set to true if you DON'T have a global.css file
-    }),
-  ],
+  integrations: [critters()],
   image: {
     domains: ['cms.mdpabel.com'],
+  },
+  vite: {
+    plugins: [tailwindcss()],
   },
 
   build: {
     // Forces all project styles to be inlined into the HTML
     inlineStylesheets: 'always',
   },
-
-  integrations: [critters()],
 
   redirects: {
     '/bd/wordpress-malware-removal': {
