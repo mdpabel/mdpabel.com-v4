@@ -23,6 +23,6 @@ export default defineConfig({
 
   build: {
     // Forces all project styles to be inlined into the HTML
-    inlineStylesheets: 'auto',
+    inlineStylesheets: 'always',
   },
 });
