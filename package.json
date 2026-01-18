@@ -16,6 +16,7 @@
     "@lucide/astro": "^0.562.0",
     "@types/he": "^1.2.3",
     "astro": "^5.16.11",
+    "astro-critters": "^2.2.1",
     "clsx": "^2.1.1",
     "he": "^1.2.0",
     "tailwind-merge": "^3.4.0",

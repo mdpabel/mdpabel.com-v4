@@ -3,7 +3,6 @@ import { User, Shield, Code, Wrench, CheckCircle, Image as ImageIcon } from '@lu
 import InternalServiceLinks from './InternalServiceLinks.astro';
 import AboutAuthor from './AboutAuthor.astro';
 import type { WordPressPost } from '../lib/wordpress';
-import Banner from './Banner.astro'
 import { Image } from 'astro:assets';
 
 interface Props {
@@ -38,7 +37,7 @@ const malwareSectionBase = "dark:prose-invert max-w-none text-slate-700 dark:tex
 ---
 
 <div>
-  <Banner />
+ 
   <article>
     
     {/* --- HEADER --- */}

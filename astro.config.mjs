@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
+import critters from 'astro-critters';
 
 export default defineConfig({
   // Add this integrations array
@@ -12,6 +13,13 @@ export default defineConfig({
   image: {
     domains: ['cms.mdpabel.com'],
   },
+
+  build: {
+    // Forces all project styles to be inlined into the HTML
+    inlineStylesheets: 'always',
+  },
+
+  integrations: [critters()],
 
   redirects: {
     '/bd/wordpress-malware-removal': {

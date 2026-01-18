@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import ComponentWrapper from '../../components/component-wrapper.astro';
 import SinglePost from '../../components/SinglePost.astro';
 import { wordpress, type WordPressPost } from '../../lib/wordpress';
+import Banner from '../../components/Banner.astro'
 
 // 1. Generate Paths
 export async function getStaticPaths() {
@@ -72,6 +73,8 @@ const schema = {
   image={seoImage}
 >
   <script type="application/ld+json" set:html={JSON.stringify(schema)} is:inline />
+
+   <Banner />
   
   <ComponentWrapper class="pb-20">
     <SinglePost post={post} parentSlug="blog" />

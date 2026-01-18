@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import ComponentWrapper from '../../components/component-wrapper.astro';
 import SinglePost from '../../components/SinglePost.astro';
 import { wordpress } from '../../lib/wordpress';
+import Banner from '../../components/Banner.astro'
 
 export async function getStaticPaths() {
   const posts = await wordpress.getAllPosts({ postType: 'case-study' }); 
@@ -34,6 +35,8 @@ const schema = {
 
 <Layout title={seoTitle} description={seoDesc} image={seoImage}>
   <script type="application/ld+json" set:html={JSON.stringify(schema)} is:inline />
+
+   <Banner />
   
   <ComponentWrapper class="pb-20">
     <SinglePost post={post} parentSlug="case-studies" />
