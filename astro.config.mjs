@@ -16,6 +16,11 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: 'hover',
+  },
+
   build: {
     // Forces all project styles to be inlined into the HTML
     inlineStylesheets: 'always',
