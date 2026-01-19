@@ -10,7 +10,7 @@ export default defineConfig({
   integrations: [critters(), sitemap()],
 
   image: {
-    domains: ['cms.mdpabel.com'],
+    domains: ['cms.mdpabel.com', 'leetcard.jacoblin.cool'],
   },
   vite: {
     plugins: [tailwindcss()],
@@ -22,7 +22,6 @@ export default defineConfig({
   },
 
   build: {
-    // Forces all project styles to be inlined into the HTML
-    inlineStylesheets: 'always',
+    inlineStylesheets: 'auto',
   },
 });

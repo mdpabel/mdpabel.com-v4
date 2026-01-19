@@ -16,7 +16,7 @@ const {
 ---
 
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth dark" transition:animate="none">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
@@ -27,36 +27,12 @@ const {
     <title>{title}</title>
 
     <ClientRouter />
-
-
-    <script is:inline>
-    // 1. Determine theme (Local Storage -> System Preference -> Default)
-    const getTheme = () => {
-      if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-        return localStorage.getItem('theme');
-      }
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    };
-
-    // 2. Apply theme immediately to <html> tag to prevent flicker
-    const theme = getTheme();
-    document.documentElement.classList.toggle('dark', theme === 'dark');
-    
-    // 3. Persist initial choice
-    window.localStorage.setItem('theme', theme);
-
-    // 4. Support View Transitions (if enabled)
-    document.addEventListener('astro:after-swap', () => {
-      const currentTheme = localStorage.getItem('theme') || 'light';
-      document.documentElement.classList.toggle('dark', currentTheme === 'dark');
-    });
-  </script>
   </head>
   <body class="flex flex-col bg-white dark:bg-slate-900 min-h-screen font-serif text-slate-900 dark:text-slate-100">
     
     <Header />
     
-    <main class="grow" transition:animate="none">
+    <main class="grow">
       <slot />
     </main>
 

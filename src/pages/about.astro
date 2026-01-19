@@ -2,15 +2,8 @@
 import Layout from '../layouts/Layout.astro';
 import ComponentWrapper from '../components/component-wrapper.astro';
 import { siteData } from '../data/siteData';
-
-// 1. Helper Logic (Runs at build time)
-function calculateYearsSince(startDate: Date): number {
-  const currentDate = new Date();
-  const timeDiff = currentDate.getTime() - startDate.getTime();
-  const millisecondsInYear = 1000 * 60 * 60 * 24 * 365.25;
-  const years = timeDiff / millisecondsInYear;
-  return Math.floor(years) + (years % 1 >= 0.5 ? 0.5 : 0);
-}
+import me from "../assets/me.webp"
+import { Image } from 'astro:assets'
 
 // 2. SEO Setup
 const seo = {
@@ -84,11 +77,13 @@ const ICONS = {
       
       {/* --- IMAGE SECTION --- */}
       <div class="lg:ml-20">
-        <img
+        <Image
           class="shadow-xl mx-auto lg:mx-0 rounded-2xl w-full max-w-[500px] object-cover aspect-square lg:rotate-3"
-          src="/me.webp" 
-          width="600"
-          height="1000"
+          src={me}
+          width="400"
+          height="400"
+          format="avif"
+          quality="mid"
           alt="Me"
         />
       </div>
@@ -222,6 +217,7 @@ const ICONS = {
             width="500"
             height="300"
             alt="Leetcode MD Pabel"
+            loading="lazy"
             src="https://leetcard.jacoblin.cool/mdpabel?theme=light&font=Karma"
           />
         </div>

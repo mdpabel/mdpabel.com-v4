@@ -1,5 +1,5 @@
 ---
-import { Rocket, Menu, X } from '@lucide/astro';
+import { Rocket, Menu, X, ArrowRight } from '@lucide/astro';
 import ComponentWrapper from './component-wrapper.astro';
 
 const links = [
@@ -82,88 +82,101 @@ const links = [
   {/* --- MOBILE MENU OVERLAY --- */}
   <div
     id="mobile-menu"
-    class="z-[999] fixed inset-0 flex flex-col justify-center items-center bg-white dark:bg-slate-900 p-6 transition-transform translate-x-full duration-300 ease-in-out"
+    class="z-[999] fixed inset-0 flex flex-col bg-white dark:bg-slate-900 overflow-hidden transition-transform translate-x-full duration-300 ease-in-out"
     aria-hidden="true"
   >
-    <button
-      id="menu-close-btn"
-      aria-label="Close Menu"
-      class="top-6 right-6 absolute text-gray-300 hover:text-white cursor-pointer"
-    >
-      <X class="w-6 h-6" />
-    </button>
+    {/* 1. Menu Header: Logo + Close Button */}
+    <div class="flex justify-between items-center px-6 py-5 border-slate-100 dark:border-slate-800 border-b">
+      <div class="flex items-center gap-3">
+        <div class="flex justify-center items-center bg-sky-600 dark:bg-white rounded-lg w-8 h-8">
+          <Rocket class="w-4 h-4 text-white dark:text-slate-950" />
+        </div>
+        <span class="font-bold text-slate-900 dark:text-white text-lg">Menu</span>
+      </div>
+      
+      <button
+        id="menu-close-btn"
+        aria-label="Close Menu"
+        class="bg-slate-100 dark:bg-slate-800 p-2 rounded-full text-slate-500 hover:text-slate-900 dark:hover:text-white dark:text-slate-400 cursor-pointer"
+      >
+        <X class="w-6 h-6" />
+      </button>
+    </div>
 
-    <ul class="flex flex-col items-center gap-4 w-full">
-      <div class="flex flex-col gap-2 w-full text-center">
+    {/* 2. Main Navigation Links (Left Aligned, cleaner) */}
+    <div class="flex flex-col justify-start px-6 pt-10 overflow-y-auto grow">
+      <ul class="flex flex-col space-y-6">
         {links.map((link) => (
           <li>
             <a
               href={link.href}
-              class="group flex justify-center items-center gap-4 hover:bg-slate-700/50 p-3 rounded-lg transition-colors duration-200 mobile-link"
+              class="group flex justify-between items-center font-bold text-slate-800 hover:text-sky-600 dark:hover:text-sky-400 dark:text-slate-100 text-xl transition-colors mobile-link"
             >
-              <span class="font-medium text-slate-700 dark:text-slate-200 group-hover:text-white text-lg">
-                {link.name}
-              </span>
+              {link.name}
+              <ArrowRight class="opacity-50 w-5 h-5" />
             </a>
           </li>
         ))}
-      </div>
+      </ul>
+    </div>
 
-      <li class="my-4 border-slate-400/60 border-t w-full"></li>
-
-      <div class="flex flex-col items-center gap-4">
-        <li>
-          <a
-            href="https://mdpabe1.substack.com/"
-            target="_blank"
-            class="block bg-slate-500 hover:bg-slate-600 px-6 py-2 rounded-full font-semibold text-white text-xl"
-          >
-            Newsletter
-          </a>
-        </li>
-        <li>
-          <a
-            href="/hire-me"
-            class="block bg-slate-500 hover:bg-slate-600 px-6 py-2 rounded-full font-semibold text-white text-xl"
-          >
-            Hire Me
-          </a>
-        </li>
+    {/* 3. Bottom Actions (Fixed Sizes) */}
+    <div class="bg-slate-50 dark:bg-slate-800/50 p-6 border-slate-200 dark:border-slate-800 border-t">
+      <div class="flex flex-col gap-3">
+        <a
+          href="/hire-me"
+          class="flex justify-center items-center bg-sky-600 hover:bg-sky-700 py-3 rounded-full w-full font-semibold text-white text-base transition-all"
+        >
+          Hire Me
+        </a>
+        <a
+          href="https://mdpabe1.substack.com/"
+          target="_blank"
+          class="flex justify-center items-center hover:bg-white dark:hover:bg-slate-800 py-3 border border-slate-300 dark:border-slate-600 rounded-full w-full font-medium text-slate-700 dark:text-slate-300 transition-all"
+        >
+          Newsletter
+        </a>
       </div>
-    </ul>
+      
+      <div class="mt-6 text-slate-500 dark:text-slate-400 text-xs text-center">
+        &copy; {new Date().getFullYear()} MD Pabel.
+      </div>
+    </div>
   </div>
 </header>
 
 <script>
-  // 1. Select elements with type safety in mind
-  // These might be null if the DOM hasn't loaded or IDs change, so we handle that.
-  const header = document.getElementById('main-header');
-  const menu = document.getElementById('mobile-menu');
-  const openBtn = document.getElementById('menu-open-btn');
-  const closeBtn = document.getElementById('menu-close-btn');
-  const mobileLinks = document.querySelectorAll('.mobile-link');
-  
-  // 3. Mobile Menu Toggle
-  function toggleMenu(isOpen: boolean) {
-    if (!menu) return; // Guard clause
+  // Runs on initial load AND after every View Transition navigation
+  document.addEventListener('astro:page-load', () => {
+    // 1. We cast these as 'HTMLElement' so TypeScript knows they have properties like .onclick and .style
+    const menu = document.getElementById('mobile-menu') as HTMLElement | null;
+    const openBtn = document.getElementById('menu-open-btn') as HTMLElement | null;
+    const closeBtn = document.getElementById('menu-close-btn') as HTMLElement | null;
+    const mobileLinks = document.querySelectorAll('.mobile-link');
 
-    if (isOpen) {
-      menu.classList.remove('translate-x-full');
-      menu.classList.add('translate-x-0');
-      document.body.style.overflow = 'hidden'; // Lock body scroll
-    } else {
-      menu.classList.add('translate-x-full');
-      menu.classList.remove('translate-x-0');
-      document.body.style.overflow = ''; // Unlock body scroll
-    }
-  }
+    // If elements don't exist, stop here
+    if (!menu || !openBtn || !closeBtn) return;
 
-  // 4. Event Listeners with Optional Chaining (?.)
-  // If openBtn is null, the code simply stops instead of crashing the site.
-  openBtn?.addEventListener('click', () => toggleMenu(true));
-  closeBtn?.addEventListener('click', () => toggleMenu(false));
+    // 2. We explicitly tell TypeScript that 'isOpen' is a boolean (true/false)
+    const toggleMenu = (isOpen: boolean) => {
+      if (isOpen) {
+        menu.classList.remove('translate-x-full');
+        menu.classList.add('translate-x-0');
+        document.body.style.overflow = 'hidden';
+      } else {
+        menu.classList.add('translate-x-full');
+        menu.classList.remove('translate-x-0');
+        document.body.style.overflow = '';
+      }
+    };
 
-  mobileLinks.forEach((link) => {
-    link.addEventListener('click', () => toggleMenu(false));
+    // Re-attach event listeners
+    openBtn.onclick = () => toggleMenu(true);
+    closeBtn.onclick = () => toggleMenu(false);
+
+    mobileLinks.forEach((link) => {
+      // Cast the link to HTMLElement to access onclick safely
+      (link as HTMLElement).onclick = () => toggleMenu(false);
+    });
   });
 </script>
