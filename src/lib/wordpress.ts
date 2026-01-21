@@ -435,6 +435,7 @@ class WordPressAPI {
 
   // Optimized: Get related posts
   // Accepts categoryIds directly to avoid fetching the current post again
+  // Optimized & Randomized: Get related posts
   async getRelatedPosts<TACF = any>(
     postId: number,
     categoryIds: number[] = [],
@@ -442,7 +443,7 @@ class WordPressAPI {
     postType: string = 'posts',
   ): Promise<WordPressPost<TACF>[]> {
     try {
-      // 1. If no categories provided, try to fetch the post to find them (Fallback)
+      // 1. Fallback: If no categories provided, fetch current post to find them
       if (categoryIds.length === 0) {
         const post = await this.getPostById<TACF>(postId, postType);
         if (post && post.categories.length > 0) {
@@ -452,21 +453,29 @@ class WordPressAPI {
 
       if (categoryIds.length === 0) return [];
 
-      // 2. Fetch related posts (Lightweight)
+      // 2. Fetch a "Pool" of posts (e.g., 20 latest) instead of just 3
+      // This gives us enough variety to shuffle them.
+      const poolSize = 20;
+
       const { posts } = await this.getPosts<TACF>({
         postType,
-        perPage: limit,
-        // We pass the raw category IDs to the filter
-        // Note: We need to ensure getPosts handles 'categories' and 'exclude'
-        // If your getPosts doesn't handle them yet, we append them manually here:
+        perPage: poolSize, // Fetch 20, not 3
         status: 'publish',
-        // @ts-ignore - We are dynamically adding params that might be missing in your interface
+        // @ts-ignore
         categories: categoryIds,
         exclude: [postId],
+        // Only fetch fields we need for the card (Lightweight)
         _fields: ['id', 'title', 'slug', 'date', 'featured_media', '_embedded'],
       });
 
-      return posts;
+      if (posts.length === 0) return [];
+
+      // 3. Shuffle the pool (Randomize!)
+      // This runs at build time, assigning a unique random set to each page.
+      const shuffled = posts.sort(() => 0.5 - Math.random());
+
+      // 4. Return only the requested amount (e.g., 3)
+      return shuffled.slice(0, limit);
     } catch (error) {
       console.error('Error fetching related posts:', error);
       return [];
