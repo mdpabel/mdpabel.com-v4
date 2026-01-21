@@ -455,7 +455,7 @@ class WordPressAPI {
 
       // 2. Fetch a "Pool" of posts (e.g., 20 latest) instead of just 3
       // This gives us enough variety to shuffle them.
-      const poolSize = 20;
+      const poolSize = 100;
 
       const { posts } = await this.getPosts<TACF>({
         postType,
