@@ -2,10 +2,13 @@
 import { Rocket, Menu, X, ArrowRight } from '@lucide/astro';
 import ComponentWrapper from './component-wrapper.astro';
 
+// ✅ UPDATE 1: Add a 'prefetch' property to your links
+// We set 'Services' to 'load' because it's a high-conversion page.
+// We leave others as 'undefined' so they fallback to your global default (hover/viewport).
 const links = [
-  { name: 'About', href: '/about' },
-  { name: 'Services', href: '/wordpress-malware-removal' },
-  { name: 'Blog', href: '/blog' },
+  { name: 'About', href: '/about', prefetch: 'load' }, 
+  { name: 'Services', href: '/wordpress-malware-removal', prefetch: 'load' }, // 💰 Money Page
+  { name: 'Blog', href: '/blog', prefetch: undefined },
 ];
 ---
 
@@ -35,7 +38,7 @@ const links = [
               <a
                 href={link.href}
                 class="text-slate-950 hover:text-black dark:hover:text-white dark:text-slate-300 transition-colors"
-                
+                data-astro-prefetch={link.prefetch} 
               >
                 {link.name}
               </a>
@@ -43,7 +46,6 @@ const links = [
           </div>
         </div>
 
-        {/* --- RIGHT SIDE ACTIONS (No Search) --- */}
         <ul class="hidden sm:flex justify-end items-center gap-5 h-8">
           <li class="transition-opacity duration-300">
             <a
@@ -55,9 +57,11 @@ const links = [
             </a>
           </li>
           <li class="flex items-center gap-2">
+            {/* ✅ UPDATE 2: Force 'Hire Me' to load immediately */}
             <a
               href="/hire-me"
               class="flex justify-center items-center bg-sky-600 hover:bg-sky-700 dark:bg-slate-700 px-6 py-2 border border-slate-300 rounded-full w-32 h-8 font-medium text-white text-sm transition-all duration-300"
+              data-astro-prefetch="load"
             >
               Hire Me
             </a>
@@ -85,7 +89,7 @@ const links = [
     class="z-[999] fixed inset-0 flex flex-col bg-white dark:bg-slate-900 overflow-hidden transition-transform translate-x-full duration-300 ease-in-out"
     aria-hidden="true"
   >
-    {/* 1. Menu Header: Logo + Close Button */}
+    {/* 1. Menu Header */}
     <div class="flex justify-between items-center px-6 py-5 border-slate-100 dark:border-slate-800 border-b">
       <div class="flex items-center gap-3">
         <div class="flex justify-center items-center bg-sky-600 dark:bg-white rounded-lg w-8 h-8">
@@ -103,7 +107,7 @@ const links = [
       </button>
     </div>
 
-    {/* 2. Main Navigation Links (Left Aligned, cleaner) */}
+    {/* 2. Main Navigation Links (Mobile) */}
     <div class="flex flex-col justify-start px-6 pt-10 overflow-y-auto grow">
       <ul class="flex flex-col space-y-6">
         {links.map((link) => (
@@ -111,6 +115,7 @@ const links = [
             <a
               href={link.href}
               class="group flex justify-between items-center font-bold text-slate-800 hover:text-sky-600 dark:hover:text-sky-400 dark:text-slate-100 text-xl transition-colors mobile-link"
+              data-astro-prefetch={link.prefetch}
             >
               {link.name}
               <ArrowRight class="opacity-50 w-5 h-5" />
@@ -120,12 +125,14 @@ const links = [
       </ul>
     </div>
 
-    {/* 3. Bottom Actions (Fixed Sizes) */}
+    {/* 3. Bottom Actions */}
     <div class="bg-slate-50 dark:bg-slate-800/50 p-6 border-slate-200 dark:border-slate-800 border-t">
       <div class="flex flex-col gap-3">
+        {/* ✅ UPDATE 3: Mobile 'Hire Me' also gets priority */}
         <a
           href="/hire-me"
           class="flex justify-center items-center bg-sky-600 hover:bg-sky-700 py-3 rounded-full w-full font-semibold text-white text-base transition-all"
+          data-astro-prefetch="load"
         >
           Hire Me
         </a>
@@ -146,18 +153,14 @@ const links = [
 </header>
 
 <script>
-  // Runs on initial load AND after every View Transition navigation
   document.addEventListener('astro:page-load', () => {
-    // 1. We cast these as 'HTMLElement' so TypeScript knows they have properties like .onclick and .style
     const menu = document.getElementById('mobile-menu') as HTMLElement | null;
     const openBtn = document.getElementById('menu-open-btn') as HTMLElement | null;
     const closeBtn = document.getElementById('menu-close-btn') as HTMLElement | null;
     const mobileLinks = document.querySelectorAll('.mobile-link');
 
-    // If elements don't exist, stop here
     if (!menu || !openBtn || !closeBtn) return;
 
-    // 2. We explicitly tell TypeScript that 'isOpen' is a boolean (true/false)
     const toggleMenu = (isOpen: boolean) => {
       if (isOpen) {
         menu.classList.remove('translate-x-full');
@@ -170,12 +173,10 @@ const links = [
       }
     };
 
-    // Re-attach event listeners
     openBtn.onclick = () => toggleMenu(true);
     closeBtn.onclick = () => toggleMenu(false);
 
     mobileLinks.forEach((link) => {
-      // Cast the link to HTMLElement to access onclick safely
       (link as HTMLElement).onclick = () => toggleMenu(false);
     });
   });
