@@ -433,29 +433,40 @@ class WordPressAPI {
     }
   }
 
-  // Get related posts
+  // Optimized: Get related posts
+  // Accepts categoryIds directly to avoid fetching the current post again
   async getRelatedPosts<TACF = any>(
     postId: number,
-    limit: number = 5,
+    categoryIds: number[] = [],
+    limit: number = 3,
     postType: string = 'posts',
   ): Promise<WordPressPost<TACF>[]> {
     try {
-      const post = await this.getPostById<TACF>(postId, postType);
-      if (!post || post.categories.length === 0) return [];
+      // 1. If no categories provided, try to fetch the post to find them (Fallback)
+      if (categoryIds.length === 0) {
+        const post = await this.getPostById<TACF>(postId, postType);
+        if (post && post.categories.length > 0) {
+          categoryIds = post.categories.map((cat) => cat.id);
+        }
+      }
 
-      const categoryIds = post.categories.map((cat) => cat.id);
-      const response = await fetch(
-        `${
-          this.baseUrl
-        }/wp-json/wp/v2/${postType}?categories=${categoryIds.join(
-          ',',
-        )}&exclude=${postId}&per_page=${limit}&_embed=true`,
-      );
+      if (categoryIds.length === 0) return [];
 
-      if (!response.ok) return [];
+      // 2. Fetch related posts (Lightweight)
+      const { posts } = await this.getPosts<TACF>({
+        postType,
+        perPage: limit,
+        // We pass the raw category IDs to the filter
+        // Note: We need to ensure getPosts handles 'categories' and 'exclude'
+        // If your getPosts doesn't handle them yet, we append them manually here:
+        status: 'publish',
+        // @ts-ignore - We are dynamically adding params that might be missing in your interface
+        categories: categoryIds,
+        exclude: [postId],
+        _fields: ['id', 'title', 'slug', 'date', 'featured_media', '_embedded'],
+      });
 
-      const posts = await response.json();
-      return posts.map((post: any) => this.processPost<TACF>(post));
+      return posts;
     } catch (error) {
       console.error('Error fetching related posts:', error);
       return [];

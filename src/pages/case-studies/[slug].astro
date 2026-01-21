@@ -4,6 +4,7 @@ import ComponentWrapper from '../../components/component-wrapper.astro';
 import SinglePost from '../../components/SinglePost.astro';
 import { wordpress } from '../../lib/wordpress';
 import Banner from '../../components/Banner.astro'
+import RelatedPosts from '../../components/RelatedPosts.astro'
 
 export async function getStaticPaths() {
   const posts = await wordpress.getAllPosts({ postType: 'case-study' }); 
@@ -40,5 +41,10 @@ const schema = {
   
   <ComponentWrapper class="pb-20">
     <SinglePost post={post} parentSlug="case-studies" />
+
+     <RelatedPosts 
+        currentPostId={post.id}
+        categoryIds={post.categories.map(cat => cat.id)} 
+      />
   </ComponentWrapper>
 </Layout>

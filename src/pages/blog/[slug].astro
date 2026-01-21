@@ -4,6 +4,7 @@ import ComponentWrapper from '../../components/component-wrapper.astro';
 import SinglePost from '../../components/SinglePost.astro';
 import { wordpress, type WordPressPost } from '../../lib/wordpress';
 import Banner from '../../components/Banner.astro'
+import RelatedPosts from '../../components/RelatedPosts.astro'
 
 // 1. Generate Paths
 export async function getStaticPaths() {
@@ -78,5 +79,10 @@ const schema = {
   
   <ComponentWrapper class="pb-20">
     <SinglePost post={post} parentSlug="blog" />
+
+    <RelatedPosts 
+      currentPostId={post.id}
+      categoryIds={post.categories.map(cat => cat.id)} 
+    />
   </ComponentWrapper>
 </Layout>

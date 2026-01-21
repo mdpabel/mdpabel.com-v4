@@ -1,0 +1,71 @@
+---
+import { wordpress } from '../lib/wordpress';
+import type { WordPressPost } from '../lib/wordpress';
+
+interface Props {
+  currentPostId: number;
+  categoryIds: number[];
+  limit?: number;
+}
+
+const { currentPostId, categoryIds, limit = 3 } = Astro.props;
+
+// Fetch related posts (Server-side)
+const relatedPosts = await wordpress.getRelatedPosts(
+  currentPostId,
+  categoryIds,
+  limit
+);
+
+if (relatedPosts.length === 0) {
+  return null; // Don't render anything if no related posts found
+}
+---
+
+<section class="mt-16 pt-12 border-slate-200 dark:border-slate-800 border-t">
+  <h2 class="mb-8 font-bold text-slate-900 dark:text-white text-2xl">
+    Read Next
+  </h2>
+  
+  <div class="gap-8 grid grid-cols-1 md:grid-cols-3">
+    {relatedPosts.map((post) => (
+      <a 
+        href={`/blog/${post.slug}`} 
+        class="group flex flex-col gap-3"
+      >
+        {/* Thumbnail Fallback */}
+        <div class="bg-slate-100 dark:bg-slate-800/50 rounded-xl w-full aspect-video overflow-hidden">
+          {post.featuredImage ? (
+            <img 
+              src={post.featuredImage.url} 
+              alt={post.title}
+              width="400"
+              height="225"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+            />
+          ) : (
+            <div class="flex justify-center items-center w-full h-full text-slate-300">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+          )}
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <h3 class="font-bold text-slate-900 dark:group-hover:text-blue-400 dark:text-slate-100 group-hover:text-blue-600 text-lg leading-snug transition-colors">
+            <span set:html={post.title} />
+          </h3>
+          <time class="text-slate-500 dark:text-slate-400 text-sm">
+            {new Date(post.date).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            })}
+          </time>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>
