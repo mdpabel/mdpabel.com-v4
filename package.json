@@ -7,7 +7,8 @@
     "dev:bun": "bunx --bun astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "gen": "node scripts/process-threats.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.0",
@@ -25,6 +26,9 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.19",
+    "dotenv": "^17.2.3",
+    "gray-matter": "^4.0.3",
+    "openai": "^6.16.0",
     "prettier": "^3.8.0",
     "prettier-plugin-tailwindcss": "^0.7.2"
   }
