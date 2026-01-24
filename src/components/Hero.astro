@@ -1,84 +1,236 @@
 ---
 // 1. Import Zero-JS Icons
 import { CheckCircle, ShieldCheck, Star } from '@lucide/astro';
-import me from "../assets/my-img.png";
+import me from '../assets/my-img.png';
 
 // 2. Import your Links component (We will convert this next!)
 // If you don't have this file yet, comment it out to prevent errors.
-import Links from './Links.astro'; 
-import { Image } from 'astro:assets'
+import Links from './Links.astro';
+import { Image } from 'astro:assets';
 
 // 3. Mock Data (Replace this with your real import later)
 // import { siteData } from '@/site-data';
 const siteData = {
-  personal: { name: 'MD Pabel' }
+  personal: { name: 'MD Pabel' },
 };
 ---
 
-<section class="mb-12 pt-12 md:pt-16">
-  <div class="flex md:flex-row flex-col-reverse items-start gap-x-10 gap-y-8">
-    
+<section class='mb-12 pt-12 md:pt-16'>
+  <div class='gap-x-10 gap-y-8 grid grid-cols-3'>
     {/* --- LEFT SECTION (Text Content) --- */}
-    <div class="flex-1">
-      
+    <div class='col-span-2'>
       {/* H1 Headline */}
-      <h1 class="mb-2 font-bold text-gray-900 dark:text-white text-3xl md:text-4xl">
+      <h1
+        class='mb-2 font-bold text-gray-900 dark:text-white text-3xl md:text-4xl'>
         WordPress Malware Removal & Security Expert
       </h1>
-      
+
       {/* H2 Subheadline */}
-      <h2 class="mb-4 font-semibold text-slate-700 dark:text-slate-300 text-xl md:text-2xl">
+      <h2
+        class='mb-4 font-semibold text-slate-700 dark:text-slate-300 text-xl md:text-2xl'>
         4500+ WordPress Sites Cleaned — Fast, Secure, Guaranteed
       </h2>
 
       {/* Description */}
-      <p class="my-4 text-gray-500 dark:text-slate-300 text-lg leading-relaxed">
-        Hi, I'm {siteData.personal.name}. I don't just build websites; I
-        protect them. If your site is hacked, redirecting to spam, or
-        blacklisted by Google—I will
-        <strong class="font-semibold text-slate-900 dark:text-white">
+      <p class='my-4 text-gray-500 dark:text-slate-300 text-lg leading-relaxed'>
+        Hi, I'm {siteData.personal.name}. I don't just build websites; I protect
+        them. If your site is hacked, redirecting to spam, or blacklisted by
+        Google—I will
+        <strong class='font-semibold text-slate-900 dark:text-white'>
           manually clean it
         </strong>
         and secure it against future attacks. No data loss, guaranteed.
       </p>
 
       {/* --- STATS INDICATORS --- */}
-      <div class="flex flex-wrap gap-4 mb-8">
-        <div class="flex items-center gap-2 bg-white dark:bg-slate-800 px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-lg font-medium text-slate-700 dark:text-slate-300 text-sm">
-          <CheckCircle class="w-4 h-4 text-slate-900 dark:text-white" />
+      <div class='flex flex-wrap gap-4 mb-8'>
+        <div
+          class='flex items-center gap-2 bg-white dark:bg-slate-800 px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-lg font-medium text-slate-700 dark:text-slate-300 text-sm'>
+          <CheckCircle class='w-4 h-4 text-slate-900 dark:text-white' />
           4,500+ Fixed
         </div>
-        <div class="flex items-center gap-2 bg-white dark:bg-slate-800 px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-lg font-medium text-slate-700 dark:text-slate-300 text-sm">
-          <Star class="w-4 h-4 text-slate-900 dark:text-white" />
+        <div
+          class='flex items-center gap-2 bg-white dark:bg-slate-800 px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-lg font-medium text-slate-700 dark:text-slate-300 text-sm'>
+          <Star class='w-4 h-4 text-slate-900 dark:text-white' />
           Top Rated
         </div>
-        <div class="flex items-center gap-2 bg-white dark:bg-slate-800 px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-lg font-medium text-slate-700 dark:text-slate-300 text-sm">
-          <ShieldCheck class="w-4 h-4 text-slate-900 dark:text-white" />
+        <div
+          class='flex items-center gap-2 bg-white dark:bg-slate-800 px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-lg font-medium text-slate-700 dark:text-slate-300 text-sm'>
+          <ShieldCheck class='w-4 h-4 text-slate-900 dark:text-white' />
           Security Expert
         </div>
       </div>
-
-      {/* --- LINKS COMPONENT --- */}
-      <Links />
-
     </div>
 
-    {/* --- RIGHT SECTION (Image) --- */}
-    {/* Kept 'hidden md:block' per your design */}
-    <div class="hidden md:block mt-12 md:mt-0 shrink-0">
-      <div class="relative w-48 h-48">
-     
-        <Image
-          src={me}
-          alt={`${siteData.personal.name} - Full Stack Developer`}
-          width="192"
-          height="192"
-          format="avif"
-          quality="mid"
-          class="shadow-lg grayscale hover:grayscale-0 rounded-2xl w-full h-full object-cover transition-all duration-300"
-        />
+    {/* --- RIGHT SECTION (Animated Scanner) --- */}
+    <div class='hidden md:block col-span-1 mt-12 md:mt-0 shrink-0'>
+      {/* Container ensures it stays a 192px square */}
+      <div
+        class='relative flex justify-center items-center bg-slate-50 dark:bg-slate-800/50 shadow-lg border border-slate-200 dark:border-slate-700 rounded-2xl overflow-hidden'>
+        {/* THE SVG ANIMATION */}
+        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' class=''>
+          {/* Definitions for gradients and masks */}
+          <defs>
+            <linearGradient id='scanGradient' x1='0%' y1='0%' x2='0%' y2='100%'>
+              <stop
+                offset='0%'
+                style='stop-color:rgb(16, 185, 129);stop-opacity:0'></stop>
+              <stop
+                offset='50%'
+                style='stop-color:rgb(16, 185, 129);stop-opacity:0.5'></stop>
+              <stop
+                offset='100%'
+                style='stop-color:rgb(16, 185, 129);stop-opacity:0.8'></stop>
+            </linearGradient>
+            <clipPath id='shieldMask'>
+              <path
+                d='M100 20C100 20 40 35 40 90C40 145 100 180 100 180C100 180 160 145 160 90C160 35 100 20 100 20Z'
+              ></path>
+            </clipPath>
+          </defs>
+
+          {/* Base Shield Outline */}
+          <path
+            d='M100 20C100 20 40 35 40 90C40 145 100 180 100 180C100 180 160 145 160 90C160 35 100 20 100 20Z'
+            fill='none'
+            stroke='currentColor'
+            stroke-width='4'
+            class='text-slate-300 dark:text-slate-600'></path>
+
+          {/* Content inside the shield (masked) */}
+          <g clip-path='url(#shieldMask)'>
+            {/* 1. The "Red Glitch/Malware" State - Animates opacity out */}
+            <g class='animate-malware-clear'>
+              <circle
+                cx='100'
+                cy='90'
+                r='30'
+                class='fill-red-500/20 dark:fill-red-900/30'></circle>
+              {/* Abstract 'bug' dots */}
+              <circle cx='90' cy='80' r='4' class='fill-red-500 animate-pulse'
+              ></circle>
+              <circle
+                cx='110'
+                cy='85'
+                r='5'
+                class='fill-red-500 animate-pulse delay-75'></circle>
+              <circle
+                cx='100'
+                cy='105'
+                r='3'
+                class='fill-red-500 animate-pulse delay-150'></circle>
+              <path
+                d='M85 95L115 95'
+                stroke='red'
+                stroke-width='2'
+                stroke-linecap='round'
+                class='animate-glitch-line'></path>
+            </g>
+
+            {/* 2. The "Scanner Bar" - Moves top to bottom */}
+            <rect
+              x='0'
+              y='-50'
+              width='200'
+              height='50'
+              fill='url(#scanGradient)'
+              class='animate-scanner'></rect>
+            <line
+              x1='0'
+              y1='0'
+              x2='200'
+              y2='0'
+              stroke='rgb(16, 185, 129)'
+              stroke-width='2'
+              class='shadow-[0_0_10px_rgb(16,185,129)] animate-scanner-line'
+            ></line>
+
+            {/* 3. The "Secure/Clean" State - Animates opacity in */}
+            <g class='opacity-0 animate-secure-appear'>
+              <circle cx='100' cy='90' r='35' class='fill-emerald-500/20'
+              ></circle>
+              {/* Checkmark */}
+              <path
+                d='M80 95 L95 110 L125 75'
+                fill='none'
+                stroke='rgb(16, 185, 129)'
+                stroke-width='8'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+                class='animate-draw-check'></path>
+            </g>
+          </g>
+        </svg>
       </div>
     </div>
-
   </div>
 </section>
+
+{/* CSS Styles for the animation */}
+<style>
+  /* Move the scanner bar down */
+  .animate-scanner,
+  .animate-scanner-line {
+    animation: scanDown 3s ease-in-out infinite;
+  }
+
+  /* Fade out the red bugs as the scanner passes */
+  .animate-malware-clear {
+    animation: clearMalware 3s ease-in-out infinite;
+  }
+
+  /* Fade in the green secure state after the scanner passes */
+  .animate-secure-appear {
+    animation: appearSecure 3s ease-in-out infinite;
+  }
+
+  /* Little glitch jerky movement */
+  .animate-glitch-line {
+    animation: glitchX 0.2s steps(2) infinite;
+  }
+
+  @keyframes scanDown {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    45%,
+    55% {
+      transform: translateY(250px);
+    } /* Pause at bottom */
+  }
+
+  @keyframes clearMalware {
+    0%,
+    25% {
+      opacity: 1;
+    }
+    40%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes appearSecure {
+    0%,
+    35% {
+      opacity: 0;
+    }
+    50%,
+    90% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes glitchX {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(3px);
+    }
+  }
+</style>
