@@ -1,7 +1,7 @@
 ---
 title: 'Drive-By Script Injection'
 slug: 'drive-by-script-injection'
-reportDate: '2026-01-24'
+reportDate: '2026-01-23'
 threatType: 'Script Injection'
 severity: 'High'
 fileHash: 'switch-domain-suspension-drive-by-malware'

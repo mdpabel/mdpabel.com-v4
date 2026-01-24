@@ -1,7 +1,7 @@
 ---
 title: 'WP Compatibility Patch Backdoor'
 slug: 'wp-compatibility-patch-backdoor'
-reportDate: '2026-01-24'
+reportDate: '2026-01-14'
 threatType: 'Backdoor'
 severity: 'Critical'
 fileHash: 'wp-compat-hidden-plugin'

@@ -1,7 +1,7 @@
 ---
 title: 'SEO Spam Malware Injection'
 slug: 'seo-spam-anchor-css-injection'
-reportDate: '2026-01-24'
+reportDate: '2026-01-15'
 threatType: 'SEO Spam'
 severity: 'Medium'
 fileHash: 'db-spam-malware'

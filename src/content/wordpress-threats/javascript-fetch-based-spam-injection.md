@@ -1,7 +1,7 @@
 ---
 title: 'JavaScript Fetch-Based Spam Injection'
 slug: 'javascript-fetch-based-spam-injection'
-reportDate: '2026-01-24'
+reportDate: '2026-01-19'
 threatType: 'JS Injection'
 severity: 'High'
 fileHash: 'seo-spam-database-injection'

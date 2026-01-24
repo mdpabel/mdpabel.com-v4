@@ -1,7 +1,7 @@
 ---
 title: 'Obfuscated JavaScript Credit Card Stealer'
 slug: 'javascript-credit-card-stealer'
-reportDate: '2026-01-24'
+reportDate: '2026-01-20'
 threatType: 'Data Theft'
 severity: 'Critical'
 fileHash: 'credit-card-skimmer-and-backdoor'

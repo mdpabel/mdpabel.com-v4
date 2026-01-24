@@ -15,6 +15,7 @@ import me from '../assets/my-img.png';
 
 // Data
 import { siteData } from '../data/siteData';
+import LiveThreatTerminal from '../components/LiveThreatTerminal.astro';
 
 // SEO Configuration
 const seo = {
@@ -156,88 +157,7 @@ const jsonLd = {
     </section>
 
     {/* 2. LIVE ACTIVITY LOG SECTION */}
-    <section class='rounded-xl'>
-      <div class='mb-8 text-center'>
-        <h2
-          class='mb-4 font-bold text-gray-900 dark:text-white text-3xl text-center'>
-          Live Activity Log
-        </h2>
-        <p class='mb-12 text-slate-700 dark:text-slate-300 text-center'>
-          Real problems I'm solving daily.
-        </p>
-      </div>
-      <div class='mx-auto max-w-4xl'>
-        <div
-          class='bg-slate-900 shadow-2xl border border-slate-800 rounded-lg overflow-hidden'>
-          <div
-            class='flex items-center gap-2 bg-slate-800 px-4 py-2 border-slate-700 border-b'>
-            <div class='bg-red-500 rounded-full w-3 h-3'></div>
-            <div class='bg-yellow-500 rounded-full w-3 h-3'></div>
-            <div class='bg-green-500 rounded-full w-3 h-3'></div>
-            <span class='ml-2 font-mono text-slate-400 text-xs'
-              >user@security-console:~/recent-fixes</span
-            >
-          </div>
-          <div
-            class='space-y-3 p-6 h-64 overflow-y-auto font-mono text-xs sm:text-sm terminal-scroll'>
-            <div class='flex gap-4'>
-              <span class='text-slate-500 shrink-0'>[10:42 AM]</span>
-              <div class='flex sm:flex-row flex-col sm:gap-2'>
-                <span class='font-bold text-rose-400'>DETECTED:</span>
-                <span class='text-slate-300'
-                  >Japanese SEO Spam Injection found in /wp-includes/</span
-                >
-              </div>
-            </div>
-            <div class='flex gap-4'>
-              <span class='text-slate-500 shrink-0'>[11:15 AM]</span>
-              <div class='flex sm:flex-row flex-col sm:gap-2'>
-                <span class='font-bold text-emerald-400'>RESOLVED:</span>
-                <span class='text-slate-300'
-                  >Cleaned 245 infected files. Backdoor closed.</span
-                >
-              </div>
-            </div>
-            <div class='flex gap-4'>
-              <span class='text-slate-500 shrink-0'>[01:20 PM]</span>
-              <div class='flex sm:flex-row flex-col sm:gap-2'>
-                <span class='font-bold text-rose-400'>CRITICAL:</span>
-                <span class='text-slate-300'
-                  >Client site displaying "Deceptive Site Ahead" (Red Screen)</span
-                >
-              </div>
-            </div>
-            <div class='flex gap-4'>
-              <span class='text-slate-500 shrink-0'>[02:05 PM]</span>
-              <div class='flex sm:flex-row flex-col sm:gap-2'>
-                <span class='font-bold text-blue-400'>ACTION:</span>
-                <span class='text-slate-300'
-                  >Submitted Google Review Request. Blacklist removal pending.</span
-                >
-              </div>
-            </div>
-            <div class='flex gap-4'>
-              <span class='text-slate-500 shrink-0'>[03:45 PM]</span>
-              <div class='flex sm:flex-row flex-col sm:gap-2'>
-                <span class='font-bold text-emerald-400'>SUCCESS:</span>
-                <span class='text-slate-300'
-                  >Site recovered. Firewall rules updated.</span
-                >
-              </div>
-            </div>
-            <div class='flex gap-4 animate-pulse'>
-              <span class='text-slate-500 shrink-0'>[NOW]</span>
-              <div class='flex sm:flex-row flex-col sm:gap-2'>
-                <span class='font-bold text-blue-400'>SCANNING:</span>
-                <span class='text-slate-300'
-                  >Analyzing suspicious admin user creation...</span
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <LiveThreatTerminal count={6} />
 
     {/* 3. SERVICES / PRICING SECTION */}
     <div class='my-20'>

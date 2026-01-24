@@ -1,7 +1,7 @@
 ---
 title: 'Hidden Plugin Backdoor'
 slug: 'hidden-plugin-backdoor'
-reportDate: '2026-01-24'
+reportDate: '2026-01-21'
 threatType: 'Backdoor'
 severity: 'High'
 fileHash: 'wp-security-hidden-plugin'

@@ -1,7 +1,7 @@
 ---
 title: 'Malicious Redirect via Hidden Plugin'
 slug: 'malicious-redirect-hidden-plugin'
-reportDate: '2026-01-24'
+reportDate: '2026-01-17'
 threatType: 'Malware, Backdoor'
 severity: 'High'
 fileHash: 'woocommerce_input-hidden-plugin'

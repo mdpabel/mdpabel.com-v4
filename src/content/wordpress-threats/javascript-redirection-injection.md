@@ -1,7 +1,7 @@
 ---
 title: 'JavaScript Redirection Injection'
 slug: 'javascript-redirection-injection'
-reportDate: '2026-01-24'
+reportDate: '2026-01-18'
 threatType: 'Redirection Malware'
 severity: 'High'
 fileHash: 'db-malware'
