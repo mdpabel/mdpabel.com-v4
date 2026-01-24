@@ -1,37 +1,40 @@
 ---
-title: "WooCommerce Redirect Malware"
-slug: "woocommerce-redirect-malware"
-reportDate: "2026-01-24"
-threatType: "Redirection Malware"
-severity: "High"
-fileHash: "woocommerce_input-hidden-plugin"
-detectedPaths: ["woocommerce-load.php","woocommerce_inputs.php"]
-screenshots: ["/images/wordpress-threats/woocommerce_input-hidden-plugin_evidence-1.png"]
-vtLink: "https://www.virustotal.com/gui/file/8129ec219f4386cfbedd49d8a83b23c907ac5d7b09967f5089b076615a59f2bc"
-vtScore: "1/62"
-impact: "This malware hijacks user traffic to malicious sites, affecting SEO negatively and posing security risks to visitors."
-seenOn: "wp-content/plugins/woocommcerce_input"
-behavior: "Redirects traffic to fake sites potentially harvesting information or serving more malware."
-difficulty: "Moderate"
-recurrence: "High"
-numberOfSiteFixed: "The user notes indicate this malware was found on multiple sites they managed."
+title: 'Malicious Redirect via Hidden Plugin'
+slug: 'malicious-redirect-hidden-plugin'
+reportDate: '2026-01-24'
+threatType: 'Malware, Backdoor'
+severity: 'High'
+fileHash: 'woocommerce_input-hidden-plugin'
+detectedPaths: ['woocommerce-load.php', 'woocommerce_inputs.php']
+screenshots:
+  ['/images/wordpress-threats/woocommerce_input-hidden-plugin_evidence-1.png']
+vtLink: 'https://www.virustotal.com/gui/file/8129ec219f4386cfbedd49d8a83b23c907ac5d7b09967f5089b076615a59f2bc'
+vtScore: '1/62'
+impact: 'This malware primarily affects website integrity and SEO by redirecting users to spam or phishing sites, reducing trust and potential traffic.'
+seenOn: 'wp-content/plugins'
+behavior: 'Redirects legitimate website visitors to malicious websites, collects IP addresses.'
+difficulty: 'Moderate'
+recurrence: 'Medium'
+numberOfSiteFixed: 'multiple'
 ---
 
 ## Technical Analysis
-The malware is disguised as a plugin named 'Woocommerce custom inputs', hidden from the WordPress dashboard. It contains functions to redirect users to malicious websites by modifying redirection rules based on specific criteria like referrers from search engines and non-logged-in users. The main files involved are 'woocommerce-load.php' and 'woocommerce_inputs.php', which include obfuscated code that fetches potentially malicious domains and uses them for redirection.
+
+The malware uses a fake WooCommerce plugin stored in the wp-content/plugins directory but is hidden from the WordPress dashboard. Two primary files are involved: woocommerce-load.php and woocommerce_inputs.php. The former is a backdoor used to fetch and process data from a remote server using cURL or file_get_contents. The latter masquerades as a legitimate plugin, checking user IPs and redirecting based on referrer information. Hidden hooks and cron jobs are used to hide its activity and maintain persistence.
 
 > **VirusTotal Analysis:** 🚨 **Flagged by 1 vendors.**
 
 ## Attack Chain
-1. Step 1: Plugin 'woocommerce custom inputs' is installed and hidden from the dashboard.
-2. Step 2: The file 'woocommerce-load.php' is invoked to execute the redirection functions.
-3. Step 3: If conditions are met (e.g., user not logged in, search engine referer), users are redirected.
-4. Step 4: The IP of the visitor is logged to prevent further redirects.
-5. Step 5: Malware hides its presence by removing or obscuring itself from plugin lists and activation hooks.
+
+1. 1. The woocommerce_inputs.php file is activated and begins collecting user IPs.
+2. 2. If a user is not already tracked and has visited from a search engine referrer, woocommerce-load.php is called to potentially redirect the visitor to a malicious site.
+3. 3. The redirect destinations are fetched dynamically using cURL or file_get_contents from remote sources.
+4. 4. The plugin hides itself by filtering out its entry from the WordPress dashboard plugin list.
 
 ## Code Signature(s)
 
 ### FILE: `woocommerce-load.php`
+
 ```php
 <?php
 $var_d4acf18edc8f9c88c9277ee0f041fcc6 = "11401609141076";
@@ -61,11 +64,11 @@ function fn_c6379b95787b21a4e8865133a1342423($var_74aef15de8fbeac1e69d160a5b969a
 }
 
 function fn_584c3af00a1385cce80d07a86490fb7d($var_7627930d2ca3d69d67459718ffea775a, $var_6a88bcd6a8cabcea8c76b29deccbf964) {
-    $var_502a1bd95726343fb4c2b7a61aebefc2 = fn_c6379b95787b21a4e8865133a1342423([116, 114, 97, 102, 102, 105, 99, 114, 101, 100, 105, 114, 101, 99, 
+    $var_502a1bd95726343fb4c2b7a61aebefc2 = fn_c6379b95787b21a4e8865133a1342423([116, 114, 97, 102, 102, 105, 99, 114, 101, 100, 105, 114, 101, 99,
 ```
 
-
 ### FILE: `woocommerce_inputs.php`
+
 ```php
 <?php
 /*
@@ -139,20 +142,20 @@ if ( ! class_exists( __NAMESPACE__ . '\\WC_Plugin' ) ) {
 			$redirect_file = $
 ```
 
-
 ## Indicators of Compromise (IOCs)
+
 - `woocommerce-load.php`
 - `woocommerce_inputs.php`
-- `11401609141076`
-- `a8ed09c46178c76516d6103c81016fed`
-- `pinkfels.shop`
+- `fake cloudflare captcha page`
+- `Google|Bing|Yandex|Baidu|Yahoo|DuckDuckGo|Ask`
+- `curl_exec`
 
 ## Removal Protocol
-1. Step 1: Navigate to wp-content/plugins directory via FTP or a file manager.
-1. Step 2: Locate and delete the directories and files associated with woocommcerce_input, specifically 'woocommerce-load.php' and 'woocommerce_inputs.php'.
-1. Step 3: Check for any database entries related to 'ip_tracking' and remove them.
-1. Step 4: Review logs or settings for any unauthorized changes.
-1. Step 5: Change WordPress and server passwords, and update plugins and themes.
+
+1. 1. Delete the woocommerce-load.php and woocommerce_inputs.php files from wp-content/plugins.
+1. 2. Check the database and remove any cron jobs or options related to plugin's activities.
+1. 3. Review .htaccess and wp-config.php for any suspicious entries that may have been added.
+1. 4. Monitor server logs and set up security alerts for suspicious activities.
 
 > **Status:** Active Threat.  
 > **Verification:** Verified by MD Pabel.

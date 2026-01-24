@@ -298,7 +298,7 @@ ${data.manualCleaning.map((step) => `1. ${step}`).join('\n')}
     console.log(`   ✅ Generated Report: ${finalSlug}.md`);
 
     // CLEANUP: Remove source folder
-    // fs.rmSync(caseDir, { recursive: true, force: true });
+    fs.rmSync(caseDir, { recursive: true, force: true });
   } catch (error) {
     console.error(`   ❌ Failed to process ${caseId}:`, error);
   }

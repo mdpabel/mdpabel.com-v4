@@ -1,5 +1,12 @@
 ---
-import { User, Shield, Code, Wrench, CheckCircle, Image as ImageIcon } from '@lucide/astro';
+import {
+  User,
+  Shield,
+  Code,
+  Wrench,
+  CheckCircle,
+  Image as ImageIcon,
+} from '@lucide/astro';
 import InternalServiceLinks from './InternalServiceLinks.astro';
 import AboutAuthor from './AboutAuthor.astro';
 import type { WordPressPost } from '../lib/wordpress';
@@ -18,7 +25,7 @@ const isMalwareLog = parentSlug === 'malware-log';
 const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
   year: 'numeric',
   month: 'numeric',
-  day: 'numeric'
+  day: 'numeric',
 });
 
 // 2. Featured Image (Safe Access)
@@ -32,28 +39,29 @@ const chatGptPrompt = `Read the article at ${articleUrl} and explain it to me. R
 const chatGptUrl = `https://chat.openai.com/?model=gpt-4&q=${encodeURIComponent(chatGptPrompt)}`;
 
 // 4. Styles
-const proseClasses = 'prose-img:shadow-lg dark:prose-invert prose-li:mb-2 prose-headings:pb-2 prose-img:border dark:prose-headings:border-slate-700 dark:prose-img:border-slate-600 prose-headings:border-slate-300 prose-img:border-slate-300 prose-headings:border-b prose-img:rounded-lg max-w-none prose-headings:font-bold dark:prose-headings:text-white dark:prose-ol:text-slate-300 dark:prose-p:text-slate-300 dark:prose-strong:text-white dark:prose-ul:text-slate-300 prose-headings:text-gray-900 prose-ol:text-slate-700 prose-p:text-slate-700 prose-strong:text-gray-900 prose-ul:text-slate-700 !break-words prose-code:break-words prose-p:leading-relaxed prose prose-lg';
-const malwareSectionBase = "dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 prose prose-base";
+const proseClasses =
+  'prose-img:shadow-lg dark:prose-invert prose-li:mb-2 prose-headings:pb-2 prose-img:border dark:prose-headings:border-slate-700 dark:prose-img:border-slate-600 prose-headings:border-slate-300 prose-img:border-slate-300 prose-headings:border-b prose-img:rounded-lg max-w-none prose-headings:font-bold dark:prose-headings:text-white dark:prose-ol:text-slate-300 dark:prose-p:text-slate-300 dark:prose-strong:text-white dark:prose-ul:text-slate-300 prose-headings:text-gray-900 prose-ol:text-slate-700 prose-p:text-slate-700 prose-strong:text-gray-900 prose-ul:text-slate-700 !break-words prose-code:break-words prose-p:leading-relaxed prose prose-lg';
+const malwareSectionBase =
+  'dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 prose prose-base';
 ---
 
 <div>
- 
-  <article class="blog-post">
-    
+  <article class='blog-post'>
     {/* --- HEADER --- */}
-    <h1 class="mb-6 font-bold text-gray-900 dark:text-white text-3xl md:text-4xl">
+    <h1
+      class='mb-6 font-bold text-gray-900 dark:text-white text-3xl md:text-4xl'>
       <span set:html={post.title} />
     </h1>
 
-    <div class="flex justify-between items-center mb-8">
-      <div class="text-slate-500 dark:text-slate-400 text-sm">
+    <div class='flex justify-between items-center mb-8'>
+      <div class='text-slate-500 dark:text-slate-400 text-sm'>
         Published on {formattedDate}
       </div>
 
-      <div class="flex items-center gap-3 sm:gap-6">
-        <div class="flex items-center gap-2">
-          <User class="w-4 h-4 text-slate-500 dark:text-slate-400" />
-          <span class="text-slate-500 dark:text-slate-300 text-sm">
+      <div class='flex items-center gap-3 sm:gap-6'>
+        <div class='flex items-center gap-2'>
+          <User class='w-4 h-4 text-slate-500 dark:text-slate-400' />
+          <span class='text-slate-500 dark:text-slate-300 text-sm'>
             MD Pabel
           </span>
         </div>
@@ -61,129 +69,146 @@ const malwareSectionBase = "dark:prose-invert max-w-none text-slate-700 dark:tex
     </div>
 
     {/* --- CHATGPT BUTTON --- */}
-    <div class="mb-8">
-      <a 
+    <div class='mb-8'>
+      <a
         href={chatGptUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="inline-flex items-center gap-2 bg-white hover:bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800 shadow-sm px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg font-medium text-slate-700 dark:text-slate-300 text-sm transition-colors"
-      >
-        <svg viewBox="0 0 24 24" class="fill-current w-4 h-4"><path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729ZM12.7309 5.1155a3.8953 3.8953 0 0 1 2.4977.8828l-1.6361 1.6361-1.6361 1.6361a2.8284 2.8284 0 0 0 .8828 2.4977l1.6361 1.6361a3.8953 3.8953 0 0 1-.8828 2.4977l-1.6361-1.6361-1.6361-1.6361a2.8284 2.8284 0 0 0-2.4977-.8828 3.8953 3.8953 0 0 1-2.4977-.8828l1.6361-1.6361 1.6361-1.6361a2.8284 2.8284 0 0 0-.8828-2.4977l-1.6361-1.6361 1.6361 1.6361Z"/></svg>
+        target='_blank'
+        rel='noopener noreferrer'
+        class='inline-flex items-center gap-2 bg-white hover:bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800 shadow-sm px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg font-medium text-slate-700 dark:text-slate-300 text-sm transition-colors'>
+        <svg viewBox='0 0 24 24' class='fill-current w-4 h-4'
+          ><path
+            d='M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729ZM12.7309 5.1155a3.8953 3.8953 0 0 1 2.4977.8828l-1.6361 1.6361-1.6361 1.6361a2.8284 2.8284 0 0 0 .8828 2.4977l1.6361 1.6361a3.8953 3.8953 0 0 1-.8828 2.4977l-1.6361-1.6361-1.6361-1.6361a2.8284 2.8284 0 0 0-2.4977-.8828 3.8953 3.8953 0 0 1-2.4977-.8828l1.6361-1.6361 1.6361-1.6361a2.8284 2.8284 0 0 0-.8828-2.4977l-1.6361-1.6361 1.6361 1.6361Z'
+          ></path></svg
+        >
         Ask AI to Explain
       </a>
     </div>
 
     {/* --- FEATURED IMAGE --- */}
-  {featuredImg && (
-      <Image
-        src={featuredImg}
-        alt={featuredAlt}
-        class="shadow-lg mb-8 border border-slate-300 dark:border-slate-700 rounded-lg w-full h-auto object-cover"
-        width={1200}
-        height={630}
-        format="avif"
-        quality="mid"
-        loading="eager" 
-      />
-    )}
+    {
+      featuredImg && (
+        <Image
+          src={featuredImg}
+          alt={featuredAlt}
+          class='shadow-lg mb-8 border border-slate-300 dark:border-slate-700 rounded-lg w-full h-auto object-cover'
+          width={1200}
+          height={630}
+          format='avif'
+          quality='mid'
+          loading='eager'
+        />
+      )
+    }
 
     {/* --- CONTENT A: STANDARD --- */}
-    {!isMalwareLog && (
-      <div 
-        style="word-break: break-word;"
-        class={proseClasses}
-        set:html={post.content}
-      />
-    )}
+    {
+      !isMalwareLog && (
+        <div
+          style='word-break: break-word;'
+          class={proseClasses}
+          set:html={post.content}
+        />
+      )
+    }
 
     {/* --- CONTENT B: MALWARE LOG SPECIAL --- */}
-    {isMalwareLog && post.acf && (
-      <div class="space-y-8">
-        
-        {/* Issue Reported */}
-        <div>
-          <div class="flex items-center gap-3 mb-4">
-            <Shield class="w-6 h-6 text-red-600 dark:text-red-400" />
-            <h2 class="font-bold text-gray-900 dark:text-white text-xl md:text-2xl">
-              Issue Reported
-            </h2>
-          </div>
-          <div class={malwareSectionBase} set:html={post.acf.issue_reported} />
-        </div>
-
-        {/* Malware Type */}
-        <div>
-          <div class="flex items-center gap-3 mb-4">
-            <Code class="w-6 h-6 text-orange-600 dark:text-orange-400" />
-            <h2 class="font-bold text-gray-900 dark:text-white text-xl md:text-2xl">
-              Malware Type
-            </h2>
-          </div>
-          <div class={malwareSectionBase} set:html={post.acf.malware_type} />
-        </div>
-
-        {/* Code Breakdown */}
-        <div>
-          <div class="flex items-center gap-3 mb-4">
-            <Wrench class="w-6 h-6 text-yellow-600 dark:text-yellow-400" />
-            <h2 class="font-bold text-gray-900 dark:text-white text-xl md:text-2xl">
-              Code Breakdown and Decoding
-            </h2>
-          </div>
-          <div class={malwareSectionBase} set:html={post.acf.location_of_infection} />
-        </div>
-
-        {/* Cleanup Steps */}
-        {post.acf.cleanup_steps && (
+    {
+      isMalwareLog && post.acf && (
+        <div class='space-y-8'>
+          {/* Issue Reported */}
           <div>
-            <div class="flex items-center gap-3 mb-4">
-              <CheckCircle class="w-6 h-6 text-green-600 dark:text-green-400" />
-              <h2 class="font-bold text-gray-900 dark:text-white text-xl md:text-2xl">
-                Cleanup Steps
+            <div class='flex items-center gap-3 mb-4'>
+              <Shield class='w-6 h-6 text-red-600 dark:text-red-400' />
+              <h2 class='font-bold text-gray-900 dark:text-white text-xl md:text-2xl'>
+                Issue Reported
               </h2>
             </div>
-            <div class={malwareSectionBase} set:html={post.acf.cleanup_steps} />
+            <div
+              class={malwareSectionBase}
+              set:html={post.acf.issue_reported}
+            />
           </div>
-        )}
 
-        {/* Result */}
-        <div>
-          <div class="flex items-center gap-3 mb-4">
-            <CheckCircle class="w-6 h-6 text-blue-600 dark:text-blue-400" />
-            <h2 class="font-bold text-gray-900 dark:text-white text-xl md:text-2xl">
-              Result
-            </h2>
-          </div>
-          <div class={malwareSectionBase} set:html={post.acf.result} />
-        </div>
-
-        {/* Screenshots */}
-        {post.acf.screenshot && post.acf.screenshot.length > 0 && (
+          {/* Malware Type */}
           <div>
-            <div class="flex items-center gap-3 mb-4">
-              <ImageIcon class="w-6 h-6 text-purple-600 dark:text-purple-400" />
-              <h2 class="font-bold text-gray-900 dark:text-white text-xl md:text-2xl">
-                Screenshots
+            <div class='flex items-center gap-3 mb-4'>
+              <Code class='w-6 h-6 text-orange-600 dark:text-orange-400' />
+              <h2 class='font-bold text-gray-900 dark:text-white text-xl md:text-2xl'>
+                Malware Type
               </h2>
             </div>
-            <div class={`gap-4 grid ${post.acf.screenshot.length > 1 ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'}`}>
-              {post.acf.screenshot.map((img: any, index: number) => (
-                <Image
-                  src={img.full_image_url}
-                  alt={`Screenshot ${index + 1}`}
-                  class="shadow-md rounded-lg w-full h-auto object-cover"
-                  width="800"
-                  height="600"
-                  format="avif" 
-                  quality="mid" 
-                />
-              ))}
-            </div>
+            <div class={malwareSectionBase} set:html={post.acf.malware_type} />
           </div>
-        )}
 
-      </div>
-    )}
+          {/* Code Breakdown */}
+          <div>
+            <div class='flex items-center gap-3 mb-4'>
+              <Wrench class='w-6 h-6 text-yellow-600 dark:text-yellow-400' />
+              <h2 class='font-bold text-gray-900 dark:text-white text-xl md:text-2xl'>
+                Code Breakdown and Decoding
+              </h2>
+            </div>
+            <div
+              class={malwareSectionBase}
+              set:html={post.acf.location_of_infection}
+            />
+          </div>
+
+          {/* Cleanup Steps */}
+          {post.acf.cleanup_steps && (
+            <div>
+              <div class='flex items-center gap-3 mb-4'>
+                <CheckCircle class='w-6 h-6 text-green-600 dark:text-green-400' />
+                <h2 class='font-bold text-gray-900 dark:text-white text-xl md:text-2xl'>
+                  Cleanup Steps
+                </h2>
+              </div>
+              <div
+                class={malwareSectionBase}
+                set:html={post.acf.cleanup_steps}
+              />
+            </div>
+          )}
+
+          {/* Result */}
+          <div>
+            <div class='flex items-center gap-3 mb-4'>
+              <CheckCircle class='w-6 h-6 text-blue-600 dark:text-blue-400' />
+              <h2 class='font-bold text-gray-900 dark:text-white text-xl md:text-2xl'>
+                Result
+              </h2>
+            </div>
+            <div class={malwareSectionBase} set:html={post.acf.result} />
+          </div>
+
+          {/* Screenshots */}
+          {post.acf.screenshot && post.acf.screenshot.length > 0 && (
+            <div>
+              <div class='flex items-center gap-3 mb-4'>
+                <ImageIcon class='w-6 h-6 text-purple-600 dark:text-purple-400' />
+                <h2 class='font-bold text-gray-900 dark:text-white text-xl md:text-2xl'>
+                  Screenshots
+                </h2>
+              </div>
+              <div
+                class={`gap-4 grid ${post.acf.screenshot.length > 1 ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'}`}>
+                {post.acf.screenshot.map((img: any, index: number) => (
+                  <Image
+                    src={img.full_image_url}
+                    alt={`Screenshot ${index + 1}`}
+                    class='shadow-md rounded-lg w-full h-auto object-cover'
+                    width='800'
+                    height='600'
+                    format='avif'
+                    quality='mid'
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )
+    }
   </article>
 
   {/* --- FOOTER COMPONENTS --- */}
