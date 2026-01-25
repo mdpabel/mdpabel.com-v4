@@ -9,12 +9,12 @@ import {
   Briefcase,
   Compass,
   FileTerminal,
-  ShieldAlert, // For Malware Removal
-  Languages, // For Japanese Spam
-  FileWarning, // For Blacklist
-  Code2, // For Fullstack
-  Cpu, // For Headless
-  Lock, // For Maintenance
+  ShieldAlert,
+  Languages,
+  FileWarning,
+  Code2,
+  Cpu,
+  Lock,
 } from '@lucide/astro';
 import ComponentWrapper from './component-wrapper.astro';
 
@@ -31,7 +31,7 @@ interface NavDropdownChild {
   href: string;
   desc: string;
   icon: any;
-  badge?: string; // ✨ NEW: Support for 'Coming Soon' badges
+  badge?: string;
 }
 
 interface NavDropdown {
@@ -52,7 +52,7 @@ const navItems: NavItem[] = [
   },
   {
     name: 'Services',
-    type: 'dropdown', // 🔄 Changed from 'link' to 'dropdown'
+    type: 'dropdown',
     children: [
       {
         name: 'Malware Removal',
@@ -77,21 +77,21 @@ const navItems: NavItem[] = [
         href: '#',
         desc: 'Custom React/Node web apps',
         icon: Code2,
-        badge: 'Soon', // 🚧 Future Service
+        badge: 'Soon',
       },
       {
         name: 'Headless WP',
         href: '#',
         desc: 'High-performance Astro/Next.js sites',
         icon: Cpu,
-        badge: 'Soon', // 🚧 Future Service
+        badge: 'Soon',
       },
       {
         name: 'Security Care',
         href: '#',
         desc: '24/7 Monitoring & Protection',
         icon: Lock,
-        badge: 'Soon', // 🚧 Future Service
+        badge: 'Soon',
       },
     ],
   },
@@ -136,7 +136,7 @@ const navItems: NavItem[] = [
 
 <header
   id='main-header'
-  class='top-0 z-50 sticky bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-slate-100 dark:border-slate-800 border-b w-full transition-colors duration-300'>
+  class='top-0 z-50 sticky bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-slate-100 dark:border-slate-800 border-b w-full overflow-x-clip transition-colors duration-300'>
   <div class='py-4 text-black'>
     <ComponentWrapper>
       <nav class='relative flex justify-between items-center mx-auto'>
@@ -158,7 +158,6 @@ const navItems: NavItem[] = [
             {
               navItems.map((item) =>
                 item.type === 'link' ? (
-                  // STANDARD LINK
                   <a
                     href={item.href}
                     class='hover:bg-slate-50 dark:hover:bg-slate-800 px-3 py-2 rounded-full font-medium text-slate-600 hover:text-sky-600 dark:hover:text-white dark:text-slate-300 text-base transition-colors'
@@ -166,28 +165,18 @@ const navItems: NavItem[] = [
                     {item.name}
                   </a>
                 ) : (
-                  // MEGA MENU DROPDOWN PARENT
                   <div class='group relative px-4 py-2'>
                     <button class='flex items-center gap-1 font-medium text-slate-600 dark:group-hover:text-white dark:text-slate-300 group-hover:text-sky-600 text-base transition-colors cursor-pointer'>
                       {item.name}
                       <ChevronDown class='w-4 h-4 group-hover:rotate-180 transition-transform' />
                     </button>
-
-                    {/* CENTERED DROPDOWN PANEL */}
                     <div class='invisible group-hover:visible top-full left-1/2 z-50 absolute opacity-0 group-hover:opacity-100 pt-4 w-[600px] origin-top transition-all -translate-x-1/2 translate-y-2 group-hover:translate-y-0 duration-200 ease-out transform'>
-                      {/* Visual Card */}
                       <div class='relative gap-2 grid grid-cols-2 bg-white dark:bg-slate-900 shadow-xl p-4 border border-slate-200 dark:border-slate-700 rounded-2xl'>
-                        {/* Arrow */}
                         <div class='-top-2 left-1/2 absolute bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 border-t border-l w-4 h-4 rotate-45 -translate-x-1/2 transform' />
-
                         {item.children.map((subItem) => (
                           <a
                             href={subItem.href}
-                            class={`group/item relative flex items-start gap-4 p-3 rounded-xl transition-colors z-10 ${
-                              subItem.badge
-                                ? 'opacity-70 cursor-default' // Dim 'Coming Soon' items
-                                : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'
-                            }`}
+                            class={`group/item relative flex items-start gap-4 p-3 rounded-xl transition-colors z-10 ${subItem.badge ? 'opacity-70 cursor-default' : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'}`}
                             onclick={subItem.badge ? 'return false;' : ''}>
                             <div class='bg-sky-50 dark:bg-slate-800 group-hover/item:bg-sky-600 p-2 rounded-lg text-sky-600 dark:text-sky-400 group-hover/item:text-white transition-colors'>
                               <subItem.icon class='w-5 h-5' />
@@ -195,7 +184,6 @@ const navItems: NavItem[] = [
                             <div>
                               <div class='flex items-center gap-2 font-semibold text-slate-900 dark:text-white group-hover/item:text-sky-600 text-base transition-colors'>
                                 {subItem.name}
-                                {/* ✨ RENDER BADGE IF EXISTS */}
                                 {subItem.badge && (
                                   <span class='bg-amber-100 dark:bg-amber-900/30 px-1.5 py-0.5 rounded font-bold text-[10px] text-amber-700 dark:text-amber-400 uppercase tracking-wide'>
                                     {subItem.badge}
@@ -223,17 +211,16 @@ const navItems: NavItem[] = [
             <a
               href='https://mdpabe1.substack.com/'
               target='_blank'
-              class='font-medium text-slate-600 hover:text-slate-900 dark:hover:text-white dark:text-slate-400 text-base transition-colors'>
-              Newsletter
-            </a>
+              class='font-medium text-slate-600 hover:text-slate-900 dark:hover:text-white dark:text-slate-400 text-base transition-colors'
+              >Newsletter</a
+            >
           </li>
           <li>
             <a
               href='/hire-me'
               class='flex items-center gap-2 bg-sky-600 hover:bg-sky-700 dark:bg-white dark:hover:bg-slate-200 shadow-md hover:shadow-lg px-5 py-2.5 rounded-full font-semibold text-white dark:text-slate-900 text-sm transition-all hover:-translate-y-0.5 transform'
-              data-astro-prefetch='load'>
-              Hire Me
-            </a>
+              data-astro-prefetch='load'>Hire Me</a
+            >
           </li>
         </ul>
 
@@ -251,11 +238,11 @@ const navItems: NavItem[] = [
   </div>
 
   {/* --- MOBILE MENU OVERLAY --- */}
+  {/* Added 'invisible' class below to prevent horizontal scroll when closed */}
   <div
     id='mobile-menu'
-    class='lg:hidden z-[100] fixed inset-0 flex flex-col bg-white dark:bg-slate-900 transition-transform translate-x-full duration-300 ease-in-out'
+    class='lg:hidden invisible z-[100] fixed inset-0 flex flex-col bg-white dark:bg-slate-900 transition-all translate-x-full duration-300 ease-in-out'
     aria-hidden='true'>
-    {/* 1. Mobile Header */}
     <div
       class='flex justify-between items-center px-6 py-4 border-slate-100 dark:border-slate-800 border-b'>
       <div class='flex items-center gap-3'>
@@ -267,7 +254,6 @@ const navItems: NavItem[] = [
           >Menu</span
         >
       </div>
-
       <button
         id='menu-close-btn'
         aria-label='Close Menu'
@@ -276,13 +262,11 @@ const navItems: NavItem[] = [
       </button>
     </div>
 
-    {/* 2. Mobile Links */}
     <div class='flex-1 bg-slate-50 dark:bg-slate-900 px-6 py-6'>
       <ul class='space-y-2'>
         {
           navItems.map((item) =>
             item.type === 'link' ? (
-              // SIMPLE MOBILE LINK
               <li>
                 <a
                   href={item.href}
@@ -292,7 +276,6 @@ const navItems: NavItem[] = [
                 </a>
               </li>
             ) : (
-              // MOBILE ACCORDION FOR DROPDOWN
               <li class='border-slate-100 dark:border-slate-800/50 border-b'>
                 <details class='group'>
                   <summary class='flex justify-between items-center py-3 font-medium text-slate-800 dark:text-slate-200 text-lg cursor-pointer list-none'>
@@ -303,15 +286,10 @@ const navItems: NavItem[] = [
                     {item.children.map((subItem) => (
                       <a
                         href={subItem.href}
-                        class={`flex items-center gap-3 py-2 ${
-                          subItem.badge
-                            ? 'opacity-60 cursor-default' // Dim 'Coming Soon'
-                            : 'text-slate-600 hover:text-sky-600 dark:hover:text-sky-400 dark:text-slate-400 mobile-link'
-                        }`}
+                        class={`flex items-center gap-3 py-2 ${subItem.badge ? 'opacity-60 cursor-default' : 'text-slate-600 hover:text-sky-600 dark:hover:text-sky-400 dark:text-slate-400 mobile-link'}`}
                         onclick={subItem.badge ? 'return false;' : ''}>
                         <subItem.icon class='w-4 h-4' />
                         <span class='text-base'>{subItem.name}</span>
-                        {/* Mobile Badge */}
                         {subItem.badge && (
                           <span class='bg-amber-100 dark:bg-amber-900/30 ml-auto px-1.5 py-0.5 rounded font-bold text-[10px] text-amber-700 dark:text-amber-400 uppercase tracking-wide'>
                             {subItem.badge}
@@ -328,21 +306,19 @@ const navItems: NavItem[] = [
       </ul>
     </div>
 
-    {/* 3. Mobile Footer Actions */}
     <div
       class='bg-slate-50 dark:bg-slate-900 p-6 border-slate-200 dark:border-slate-800 border-t'>
       <a
         href='/hire-me'
         class='flex justify-center items-center bg-sky-600 hover:bg-sky-700 shadow-sm mb-3 py-3.5 rounded-xl w-full font-semibold text-white transition-colors'
-        data-astro-prefetch='load'>
-        Hire Me
-      </a>
+        data-astro-prefetch='load'>Hire Me</a
+      >
       <a
         href='https://mdpabe1.substack.com/'
         target='_blank'
-        class='flex justify-center items-center bg-white dark:bg-slate-800 py-3.5 border border-slate-200 dark:border-slate-600 rounded-xl w-full font-medium text-slate-700 dark:text-slate-300 transition-colors'>
-        Newsletter
-      </a>
+        class='flex justify-center items-center bg-white dark:bg-slate-800 py-3.5 border border-slate-200 dark:border-slate-600 rounded-xl w-full font-medium text-slate-700 dark:text-slate-300 transition-colors'
+        >Newsletter</a
+      >
     </div>
   </div>
 </header>
@@ -358,10 +334,20 @@ const navItems: NavItem[] = [
 
     const toggleMenu = (isOpen: boolean) => {
       if (isOpen) {
-        menu.classList.remove('translate-x-full');
+        // Remove invisible so it can be seen, then translate it in
+        menu.classList.remove('invisible', 'translate-x-full');
+        menu.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
       } else {
+        // Translate it out, then make it invisible to stop horizontal scroll
         menu.classList.add('translate-x-full');
+        // We wait a moment for the animation to finish before applying invisible
+        setTimeout(() => {
+          if (menu.classList.contains('translate-x-full')) {
+            menu.classList.add('invisible');
+          }
+        }, 300);
+        menu.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
       }
     };
@@ -369,7 +355,6 @@ const navItems: NavItem[] = [
     openBtn.addEventListener('click', () => toggleMenu(true));
     closeBtn.addEventListener('click', () => toggleMenu(false));
 
-    // Close menu when a link is clicked
     mobileLinks.forEach((link) => {
       link.addEventListener('click', () => toggleMenu(false));
     });
