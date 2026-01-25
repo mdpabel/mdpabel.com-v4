@@ -10,11 +10,11 @@ import {
   Compass,
   FileTerminal,
   ShieldAlert, // For Malware Removal
-  Languages,   // For Japanese Spam
+  Languages, // For Japanese Spam
   FileWarning, // For Blacklist
-  Code2,       // For Fullstack
-  Cpu,         // For Headless
-  Lock,        // For Maintenance
+  Code2, // For Fullstack
+  Cpu, // For Headless
+  Lock, // For Maintenance
 } from '@lucide/astro';
 import ComponentWrapper from './component-wrapper.astro';
 
@@ -30,7 +30,7 @@ interface NavDropdownChild {
   name: string;
   href: string;
   desc: string;
-  icon: any; 
+  icon: any;
   badge?: string; // ✨ NEW: Support for 'Coming Soon' badges
 }
 
@@ -175,7 +175,6 @@ const navItems: NavItem[] = [
 
                     {/* CENTERED DROPDOWN PANEL */}
                     <div class='invisible group-hover:visible top-full left-1/2 z-50 absolute opacity-0 group-hover:opacity-100 pt-4 w-[600px] origin-top transition-all -translate-x-1/2 translate-y-2 group-hover:translate-y-0 duration-200 ease-out transform'>
-                      
                       {/* Visual Card */}
                       <div class='relative gap-2 grid grid-cols-2 bg-white dark:bg-slate-900 shadow-xl p-4 border border-slate-200 dark:border-slate-700 rounded-2xl'>
                         {/* Arrow */}
@@ -185,12 +184,11 @@ const navItems: NavItem[] = [
                           <a
                             href={subItem.href}
                             class={`group/item relative flex items-start gap-4 p-3 rounded-xl transition-colors z-10 ${
-                              subItem.badge 
+                              subItem.badge
                                 ? 'opacity-70 cursor-default' // Dim 'Coming Soon' items
                                 : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'
                             }`}
-                            onclick={subItem.badge ? 'return false;' : ''} // Prevent clicks on 'Soon' items
-                          >
+                            onclick={subItem.badge ? 'return false;' : ''}>
                             <div class='bg-sky-50 dark:bg-slate-800 group-hover/item:bg-sky-600 p-2 rounded-lg text-sky-600 dark:text-sky-400 group-hover/item:text-white transition-colors'>
                               <subItem.icon class='w-5 h-5' />
                             </div>
@@ -199,7 +197,7 @@ const navItems: NavItem[] = [
                                 {subItem.name}
                                 {/* ✨ RENDER BADGE IF EXISTS */}
                                 {subItem.badge && (
-                                  <span class="bg-amber-100 dark:bg-amber-900/30 px-1.5 py-0.5 rounded font-bold text-[10px] text-amber-700 dark:text-amber-400 uppercase tracking-wide">
+                                  <span class='bg-amber-100 dark:bg-amber-900/30 px-1.5 py-0.5 rounded font-bold text-[10px] text-amber-700 dark:text-amber-400 uppercase tracking-wide'>
                                     {subItem.badge}
                                   </span>
                                 )}
@@ -265,7 +263,9 @@ const navItems: NavItem[] = [
           class='flex justify-center items-center bg-sky-600 dark:bg-white rounded-lg w-8 h-8'>
           <Rocket class='w-4 h-4 text-white dark:text-slate-950' />
         </div>
-        <span class='font-bold text-slate-900 dark:text-white text-lg'>Menu</span>
+        <span class='font-bold text-slate-900 dark:text-white text-lg'
+          >Menu</span
+        >
       </div>
 
       <button
@@ -304,17 +304,16 @@ const navItems: NavItem[] = [
                       <a
                         href={subItem.href}
                         class={`flex items-center gap-3 py-2 ${
-                          subItem.badge 
+                          subItem.badge
                             ? 'opacity-60 cursor-default' // Dim 'Coming Soon'
                             : 'text-slate-600 hover:text-sky-600 dark:hover:text-sky-400 dark:text-slate-400 mobile-link'
                         }`}
-                        onclick={subItem.badge ? 'return false;' : ''}
-                      >
+                        onclick={subItem.badge ? 'return false;' : ''}>
                         <subItem.icon class='w-4 h-4' />
                         <span class='text-base'>{subItem.name}</span>
                         {/* Mobile Badge */}
                         {subItem.badge && (
-                          <span class="bg-amber-100 dark:bg-amber-900/30 ml-auto px-1.5 py-0.5 rounded font-bold text-[10px] text-amber-700 dark:text-amber-400 uppercase tracking-wide">
+                          <span class='bg-amber-100 dark:bg-amber-900/30 ml-auto px-1.5 py-0.5 rounded font-bold text-[10px] text-amber-700 dark:text-amber-400 uppercase tracking-wide'>
                             {subItem.badge}
                           </span>
                         )}
