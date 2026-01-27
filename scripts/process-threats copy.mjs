@@ -172,52 +172,57 @@ for (const caseId of cases) {
 
   try {
     const prompt = `
-      You are a Senior Forensic Malware Analyst.
-      Your task is to generate a threat report by correlating the "User's Observation" with the "File Evidence".
+      You are a Senior WordPress Malware and Security Expert. 
+      Analyze the provided files and user notes to generate a specific threat report.
 
       =========================================
-      INPUT 1: USER OBSERVATION (Source of Truth)
+      1. USER CONTEXT: Notes from the WordPress Malware Removal Expert regarding the malware removed from the client's site.
       =========================================
       "${contextContent}"
-      
-      *INSTRUCTION:* Read the text above CAREFULLY. It describes the symptoms, the malware name (if known), or the error messages seen on the site. This is your guide for what to hunt for in the files below.
 
       =========================================
-      INPUT 2: FILE EVIDENCE (The Code)
+      2. FORENSIC EVIDENCE: The malicious files captured by the user during the removal process.
       =========================================
       ${evidenceFiles.map((f) => `\n--- START FILE: ${f.name} ---\n${f.content}\n--- END FILE ---\n`).join('')}
 
       =========================================
       3. VIRUSTOTAL INTEL
       =========================================
-      ${vtData?.found ? `Detections: ${vtData.positives}/${vtData.total}` : 'Result: Zero-Day / Unique'}
+      ${vtData?.found ? `Detections: ${vtData.positives}/${vtData.total}` : 'Result: Zero-Day / Unique (Not found in database)'}
 
       =========================================
-      4. REPORTING TASK
+      4. ANALYST INSTRUCTIONS
       =========================================
+      A. INTERPRETATION:
+         - Identify the malware based on the malicious code and the context provided by the user.
+         - Identify the threat type, severity, IOCs, behavior, impact, difficulty, and recurrence.
+         - Provide a technical analysis of how the malware works and where it hides.
+         - Outline the execution flow in clear steps.
+         - Provide manual cleaning steps to remove the malware.
+         - Use evidence from the files and user context to support your analysis.
       
-      A. DYNAMIC IOC EXTRACTION:
-         - Based *strictly* on the "User Observation" and the "File Evidence", extract 3-5 high-fidelity Indicators of Compromise (IOCs).
-         - If the User Observation mentions a specific behavior (e.g. "redirects mobile users"), look for code that does that.
-         - If the User Observation mentions a file path or extension, look for patterns matching that.
-         - RULE: Do NOT output generic code (e.g. "<?php", "eval"). Output unique strings, variable names, domains, or regex patterns found in the evidence.
+      B. WRITING STYLE:
+         - Use basic, direct English. 
+         - Do NOT use AI words like "delve", "comprehensive", "landscape", "meticulous".
+         - Be purely technical and factual.
 
-      B. OUTPUT FORMAT (JSON):
+      C. OUTPUT FORMAT:
+         Return a JSON object with these fields:
          {
-           "title": "Technical Name of the Threat (derive from Context + Code)",
-           "slug": "kebab-case-slug",
-           "threatType": "Category (e.g. Backdoor, Shell, Spam Injection, Ransomware)",
+           "title": "Short Technical Name",
+           "slug": "kebab-case-seo-slug (e.g. 'database-js-fetch-injection')",
+           "threatType": "Category (e.g. 'Database Injection', 'Cron Malware', 'Backdoor')",
            "severity": "Critical, High, or Medium",
-           "iocs": ["Signature 1", "Signature 2", "Signature 3"],
-           "technicalAnalysis": "Synthesize the 'User Observation' with the 'File Evidence'. Explain HOW the code achieves the effects described by the user.",
+           "iocs": ["List 3-5 specific strings/domains from the code"],
+           "technicalAnalysis": "How the code works and where it hides. Connect the user context to the file evidence.",
            "executionFlow": ["Step 1", "Step 2", "Step 3"],
            "manualCleaning": ["Step 1", "Step 2", "Step 3"],
-           "impact": "What happens to the site? (Derive from User Context + Code capabilities)",
-           "seenOn": "Where was this found? (Derive from file paths or User Context)",
-           "behavior": "Active behavior (e.g. Auto-installs, modifying .htaccess, etc.)",
+           "impact": "Impact on the website/SEO/Performance/Security.",
+           "seenOn": "Location found (Normalized technical term)",
+           "behavior": "What the malware does (e.g. Redirects, Steals Data)",
            "difficulty": "Easy, Moderate, or Hard",
            "recurrence": "Low, Medium, or High",
-           "numberOfSiteFixed": "1"
+           "numberOfSiteFixed": "Include this if the user mentions how many sites they fixed this malware on",
          }
     `;
 
