@@ -3,7 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import ComponentWrapper from '../../components/component-wrapper.astro';
 import { wordpress } from '../../lib/wordpress';
 import { Calendar, Clock, ArrowRight, Tag } from '@lucide/astro';
-import Pagination from '../../components/Pagination.astro'
+import Pagination from '../../components/Pagination.astro';
 
 // --- 1. Static Paths for Pagination ---
 export async function getStaticPaths() {
@@ -12,14 +12,13 @@ export async function getStaticPaths() {
     postType: 'snippet',
     perPage: PER_PAGE,
     page: 1,
-    status: 'publish',
   });
 
   return Array.from({ length: totalPages }, (_, i) => {
     const pageNum = i + 1;
     return {
       params: { page: pageNum === 1 ? undefined : pageNum.toString() },
-      props: { initialPosts: pageNum === 1 ? posts : null }
+      props: { initialPosts: pageNum === 1 ? posts : null },
     };
   });
 }
@@ -35,7 +34,7 @@ if (!posts) {
     postType: 'snippet',
     perPage: 12,
     page: currentPage,
-    status: 'publish'
+    status: 'publish',
   });
   posts = response.posts;
 }
@@ -43,62 +42,67 @@ if (!posts) {
 const isFirstPage = currentPage === 1;
 ---
 
-<Layout 
-  title="Code Snippets: Development Utilities & Hooks" 
-  description="A collection of useful code snippets, React hooks, and WordPress utilities."
->
-  <div class="py-16 min-h-screen transition-colors">
+<Layout
+  title='Code Snippets: Development Utilities & Hooks'
+  description='A collection of useful code snippets, React hooks, and WordPress utilities.'>
+  <div class='py-16 min-h-screen transition-colors'>
     <ComponentWrapper>
-      
       {/* --- Page Header --- */}
-      <div class="mb-16 max-w-3xl">
-        <h1 class="mb-6 font-bold text-slate-900 dark:text-white text-4xl md:text-5xl tracking-tight">
+      <div class='mb-16 max-w-3xl'>
+        <h1
+          class='mb-6 font-bold text-slate-900 dark:text-white text-4xl md:text-5xl tracking-tight'>
           Code Snippets
         </h1>
-        <p class="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
-          A curated collection of reusable logic, React hooks, and WordPress configuration snippets to speed up your development workflow.
+        <p class='text-slate-600 dark:text-slate-400 text-lg leading-relaxed'>
+          A curated collection of reusable logic, React hooks, and WordPress
+          configuration snippets to speed up your development workflow.
         </p>
       </div>
 
       {/* --- Snippets List --- */}
-      <div class="gap-4 grid grid-cols-1">
-        {posts.map((snippet) => (
-          <a 
-            href={`/snippets/${snippet.slug}`}
-            class="group block bg-slate-50 hover:bg-white dark:bg-slate-900/50 dark:hover:bg-slate-900 shadow-sm hover:shadow-md p-6 border border-slate-200 hover:border-sky-500 dark:border-slate-800 dark:hover:border-sky-500 rounded-2xl transition-all duration-300"
-          >
-            <div class="flex md:flex-row flex-col justify-between md:items-center gap-4">
-              <div class="flex-1">
-                {/* Category Badge */}
-                <div class="flex items-center gap-2 mb-3">
-                  <Tag class="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
-                  <span class="font-bold text-sky-600 dark:text-sky-400 text-xs uppercase tracking-widest">
-                    {snippet.acf?.language || 'Utility'}
-                  </span>
+      <div class='gap-4 grid grid-cols-1'>
+        {
+          posts.map((snippet) => (
+            <a
+              href={`/snippets/${snippet.slug}`}
+              class='group block bg-slate-50 hover:bg-white dark:bg-slate-900/50 dark:hover:bg-slate-900 shadow-sm hover:shadow-md p-6 border border-slate-200 hover:border-sky-500 dark:border-slate-800 dark:hover:border-sky-500 rounded-2xl transition-all duration-300'>
+              <div class='flex md:flex-row flex-col justify-between md:items-center gap-4'>
+                <div class='flex-1'>
+                  {/* Category Badge */}
+                  <div class='flex items-center gap-2 mb-3'>
+                    <Tag class='w-3.5 h-3.5 text-sky-600 dark:text-sky-400' />
+                    <span class='font-bold text-sky-600 dark:text-sky-400 text-xs uppercase tracking-widest'>
+                      {snippet.acf?.language || 'Utility'}
+                    </span>
+                  </div>
+
+                  {/* Title */}
+                  <h2 class='font-bold text-slate-900 dark:group-hover:text-sky-400 dark:text-white group-hover:text-sky-600 text-xl transition-colors'>
+                    <span set:html={snippet.title} />
+                  </h2>
+
+                  {/* Excerpt/Description */}
+                  <p class='mt-2 text-slate-600 dark:text-slate-400 text-sm italic line-clamp-1'>
+                    {snippet.acf?.description__usage_notes?.replace(
+                      /<[^>]*>/g,
+                      '',
+                    ) ||
+                      'Click to view implementation details and usage notes.'}
+                  </p>
                 </div>
 
-                {/* Title */}
-                <h2 class="font-bold text-slate-900 dark:group-hover:text-sky-400 dark:text-white group-hover:text-sky-600 text-xl transition-colors">
-                  <span set:html={snippet.title} />
-                </h2>
-
-                {/* Excerpt/Description */}
-                <p class="mt-2 text-slate-600 dark:text-slate-400 text-sm italic line-clamp-1">
-                  {snippet.acf?.description__usage_notes?.replace(/<[^>]*>/g, '') || 'Click to view implementation details and usage notes.'}
-                </p>
-              </div>
-
-              {/* Meta Info */}
-              <div class="flex items-center gap-6 md:pl-8 border-slate-200 dark:border-slate-800 md:border-l text-slate-500 dark:text-slate-500 text-sm">
-                <div class="flex items-center gap-1.5 whitespace-nowrap">
-                  <Calendar class="w-4 h-4" />
-                  <span>{new Date(snippet.date).toLocaleDateString()}</span>
+                {/* Meta Info */}
+                <div class='flex items-center gap-6 md:pl-8 border-slate-200 dark:border-slate-800 md:border-l text-slate-500 dark:text-slate-500 text-sm'>
+                  <div class='flex items-center gap-1.5 whitespace-nowrap'>
+                    <Calendar class='w-4 h-4' />
+                    <span>{new Date(snippet.date).toLocaleDateString()}</span>
+                  </div>
+                  <ArrowRight class='hidden md:block w-5 h-5 text-slate-300 dark:text-slate-700 group-hover:text-sky-500 transition-all group-hover:translate-x-1' />
                 </div>
-                <ArrowRight class="hidden md:block w-5 h-5 text-slate-300 dark:text-slate-700 group-hover:text-sky-500 transition-all group-hover:translate-x-1" />
               </div>
-            </div>
-          </a>
-        ))}
+            </a>
+          ))
+        }
       </div>
 
       {/* --- Pagination can be added here later --- */}

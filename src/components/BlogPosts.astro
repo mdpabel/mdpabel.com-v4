@@ -39,7 +39,6 @@ let totalPages = 0;
 if (mode === 'featured') {
   // 1. Fetch Case Studies
   const caseStudiesResponse = await wordpress.getPosts({
-    status: 'publish',
     perPage: limit,
     postType: 'case-study',
     _fields: ['id', 'title', 'slug', 'date'],
@@ -47,7 +46,6 @@ if (mode === 'featured') {
 
   // 2. Fetch Blog Posts
   const blogPostsResponse = await wordpress.getPosts({
-    status: 'publish',
     perPage: limit,
     // postType defaults to 'posts' in the class
     _fields: ['id', 'title', 'slug', 'date'],
@@ -56,30 +54,30 @@ if (mode === 'featured') {
   // 3. Combine and Format Slugs manually for routing
   const formattedCaseStudies = caseStudiesResponse.posts.map((post) => ({
     ...post,
-    slug: `case-studies/${post.slug}`
+    slug: `case-studies/${post.slug}`,
   }));
 
   const formattedBlogPosts = blogPostsResponse.posts.map((post) => ({
     ...post,
-    slug: `blog/${post.slug}`
+    slug: `blog/${post.slug}`,
   }));
 
   const combinedPosts = [...formattedCaseStudies, ...formattedBlogPosts];
 
   // 4. Sort by Date Descending
-  combinedPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  combinedPosts.sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+  );
 
   // 5. Slice to Limit
   posts = combinedPosts.slice(0, limit);
-
 } else {
   // Standard Fetch
   const response = await wordpress.getPosts({
-    status: 'publish',
     perPage: limit,
     _fields: ['id', 'title', 'slug', 'date'],
     page,
-    postType: postType, 
+    postType: postType,
   });
 
   posts = response.posts;
@@ -90,87 +88,94 @@ if (mode === 'featured') {
   if (rootSlug) {
     posts = posts.map((post) => ({
       ...post,
-      slug: `${rootSlug}/${post.slug}`
+      slug: `${rootSlug}/${post.slug}`,
     }));
   }
 }
 ---
 
 <div class={cn('mb-16 md:pb-12', className)}>
-  <ComponentWrapper class="p-0">
-    
+  <ComponentWrapper class='p-0'>
     {/* --- HEADER --- */}
-    {mode === 'all' ? (
-      <h1 class="mb-6 font-bold text-gray-900 dark:text-white text-3xl text-center">
-        {title}
-      </h1>
-    ) : (
-      <h2 class="mb-6 font-bold text-gray-900 dark:text-white text-3xl text-center">
-        {title}
-      </h2>
-    )}
+    {
+      mode === 'all' ? (
+        <h1 class='mb-6 font-bold text-gray-900 dark:text-white text-3xl text-center'>
+          {title}
+        </h1>
+      ) : (
+        <h2 class='mb-6 font-bold text-gray-900 dark:text-white text-3xl text-center'>
+          {title}
+        </h2>
+      )
+    }
 
-    {shortDescription && (
-      <p class="mx-auto mb-8 max-w-3xl text-slate-700 dark:text-slate-300 text-lg md:text-xl text-center">
-        {shortDescription}
-      </p>
-    )}
+    {
+      shortDescription && (
+        <p class='mx-auto mb-8 max-w-3xl text-slate-700 dark:text-slate-300 text-lg md:text-xl text-center'>
+          {shortDescription}
+        </p>
+      )
+    }
 
     {/* --- POST LIST --- */}
-    <ul class="space-y-4 mx-auto">
-      {posts.map((post, index) => (
-        <li class="group flex justify-between items-center">
-          <div class="flex sm:flex-row flex-col sm:items-center gap-3">
-            
-            {/* Number Badge */}
-            <div>
-              <span class="bg-sky-600 dark:bg-slate-800 px-3 py-1 rounded font-medium text-white dark:text-slate-300">
-                {String(index + 1 + (page - 1) * limit).padStart(2, '0')}
-              </span>
+    <ul class='space-y-4 mx-auto'>
+      {
+        posts.map((post, index) => (
+          <li class='group flex justify-between items-center'>
+            <div class='flex sm:flex-row flex-col sm:items-center gap-3'>
+              {/* Number Badge */}
+              <div>
+                <span class='bg-sky-600 dark:bg-slate-800 px-3 py-1 rounded font-medium text-white dark:text-slate-300'>
+                  {String(index + 1 + (page - 1) * limit).padStart(2, '0')}
+                </span>
+              </div>
+
+              {/* Title */}
+              <h3 class='font-medium text-gray-500 dark:text-slate-300 text-base'>
+                <a
+                  href={`/${post.slug}`}
+                  class='hover:text-black dark:hover:text-white transition-colors'>
+                  {/* set:html safely renders HTML entities from WP titles */}
+                  <span class='break-words' set:html={post.title} />
+                </a>
+              </h3>
             </div>
 
-            {/* Title */}
-            <h3 class="font-medium text-gray-500 dark:text-slate-300 text-base">
-              <a href={`/${post.slug}`} class="hover:text-black dark:hover:text-white transition-colors">
-                {/* set:html safely renders HTML entities from WP titles */}
-                <span class="break-words" set:html={post.title} />
-              </a>
-            </h3>
-          </div>
-
-          {/* Arrow Icon */}
-          <a
-            href={`/${post.slug}`}
-            aria-label={`Read more about ${post.title}`}
-            class="hidden md:block text-slate-500 hover:text-slate-600 dark:hover:text-slate-200 dark:text-slate-300 transition-colors group-hover:translate-x-1 duration-200"
-          >
-            <ArrowUpRight class="w-5 h-5" />
-          </a>
-        </li>
-      ))}
+            {/* Arrow Icon */}
+            <a
+              href={`/${post.slug}`}
+              aria-label={`Read more about ${post.title}`}
+              class='hidden md:block text-slate-500 hover:text-slate-600 dark:hover:text-slate-200 dark:text-slate-300 transition-colors group-hover:translate-x-1 duration-200'>
+              <ArrowUpRight class='w-5 h-5' />
+            </a>
+          </li>
+        ))
+      }
     </ul>
 
     {/* --- PAGINATION --- */}
-    {mode === 'all' && totalPages > 1 && (
-      <Pagination 
-        total={total} 
-        totalPages={totalPages} 
-        currentPage={page} 
-        baseUrl={`/${rootSlug}`} 
-      />
-    )}
+    {
+      mode === 'all' && totalPages > 1 && (
+        <Pagination
+          total={total}
+          totalPages={totalPages}
+          currentPage={page}
+          baseUrl={`/${rootSlug}`}
+        />
+      )
+    }
 
     {/* --- FOOTER LINK --- */}
-    {rootSlug && rootPageLabel && (
-      <div class="mt-5 md:text-left text-center">
-        <a
-          class="text-slate-500 hover:text-slate-600 dark:hover:text-slate-200 dark:text-slate-300 underline transition-colors"
-          href={`/${rootSlug}`}
-        >
-          {rootPageLabel}
-        </a>
-      </div>
-    )}
-
+    {
+      rootSlug && rootPageLabel && (
+        <div class='mt-5 md:text-left text-center'>
+          <a
+            class='text-slate-500 hover:text-slate-600 dark:hover:text-slate-200 dark:text-slate-300 underline transition-colors'
+            href={`/${rootSlug}`}>
+            {rootPageLabel}
+          </a>
+        </div>
+      )
+    }
   </ComponentWrapper>
 </div>

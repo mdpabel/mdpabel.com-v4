@@ -433,6 +433,40 @@ class WordPressAPI {
     }
   }
 
+  /**
+   * ✅ NEW METHOD: Get total pages via HEAD request (Lightweight)
+   * Used for generating static paths without downloading post content.
+   */
+  async getTotalPages(
+    options: { postType?: string; perPage?: number } = {},
+  ): Promise<number> {
+    try {
+      const postType = options.postType || 'posts';
+      const perPage = options.perPage || 10;
+
+      // Construct URL with query params
+      // We explicitly ask for 1 item per page if perPage isn't set, just to get the headers
+      // But usually perPage matches the build setting
+      const url = `${this.baseUrl}/wp-json/wp/v2/${postType}?per_page=${perPage}&_fields=id`;
+
+      // Perform HEAD request to get headers only
+      const response = await this.fetchWithRetry(url, { method: 'HEAD' });
+
+      if (!response.ok) {
+        console.warn(
+          `Failed to fetch headers for total pages: ${response.status}`,
+        );
+        return 1; // Fallback to avoid build crash
+      }
+
+      const totalPages = response.headers.get('X-WP-TotalPages');
+      return totalPages ? parseInt(totalPages, 10) : 1;
+    } catch (error) {
+      console.error('Error fetching total pages:', error);
+      return 1; // Fallback
+    }
+  }
+
   // Optimized: Get related posts
   // Accepts categoryIds directly to avoid fetching the current post again
   // Optimized & Randomized: Get related posts
@@ -460,7 +494,7 @@ class WordPressAPI {
       const { posts } = await this.getPosts<TACF>({
         postType,
         perPage: poolSize, // Fetch 20, not 3
-        status: 'publish',
+
         // @ts-ignore
         categories: categoryIds,
         exclude: [postId],
