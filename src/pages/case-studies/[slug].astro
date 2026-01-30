@@ -1,21 +1,53 @@
 ---
+// src/pages/case-studies/[slug].astro
 import Layout from '../../layouts/Layout.astro';
 import ComponentWrapper from '../../components/component-wrapper.astro';
 import SinglePost from '../../components/SinglePost.astro';
 import { wordpress } from '../../lib/wordpress';
-import Banner from '../../components/Banner.astro'
-import RelatedPosts from '../../components/RelatedPosts.astro'
+import Banner from '../../components/Banner.astro';
+import RelatedPosts from '../../components/RelatedPosts.astro';
 
 export async function getStaticPaths() {
-  const posts = await wordpress.getAllPosts({ postType: 'case-study' }); 
+  // ✅ OPTIMIZATION: Fetch ALL case studies once (Cached).
+  // We explicitly ask for fields needed for the related posts logic.
+  const posts = await wordpress.getAllPosts({
+    postType: 'case-study',
+    _fields: [
+      'id',
+      'slug',
+      'title',
+      'content',
+      'excerpt',
+      'date',
+      'featured_media',
+      'acf',
+      'categories',
+      '_embedded',
+    ],
+  });
 
-  return posts.map((post) => ({
-    params: { slug: post.slug },
-    props: { post },
-  }));
+  // Generate routes and pre-calculate related posts in memory (0ms latency)
+  return posts.map((post) => {
+    // Filter related posts from the array we already have
+    const relatedPosts = posts
+      .filter(
+        (p) =>
+          p.id !== post.id && // Exclude current post
+          p.categories.some((cat) =>
+            post.categories.find((c) => c.id === cat.id),
+          ),
+      )
+      .sort(() => 0.5 - Math.random()) // Randomize
+      .slice(0, 3); // Limit to 3
+
+    return {
+      params: { slug: post.slug },
+      props: { post, relatedPosts },
+    };
+  });
 }
 
-const { post } = Astro.props;
+const { post, relatedPosts } = Astro.props;
 
 // SEO
 const seoTitle = `${post.title} | Case Study`;
@@ -24,27 +56,29 @@ const seoImage = post.featuredImage?.url;
 
 // Schema
 const schema = {
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": post.title,
-  "image": seoImage,
-  "author": { "@type": "Person", "name": "MD Pabel" },
-  "datePublished": post.date,
-  "description": seoDesc
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: post.title,
+  image: seoImage,
+  author: { '@type': 'Person', name: 'MD Pabel' },
+  datePublished: post.date,
+  description: seoDesc,
 };
 ---
 
 <Layout title={seoTitle} description={seoDesc} image={seoImage}>
-  <script type="application/ld+json" set:html={JSON.stringify(schema)} is:inline />
+  <script
+    type='application/ld+json'
+    set:html={JSON.stringify(schema)}
+    is:inline
+  />
 
-   <Banner />
-  
-  <ComponentWrapper class="pb-20">
-    <SinglePost post={post} parentSlug="case-studies" />
+  <Banner />
 
-     <RelatedPosts 
-        currentPostId={post.id}
-        categoryIds={post.categories.map(cat => cat.id)} 
-      />
+  <ComponentWrapper class='pb-20'>
+    <SinglePost post={post} parentSlug='case-studies' />
+
+    {/* ✅ Pass pre-calculated posts to avoid API calls */}
+    <RelatedPosts currentPostId={post.id} posts={relatedPosts} />
   </ComponentWrapper>
 </Layout>

@@ -111,6 +111,9 @@ export interface PostsResponse<TACF = any> {
 class WordPressAPI {
   private baseUrl: string;
 
+  // ✅ SMART CACHE: Stores separate promises for 'posts', 'case-study', 'guide', etc.
+  private _requestCache = new Map<string, Promise<WordPressPost<any>[]>>();
+
   constructor() {
     this.baseUrl = import.meta.env.PUBLIC_WORDPRESS_API_URL;
     if (!this.baseUrl) {
@@ -118,10 +121,6 @@ class WordPressAPI {
     }
   }
 
-  /**
-   * 🛡️ RETRY LOGIC HELPER
-   * Prevents build crashes on ECONNRESET or timeouts
-   */
   private async fetchWithRetry(
     url: string,
     options: RequestInit = {},
@@ -140,7 +139,7 @@ class WordPressAPI {
           `⚠️ Fetch failed. Retrying in ${delay}ms... (${retries} attempts left) - ${url}`,
         );
         await new Promise((res) => setTimeout(res, delay));
-        return this.fetchWithRetry(url, options, retries - 1, delay * 2); // Exponential backoff
+        return this.fetchWithRetry(url, options, retries - 1, delay * 2);
       }
       throw error;
     }
@@ -233,6 +232,25 @@ class WordPressAPI {
 
   // --- Main Fetch Methods ---
 
+  async getTotalPages(
+    options: { postType?: string; perPage?: number } = {},
+  ): Promise<number> {
+    try {
+      const postType = options.postType || 'posts';
+      const perPage = options.perPage || 10;
+      const url = `${this.baseUrl}/wp-json/wp/v2/${postType}?per_page=${perPage}&_fields=id`;
+
+      const response = await this.fetchWithRetry(url, { method: 'HEAD' });
+      if (!response.ok) return 1;
+
+      const totalPages = response.headers.get('X-WP-TotalPages');
+      return totalPages ? parseInt(totalPages, 10) : 1;
+    } catch (error) {
+      console.error('Error fetching total pages:', error);
+      return 1;
+    }
+  }
+
   async getPosts<TACF = any>(
     options: PostsQueryOptions = {},
   ): Promise<PostsResponse<TACF>> {
@@ -249,10 +267,11 @@ class WordPressAPI {
       if (options.orderBy) params.append('orderby', options.orderBy);
       if (options.order) params.append('order', options.order);
       if (options.status) params.append('status', options.status);
+      if (options._fields && options._fields.length > 0) {
+        params.append('_fields', options._fields.join(','));
+      }
 
       const url = `${this.baseUrl}/wp-json/wp/v2/${postType}?${params.toString()}`;
-
-      // ✅ USE RETRY FETCH
       const response = await this.fetchWithRetry(url);
 
       if (!response.ok) {
@@ -280,57 +299,101 @@ class WordPressAPI {
   }
 
   /**
-   * ✅ OPTIMIZED: Fetches ALL posts with delay to prevent server crash.
+   * ✅ SMART SINGLETON: Fetches ALL items of a specific type once.
+   * Caches them separately based on the postType.
    */
   async getAllPosts<TACF = any>(
     options: PostsQueryOptions = {},
   ): Promise<WordPressPost<TACF>[]> {
-    let allPosts: WordPressPost<TACF>[] = [];
-    let page = 1;
-    let totalPages = 1;
+    const postType = options.postType || 'posts';
 
-    do {
+    // Create a unique key (e.g., 'all-posts', 'all-case-study')
+    const cacheKey = `all-${postType}`;
+
+    // 1. Check if we already have a promise for this specific post type
+    if (this._requestCache.has(cacheKey)) {
+      console.log(`⚡ [Cache Hit] Reuse existing promise for '${cacheKey}'`);
+      return this._requestCache.get(cacheKey) as Promise<WordPressPost<TACF>[]>;
+    }
+
+    console.log(
+      `🌍 [Cache Miss] Starting SINGLE fetch for all '${postType}'...`,
+    );
+
+    // 2. Create the Promise
+    const requestPromise = (async () => {
+      let allPosts: WordPressPost<TACF>[] = [];
+      let page = 1;
+      let totalPages = 1;
+      const startTime = Date.now();
+
       try {
-        // Fetch 50 items (safer than 100 on weak servers)
-        const currentOptions = { ...options, page, perPage: 50 };
-        const { posts, totalPages: total } =
-          await this.getPosts<TACF>(currentOptions);
+        do {
+          const currentOptions = { ...options, page, perPage: 50 };
+          const { posts, totalPages: total } =
+            await this.getPosts<TACF>(currentOptions);
 
-        totalPages = total;
-        allPosts = [...allPosts, ...posts];
+          totalPages = total;
+          allPosts = [...allPosts, ...posts];
 
-        // ✅ Add a small delay between pages to be kind to the server
-        if (page < totalPages) {
-          await new Promise((r) => setTimeout(r, 200));
-        }
+          // 📝 Log progress for larger sites
+          if (totalPages > 1) {
+            console.log(
+              `   ➤ Fetched page ${page} of ${totalPages} for '${postType}' (${posts.length} items)`,
+            );
+          }
 
-        page++;
+          if (page < totalPages) {
+            await new Promise((r) => setTimeout(r, 50));
+          }
+          page++;
+        } while (page <= totalPages);
+
+        const duration = ((Date.now() - startTime) / 1000).toFixed(2);
+        console.log(
+          `✅ [Cache Ready] Stored ${allPosts.length} '${postType}' items in ${duration}s.`,
+        );
+        return allPosts;
       } catch (error) {
-        console.error(`Error fetching all posts page ${page}:`, error);
-        break;
+        console.error(`❌ Error fetching ${postType}:`, error);
+        this._requestCache.delete(cacheKey); // Clear cache on failure
+        return [];
       }
-    } while (page <= totalPages);
+    })();
 
-    return allPosts;
+    // 3. Store the promise in the Map
+    this._requestCache.set(cacheKey, requestPromise);
+
+    return requestPromise as Promise<WordPressPost<TACF>[]>;
   }
 
-  // Get single post by slug
+  // ✅ CACHE-AWARE: Single Post by Slug
   async getPostBySlug<TACF = any>(
     slug: string,
     postType: string = 'posts',
   ): Promise<WordPressPost<TACF> | null> {
+    // 1. Check the specific cache for this postType
+    const cacheKey = `all-${postType}`;
+    if (this._requestCache.has(cacheKey)) {
+      try {
+        const allPosts = await this._requestCache.get(cacheKey)!;
+        const cached = allPosts.find((p) => p.slug === slug);
+        if (cached) {
+          // console.log(`⚡ [Memory Hit] Found post "${slug}" in '${cacheKey}'`); // Optional verbose log
+          return cached as WordPressPost<TACF>;
+        }
+      } catch (e) {
+        /* ignore */
+      }
+    }
+
+    // 2. Fallback to Network
     try {
-      // ASTRO CHANGE: Removed Next.js cache tags
       const response = await fetch(
         `${this.baseUrl}/wp-json/wp/v2/${postType}?slug=${slug}&_embed=true`,
       );
-
-      if (!response.ok) {
-        throw new Error(`Failed to fetch post: ${response.status}`);
-      }
-
+      if (!response.ok) throw new Error(`Status: ${response.status}`);
       const posts = await response.json();
-
       return posts.length > 0 ? this.processPost<TACF>(posts[0]) : null;
     } catch (error) {
       console.error(`Error fetching post by slug ${slug}:`, error);
@@ -338,21 +401,32 @@ class WordPressAPI {
     }
   }
 
-  // Get single post by ID
+  // ✅ CACHE-AWARE: Single Post by ID
   async getPostById<TACF = any>(
     id: number,
     postType: string = 'posts',
   ): Promise<WordPressPost<TACF> | null> {
+    // 1. Check memory first
+    const cacheKey = `all-${postType}`;
+    if (this._requestCache.has(cacheKey)) {
+      try {
+        const allPosts = await this._requestCache.get(cacheKey)!;
+        const cached = allPosts.find((p) => p.id === id);
+        if (cached) return cached as WordPressPost<TACF>;
+      } catch (e) {
+        /* ignore */
+      }
+    }
+
+    // 2. Fallback to Network
     try {
       const response = await fetch(
         `${this.baseUrl}/wp-json/wp/v2/${postType}/${id}?_embed=true`,
       );
-
       if (!response.ok) {
         if (response.status === 404) return null;
-        throw new Error(`Failed to fetch post: ${response.status}`);
+        throw new Error(`Status: ${response.status}`);
       }
-
       const post = await response.json();
       return this.processPost<TACF>(post);
     } catch (error) {
@@ -361,123 +435,97 @@ class WordPressAPI {
     }
   }
 
-  // Get all categories
   async getCategories(): Promise<WordPressCategory[]> {
     try {
       const response = await fetch(
         `${this.baseUrl}/wp-json/wp/v2/categories?per_page=100`,
       );
-
       if (!response.ok) return [];
-
       const categories = await response.json();
       return categories.map((category: any) => this.processCategory(category));
     } catch (error) {
-      console.error('Error fetching categories:', error);
       return [];
     }
   }
 
-  // Get all tags
   async getTags(): Promise<WordPressTag[]> {
     try {
       const response = await fetch(
         `${this.baseUrl}/wp-json/wp/v2/tags?per_page=100`,
       );
-
       if (!response.ok) return [];
-
       const tags = await response.json();
       return tags.map((tag: any) => this.processTag(tag));
     } catch (error) {
-      console.error('Error fetching tags:', error);
       return [];
     }
   }
 
-  // Helper method to get category IDs by slugs
   async getCategoryIdsBySlug(slugs: string[]): Promise<number[]> {
     try {
       const response = await fetch(
-        `${this.baseUrl}/wp-json/wp/v2/categories?slug=${slugs.join(
-          ',',
-        )}&per_page=100`,
+        `${this.baseUrl}/wp-json/wp/v2/categories?slug=${slugs.join(',')}&per_page=100`,
       );
-
       if (!response.ok) return [];
-
       const categories = await response.json();
       return categories.map((cat: any) => cat.id);
     } catch (error) {
-      console.error('Error fetching category IDs:', error);
       return [];
     }
   }
 
-  // Helper method to get tag IDs by slugs
   async getTagIdsBySlug(slugs: string[]): Promise<number[]> {
     try {
       const response = await fetch(
-        `${this.baseUrl}/wp-json/wp/v2/tags?slug=${slugs.join(
-          ',',
-        )}&per_page=100`,
+        `${this.baseUrl}/wp-json/wp/v2/tags?slug=${slugs.join(',')}&per_page=100`,
       );
-
       if (!response.ok) return [];
-
       const tags = await response.json();
       return tags.map((tag: any) => tag.id);
     } catch (error) {
-      console.error('Error fetching tag IDs:', error);
       return [];
     }
   }
 
-  /**
-   * ✅ NEW METHOD: Get total pages via HEAD request (Lightweight)
-   * Used for generating static paths without downloading post content.
-   */
-  async getTotalPages(
-    options: { postType?: string; perPage?: number } = {},
-  ): Promise<number> {
-    try {
-      const postType = options.postType || 'posts';
-      const perPage = options.perPage || 10;
-
-      // Construct URL with query params
-      // We explicitly ask for 1 item per page if perPage isn't set, just to get the headers
-      // But usually perPage matches the build setting
-      const url = `${this.baseUrl}/wp-json/wp/v2/${postType}?per_page=${perPage}&_fields=id`;
-
-      // Perform HEAD request to get headers only
-      const response = await this.fetchWithRetry(url, { method: 'HEAD' });
-
-      if (!response.ok) {
-        console.warn(
-          `Failed to fetch headers for total pages: ${response.status}`,
-        );
-        return 1; // Fallback to avoid build crash
-      }
-
-      const totalPages = response.headers.get('X-WP-TotalPages');
-      return totalPages ? parseInt(totalPages, 10) : 1;
-    } catch (error) {
-      console.error('Error fetching total pages:', error);
-      return 1; // Fallback
-    }
-  }
-
-  // Optimized: Get related posts
-  // Accepts categoryIds directly to avoid fetching the current post again
-  // Optimized & Randomized: Get related posts
+  // ✅ CACHE-AWARE: Related Posts
   async getRelatedPosts<TACF = any>(
     postId: number,
     categoryIds: number[] = [],
     limit: number = 3,
     postType: string = 'posts',
   ): Promise<WordPressPost<TACF>[]> {
+    // 1. Check memory first
+    const cacheKey = `all-${postType}`;
+    if (this._requestCache.has(cacheKey)) {
+      try {
+        const allPosts = await this._requestCache.get(cacheKey)!;
+
+        // Find categories if missing
+        let targetCats = categoryIds;
+        if (targetCats.length === 0) {
+          const currentPost = allPosts.find((p) => p.id === postId);
+          if (currentPost) targetCats = currentPost.categories.map((c) => c.id);
+        }
+
+        if (targetCats.length === 0) return [];
+
+        const related = allPosts
+          .filter(
+            (p) =>
+              p.id !== postId &&
+              p.categories.some((c) => targetCats.includes(c.id)),
+          )
+          .sort(() => 0.5 - Math.random())
+          .slice(0, limit);
+
+        return related as WordPressPost<TACF>[];
+      } catch (e) {
+        /* Fallback */
+      }
+    }
+
+    // 2. Fallback to Network
     try {
-      // 1. Fallback: If no categories provided, fetch current post to find them
       if (categoryIds.length === 0) {
         const post = await this.getPostById<TACF>(postId, postType);
         if (post && post.categories.length > 0) {
@@ -487,36 +535,26 @@ class WordPressAPI {
 
       if (categoryIds.length === 0) return [];
 
-      // 2. Fetch a "Pool" of posts (e.g., 20 latest) instead of just 3
-      // This gives us enough variety to shuffle them.
-      const poolSize = 100;
-
       const { posts } = await this.getPosts<TACF>({
         postType,
-        perPage: poolSize, // Fetch 20, not 3
-
+        perPage: 50,
+        status: 'publish',
         // @ts-ignore
         categories: categoryIds,
         exclude: [postId],
-        // Only fetch fields we need for the card (Lightweight)
         _fields: ['id', 'title', 'slug', 'date', 'featured_media', '_embedded'],
       });
 
       if (posts.length === 0) return [];
-
-      // 3. Shuffle the pool (Randomize!)
-      // This runs at build time, assigning a unique random set to each page.
-      const shuffled = posts.sort(() => 0.5 - Math.random());
-
-      // 4. Return only the requested amount (e.g., 3)
-      return shuffled.slice(0, limit);
+      return posts.sort(() => 0.5 - Math.random()).slice(0, limit);
     } catch (error) {
       console.error('Error fetching related posts:', error);
       return [];
     }
   }
 
-  // Search posts
+  // ... [Standard methods] ...
+
   async searchPosts<TACF = any>(
     query: string,
     options: Omit<PostsQueryOptions, 'search'> = {},
@@ -524,7 +562,6 @@ class WordPressAPI {
     return this.getPosts<TACF>({ ...options, search: query });
   }
 
-  // Get posts by category
   async getPostsByCategory<TACF = any>(
     categorySlug: string[],
     options: Omit<PostsQueryOptions, 'categories'> = {},
@@ -532,7 +569,6 @@ class WordPressAPI {
     return this.getPosts<TACF>({ ...options, categories: [...categorySlug] });
   }
 
-  // Get posts by tag
   async getPostsByTag<TACF = any>(
     tagSlug: string,
     options: Omit<PostsQueryOptions, 'tags'> = {},
@@ -540,7 +576,6 @@ class WordPressAPI {
     return this.getPosts<TACF>({ ...options, tags: [tagSlug] });
   }
 
-  // Get posts by author
   async getPostsByAuthor<TACF = any>(
     authorId: number,
     options: Omit<PostsQueryOptions, 'author'> = {},
@@ -548,7 +583,6 @@ class WordPressAPI {
     return this.getPosts<TACF>({ ...options, author: authorId });
   }
 
-  // Get recent posts
   async getRecentPosts<TACF = any>(
     limit: number = 5,
     postType: string = 'posts',
@@ -562,7 +596,6 @@ class WordPressAPI {
     return posts;
   }
 
-  // Get popular posts (by comment count)
   async getPopularPosts<TACF = any>(
     limit: number = 5,
     postType: string = 'posts',
@@ -571,13 +604,10 @@ class WordPressAPI {
       const response = await fetch(
         `${this.baseUrl}/wp-json/wp/v2/${postType}?per_page=${limit}&orderby=comment_count&order=desc&_embed=true`,
       );
-
       if (!response.ok) return [];
-
       const posts = await response.json();
       return posts.map((post: any) => this.processPost<TACF>(post));
     } catch (error) {
-      console.error('Error fetching popular posts:', error);
       return [];
     }
   }
@@ -587,38 +617,24 @@ class WordPressAPI {
       `${this.baseUrl}/wp-json/custom/v1/post-views/${postId}`,
       {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({}),
         cache: 'no-cache',
       },
     );
-
-    if (!response.ok)
-      return {
-        views: 0,
-      };
-
+    if (!response.ok) return { views: 0 };
     const data = await response.json();
-    return {
-      views: data.views || 0,
-    };
+    return { views: data.views || 0 };
   }
 
-  // Build Basic auth header
   private authHeader(): Record<string, string> {
     const user = import.meta.env.WP_APP_USER;
     const pass = import.meta.env.WP_APP_PASSWORD;
     if (!user || !pass) return {};
-
-    // ASTRO/CLOUDFLARE CHANGE: Use btoa() instead of Buffer.from()
-    // btoa is available in browser/worker environments
     const basic = btoa(`${user}:${pass}`);
     return { Authorization: `Basic ${basic}` };
   }
 
-  // Process a comment object
   private processComment(raw: any): WordPressComment {
     return {
       id: raw.id,
@@ -635,7 +651,6 @@ class WordPressAPI {
     };
   }
 
-  // Build a nested tree from a flat list of comments
   private buildCommentTree(list: WordPressComment[]): WordPressComment[] {
     const byId = new Map<
       number,
@@ -643,7 +658,6 @@ class WordPressAPI {
     >();
     list.forEach((c) => byId.set(c.id, { ...c, children: [] }));
     const roots: (WordPressComment & { children: WordPressComment[] })[] = [];
-
     list.forEach((c) => {
       const node = byId.get(c.id)!;
       if (c.parent && byId.has(c.parent)) {
@@ -652,11 +666,9 @@ class WordPressAPI {
         roots.push(node);
       }
     });
-
     return roots;
   }
 
-  // Get comments for a post
   async getComments(
     postId: number,
     options: CommentsQueryOptions = {},
@@ -666,7 +678,6 @@ class WordPressAPI {
       const perPage = options.perPage ?? 50;
       const order = options.order ?? 'asc';
       const status = options.status ?? 'approve';
-
       const params = new URLSearchParams();
       params.set('post', String(postId));
       params.set('per_page', String(perPage));
@@ -676,13 +687,9 @@ class WordPressAPI {
       if (status) params.set('status', status);
 
       const url = `${this.baseUrl}/wp-json/wp/v2/comments?${params.toString()}`;
+      const res = await fetch(url, { headers: { ...this.authHeader() } });
 
-      // ASTRO CHANGE: Standard fetch, auth added via headers
-      const res = await fetch(url, {
-        headers: { ...this.authHeader() },
-      });
-
-      if (!res.ok) {
+      if (!res.ok)
         return {
           comments: [],
           tree: [],
@@ -690,7 +697,6 @@ class WordPressAPI {
           totalPages: 0,
           hasMore: false,
         };
-      }
 
       const raw = await res.json();
       const total = parseInt(res.headers.get('X-WP-Total') || '0', 10);
@@ -701,13 +707,7 @@ class WordPressAPI {
       const comments = (raw as any[]).map(this.processComment.bind(this));
       const tree = this.buildCommentTree(comments);
 
-      return {
-        comments,
-        tree,
-        total,
-        totalPages,
-        hasMore: page < totalPages,
-      };
+      return { comments, tree, total, totalPages, hasMore: page < totalPages };
     } catch (err) {
       console.error('Error fetching comments:', err);
       return {
@@ -721,5 +721,4 @@ class WordPressAPI {
   }
 }
 
-// Export singleton instance
 export const wordpress = new WordPressAPI();

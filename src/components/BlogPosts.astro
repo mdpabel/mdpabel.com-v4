@@ -16,6 +16,9 @@ interface Props {
   limit?: number;
   page?: number;
   shortDescription?: string;
+  // ✅ NEW: Accept pre-fetched data to avoid API calls
+  posts?: WordPressPost[];
+  totalPages?: number;
 }
 
 const {
@@ -28,6 +31,9 @@ const {
   rootPageLabel,
   limit = 5,
   page = 1,
+  // ✅ Destructure new props
+  posts: preFetchedPosts,
+  totalPages: passedTotalPages,
 } = Astro.props;
 
 let posts: WordPressPost[] = [];
@@ -36,7 +42,24 @@ let totalPages = 0;
 
 // --- DATA FETCHING LOGIC ---
 
-if (mode === 'featured') {
+if (preFetchedPosts) {
+  // ⚡ OPTIMIZATION: Use pre-fetched data if available
+  posts = preFetchedPosts;
+
+  // Use passed totalPages if available (important for pagination UI)
+  if (passedTotalPages) {
+    totalPages = passedTotalPages;
+    total = passedTotalPages * limit; // Approx total for pagination logic
+  }
+
+  // Apply rootSlug prefix just like the standard fetch does
+  if (rootSlug) {
+    posts = posts.map((post) => ({
+      ...post,
+      slug: `${rootSlug}/${post.slug}`,
+    }));
+  }
+} else if (mode === 'featured') {
   // 1. Fetch Case Studies
   const caseStudiesResponse = await wordpress.getPosts({
     perPage: limit,
@@ -47,7 +70,6 @@ if (mode === 'featured') {
   // 2. Fetch Blog Posts
   const blogPostsResponse = await wordpress.getPosts({
     perPage: limit,
-    // postType defaults to 'posts' in the class
     _fields: ['id', 'title', 'slug', 'date'],
   });
 
@@ -72,7 +94,7 @@ if (mode === 'featured') {
   // 5. Slice to Limit
   posts = combinedPosts.slice(0, limit);
 } else {
-  // Standard Fetch
+  // Standard Fetch (Fallback)
   const response = await wordpress.getPosts({
     perPage: limit,
     _fields: ['id', 'title', 'slug', 'date'],

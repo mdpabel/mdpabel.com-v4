@@ -27,7 +27,6 @@ const {
     <ClientRouter />
   </head>
   <body
-    style='overflow-y: unset;'
     class='flex flex-col bg-white dark:bg-slate-900 min-h-screen font-serif text-slate-900 dark:text-slate-100'>
     <Header />
 
@@ -40,3 +39,10 @@ const {
     <FloatingCTA />
   </body>
 </html>
+
+<script>
+  // Force reset overflow on every navigation
+  document.addEventListener('astro:page-load', () => {
+    document.body.style.overflow = '';
+  });
+</script>

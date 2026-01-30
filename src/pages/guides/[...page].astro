@@ -1,4 +1,5 @@
 ---
+// src/pages/guides/[...page].astro
 import BlogPosts from '../../components/BlogPosts.astro';
 import ComponentWrapper from '../../components/component-wrapper.astro';
 import Layout from '../../layouts/Layout.astro';
@@ -8,22 +9,49 @@ import { wordpress } from '../../lib/wordpress';
 export async function getStaticPaths() {
   const PER_PAGE = 10;
 
-  // 🚀 FAST: Only fetches headers (1kb) instead of body (100kb+)
-  const totalPages = await wordpress.getTotalPages({
-    postType: 'guide',
-    perPage: PER_PAGE,
+  // ✅ OPTIMIZATION: Fetch ALL guides once (Cached).
+  // This uses the cached "getAllPosts" method with a specific postType.
+  const allGuides = await wordpress.getAllPosts({
+    postType: 'guide', // <--- Creates a separate cache key 'all-guide'
+    _fields: [
+      'id',
+      'slug',
+      'title',
+      'excerpt',
+      'date',
+      'featured_media',
+      '_embedded',
+      'categories',
+    ],
   });
 
+  // Calculate total pages locally
+  const totalPages = Math.ceil(allGuides.length / PER_PAGE);
+
+  // Generate routes for all pages
   return Array.from({ length: totalPages }, (_, i) => {
     const pageNum = i + 1;
+
+    // Slice data for this specific page locally
+    const start = i * PER_PAGE;
+    const end = start + PER_PAGE;
+    const pagePosts = allGuides.slice(start, end);
+
     return {
+      // Page 1 matches '/guides' (undefined param)
+      // Page 2 matches '/guides/2', etc.
       params: { page: pageNum === 1 ? undefined : pageNum.toString() },
+      // ✅ Pass data directly to props so the component doesn't fetch again
+      props: { posts: pagePosts, totalPages },
     };
   });
 }
 
 // --- 2. Extract current page from Params ---
 const { page } = Astro.params;
+// ✅ Receive the pre-sliced posts
+const { posts, totalPages } = Astro.props;
+
 const currentPage = page ? Number(page) : 1;
 
 // --- 3. Dynamic SEO Settings ---
@@ -34,7 +62,6 @@ const seoTitle = isFirstPage
   ? 'WordPress Guides & Tutorials: Security, Malware Removal & Optimization'
   : `Guides & Tutorials (Page ${currentPage}) | WordPress Security`;
 
-// ✅ FIX: Dynamic description prevents duplicate meta errors
 const seoDesc = isFirstPage
   ? 'Explore step-by-step WordPress guides on security best practices, malware detection and removal, fixing common errors, and performance optimization.'
   : `Page ${currentPage} of our WordPress tutorials archive. Browse step-by-step guides on security, malware removal, and error troubleshooting.`;
@@ -49,6 +76,8 @@ const canonicalURL = isFirstPage ? baseUrl : `${baseUrl}/${currentPage}`;
   canonical={canonicalURL}>
   <ComponentWrapper class='pt-12'>
     <BlogPosts
+      posts={posts}
+      totalPages={totalPages}
       postType='guide'
       rootSlug='guides'
       page={currentPage}
