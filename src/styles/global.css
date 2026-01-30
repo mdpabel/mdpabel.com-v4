@@ -143,3 +143,67 @@ body {
   @apply bg-zinc-900;
 }
 /* WORDPRESS END  */
+
+/* Basic table styling for all screens */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+th,
+td {
+  padding: 8px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+/* Mobile reflow: Stack table into blocks at screens < 600px (adjust breakpoint as needed) */
+@media screen and (max-width: 600px) {
+  table {
+    border: 0;
+  }
+
+  table thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+
+  table tr {
+    border-bottom: 3px solid #ddd;
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  table td {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    font-size: 14px;
+    text-align: left;
+  }
+
+  table td::before {
+    /*
+      Use the data-label attribute as the pseudo-element content.
+      This acts as the "header" for each stacked cell.
+    */
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  table td:last-child {
+    border-bottom: 0;
+  }
+}
+
+li::marker {
+  color: gray;
+}
