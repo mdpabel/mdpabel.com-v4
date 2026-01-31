@@ -5,56 +5,36 @@ import ComponentWrapper from '../../components/component-wrapper.astro';
 import Layout from '../../layouts/Layout.astro';
 import { wordpress } from '../../lib/wordpress';
 
-// --- 1. Generate Static Paths ---
 export async function getStaticPaths() {
   const PER_PAGE = 10;
 
-  // ✅ OPTIMIZATION: Fetch ALL guides once (Cached).
-  // This uses the cached "getAllPosts" method with a specific postType.
+  // 1. Fetch all items
   const allGuides = await wordpress.getAllPosts({
-    postType: 'guide', // <--- Creates a separate cache key 'all-guide'
-    _fields: [
-      'id',
-      'slug',
-      'title',
-      'excerpt',
-      'date',
-      'featured_media',
-      '_embedded',
-      'categories',
-    ],
+    postType: 'guide',
   });
 
-  // Calculate total pages locally
+  // 2. Calculate total pages
   const totalPages = Math.ceil(allGuides.length / PER_PAGE);
 
-  // Generate routes for all pages
+  // 3. Generate routes manually
   return Array.from({ length: totalPages }, (_, i) => {
     const pageNum = i + 1;
-
-    // Slice data for this specific page locally
     const start = i * PER_PAGE;
     const end = start + PER_PAGE;
     const pagePosts = allGuides.slice(start, end);
 
     return {
-      // Page 1 matches '/guides' (undefined param)
-      // Page 2 matches '/guides/2', etc.
+      // ✅ CRITICAL: For /guides (root) to work, page 1 MUST be undefined
       params: { page: pageNum === 1 ? undefined : pageNum.toString() },
-      // ✅ Pass data directly to props so the component doesn't fetch again
-      props: { posts: pagePosts, totalPages },
+      props: { posts: pagePosts, totalPages, currentPage: pageNum },
     };
   });
 }
 
-// --- 2. Extract current page from Params ---
-const { page } = Astro.params;
-// ✅ Receive the pre-sliced posts
-const { posts, totalPages } = Astro.props;
+// ✅ Use props instead of params for the current page to ensure stability
+const { posts, totalPages, currentPage } = Astro.props;
 
-const currentPage = page ? Number(page) : 1;
-
-// --- 3. Dynamic SEO Settings ---
+// --- Dynamic SEO Settings ---
 const isFirstPage = currentPage === 1;
 const baseUrl = 'https://www.mdpabel.com/guides';
 
@@ -63,8 +43,8 @@ const seoTitle = isFirstPage
   : `Guides & Tutorials (Page ${currentPage}) | WordPress Security`;
 
 const seoDesc = isFirstPage
-  ? 'Explore step-by-step WordPress guides on security best practices, malware detection and removal, fixing common errors, and performance optimization.'
-  : `Page ${currentPage} of our WordPress tutorials archive. Browse step-by-step guides on security, malware removal, and error troubleshooting.`;
+  ? 'Explore step-by-step WordPress guides on security best practices, malware detection and removal...'
+  : `Page ${currentPage} of our WordPress tutorials archive.`;
 
 const canonicalURL = isFirstPage ? baseUrl : `${baseUrl}/${currentPage}`;
 ---
@@ -83,7 +63,7 @@ const canonicalURL = isFirstPage ? baseUrl : `${baseUrl}/${currentPage}`;
       page={currentPage}
       limit={10}
       title='Security, Malware Removal & Optimization Tutorials'
-      shortDescription='Step-by-step tutorials on WordPress security, error troubleshooting, malware removal, and performance optimization.'
+      shortDescription='Step-by-step tutorials on WordPress security...'
       mode='all'
     />
   </ComponentWrapper>

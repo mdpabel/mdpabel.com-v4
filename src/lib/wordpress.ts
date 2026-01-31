@@ -83,6 +83,7 @@ export interface WordPressPost<TACF = any> {
   sticky: boolean;
   acf: TACF;
   yoastSEO: YoastSEO;
+  yoastHead: string;
 }
 
 export interface PostsQueryOptions {
@@ -227,6 +228,7 @@ class WordPressAPI {
       sticky: post.sticky || false,
       acf: (post.acf as TACF) || ({} as TACF),
       yoastSEO: post.yoast_head_json,
+      yoastHead: post.yoast_head || '',
     };
   }
 
@@ -267,11 +269,13 @@ class WordPressAPI {
       if (options.orderBy) params.append('orderby', options.orderBy);
       if (options.order) params.append('order', options.order);
       if (options.status) params.append('status', options.status);
-      if (options._fields && options._fields.length > 0) {
-        params.append('_fields', options._fields.join(','));
-      }
+      // if (options._fields && options._fields.length > 0) {
+      //   params.append('_fields', options._fields.join(','));
+      // }
 
       const url = `${this.baseUrl}/wp-json/wp/v2/${postType}?${params.toString()}`;
+
+      console.log(`🌐 Fetching posts from: ${url}`);
       const response = await this.fetchWithRetry(url);
 
       if (!response.ok) {
@@ -377,6 +381,11 @@ class WordPressAPI {
     if (this._requestCache.has(cacheKey)) {
       try {
         const allPosts = await this._requestCache.get(cacheKey)!;
+
+        console.log(
+          `Found ${allPosts.length} posts in cache for '${cacheKey}'`,
+        );
+
         const cached = allPosts.find((p) => p.slug === slug);
         if (cached) {
           // console.log(`⚡ [Memory Hit] Found post "${slug}" in '${cacheKey}'`); // Optional verbose log

@@ -1,5 +1,6 @@
 ---
 // src/pages/blog/[...page].astro
+import { fields } from '../../../constant';
 import BlogPosts from '../../components/BlogPosts.astro';
 import ComponentWrapper from '../../components/component-wrapper.astro';
 import Layout from '../../layouts/Layout.astro';
@@ -12,16 +13,7 @@ export async function getStaticPaths() {
   // ✅ OPTIMIZATION: Fetch ALL posts once (Cached in memory).
   const allPosts = await wordpress.getAllPosts({
     // Only fetch the fields needed for the listing cards
-    _fields: [
-      'id',
-      'slug',
-      'title',
-      'excerpt',
-      'date',
-      'featured_media',
-      '_embedded', // Needed for images/author
-      'categories',
-    ],
+    _fields: fields,
   });
 
   // Calculate total pages locally
@@ -37,10 +29,9 @@ export async function getStaticPaths() {
     const pagePosts = allPosts.slice(start, end);
 
     return {
-      // Page 1 matches '/blog', Page 2 matches '/blog/2'
+      // ✅ CRITICAL: For /guides (root) to work, page 1 MUST be undefined
       params: { page: pageNum === 1 ? undefined : pageNum.toString() },
-      // ✅ PASS DATA DIRECTLY: No need to fetch again in the component!
-      props: { posts: pagePosts, totalPages },
+      props: { posts: pagePosts, totalPages, currentPage: pageNum },
     };
   });
 }

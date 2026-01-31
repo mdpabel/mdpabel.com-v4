@@ -1,0 +1,149 @@
+---
+// src/pages/author/[slug].astro
+
+import { fields } from '../../../constant';
+import ComponentWrapper from '../../components/component-wrapper.astro';
+import Layout from '../../layouts/Layout.astro';
+import { wordpress } from '../../lib/wordpress';
+import PostCard from '../../components/PostCard.astro';
+
+export async function getStaticPaths() {
+  // Hardcoded for single-author site (Fast & Simple)
+  const authors = [{ slug: 'mdpabel', name: 'MD Pabel', id: 1 }];
+
+  // Fetch EVERYTHING (Cached)
+  const [allPosts, allGuides, allCases, allLogs] = await Promise.all([
+    wordpress.getAllPosts({ postType: 'posts', _fields: fields }),
+    wordpress.getAllPosts({ postType: 'guide', _fields: fields }),
+    wordpress.getAllPosts({ postType: 'case-study', _fields: fields }),
+    wordpress.getAllPosts({ postType: 'malware-log', _fields: fields }),
+  ]);
+
+  return authors.map((author) => {
+    // Merge & Filter
+    const authorContent = [
+      ...allPosts
+        .filter((p) => p.author.id === author.id)
+        .map((p) => ({ ...p, typeLabel: 'Blog' })),
+      ...allGuides
+        .filter((p) => p.author.id === author.id)
+        .map((p) => ({ ...p, typeLabel: 'Guide' })),
+      ...allCases
+        .filter((p) => p.author.id === author.id)
+        .map((p) => ({ ...p, typeLabel: 'Case Study' })),
+      ...allLogs
+        .filter((p) => p.author.id === author.id)
+        .map((p) => ({ ...p, typeLabel: 'Malware Log' })),
+    ];
+
+    // Sort Newest First
+    const sortedContent = authorContent.sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    );
+
+    return {
+      params: { slug: author.slug },
+      props: { author, posts: sortedContent },
+    };
+  });
+}
+
+const { author, posts } = Astro.props;
+
+// SEO Metadata
+const seoTitle = `${author.name} - Security Specialist & Author`;
+const seoDesc = `Author profile of ${author.name}. Expert in WordPress security, malware removal, and full-stack development. View all ${posts.length} published articles and case studies.`;
+const canonicalURL = `https://www.mdpabel.com/author/${author.slug}/`;
+---
+
+<Layout title={seoTitle} description={seoDesc} canonical={canonicalURL}>
+  <ComponentWrapper class='pt-12'>
+    {/* UNIQUE CONTENT SECTION: This prevents "Thin Content" penalties */}
+    <div
+      class='items-center gap-8 grid grid-cols-1 md:grid-cols-3 bg-gray-50 mx-auto mb-16 p-8 rounded-2xl max-w-4xl'>
+      {/* Avatar */}
+      <div class='text-center md:text-right'>
+        <img
+          src='https://secure.gravatar.com/avatar/b6b48a60efe9dc8cd04d4a7e5c9b22cafd47332f65a407ce270e8ad7f8843372?s=200'
+          alt={author.name}
+          class='inline-block shadow-md border-4 border-white rounded-full w-32 h-32'
+        />
+      </div>
+
+      {/* Bio Text */}
+      <div class='md:col-span-2 md:text-left text-center'>
+        <h1 class='mb-2 font-bold text-gray-900 text-3xl'>{author.name}</h1>
+        <p class='mb-4 font-medium text-blue-600'>
+          WordPress Security Expert & Full Stack Developer
+        </p>
+
+        <p class='mb-4 text-gray-600 leading-relaxed'>
+          I specialize in fixing hacked WordPress sites, removing malware, and
+          optimizing server performance. With over 7 years of experience, I have
+          resolved 4,500+ security cases. This archive contains my complete body
+          of work, including technical guides, real-world case studies, and
+          security logs.
+        </p>
+
+        <div class='flex flex-wrap justify-center md:justify-start gap-3'>
+          <span
+            class='bg-white px-3 py-1 border border-gray-200 rounded-full text-gray-600 text-sm'
+            >🛡️ Malware Removal</span
+          >
+          <span
+            class='bg-white px-3 py-1 border border-gray-200 rounded-full text-gray-600 text-sm'
+            >⚡ Performance</span
+          >
+          <span
+            class='bg-white px-3 py-1 border border-gray-200 rounded-full text-gray-600 text-sm'
+            >🐛 Bug Fixing</span
+          >
+        </div>
+      </div>
+    </div>
+
+    {/* FEED SECTION: Distinct from Blog because it includes Cases & Logs */}
+    <div class='mb-8 pb-4 border-gray-100 border-b'>
+      <h2 class='font-bold text-gray-900 text-2xl'>Latest Contributions</h2>
+      <p class='text-gray-500'>
+        A unified feed of articles, case studies, and logs.
+      </p>
+    </div>
+
+    <div class='gap-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
+      {
+        posts.map((post) => (
+          <div class='group relative'>
+            {/* Visual differentiation preventing "Duplicate" perception */}
+            <span
+              class={`absolute top-3 right-3 z-10 text-white text-[10px] uppercase font-bold px-2 py-1 rounded tracking-wide backdrop-blur-sm
+             ${
+               post.typeLabel === 'Case Study'
+                 ? 'bg-purple-600/90'
+                 : post.typeLabel === 'Malware Log'
+                   ? 'bg-red-600/90'
+                   : post.typeLabel === 'Guide'
+                     ? 'bg-green-600/90'
+                     : 'bg-blue-600/90'
+             }`}>
+              {post.typeLabel}
+            </span>
+
+            <PostCard
+              post={post}
+              rootSlug={
+                post.typeLabel === 'Case Study'
+                  ? 'case-studies'
+                  : post.typeLabel === 'Malware Log'
+                    ? 'malware-log'
+                    : post.typeLabel === 'Guide'
+                      ? 'guides'
+                      : 'blog'
+              }
+            />
+          </div>
+        ))
+      }
+    </div>
+  </ComponentWrapper>
+</Layout>

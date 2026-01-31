@@ -6,23 +6,12 @@ import SinglePost from '../../components/SinglePost.astro';
 import { wordpress } from '../../lib/wordpress';
 import Banner from '../../components/Banner.astro';
 import RelatedPosts from '../../components/RelatedPosts.astro';
+import { fields } from '../../../constant';
 
 export async function getStaticPaths() {
   // ✅ OPTIMIZATION: Fetch ALL guides once (Cached).
   const posts = await wordpress.getAllPosts({
     postType: 'guide',
-    _fields: [
-      'id',
-      'slug',
-      'title',
-      'content',
-      'excerpt',
-      'date',
-      'featured_media',
-      'acf',
-      'categories',
-      '_embedded',
-    ],
   });
 
   // Generate routes and pre-calculate related posts in memory
@@ -47,31 +36,9 @@ export async function getStaticPaths() {
 }
 
 const { post, relatedPosts } = Astro.props;
-
-// SEO
-const seoTitle = `${post.title} | MD Pabel`;
-const seoDesc = post.excerpt.replace(/<[^>]*>?/gm, '').slice(0, 160);
-const seoImage = post.featuredImage?.url;
-
-// Schema
-const schema = {
-  '@context': 'https://schema.org',
-  '@type': 'HowTo',
-  headline: post.title,
-  image: seoImage,
-  author: { '@type': 'Person', name: 'MD Pabel' },
-  datePublished: post.date,
-  description: seoDesc,
-};
 ---
 
-<Layout title={seoTitle} description={seoDesc} image={seoImage}>
-  <script
-    type='application/ld+json'
-    set:html={JSON.stringify(schema)}
-    is:inline
-  />
-
+<Layout yoastHead={post.yoastHead}>
   <Banner />
 
   <ComponentWrapper class='pb-20 max-w-4xl'>

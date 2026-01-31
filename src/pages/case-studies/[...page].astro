@@ -14,16 +14,6 @@ export async function getStaticPaths() {
   // because we are passing a specific 'postType'.
   const allCaseStudies = await wordpress.getAllPosts({
     postType: 'case-study',
-    _fields: [
-      'id',
-      'slug',
-      'title',
-      'excerpt',
-      'date',
-      'featured_media',
-      '_embedded',
-      'categories',
-    ],
   });
 
   // Calculate total pages locally
@@ -39,9 +29,9 @@ export async function getStaticPaths() {
     const pagePosts = allCaseStudies.slice(start, end);
 
     return {
+      // ✅ CRITICAL: For /guides (root) to work, page 1 MUST be undefined
       params: { page: pageNum === 1 ? undefined : pageNum.toString() },
-      // ✅ Pass data directly to props so the component doesn't fetch again
-      props: { posts: pagePosts, totalPages },
+      props: { posts: pagePosts, totalPages, currentPage: pageNum },
     };
   });
 }

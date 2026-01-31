@@ -3,84 +3,46 @@
 import Layout from '../../layouts/Layout.astro';
 import ComponentWrapper from '../../components/component-wrapper.astro';
 import SinglePost from '../../components/SinglePost.astro';
-import { wordpress, type WordPressPost } from '../../lib/wordpress';
+import { wordpress } from '../../lib/wordpress'; // Type is inferred automatically now
 import Banner from '../../components/Banner.astro';
 import RelatedPosts from '../../components/RelatedPosts.astro';
 
-// 1. Generate Paths (Fetch Once, Reuse Everywhere)
+// 1. Generate Paths
 export async function getStaticPaths() {
-  // ✅ OPTIMIZATION: Fetch ALL posts at once.
-  // The new 'wordpress.ts' will cache this request in memory,
-  // ensuring we don't hit the API thousands of times.
-  const allPosts = await wordpress.getAllPosts({
-    _fields: [
-      'id',
-      'slug',
-      'title',
-      'content',
-      'excerpt',
-      'date',
-      'featured_media',
-      'acf',
-      'categories',
-      '_links',
-      '_embedded',
-    ],
-  });
+  // The API class automatically ensures 'yoast_head' is fetched even if not in 'fields'
+  const allPosts = await wordpress.getAllPosts();
 
-  // Generate routes and pre-calculate related posts in memory (0ms latency)
   return allPosts.map((post) => {
-    // Filter related posts from the array we already have
+    // Filter related posts in memory
     const relatedPosts = allPosts
       .filter(
         (p) =>
-          p.id !== post.id && // Exclude current post
+          p.id !== post.id &&
           p.categories.some((cat) =>
             post.categories.find((c) => c.id === cat.id),
           ),
       )
-      .sort(() => 0.5 - Math.random()) // Randomize order
-      .slice(0, 3); // Limit to 3 items
+      .sort(() => 0.5 - Math.random())
+      .slice(0, 3);
 
     return {
       params: { slug: post.slug },
+      // ✅ Pass the post (which includes yoastHead) to props
       props: { post, relatedPosts },
     };
   });
 }
 
 const { post, relatedPosts } = Astro.props;
-
-// 2. SEO
-const seoTitle = `${post.title} | MD Pabel`;
-const seoDesc = post.excerpt.replace(/<[^>]*>?/gm, '').slice(0, 160);
-const seoImage = post.featuredImage?.url;
-
-// 3. Schema
-const schema = {
-  '@context': 'https://schema.org',
-  '@type': 'BlogPosting',
-  headline: post.title,
-  image: seoImage,
-  author: { '@type': 'Person', name: 'MD Pabel' },
-  datePublished: post.date,
-  description: seoDesc,
-};
 ---
 
-<Layout title={seoTitle} description={seoDesc} image={seoImage}>
-  <script
-    type='application/ld+json'
-    set:html={JSON.stringify(schema)}
-    is:inline
-  />
-
+{/* ✅ PASS 'yoastHead' DIRECTLY. No manual Schema or Title needed. */}
+<Layout yoastHead={post.yoastHead}>
   <Banner />
 
   <ComponentWrapper class='pb-20 max-w-4xl'>
     <SinglePost post={post} parentSlug='blog' />
 
-    {/* ✅ Pass the pre-calculated posts to the component */}
     <RelatedPosts currentPostId={post.id} posts={relatedPosts} />
   </ComponentWrapper>
 </Layout>
