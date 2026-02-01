@@ -1,6 +1,7 @@
 ---
 title: 'Hidden Plugin Backdoor'
 slug: 'hidden-plugin-backdoor'
+metaDescription: 'Analysis of the "WP-Security" fake plugin backdoor. Learn how hackers use gzinflate and base64_decode to hide malicious scripts from the WordPress dashboard.'
 reportDate: '2026-01-21'
 threatType: 'Backdoor'
 severity: 'High'

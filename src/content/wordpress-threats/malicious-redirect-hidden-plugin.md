@@ -1,5 +1,6 @@
 ---
 title: 'Malicious Redirect via Hidden Plugin'
+metaDescription: 'Technical analysis of a fake WooCommerce plugin used for search engine cloaking and redirects. Learn how woocommerce-load.php hijacks organic traffic and how to remove the hidden backdoor.'
 slug: 'malicious-redirect-hidden-plugin'
 reportDate: '2026-01-17'
 threatType: 'Malware, Backdoor'

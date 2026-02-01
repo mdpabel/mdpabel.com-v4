@@ -1,28 +1,32 @@
 ---
-title: "SavvyWolf Web Shell - Manager Variant"
-slug: "savvywolf-web-shell-manager-variant"
-reportDate: "2026-01-31"
-threatType: "PHP Backdoor / Web Shell"
-severity: "High"
-fileHash: "savvywolf-php-web-shell"
-detectedPaths: ["edit-wolf.php"]
-screenshots: ["/images/wordpress-threats/savvywolf-php-web-shell_evidence-1.png"]
-vtLink: "https://www.virustotal.com/gui/file/f5dddeed7490345da028b13ad17c5d8ef6a6369abd507b717fb268545cff995e"
-vtScore: "0/61 (FUD)"
-impact: "The site becomes vulnerable to unauthorized access and file manipulation. Attackers can upload, edit, and execute files remotely, compromising site integrity and security."
+title: 'SavvyWolf Web Shell - Manager Variant'
+slug: 'savvywolf-web-shell-manager-variant'
+metaDescription: 'Technical analysis of the SavvyWolf Web Shell. Learn how this self-replicating PHP backdoor uses directory walking to maintain persistence in wp-admin and wp-includes.'
+reportDate: '2026-01-31'
+threatType: 'PHP Backdoor / Web Shell'
+severity: 'High'
+fileHash: 'savvywolf-php-web-shell'
+detectedPaths: ['edit-wolf.php']
+screenshots:
+  ['/images/wordpress-threats/savvywolf-php-web-shell_evidence-1.png']
+vtLink: 'https://www.virustotal.com/gui/file/f5dddeed7490345da028b13ad17c5d8ef6a6369abd507b717fb268545cff995e'
+vtScore: '0/61 (FUD)'
+impact: 'The site becomes vulnerable to unauthorized access and file manipulation. Attackers can upload, edit, and execute files remotely, compromising site integrity and security.'
 seenOn: "The files were found primarily within the '/wp-content/', '/wp-admin/', and '/wp-includes/widgets/' directories of a WordPress installation."
-behavior: "The malware automatically installs copies of itself to maintain persistence and provides a visual interface for server management."
-difficulty: "Moderate"
-recurrence: "High"
-numberOfSiteFixed: "1"
+behavior: 'The malware automatically installs copies of itself to maintain persistence and provides a visual interface for server management.'
+difficulty: 'Moderate'
+recurrence: 'High'
+numberOfSiteFixed: '1'
 ---
 
 ## Technical Analysis
+
 The SavvyWolf Web Shell is a sophisticated PHP backdoor disguised within a WordPress environment. It self-replicates by copying itself to key WordPress directories, such as 'wp-admin' and 'wp-includes', to ensure persistence even if detected in one location. The shell masquerades as a legitimate WordPress file, making detection difficult. Once operational, it provides a web-based GUI for file management and server control without the need for FTP or SSH, leveraging its root access to the infected WordPress directory.
 
 > **VirusTotal Analysis:** 🛡️ **Zero-Day / Fully Undetected.**
 
 ## Attack Chain
+
 1. Initial deployment via an exploited vulnerability or compromised credentials.
 2. Upon execution, identifies WordPress root directory and attempts to replicate itself in strategic locations.
 3. Provides a GUI for attackers to manage server files and directory structures.
@@ -30,6 +34,7 @@ The SavvyWolf Web Shell is a sophisticated PHP backdoor disguised within a WordP
 ## Code Signature(s)
 
 ### FILE: `edit-wolf.php`
+
 ```php
 <?php
 $backups = [];
@@ -102,8 +107,8 @@ if ($try_base && is_dir($try_base)) {
     }
 ```
 
-
 ## Indicators of Compromise (IOCs)
+
 - `/wp-admin/admin-wolf.php`
 - `/wp-content/edit-wolf.php`
 - `/wp-includes/widgets/class-wp-wolf-widget.php`
@@ -111,6 +116,7 @@ if ($try_base && is_dir($try_base)) {
 - `public_html`
 
 ## Removal Protocol
+
 1. Simultaneously delete '/wp-admin/admin-wolf.php', '/wp-content/edit-wolf.php', and '/wp-includes/widgets/class-wp-wolf-widget.php'.
 1. Search the database for references to 'wolf' or specific filenames and remove them.
 1. Review server access logs for suspicious POST requests to these files and block identified IPs.

@@ -51,7 +51,10 @@ const proseClasses =
   'prose-img:shadow-lg dark:prose-invert prose-li:mb-2 prose-headings:pb-2 prose-img:border dark:prose-headings:border-slate-700 dark:prose-img:border-slate-600 prose-headings:border-slate-300 prose-img:border-slate-300 prose-headings:border-b prose-img:rounded-lg max-w-none prose-headings:font-bold dark:prose-headings:text-white dark:prose-ol:text-slate-300 dark:prose-p:text-slate-300 dark:prose-strong:text-white dark:prose-ul:text-slate-300 prose-headings:text-gray-900 prose-ol:text-slate-700 prose-p:text-slate-700 prose-strong:text-gray-900 prose-ul:text-slate-700 !break-words prose-code:break-words prose-p:leading-relaxed prose prose-lg';
 ---
 
-<Layout title={`${data.title} | Threat Report`}>
+<Layout
+  title={`${data.title} | Threat Report`}
+  description={data.metaDescription ||
+    'Detailed analysis of WordPress threats and malware.'}>
   <main class='mx-auto px-4 py-12 max-w-4xl'>
     {/* --- HEADER --- */}
     <header class='mb-8 pb-8 border-slate-200 dark:border-slate-800 border-b'>

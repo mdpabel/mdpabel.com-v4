@@ -46,4 +46,7 @@
 /best-managed-wordpress-hosting-providers-for-speed-security-2 /blog/best-managed-wordpress-hosting-providers-for-speed-security-2 301
 /case-study-cleaning-1162-infected-htaccess-files-on-bluehost-the-lockout-hack /blog/case-study-cleaning-1162-infected-htaccess-files-on-bluehost-the-lockout-hack 301
 
-/services/blacklist-removal /wordpress-malware-removal 301
+/services/blacklist-removal /blacklist-removal/ 301
+/wordpress-security-maintenance-service /wordpress-malware-removal/ 301
+
+/services/blacklist-removal-service /blacklist-removal/ 301

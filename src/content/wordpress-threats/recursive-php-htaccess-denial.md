@@ -1,6 +1,7 @@
 ---
 title: 'Recursive .htaccess PHP Execution Lockout'
 slug: 'recursive-htaccess-php-denial'
+metaDescription: 'Technical analysis of the recursive .htaccess PHP lockout. Learn how hackers use mixed-case PHP regex to cause 403 Forbidden errors and how to clean a mass infection.'
 reportDate: '2026-01-27'
 threatType: 'Configuration Hijacking / Denial of Service'
 severity: 'Critical'

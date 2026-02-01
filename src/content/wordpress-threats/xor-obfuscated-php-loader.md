@@ -1,5 +1,6 @@
 ---
 title: 'XOR-Obfuscated PHP Dropper'
+metaDescription: 'Technical analysis of the "mrk" XOR backdoor in wp-config.php. Learn how hackers use hex2bin and XOR 66 to execute ephemeral PHP payloads in temporary directories.'
 slug: 'xor-obfuscated-php-loader'
 reportDate: '2026-01-24'
 threatType: 'Remote Code Execution (RCE) Backdoor'

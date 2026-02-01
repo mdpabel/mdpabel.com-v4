@@ -1,5 +1,6 @@
 ---
 title: 'WP Compatibility Patch Backdoor'
+metaDescription: 'Technical analysis of the "WP Compatibility Patch" malware. Learn how it uses pre_user_query hooks to create and hide the adminbackup user in the WordPress database.'
 slug: 'wp-compatibility-patch-backdoor'
 reportDate: '2026-01-14'
 threatType: 'Backdoor'

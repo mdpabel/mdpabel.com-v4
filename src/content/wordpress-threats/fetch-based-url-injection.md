@@ -1,6 +1,7 @@
 ---
 title: 'Fetch-Based URL Injection'
 slug: 'fetch-based-url-injection'
+metaDescription: 'Technical analysis of the nawalaku[.]my[.]id footer injection. Learn how hackers use PHP fetch, cURL, and file_get_contents to inject SEO spam into WordPress themes.'
 reportDate: '2026-01-22'
 threatType: 'URL Injection'
 severity: 'High'

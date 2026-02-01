@@ -1,5 +1,6 @@
 ---
 title: 'PHP Shell Ultimate Backdoor'
+metaDescription: 'Technical analysis of the PHP Shell Ultimate backdoor. Learn how hackers use LD_PRELOAD and PHP-FPM exploits to bypass disable_functions and open_basedir restrictions.'
 slug: 'php-shell-ultimate-backdoor'
 reportDate: '2026-01-27'
 threatType: 'Backdoor'

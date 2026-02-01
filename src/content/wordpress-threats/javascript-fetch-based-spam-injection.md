@@ -2,6 +2,7 @@
 title: 'JavaScript Fetch-Based Spam Injection'
 slug: 'javascript-fetch-based-spam-injection'
 reportDate: '2026-01-19'
+metaDescription: 'Analysis of the sengatanlebah.shop and jasabacklink.buzz spam injections. Learn how hackers use the JS Fetch API to bypass scanners and inject dynamic SEO spam into WordPress themes.'
 threatType: 'JS Injection'
 severity: 'High'
 fileHash: 'seo-spam-database-injection'

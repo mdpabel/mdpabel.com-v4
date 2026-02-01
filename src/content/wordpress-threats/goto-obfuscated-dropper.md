@@ -1,6 +1,7 @@
 ---
 title: 'Goto Obfuscated Dropper'
 slug: 'goto-obfuscated-dropper'
+metaDescription: 'Technical analysis of a zero-day PHP backdoor using goto obfuscation and fake JPEG headers. Learn how the fcalpha.net dropper bypasses security scanners and how to remove it.'
 reportDate: '2026-01-27'
 threatType: 'Backdoor'
 severity: 'High'
