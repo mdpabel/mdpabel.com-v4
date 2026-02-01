@@ -2,7 +2,7 @@
 title: 'Malicious .htaccess Injection and Fake Index.php Dropper'
 slug: 'htaccess-injection-fake-index-php-dropper'
 reportDate: '2026-01-27'
-metaDescription: 'Technical analysis of a dual-threat infection using recursive .htaccess files for lockout and an obfuscated Monarx index.php dropper. Learn how to restore access and remove the backdoor.
+metaDescription: 'Technical analysis of a dual-threat infection using recursive .htaccess files for lockout and an obfuscated Monarx index.php dropper. Learn how to restore access and remove the backdoor.'
 threatType: 'Access Control Malware and Backdoor'
 severity: 'High'
 fileHash: 'index-php-obfuscated-dropper-htaccess-dos'
