@@ -15,7 +15,7 @@ const PUBLIC_BASE_DIR = 'public/images/wordpress-threats';
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 const VT_API_KEY = process.env.VIRUSTOTAL_API_KEY;
 
-// Delay helper to prevent API rate limits
+// Delay helper
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // Ensure directories exist
@@ -25,7 +25,7 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 console.log(`🛡️  Forensic Intelligence Engine Started...`);
 
-// --- 1. HELPER: SLUG UNIQUENESS CHECKER ---
+// --- 1. HELPER: SLUG UNIQUENESS ---
 function getUniqueSlug(baseSlug) {
   let slug = baseSlug
     .toLowerCase()
@@ -33,10 +33,8 @@ function getUniqueSlug(baseSlug) {
     .replace(/[^\w\s-]/g, '')
     .replace(/[\s_-]+/g, '-')
     .replace(/^-+|-+$/g, '');
-
   let finalSlug = slug;
   let counter = 2;
-
   while (fs.existsSync(path.join(CONTENT_DIR, `${finalSlug}.md`))) {
     finalSlug = `${slug}-${counter}`;
     counter++;
@@ -44,36 +42,30 @@ function getUniqueSlug(baseSlug) {
   return finalSlug;
 }
 
-// --- 2. HELPER: IMAGE TO BASE64 (For AI Vision) ---
+// --- 2. HELPER: IMAGE ENCODER ---
 function encodeImage(filePath) {
   const imageBuffer = fs.readFileSync(filePath);
-  const ext = path.extname(filePath).substring(1); // png, jpg
+  const ext = path.extname(filePath).substring(1);
   const mimeType = ext === 'svg' ? 'svg+xml' : ext === 'jpg' ? 'jpeg' : ext;
   return `data:image/${mimeType};base64,${imageBuffer.toString('base64')}`;
 }
 
-// --- 3. HELPER: DEFANG IOCs (Safety) ---
+// --- 3. HELPER: CLEAN DEFANG IOCs ---
 function defangIOC(text) {
   if (!text) return text;
-  return text
-    .replace(
-      /https?:\/\//gi,
-      (match) => match.toLowerCase().replace('http', 'hxxp') + '[:]',
-    ) // http:// -> hxxp[:]//
-    .replace(/\./g, '[.]') // . -> [.]
-    .replace(/:/g, '[:]') // : -> [:] (catches ports or mailto)
-    .replace(/@/g, '[@]'); // @ -> [@] (emails)
+  // Simple, readable defanging:
+  // 1. http -> hxxp
+  // 2. . -> [.]
+  return text.replace(/https?:\/\//gi, 'hxxp://').replace(/\./g, '[.]');
 }
 
 // --- 4. HELPER: VIRUSTOTAL SCAN ---
 async function checkVirusTotal(fileBuffer) {
   if (!VT_API_KEY) return null;
-
   try {
     const hashSum = crypto.createHash('sha256');
     hashSum.update(fileBuffer);
     const sha256 = hashSum.digest('hex');
-
     console.log(`    🔍 Checking VT Hash: ${sha256.substring(0, 15)}...`);
 
     const response = await fetch(
@@ -84,20 +76,18 @@ async function checkVirusTotal(fileBuffer) {
       },
     );
 
-    if (response.status === 404) {
-      return { found: false, permalink: null, detections: null };
-    }
-
-    if (!response.ok) return null;
+    if (response.status === 404)
+      return { found: false, permalink: null, hash: sha256 };
+    if (!response.ok) return { found: false, permalink: null, hash: sha256 };
 
     const data = await response.json();
     const stats = data.data.attributes.last_analysis_stats;
-
     return {
       found: true,
       permalink: `https://www.virustotal.com/gui/file/${sha256}`,
       positives: stats.malicious,
       total: stats.malicious + stats.undetected,
+      hash: sha256,
     };
   } catch (error) {
     console.error(`    ❌ VT Error: ${error.message}`);
@@ -121,65 +111,56 @@ for (const caseId of cases) {
   const caseDir = path.join(DUMP_DIR, caseId);
   const files = fs.readdirSync(caseDir);
 
-  // -- DATA CONTAINERS --
   let contextContent = 'No specific context provided.';
-  let evidenceFiles = []; // Code/Text content
-  let aiImagePayloads = []; // Base64 images for AI
-  let publicImagePaths = []; // Public paths for Markdown
-  let mainFileBuffer = null; // For VT Scan
+  let evidenceFiles = [];
+  let aiImagePayloads = [];
+  let publicImagePaths = [];
+  let mainFileBuffer = null;
+  let calculatedHash = 'N/A'; // Will store the real SHA256
 
-  // 1. ITERATE AND SORT FILES
+  // 1. ITERATE FILES
   for (const file of files) {
     const filePath = path.join(caseDir, file);
     const ext = path.extname(file).toLowerCase();
-
-    // Skip directories
     if (!fs.statSync(filePath).isFile()) continue;
 
-    // A. User Context (Priority 1)
+    // A. User Context
     if (file.toLowerCase().includes('context') && ext === '.txt') {
       contextContent = fs.readFileSync(filePath, 'utf-8');
       console.log(`    📝 Found User Context: ${file}`);
       continue;
     }
 
-    // B. Images (Priority 2)
+    // B. Images
     if (['.png', '.jpg', '.jpeg', '.gif', '.webp'].includes(ext)) {
-      // 1. Copy to Public
       const newName = `evidence-${publicImagePaths.length + 1}${ext}`;
       const destPath = path.join(PUBLIC_BASE_DIR, `${caseId}_${newName}`);
       fs.copyFileSync(filePath, destPath);
 
-      const publicPath = `/images/wordpress-threats/${caseId}_${newName}`;
-      publicImagePaths.push(publicPath);
+      publicImagePaths.push(`/images/wordpress-threats/${caseId}_${newName}`);
 
-      // 2. Prepare for AI (Vision) - Limit to first 4 images to save tokens
       if (aiImagePayloads.length < 4) {
         aiImagePayloads.push({
           type: 'image_url',
-          image_url: {
-            url: encodeImage(filePath),
-            detail: 'high',
-          },
+          image_url: { url: encodeImage(filePath), detail: 'high' },
         });
       }
       continue;
     }
 
-    // C. Evidence Code (Priority 3)
+    // C. Evidence Code
     const content = fs.readFileSync(filePath, 'utf-8');
 
-    // Capture executable for VT
+    // Capture file for Hash/VT (Prioritize PHP/JS)
     if (!mainFileBuffer && (ext === '.php' || ext === '.js' || ext === '.sh')) {
       mainFileBuffer = fs.readFileSync(filePath);
     }
+    // Fallback: if no code file found yet, use this one for hash
+    if (!mainFileBuffer) {
+      mainFileBuffer = fs.readFileSync(filePath);
+    }
 
-    // Add to text evidence
-    evidenceFiles.push({
-      name: file,
-      ext: ext,
-      content: content.slice(0, 4000), // Truncate large files
-    });
+    evidenceFiles.push({ name: file, ext: ext, content: content });
   }
 
   if (evidenceFiles.length === 0 && publicImagePaths.length === 0) {
@@ -187,61 +168,64 @@ for (const caseId of cases) {
     continue;
   }
 
-  // 2. CHECK VIRUSTOTAL
+  // 2. HASH & VIRUSTOTAL
   let vtData = null;
   if (mainFileBuffer) {
+    // Calc hash locally first
+    const hashSum = crypto.createHash('sha256');
+    hashSum.update(mainFileBuffer);
+    calculatedHash = hashSum.digest('hex');
+
     vtData = await checkVirusTotal(mainFileBuffer);
-    if (vtData?.found)
-      console.log(`    🚨 VT Detection: ${vtData.positives}/${vtData.total}`);
     if (VT_API_KEY) await delay(15000);
   }
 
-  // 3. AI ANALYSIS (MULTIMODAL)
+  // 3. AI ANALYSIS
   console.log(
     `    🤖 Analyst AI analyzing ${evidenceFiles.length} files + ${aiImagePayloads.length} images...`,
   );
 
+  // LOGIC: If file is small (< 150 lines), we force dump. If large, we ask for snippet.
+  const isLargeCase = evidenceFiles.some(
+    (f) => f.content.split('\n').length > 150,
+  );
+
   try {
     const promptInstructions = `
-      You are MD Pabel, a Senior Malware Analyst and Security Expert.
-      Your task is to generate a comprehensive threat report based on the evidence found in a client's site.
+      You are MD Pabel, a Senior Malware Analyst.
+      Write a threat report in the FIRST PERSON ("I found", "We detected").
       
-      CRITICAL PERSONA INSTRUCTIONS:
-      - Write in the FIRST PERSON (e.g., "I identified...", "Upon analyzing the logs, I found...", "We detected...").
-      - Do NOT refer to "the user" or "the client" in the third person as the source of discovery. YOU are the expert who found and fixed it.
-      - The "USER CONTEXT" input below is simply your field notes or what the client told you. Rephrase it as your own findings.
+      CRITICAL:
+      1. Use USER CONTEXT for the story.
+      2. Use SCREENSHOTS to confirm errors/symptoms.
+      3. Use CODE to explain the "How".
+      
+      CODE HANDLING:
+      ${
+        isLargeCase
+          ? 'These are large files. Extract the MOST CRITICAL malicious logic blocks (at least 20-50 lines). Do NOT show just one line. Show the full loop/function context.'
+          : "These are small files. You can ignore the 'maliciousSnippets' tool and I will just dump the full code manually."
+      }
 
-      CRITICAL SOURCE PRIORITY:
-      1. USER CONTEXT: Your primary field notes on symptoms and errors.
-      2. SCREENSHOTS (VISION): Use these to find details you might have missed in notes (e.g. specific error codes, UI banners).
-      3. MALWARE CODE: The technical proof. Use this to explain *how* the attack works.
-
-      WRITING RULES:
-      - TONE: Professional, Authoritative, Direct. (Grade 8-10 English).
-      - SEO: Use keywords: "WordPress malware", "hacked site", "security", "redirect fix", "backdoor".
-      - SAFETY: Defang all malicious URLs (e.g., hxxp[:]//evil[.]com).
-
-      REQUIRED OUTPUT FIELDS:
-      - metaDescription: 150-160 chars, compelling, click-worthy for Google (First person: "I found...").
-      - technicalAnalysis: A synthesis of the evidence. Explain what YOU found and how it works.
+      OUTPUT:
+      - maliciousSnippets: ONLY use this if files are HUGE. Otherwise return empty array.
+      - iocs: Return CLEAN URLs (e.g. http://bad.com). I will defang them myself.
     `;
 
-    // Construct Multimodal Message
     const userMessageContent = [
       {
         type: 'text',
-        text: `FIELD NOTES (CONTEXT):\n"${contextContent}"\n\nVIRUSTOTAL DATA:\n${vtData?.found ? `Detections: ${vtData.positives}/${vtData.total}` : 'Zero-Day / Unique'}\n\nMALWARE CODE EVIDENCE:\n${evidenceFiles.map((f) => `FILE: ${f.name}\n${f.content}\n`).join('---\n')}`,
+        text: `CONTEXT:\n"${contextContent}"\n\nCODE EVIDENCE:\n${evidenceFiles.map((f) => `FILE: ${f.name}\n${f.content.slice(0, 10000)}\n`).join('---\n')}`,
       },
-      ...aiImagePayloads, // Inject images here
+      ...aiImagePayloads,
     ];
 
     const completion = await openai.chat.completions.create({
-      model: 'gpt-4o', // Vision Capable
+      model: 'gpt-4o',
       messages: [
         { role: 'system', content: promptInstructions },
         { role: 'user', content: userMessageContent },
       ],
-      // Force JSON schema via tools
       tools: [
         {
           type: 'function',
@@ -251,16 +235,9 @@ for (const caseId of cases) {
             parameters: {
               type: 'object',
               properties: {
-                title: {
-                  type: 'string',
-                  description:
-                    "Technical Name (e.g. 'Japanese SEO Spam Injection')",
-                },
-                slug: { type: 'string', description: 'kebab-case-slug' },
-                metaDescription: {
-                  type: 'string',
-                  description: 'SEO optimized meta description (160 chars max)',
-                },
+                title: { type: 'string' },
+                slug: { type: 'string' },
+                metaDescription: { type: 'string' },
                 threatType: { type: 'string' },
                 severity: {
                   type: 'string',
@@ -269,10 +246,21 @@ for (const caseId of cases) {
                 iocs: { type: 'array', items: { type: 'string' } },
                 technicalAnalysis: {
                   type: 'string',
-                  description: 'Markdown formatted analysis',
+                  description: 'Markdown analysis',
                 },
                 executionFlow: { type: 'array', items: { type: 'string' } },
                 manualCleaning: { type: 'array', items: { type: 'string' } },
+                maliciousSnippets: {
+                  type: 'array',
+                  items: {
+                    type: 'object',
+                    properties: {
+                      filename: { type: 'string' },
+                      snippet: { type: 'string' },
+                      explanation: { type: 'string' },
+                    },
+                  },
+                },
                 impact: { type: 'string' },
                 seenOn: { type: 'string' },
                 behavior: { type: 'string' },
@@ -299,20 +287,45 @@ for (const caseId of cases) {
       completion.choices[0].message.tool_calls[0].function.arguments;
     const data = JSON.parse(toolArgs);
 
-    // 4. GENERATE FINAL DATA
     const finalSlug = getUniqueSlug(data.slug || `threat-case-${caseId}`);
     const date = new Date().toISOString().split('T')[0];
-
-    // SAFETY: Programmatically defang IOCs before writing
-    const safeIOCs = data.iocs ? data.iocs.map(defangIOC) : [];
+    const safeIOCs = (data.iocs || []).map(defangIOC);
 
     let vtBadge = !vtData?.found
       ? 'Zero-Day (Unique)'
-      : vtData.positives === 0
-        ? `0/${vtData.total} (FUD)`
-        : `${vtData.positives}/${vtData.total}`;
+      : `${vtData.positives}/${vtData.total}`;
 
-    // 5. WRITE MARKDOWN
+    // ** CODE DISPLAY LOGIC **
+    // If AI provided snippets (because files were huge), use them.
+    // Otherwise, if files are small/medium, DUMP THE WHOLE THING for completeness.
+    let codeBlockContent = '';
+    if (data.maliciousSnippets && data.maliciousSnippets.length > 0) {
+      codeBlockContent = data.maliciousSnippets
+        .map(
+          (s) => `
+### FILE: \`${s.filename}\`
+> **Analysis:** ${s.explanation}
+
+\`\`\`php
+${s.snippet}
+\`\`\`
+`,
+        )
+        .join('\n');
+    } else {
+      // Fallback: Dump full files (limited to 3000 chars to avoid breaking build)
+      codeBlockContent = evidenceFiles
+        .map(
+          (f) => `
+### FILE: \`${f.name}\`
+\`\`\`${f.ext.replace('.', '') || 'text'}
+${f.content.slice(0, 3000)}
+\`\`\`
+`,
+        )
+        .join('\n');
+    }
+
     const mdContent = `---
 title: "${data.title}"
 slug: "${finalSlug}"
@@ -320,7 +333,7 @@ description: "${data.metaDescription}"
 reportDate: "${date}"
 threatType: "${data.threatType}"
 severity: "${data.severity}"
-fileHash: "${caseId}"
+fileHash: "${calculatedHash}"
 detectedPaths: ${JSON.stringify(evidenceFiles.map((f) => f.name))}
 screenshots: ${JSON.stringify(publicImagePaths)}
 vtLink: "${vtData?.permalink || 'https://www.virustotal.com/gui/home/upload'}"
@@ -339,25 +352,16 @@ ${data.technicalAnalysis}
 > **VirusTotal Analysis:** ${vtData?.found && vtData.positives > 0 ? `🚨 **Flagged by ${vtData.positives} vendors.**` : '🛡️ **Zero-Day / Fully Undetected.**'}
 
 ## Attack Chain
-${data.executionFlow.map((step, i) => `${i + 1}. ${step}`).join('\n')}
+${(data.executionFlow || []).map((step, i) => `${i + 1}. ${step}`).join('\n')}
 
 ## Code Signature(s)
-${evidenceFiles
-  .map(
-    (f) => `
-### FILE: \`${f.name}\`
-\`\`\`${f.ext.replace('.', '') || 'text'}
-${f.content.slice(0, 2000)}
-\`\`\`
-`,
-  )
-  .join('\n')}
+${codeBlockContent}
 
 ## Indicators of Compromise (IOCs)
 ${safeIOCs.map((ioc) => `- \`${ioc}\``).join('\n')}
 
 ## Removal Protocol
-${data.manualCleaning.map((step) => `1. ${step}`).join('\n')}
+${(data.manualCleaning || []).map((step) => `1. ${step}`).join('\n')}
 
 > **Status:** Active Threat.  
 > **Verification:** Verified by MD Pabel.
@@ -366,11 +370,9 @@ ${data.manualCleaning.map((step) => `1. ${step}`).join('\n')}
     fs.writeFileSync(path.join(CONTENT_DIR, `${finalSlug}.md`), mdContent);
     console.log(`    ✅ Generated Report: ${finalSlug}.md`);
 
-    // 6. MOVE TO TRASH
     const trashDest = path.join(TRASH_DIR, caseId);
-    if (fs.existsSync(trashDest)) {
+    if (fs.existsSync(trashDest))
       fs.rmSync(trashDest, { recursive: true, force: true });
-    }
     fs.renameSync(caseDir, trashDest);
     console.log(`    🗑️  Moved source to: ${trashDest}`);
   } catch (error) {
