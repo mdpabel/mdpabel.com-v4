@@ -52,20 +52,7 @@ function encodeImage(filePath) {
   return `data:image/${mimeType};base64,${imageBuffer.toString('base64')}`;
 }
 
-// --- 3. HELPER: DEFANG IOCs (Safety) ---
-function defangIOC(text) {
-  if (!text) return text;
-  return text
-    .replace(
-      /https?:\/\//gi,
-      (match) => match.toLowerCase().replace('http', 'hxxp') + '[:]',
-    ) // http:// -> hxxp[:]//
-    .replace(/\./g, '[.]') // . -> [.]
-    .replace(/:/g, '[:]') // : -> [:] (catches ports or mailto)
-    .replace(/@/g, '[@]'); // @ -> [@] (emails)
-}
-
-// --- 4. HELPER: VIRUSTOTAL SCAN ---
+// --- 3. HELPER: VIRUSTOTAL SCAN ---
 async function checkVirusTotal(fileBuffer) {
   if (!VT_API_KEY) return null;
 
@@ -203,45 +190,43 @@ for (const caseId of cases) {
 
   try {
     const promptInstructions = `
-      You are MD Pabel, a Senior Malware Analyst and Security Expert.
-      Your task is to generate a comprehensive threat report based on the evidence found in a client's site.
+      You are a Senior Malware Analyst and SEO Specialist. 
+      Generate a threat report based on the provided inputs.
       
-      CRITICAL PERSONA INSTRUCTIONS:
-      - Write in the FIRST PERSON (e.g., "I identified...", "Upon analyzing the logs, I found...", "We detected...").
-      - Do NOT refer to "the user" or "the client" in the third person as the source of discovery. YOU are the expert who found and fixed it.
-      - The "USER CONTEXT" input below is simply your field notes or what the client told you. Rephrase it as your own findings.
+      CRITICAL PRIORITY ORDER FOR ANALYSIS:
+      1. USER CONTEXT (Most Important): Use this to identify the symptoms, error messages, and what the user actually saw.
+      2. SCREENSHOTS (Visual Evidence): Look at the images to find error codes, injected ads, or dashboard warnings. Use these to validate the user context and write the threat.
+      3. MALWARE CODE (Technical Proof): Use the code to explain *how* the symptoms in #1 and #2 happened.
 
-      CRITICAL SOURCE PRIORITY:
-      1. USER CONTEXT: Your primary field notes on symptoms and errors.
-      2. SCREENSHOTS (VISION): Use these to find details you might have missed in notes (e.g. specific error codes, UI banners).
-      3. MALWARE CODE: The technical proof. Use this to explain *how* the attack works.
-
-      WRITING RULES:
-      - TONE: Professional, Authoritative, Direct. (Grade 8-10 English).
-      - SEO: Use keywords: "WordPress malware", "hacked site", "security", "redirect fix", "backdoor".
-      - SAFETY: Defang all malicious URLs (e.g., hxxp[:]//evil[.]com).
-
-      REQUIRED OUTPUT FIELDS:
-      - metaDescription: 150-160 chars, compelling, click-worthy for Google (First person: "I found...").
-      - technicalAnalysis: A synthesis of the evidence. Explain what YOU found and how it works.
+      WRITING GUIDELINES:
+      - Use simple, clear, professional English.
+      - Fix any grammar issues found in the User Context.
+      - Make the content SEO-friendly (use keywords like 'WordPress malware', 'fix hacked site', 'security').
+      
+      REPORTING TASKS:
+      A. META DESCRIPTION: Write a compelling 150-160 character summary for Google search results.
+      B. IOC EXTRACTION: Extract file names, paths, domains, or unique strings from the code/images.
+      C. TECHNICAL ANALYSIS: Correlate the "What happened" (Context/Images) with "Why it happened" (Code).
     `;
 
     // Construct Multimodal Message
     const userMessageContent = [
       {
         type: 'text',
-        text: `FIELD NOTES (CONTEXT):\n"${contextContent}"\n\nVIRUSTOTAL DATA:\n${vtData?.found ? `Detections: ${vtData.positives}/${vtData.total}` : 'Zero-Day / Unique'}\n\nMALWARE CODE EVIDENCE:\n${evidenceFiles.map((f) => `FILE: ${f.name}\n${f.content}\n`).join('---\n')}`,
+        text: `USER CONTEXT:\n"${contextContent}"\n\nVIRUSTOTAL DATA:\n${vtData?.found ? `Detections: ${vtData.positives}/${vtData.total}` : 'Zero-Day / Unique'}\n\nMALWARE CODE EVIDENCE:\n${evidenceFiles.map((f) => `FILE: ${f.name}\n${f.content}\n`).join('---\n')}`,
       },
       ...aiImagePayloads, // Inject images here
     ];
 
     const completion = await openai.chat.completions.create({
-      model: 'gpt-4o', // Vision Capable
+      model: 'gpt-4o', // Must use a vision-capable model
       messages: [
         { role: 'system', content: promptInstructions },
         { role: 'user', content: userMessageContent },
       ],
-      // Force JSON schema via tools
+      // REMOVED: response_format: { type: 'json_object' }, <--- THIS WAS THE ERROR
+
+      // Force JSON schema in prompt
       tools: [
         {
           type: 'function',
@@ -257,7 +242,7 @@ for (const caseId of cases) {
                     "Technical Name (e.g. 'Japanese SEO Spam Injection')",
                 },
                 slug: { type: 'string', description: 'kebab-case-slug' },
-                metaDescription: {
+                description: {
                   type: 'string',
                   description: 'SEO optimized meta description (160 chars max)',
                 },
@@ -283,10 +268,9 @@ for (const caseId of cases) {
               required: [
                 'title',
                 'slug',
-                'metaDescription',
+                'description',
                 'technicalAnalysis',
                 'manualCleaning',
-                'iocs',
               ],
             },
           },
@@ -303,9 +287,6 @@ for (const caseId of cases) {
     const finalSlug = getUniqueSlug(data.slug || `threat-case-${caseId}`);
     const date = new Date().toISOString().split('T')[0];
 
-    // SAFETY: Programmatically defang IOCs before writing
-    const safeIOCs = data.iocs ? data.iocs.map(defangIOC) : [];
-
     let vtBadge = !vtData?.found
       ? 'Zero-Day (Unique)'
       : vtData.positives === 0
@@ -316,7 +297,7 @@ for (const caseId of cases) {
     const mdContent = `---
 title: "${data.title}"
 slug: "${finalSlug}"
-description: "${data.metaDescription}"
+description: "${data.description}"
 reportDate: "${date}"
 threatType: "${data.threatType}"
 severity: "${data.severity}"
@@ -354,7 +335,7 @@ ${f.content.slice(0, 2000)}
   .join('\n')}
 
 ## Indicators of Compromise (IOCs)
-${safeIOCs.map((ioc) => `- \`${ioc}\``).join('\n')}
+${data.iocs.map((ioc) => `- \`${ioc}\``).join('\n')}
 
 ## Removal Protocol
 ${data.manualCleaning.map((step) => `1. ${step}`).join('\n')}

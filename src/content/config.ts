@@ -4,7 +4,7 @@ const threatsCollection = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
-    metaDescription: z.string().optional(),
+    description: z.string().optional(),
     // ADD THIS LINE:
     slug: z.string().optional(),
 

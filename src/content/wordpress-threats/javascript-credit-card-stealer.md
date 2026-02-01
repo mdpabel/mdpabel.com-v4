@@ -1,7 +1,7 @@
 ---
 title: 'Obfuscated JavaScript Credit Card Stealer'
 slug: 'javascript-credit-card-stealer'
-metaDescription: 'Technical analysis of a zero-day WooCommerce credit card skimmer. Learn how attackers use XOR encryption and hostname-based keys to hide JS data theft scripts.'
+description: 'Technical analysis of a zero-day WooCommerce credit card skimmer. Learn how attackers use XOR encryption and hostname-based keys to hide JS data theft scripts.'
 reportDate: '2026-01-20'
 threatType: 'Data Theft'
 severity: 'Critical'

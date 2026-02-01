@@ -2,7 +2,7 @@
 title: 'Hello Aili Plugin Spam Injector'
 slug: 'hello-aili-plugin-spam-injector'
 reportDate: '2026-01-27'
-metaDescription: 'Technical analysis of the "Hello Aili" malware—a fake Hello Dolly plugin used for SEO spam injection via RCE. Learn how to identify C2 domains and remove the hellos.php backdoor.'
+description: 'Technical analysis of the "Hello Aili" malware—a fake Hello Dolly plugin used for SEO spam injection via RCE. Learn how to identify C2 domains and remove the hellos.php backdoor.'
 threatType: 'Spam Injection'
 severity: 'High'
 fileHash: 'fake-hellos-seo-spam-injector'

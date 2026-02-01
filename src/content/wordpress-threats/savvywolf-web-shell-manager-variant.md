@@ -1,7 +1,7 @@
 ---
 title: 'SavvyWolf Web Shell - Manager Variant'
 slug: 'savvywolf-web-shell-manager-variant'
-metaDescription: 'Technical analysis of the SavvyWolf Web Shell. Learn how this self-replicating PHP backdoor uses directory walking to maintain persistence in wp-admin and wp-includes.'
+description: 'Technical analysis of the SavvyWolf Web Shell. Learn how this self-replicating PHP backdoor uses directory walking to maintain persistence in wp-admin and wp-includes.'
 reportDate: '2026-01-31'
 threatType: 'PHP Backdoor / Web Shell'
 severity: 'High'

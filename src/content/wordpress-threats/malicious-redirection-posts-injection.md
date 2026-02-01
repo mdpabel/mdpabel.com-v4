@@ -2,7 +2,7 @@
 title: 'Malicious Redirection via _posts Table Injection'
 slug: 'malicious-redirection-posts-injection'
 reportDate: '2026-01-31'
-metaDescription: 'Technical analysis of the ushort.company database redirect hack. Learn how to identify and remove malicious meta-refresh and JS injections from the WordPress _posts table.'
+description: 'Technical analysis of the ushort.company database redirect hack. Learn how to identify and remove malicious meta-refresh and JS injections from the WordPress _posts table.'
 threatType: 'Redirection'
 severity: 'High'
 fileHash: 'meta-redirect-location-based-redirect-malware'

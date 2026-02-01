@@ -1,7 +1,7 @@
 ---
 title: 'Header-Based Backdoor Malware'
 slug: 'header-based-backdoor-injection'
-metaDescription: 'Technical breakdown of the X-Dns-Prefetch-Control header backdoor. Learn how attackers use HTTP headers to execute zero-day PHP code without leaving local file traces.'
+description: 'Technical breakdown of the X-Dns-Prefetch-Control header backdoor. Learn how attackers use HTTP headers to execute zero-day PHP code without leaving local file traces.'
 reportDate: '2026-01-24'
 threatType: 'Backdoor'
 severity: 'High'

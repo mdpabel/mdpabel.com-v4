@@ -1,7 +1,7 @@
 ---
 title: 'Drive-By Script Injection'
 slug: 'drive-by-script-injection'
-metaDescription: 'Analysis of the "Switch Domain" drive-by malware. Learn how simplecopseholding.com script injections and obfuscated PHP backdoors compromise WordPress sites and how to remove them.'
+description: 'Analysis of the "Switch Domain" drive-by malware. Learn how simplecopseholding.com script injections and obfuscated PHP backdoors compromise WordPress sites and how to remove them.'
 reportDate: '2026-01-23'
 threatType: 'Script Injection'
 severity: 'High'

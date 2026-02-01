@@ -2,7 +2,7 @@
 title: 'JavaScript Redirection Injection'
 slug: 'javascript-redirection-injection'
 reportDate: '2026-01-18'
-metaDescription: 'Technical analysis of the wpinfo-pst1 JavaScript redirect malware. Learn how obfuscated eval functions in the WordPress database hijack traffic and redirect users to malicious IPs.'
+description: 'Technical analysis of the wpinfo-pst1 JavaScript redirect malware. Learn how obfuscated eval functions in the WordPress database hijack traffic and redirect users to malicious IPs.'
 threatType: 'Redirection Malware'
 severity: 'High'
 fileHash: 'db-malware'

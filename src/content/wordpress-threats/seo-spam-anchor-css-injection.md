@@ -1,7 +1,7 @@
 ---
 title: 'SEO Spam Malware Injection'
 slug: 'seo-spam-anchor-css-injection'
-metaDescription: 'Technical analysis of a hidden CSS/JS SEO spam injection. Learn how hackers use negative positioning to hide andrikofarmakeio.com links from users while targeting search engines.'
+description: 'Technical analysis of a hidden CSS/JS SEO spam injection. Learn how hackers use negative positioning to hide andrikofarmakeio.com links from users while targeting search engines.'
 reportDate: '2026-01-15'
 threatType: 'SEO Spam'
 severity: 'Medium'
