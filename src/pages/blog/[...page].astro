@@ -13,6 +13,7 @@ export async function getStaticPaths() {
   // ✅ OPTIMIZATION: Fetch ALL posts once (Cached in memory).
   const allPosts = await wordpress.getAllPosts({
     // Only fetch the fields needed for the listing cards
+    postType: 'posts',
     _fields: fields,
   });
 

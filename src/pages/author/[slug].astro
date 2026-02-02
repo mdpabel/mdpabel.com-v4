@@ -22,18 +22,10 @@ export async function getStaticPaths() {
   return authors.map((author) => {
     // Merge & Filter
     const authorContent = [
-      ...allPosts
-        .filter((p) => p.author.id === author.id)
-        .map((p) => ({ ...p, typeLabel: 'Blog' })),
-      ...allGuides
-        .filter((p) => p.author.id === author.id)
-        .map((p) => ({ ...p, typeLabel: 'Guide' })),
-      ...allCases
-        .filter((p) => p.author.id === author.id)
-        .map((p) => ({ ...p, typeLabel: 'Case Study' })),
-      ...allLogs
-        .filter((p) => p.author.id === author.id)
-        .map((p) => ({ ...p, typeLabel: 'Malware Log' })),
+      ...allPosts.map((p) => ({ ...p, typeLabel: 'Blog' })),
+      ...allGuides.map((p) => ({ ...p, typeLabel: 'Guide' })),
+      ...allCases.map((p) => ({ ...p, typeLabel: 'Case Study' })),
+      ...allLogs.map((p) => ({ ...p, typeLabel: 'Malware Log' })),
     ];
 
     // Sort Newest First

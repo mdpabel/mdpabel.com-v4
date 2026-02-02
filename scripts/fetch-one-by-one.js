@@ -82,6 +82,7 @@ async function getMasterList() {
   while (hasMore) {
     try {
       const url = `${API_URL}/${POST_TYPE}?per_page=100&page=${page}&_fields=id,modified_gmt,slug`;
+
       const res = await fetch(url);
 
       if (!res.ok) {
