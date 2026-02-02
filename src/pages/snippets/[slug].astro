@@ -1,15 +1,16 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import ComponentWrapper from '../../components/component-wrapper.astro';
-import { wordpress } from '../../lib/wordpress';
+import { wordpress } from '../../lib/wordpress-old';
 import { Calendar, Clock, Code, ChevronLeft } from '@lucide/astro';
 
 // --- 1. Generate Static Paths ---
 export async function getStaticPaths() {
-  const { posts } = await wordpress.getAllPosts({
+  const PER_PAGE = 100;
+  const { totalPages, posts } = await wordpress.getPosts({
     postType: 'snippet',
-
-    perPage: 100, // Adjust based on your total snippet count
+    perPage: PER_PAGE,
+    page: 1,
   });
 
   return posts.map((post) => ({
