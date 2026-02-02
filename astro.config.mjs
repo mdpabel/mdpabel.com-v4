@@ -4,7 +4,7 @@ import critters from 'astro-critters';
 
 export default defineConfig({
   site: 'https://www.mdpabel.com',
-  trailingSlash: 'always',
+  trailingSlash: 'ignore',
   // Add this integrations array
   integrations: [critters()],
 

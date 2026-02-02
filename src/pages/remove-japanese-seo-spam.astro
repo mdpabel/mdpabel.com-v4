@@ -27,7 +27,7 @@ import ComponentWrapper from '../components/component-wrapper.astro';
 // --- Data Fetching ---
 let relatedPosts: WordPressPost[] = [];
 try {
-  const data = await wordpress.getPostsByCategory(['seo-spam']);
+  const data = await wordpress.getAllPostsByCategory(['seo-spam']);
   relatedPosts = data.posts ? data.posts.slice(0, 3) : [];
 } catch (error) {
   console.error('Failed to fetch posts:', error);

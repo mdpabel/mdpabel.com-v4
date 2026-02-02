@@ -15,14 +15,14 @@ export async function GET() {
     { url: 'faq', priority: 0.6 },
   ];
 
-  const fields = ['slug', 'modified', 'date'];
-
-  // 1. Fixed the destructuring to include logs
+  // 1. Fetch from Local Cache
+  // We no longer need to pass _fields because we are reading full local objects.
+  // The cache-based getAllPosts is extremely fast here.
   const [posts, caseStudies, guides, logs] = await Promise.all([
-    wordpress.getAllPosts({ postType: 'posts', _fields: fields }),
-    wordpress.getAllPosts({ postType: 'case-study', _fields: fields }),
-    wordpress.getAllPosts({ postType: 'guide', _fields: fields }),
-    wordpress.getAllPosts({ postType: 'malware-log', _fields: fields }),
+    wordpress.getAllPosts({ postType: 'posts' }).catch(() => []),
+    wordpress.getAllPosts({ postType: 'case-study' }).catch(() => []),
+    wordpress.getAllPosts({ postType: 'guide' }).catch(() => []),
+    wordpress.getAllPosts({ postType: 'malware-log' }).catch(() => []),
   ]);
 
   const createUrlEntry = (
@@ -31,15 +31,16 @@ export async function GET() {
     publishDate?: string,
     priority = 0.7,
   ) => {
+    // Priority: use modified date first, fallback to publish date, fallback to today
     const dateStr = modifiedDate || publishDate;
     const dateObj = dateStr ? new Date(dateStr) : new Date();
 
     const lastMod =
       isNaN(dateObj.getTime()) || dateObj.getFullYear() === 1970
-        ? new Date().toISOString().split('T')[0] // Just the date part YYYY-MM-DD
+        ? new Date().toISOString().split('T')[0]
         : dateObj.toISOString().split('T')[0];
 
-    // 2. FORCE TRAILING SLASH: This stops the Semrush "Redirect" error
+    // FORCE TRAILING SLASH: Essential for SEO consistency
     const cleanPath = path.replace(/^\/|\/$/g, '');
     const finalUrl =
       cleanPath === '' ? `${SITE_URL}/` : `${SITE_URL}/${cleanPath}/`;
@@ -63,7 +64,6 @@ export async function GET() {
 
   ${guides.map((post) => createUrlEntry(`guides/${post.slug}`, post.modified, post.date)).join('')}
   
-  ${/* 3. Added the missing malware logs mapping */ ''}
   ${logs.map((post) => createUrlEntry(`malware-log/${post.slug}`, post.modified, post.date)).join('')}
 </urlset>`;
 

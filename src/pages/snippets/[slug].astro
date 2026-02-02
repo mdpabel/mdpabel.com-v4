@@ -6,7 +6,7 @@ import { Calendar, Clock, Code, ChevronLeft } from '@lucide/astro';
 
 // --- 1. Generate Static Paths ---
 export async function getStaticPaths() {
-  const { posts } = await wordpress.getPosts({
+  const { posts } = await wordpress.getAllPosts({
     postType: 'snippet',
 
     perPage: 100, // Adjust based on your total snippet count

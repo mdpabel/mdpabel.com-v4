@@ -1,0 +1,80 @@
+{
+  "959": {
+    "modified": "2025-09-04T19:05:57",
+    "status": "success",
+    "slug": "successfully-removing-328-websites-from-mcafee-blacklist-a-technical-deep-dive",
+    "lastChecked": "2026-02-02T09:33:10.138Z"
+  },
+  "1053": {
+    "modified": "2025-09-04T19:07:29",
+    "status": "success",
+    "slug": "removing-fake-google-adsense-malware-from-wordpress-website",
+    "lastChecked": "2026-02-02T09:31:45.061Z"
+  },
+  "1109": {
+    "modified": "2025-08-25T14:14:16",
+    "status": "success",
+    "slug": "how-i-restored-a-wordpress-site-after-a-53000-file-slot-gambling-malware-attack",
+    "lastChecked": "2026-02-02T09:30:23.107Z"
+  },
+  "1223": {
+    "modified": "2025-08-31T11:28:08",
+    "status": "success",
+    "slug": "wordpress-drive-by-malware-cleanup-case-study",
+    "lastChecked": "2026-02-02T09:30:18.835Z"
+  },
+  "1300": {
+    "modified": "2025-12-21T17:12:07",
+    "status": "success",
+    "slug": "wordpress-hacked-fake-cloudflare-verify-you-are-human-a-wordpress-malware-removal-case-study",
+    "lastChecked": "2026-02-02T09:30:13.636Z"
+  },
+  "1431": {
+    "modified": "2025-10-01T20:37:21",
+    "status": "success",
+    "slug": "wordpress-hacked-how-i-restored-a-client-site-after-everything-was-deleted",
+    "lastChecked": "2026-02-02T09:29:39.907Z"
+  },
+  "1438": {
+    "modified": "2025-10-03T21:13:20",
+    "status": "success",
+    "slug": "how-a-former-developer-hijacked-a-wordpress-site",
+    "lastChecked": "2026-02-02T09:29:36.416Z"
+  },
+  "1440": {
+    "modified": "2025-10-03T21:23:45",
+    "status": "success",
+    "slug": "resolving-an-e-commerce-dns-hijack-via-a-compromised-cloudflare-account",
+    "lastChecked": "2026-02-02T09:29:33.006Z"
+  },
+  "1445": {
+    "modified": "2025-10-05T10:20:44",
+    "status": "success",
+    "slug": "how-i-found-a-credit-card-stealer-that-no-security-tool-could-detect",
+    "lastChecked": "2026-02-02T09:29:30.676Z"
+  },
+  "1479": {
+    "modified": "2025-10-21T09:32:32",
+    "status": "success",
+    "slug": "how-i-removed-12000-casino-gambling-posts-and-stopped-cron-job-malware-on-a-compromised-site",
+    "lastChecked": "2026-02-02T09:29:26.419Z"
+  },
+  "1503": {
+    "modified": "2025-10-23T09:05:53",
+    "status": "success",
+    "slug": "how-we-cleaned-a-hacked-wordpress-site-from-3-45m-matbet-seo-spam-and-how-you-can-prevent-it",
+    "lastChecked": "2026-02-02T09:29:24.234Z"
+  },
+  "1969": {
+    "modified": "2026-01-28T08:38:04",
+    "status": "success",
+    "slug": "case-study-how-we-debugged-and-fixed-high-cpu-usage-on-a-low-traffic-wordpress-site",
+    "lastChecked": "2026-02-02T09:29:21.133Z"
+  },
+  "2006": {
+    "modified": "2026-01-30T16:58:10",
+    "status": "success",
+    "slug": "how-we-reduced-headless-wordpress-build-times-by-90-29m-to-3m",
+    "lastChecked": "2026-02-02T09:29:15.229Z"
+  }
+}
