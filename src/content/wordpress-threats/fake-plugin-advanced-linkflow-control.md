@@ -1,27 +1,30 @@
 ---
-title: "Fake Plugin - Advanced LinkFlow Control"
-slug: "fake-plugin-advanced-linkflow-control"
-description: "Discovery and analysis of a malicious plugin 'Advanced LinkFlow Control' that conceals its presence and fetches suspicious updates from a remote server."
-reportDate: "2026-02-03"
-threatType: "undefined"
-severity: "undefined"
-fileHash: "18c9513a92db589be8e110b0c97a5c10a99b9aa86fd570d2063f3ee4ba38c895"
-detectedPaths: ["advanced-linkflow-control.php"]
-screenshots: ["/images/wordpress-threats/advanced-linkflow-control_evidence-1.png"]
-vtLink: "https://www.virustotal.com/gui/home/upload"
-vtScore: "Zero-Day (Unique)"
-impact: "undefined"
-seenOn: "undefined"
-behavior: "undefined"
-difficulty: "undefined"
-recurrence: "undefined"
-numberOfSiteFixed: "1"
+title: 'Fake Plugin - Advanced LinkFlow Control'
+slug: 'fake-plugin-advanced-linkflow-control'
+description: "I discovered a malicious plugin disguising itself as 'Advanced LinkFlow Control'. It hides from the WordPress admin dashboard and secretly exfiltrates data to a remote C2 server."
+reportDate: '2026-02-03'
+threatType: 'Stealth Backdoor / Fake Plugin'
+severity: 'High'
+fileHash: '18c9513a92db589be8e110b0c97a5c10a99b9aa86fd570d2063f3ee4ba38c895'
+detectedPaths: ['advanced-linkflow-control.php']
+screenshots:
+  ['/images/wordpress-threats/advanced-linkflow-control_evidence-1.png']
+vtLink: 'https://www.virustotal.com/gui/home/upload'
+vtScore: 'Zero-Day (Unique)'
+impact: 'Data exfiltration (IPs, User Agents), SEO spam injection, and potential remote code execution via fetched payloads.'
+seenOn: 'Compromised WordPress sites often linked to nulled themes or weak administrator credentials.'
+behavior: 'Hides from plugin list, communicates with C2 server, flushes caches to persist changes, and conditionally displays content to specific visitors (cloaking).'
+difficulty: 'Easy'
+recurrence: 'Low'
+numberOfSiteFixed: '1'
 ---
 
 ## Technical Analysis
+
 I found that the "Advanced LinkFlow Control" plugin disguises itself by removing its entry from the WordPress plugin list. It does so using a filter to eliminate itself when the 'all_plugins' hook is triggered unless a specific request parameter ('sp') is present.
 
 ### Concealment Mechanism:
+
 The plugin leverages the `add_filter('all_plugins', ...)` function to unset its entry from the plugin array returned by WordPress, effectively hiding it from the admin panel. This is achieved with the following code:
 
 ```php
@@ -36,9 +39,11 @@ add_filter('all_plugins', function ($plugins) {
 ```
 
 ### Malicious Operations:
+
 The plugin sets up communication with a remote server. It constructs URLs that include the current user's IP address, user agent, and other potentially sensitive data. The remote server is encoded in a string, decoded as `http://whatsdf.icu/get.php`, suggesting an exfiltration or update mechanism without user knowledge.
 
 ### Network Request:
+
 The plugin attempts to send gathered data by executing the following method:
 
 ```php
@@ -55,16 +60,17 @@ $response = $this->fetch_from_server();
 ```
 
 ### Plugin Activation Hook:
+
 The plugin also includes several cache flushing calls within its `activate` method, allowing it to potentially clear caches to maintain its covert updates or operations.
 
 > **VirusTotal Analysis:** 🛡️ **Zero-Day / Fully Undetected.**
 
 ## Attack Chain
 
-
 ## Code Signature(s)
 
 ### FILE: `advanced-linkflow-control.php`
+
 ```php
 <?php
 /**
@@ -144,14 +150,15 @@ if (!class_exists('Advanced_LinkFlow_Control')) {
 
         public function register_insertion_hooks() {
             add_action('loop_start', [$this, 'print_on_loop_start'], 0);
-       
+
 ```
 
-
 ## Indicators of Compromise (IOCs)
+
 - `hxxp://whatsdf[.]icu/get[.]php`
 
 ## Removal Protocol
+
 1. Access the server's plugin directory and locate 'advanced-linkflow-control' under the plugins folder.
 1. Remove the directory 'advanced-linkflow-control' to eliminate all traces of the malicious plugin.
 1. Verify that the plugin is no longer present in the WordPress admin dashboard or files.
