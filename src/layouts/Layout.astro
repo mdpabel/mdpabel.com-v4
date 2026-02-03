@@ -24,6 +24,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const cleanYoastHead = yoastHead
   ? yoastHead.replace(/<link rel="canonical".*?>/g, '')
   : null;
+
+// Use Astro.site to build the RSS URL
+const rssURL = new URL('/rss.xml', Astro.site);
 ---
 
 <!doctype html>
@@ -33,7 +36,14 @@ const cleanYoastHead = yoastHead
     <meta name='viewport' content='width=device-width' />
     <meta name='generator' content={Astro.generator} />
     <link rel='icon' type='image/png' href='/icon.png' />
-    <link rel='sitemap' href='/sitemap-index.xml' />
+    <link rel='sitemap' href='/sitemap.xml' />
+    <link rel='sitemap' href='/threats-sitemap.xml' />
+    <link
+      rel='alternate'
+      type='application/rss+xml'
+      title='MD Pabel | WordPress Security Feed'
+      href='/rss.xml'
+    />
 
     {/* ✅ SEO LOGIC: Use Cleaned Yoast or Fallback */}
     {
