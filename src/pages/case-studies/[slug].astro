@@ -17,7 +17,6 @@ export async function getStaticPaths() {
 
   // Generate routes and pre-calculate related posts in memory (0ms latency)
   return posts.map((post) => {
-    console.log(post);
     // Filter related posts from the array we already have
     const relatedPosts = posts
       .filter(

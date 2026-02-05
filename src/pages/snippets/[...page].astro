@@ -7,11 +7,9 @@ import { Calendar, ArrowRight, Tag } from '@lucide/astro';
 // --- 1. Static Paths for Pagination ---
 export async function getStaticPaths() {
   const PER_PAGE = 100;
-  const { totalPages, posts } = await wordpress.getPosts({
-    postType: 'snippet',
-    perPage: PER_PAGE,
-    page: 1,
-  });
+  const { totalPages, posts } = await fetch(
+    'https://cms.mdpabel.com/wp-json/wp/v2/snippet',
+  ).then((res) => res.json());
 
   return Array.from({ length: totalPages }, (_, i) => {
     const pageNum = i + 1;
@@ -61,7 +59,7 @@ const isFirstPage = currentPage === 1;
       {/* --- Snippets List --- */}
       <div class='gap-4 grid grid-cols-1'>
         {
-          posts.map((snippet) => (
+          posts.map((snippet: any) => (
             <a
               href={`/snippets/${snippet.slug}`}
               class='group block bg-slate-50 hover:bg-white dark:bg-slate-900/50 dark:hover:bg-slate-900 shadow-sm hover:shadow-md p-6 border border-slate-200 hover:border-sky-500 dark:border-slate-800 dark:hover:border-sky-500 rounded-2xl transition-all duration-300'>
