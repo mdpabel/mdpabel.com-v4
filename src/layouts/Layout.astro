@@ -7,26 +7,15 @@ import FloatingCTA from '../components/FloatingCTA.astro';
 import { ClientRouter } from 'astro:transitions';
 
 const {
-  // Manual Fallbacks (Used if yoastHead is missing)
   title = 'WordPress Malware Removal Expert & Hacked Site Recovery - MD Pabel',
   description = 'Hacked WordPress site? I provide expert manual malware removal, Google blacklist fix, and security hardening. 4,500+ sites recovered. No monthly fees.',
-
-  // ✅ NEW: Accept raw HTML from Yoast
   yoastHead = null,
 } = Astro.props;
 
-// 1. Generate the Correct Canonical URL (Dynamic for every page)
-// ensuring it always points to your live frontend (https://www.mdpabel.com/...)
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-
-// 2. Clean Yoast Head (If it exists)
-// We remove any <link rel="canonical"> Yoast might have sent to avoid duplicates.
 const cleanYoastHead = yoastHead
   ? yoastHead.replace(/<link rel="canonical".*?>/g, '')
   : null;
-
-// Use Astro.site to build the RSS URL
-const rssURL = new URL('/rss.xml', Astro.site);
 ---
 
 <!doctype html>
@@ -36,6 +25,7 @@ const rssURL = new URL('/rss.xml', Astro.site);
     <meta name='viewport' content='width=device-width' />
     <meta name='generator' content={Astro.generator} />
     <link rel='icon' type='image/png' href='/icon.png' />
+
     <link rel='sitemap' href='/sitemap.xml' />
     <link rel='sitemap' href='/threats-sitemap.xml' />
     <link
@@ -45,7 +35,6 @@ const rssURL = new URL('/rss.xml', Astro.site);
       href='/rss.xml'
     />
 
-    {/* ✅ SEO LOGIC: Use Cleaned Yoast or Fallback */}
     {
       cleanYoastHead ? (
         <Fragment set:html={cleanYoastHead} />
@@ -57,13 +46,12 @@ const rssURL = new URL('/rss.xml', Astro.site);
       )
     }
 
-    {/* ✅ FORCE CANONICAL: Injected safely on EVERY page */}
     <link rel='canonical' href={canonicalURL} />
-
     <ClientRouter />
   </head>
+
   <body
-    class='flex flex-col bg-white dark:bg-slate-900 min-h-screen font-serif text-slate-900 dark:text-slate-100'>
+    class='flex flex-col bg-slate-900 min-h-screen font-serif text-slate-100'>
     <Header />
 
     <main class='grow'>
@@ -71,13 +59,11 @@ const rssURL = new URL('/rss.xml', Astro.site);
     </main>
 
     <Footer />
-
     <FloatingCTA />
   </body>
 </html>
 
 <script>
-  // Force reset overflow on every navigation
   document.addEventListener('astro:page-load', () => {
     document.body.style.overflow = '';
   });
