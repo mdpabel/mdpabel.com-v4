@@ -50,3 +50,4 @@
 /wordpress-security-maintenance-service /wordpress-malware-removal/ 301
 
 /services/blacklist-removal-service /blacklist-removal/ 301
+/snippets/* /blog  301

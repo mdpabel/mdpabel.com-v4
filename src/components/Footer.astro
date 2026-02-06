@@ -2,7 +2,6 @@
 import { Rocket, Mail, Contact, User, Briefcase, Compass } from '@lucide/astro';
 import ComponentWrapper from './component-wrapper.astro';
 import ThemeToggle from './ThemeToggle.astro';
-// import ModeToggle from './ModeToggle.astro'; // We will build this next!
 
 const currentYear = new Date().getFullYear();
 ---
@@ -36,7 +35,7 @@ const currentYear = new Date().getFullYear();
         <ul class='flex flex-col gap-2'>
           <li>
             <a
-              href='/about'
+              href='/about/'
               class='flex items-center gap-2 text-slate-700 hover:text-slate-950 dark:hover:text-white dark:text-slate-300 transition-colors'>
               <User class='w-4 h-4' />
               About
@@ -52,7 +51,7 @@ const currentYear = new Date().getFullYear();
           </li>
           <li>
             <a
-              href='/blog'
+              href='/blog/'
               class='flex items-center gap-2 text-slate-700 hover:text-slate-950 dark:hover:text-white dark:text-slate-300 transition-colors'>
               <Compass class='w-4 h-4' />
               Blog
@@ -78,7 +77,7 @@ const currentYear = new Date().getFullYear();
           </li>
           <li>
             <a
-              href='/hire-me'
+              href='/hire-me/'
               class='flex items-center gap-2 text-slate-700 hover:text-slate-950 dark:hover:text-white dark:text-slate-300 transition-colors'>
               <Contact class='w-4 h-4' />
               Hire Me
@@ -96,10 +95,8 @@ const currentYear = new Date().getFullYear();
           &copy; {currentYear} MD Pabel. All rights reserved.
         </p>
 
-        {/* Placeholder for Mode Toggle */}
-        {/* <ModeToggle /> */}
-        <ThemeToggle < div />
+        <ThemeToggle />
       </div>
-    </div></ComponentWrapper
-  >
+    </div>
+  </ComponentWrapper>
 </footer>
