@@ -20,11 +20,7 @@ const cleanYoastHead = yoastHead
 
 <!doctype html>
 {/* Force 'dark' class and prevent any theme switching flash */}
-<html
-  lang='en'
-  class='scroll-smooth dark'
-  transition:animate='none'
-  style='color-scheme: dark;'>
+<html lang='en' class='scroll-smooth' transition:animate='none'>
   <head>
     <meta charset='UTF-8' />
     <meta name='viewport' content='width=device-width' />
@@ -58,16 +54,18 @@ const cleanYoastHead = yoastHead
   {
     /* Locked to bg-slate-950 for a deeper forensic feel, text-slate-100 for readability */
   }
-  <body
-    class='flex flex-col bg-slate-950 selection:bg-sky-500/30 min-h-screen font-serif text-slate-100 selection:text-sky-200 antialiased'>
-    <Header />
+  <body>
+    <div
+      class='flex flex-col bg-slate-900 selection:bg-sky-500/30 min-h-screen font-serif text-slate-100 selection:text-sky-200 antialiased'>
+      <Header />
 
-    <main class='grow'>
-      <slot />
-    </main>
+      <main class='grow'>
+        <slot />
+      </main>
 
-    <Footer />
-    <FloatingCTA />
+      <Footer />
+      <FloatingCTA />
+    </div>
   </body>
 </html>
 
@@ -77,31 +75,3 @@ const cleanYoastHead = yoastHead
     document.body.style.overflow = '';
   });
 </script>
-
-<style is:global>
-  /* Forensic theme global overrides */
-  :root {
-    color-scheme: dark;
-  }
-
-  /* Force dark background on the HTML element to prevent white flashes during navigation */
-  html {
-    background-color: #020617; /* slate-950 */
-  }
-
-  /* Custom Scrollbar for the dark theme */
-  ::-webkit-scrollbar {
-    width: 10px;
-  }
-  ::-webkit-scrollbar-track {
-    background: #0f172a; /* slate-900 */
-  }
-  ::-webkit-scrollbar-thumb {
-    background: #1e293b; /* slate-800 */
-    border-radius: 5px;
-    border: 2px solid #0f172a;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: #334155; /* slate-700 */
-  }
-</style>
