@@ -51,3 +51,4 @@
 
 /services/blacklist-removal-service /blacklist-removal/ 301
 /snippets/* /blog  301
+/faq /blog 301

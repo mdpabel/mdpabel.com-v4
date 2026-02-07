@@ -16,7 +16,8 @@
     "fetch:logs": "node scripts/fetch-one-by-one.js --type=malware-log",
     "fetch:all": "npm run fetch:posts && npm run fetch:cases && npm run fetch:guides && npm run fetch:logs",
     "fetch:all:force": "node scripts/fetch-one-by-one.js --type=posts --force=true && node scripts/fetch-one-by-one.js --type=case-study --force=true && node scripts/fetch-one-by-one.js --type=guide --force=true && node scripts/fetch-one-by-one.js --type=malware-log --force=true",
-    "build": "npm run fetch:all && astro build"
+    "build:fetchAll": "npm run fetch:all && astro build",
+    "build": "astro build"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.15",
