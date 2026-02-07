@@ -86,13 +86,13 @@ const jsonLd = {
   ],
 };
 
-// --- Design Tokens (Button Styles) ---
+// --- Design Tokens (Dark-Only Button Styles) ---
 const buttonBase =
-  'inline-flex items-center justify-center rounded-lg font-medium text-base h-12 px-8 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50';
+  'inline-flex items-center justify-center rounded-lg font-medium text-base h-12 px-8 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 disabled:pointer-events-none disabled:opacity-50';
 
-const primaryButtonStyle = `${buttonBase} bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-200 text-white dark:text-slate-900 shadow-lg hover:shadow-xl hover:-translate-y-0.5 duration-300`;
+const primaryButtonStyle = `${buttonBase} bg-white hover:bg-slate-200 text-slate-900 shadow-lg hover:shadow-xl hover:-translate-y-0.5 duration-300`;
 
-const outlineButtonStyle = `${buttonBase} border border-slate-300 hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800 text-slate-900 dark:text-white duration-300`;
+const outlineButtonStyle = `${buttonBase} border border-slate-700 hover:bg-slate-800 text-white duration-300`;
 ---
 
 <Layout
@@ -107,23 +107,22 @@ const outlineButtonStyle = `${buttonBase} border border-slate-300 hover:bg-slate
     <section class='mb-20 text-center'>
       {/* Trust Badge */}
       <div
-        class='inline-flex justify-center items-center gap-2 bg-amber-50 dark:bg-amber-900/20 mb-8 px-4 py-1.5 border border-amber-100 dark:border-amber-800 rounded-full font-medium text-amber-700 dark:text-amber-300 text-sm'>
+        class='inline-flex justify-center items-center gap-2 bg-amber-900/20 mb-8 px-4 py-1.5 border border-amber-800 rounded-full font-medium text-amber-300 text-sm'>
         <Languages class='w-4 h-4' />
         <span>Fix "Japanese Characters" in Search Results</span>
       </div>
 
       {/* H1 */}
-      <h1
-        class='mb-6 font-bold text-gray-900 dark:text-white text-3xl md:text-4xl leading-tight'>
+      <h1 class='mb-6 font-bold text-white text-3xl md:text-4xl leading-tight'>
         Japanese Keyword Hack on WordPress <br class='hidden md:block' />
         <span
-          class='bg-clip-text bg-linear-to-r from-red-600 to-amber-600 text-transparent'
+          class='bg-clip-text bg-gradient-to-r from-red-500 to-amber-500 text-transparent'
           >Removal & De-Indexing</span
         >
       </h1>
 
       <p
-        class='mx-auto mb-10 max-w-3xl text-slate-600 dark:text-slate-300 text-lg md:text-xl leading-relaxed'>
+        class='mx-auto mb-10 max-w-3xl text-slate-300 text-lg md:text-xl leading-relaxed'>
         Is your site displaying <strong>Chinese or Japanese symbols</strong>
         in Google? Seeing <strong>"Slot Gacor"</strong> or{' '}
         <strong>Pharma links</strong>? I manually remove the cloaked malware and
@@ -138,15 +137,14 @@ const outlineButtonStyle = `${buttonBase} border border-slate-300 hover:bg-slate
       </div>
     </section>
 
-    {/* --- H2: IMMEDIATE RECOGNITION (User Voice) --- */}
+    {/* --- H2: IMMEDIATE RECOGNITION --- */}
     <section
-      class='bg-slate-50 dark:bg-slate-900/50 mb-24 p-8 md:p-12 border border-slate-200 dark:border-slate-800 rounded-3xl'>
+      class='bg-slate-900/50 mb-24 p-8 md:p-12 border border-slate-800 rounded-3xl'>
       <div class='mx-auto max-w-5xl'>
-        <h2
-          class='mb-8 font-bold text-gray-900 dark:text-white text-2xl md:text-3xl text-center'>
+        <h2 class='mb-8 font-bold text-white text-2xl md:text-3xl text-center'>
           "My Site Looks Fine, But Google Says..."
         </h2>
-        <p class='mb-12 text-slate-600 dark:text-slate-400 text-center'>
+        <p class='mb-12 text-slate-400 text-center'>
           If you are saying any of these things, your site is infected with the <strong
             class='text-red-500'>Japanese Keyword Hack</strong
           >.
@@ -186,16 +184,16 @@ const outlineButtonStyle = `${buttonBase} border border-slate-300 hover:bg-slate
                 text: '"My site is selling cheap Louis Vuitton or Gucci bags appearing in search."',
               },
             ].map((item) => (
-              <div class='group bg-white dark:bg-slate-800 hover:shadow-lg p-6 border border-slate-200 dark:border-slate-700 rounded-2xl transition-all duration-300'>
+              <div class='group bg-slate-800/40 hover:shadow-lg p-6 border border-slate-700 rounded-2xl transition-all duration-300'>
                 <div class='flex items-center gap-3 mb-4'>
-                  <div class='bg-slate-100 dark:bg-slate-700 p-2.5 rounded-xl text-slate-700 dark:group-hover:text-blue-400 dark:text-slate-300 group-hover:text-blue-600 transition-colors'>
+                  <div class='bg-slate-700 p-2.5 rounded-xl text-slate-300 group-hover:text-sky-400 transition-colors'>
                     <item.icon class='w-5 h-5' />
                   </div>
-                  <h3 class='font-bold text-slate-900 dark:text-white text-sm uppercase tracking-wide'>
+                  <h3 class='font-bold text-white text-sm uppercase tracking-wide'>
                     {item.title}
                   </h3>
                 </div>
-                <p class='font-medium text-slate-600 dark:text-slate-400 italic leading-relaxed'>
+                <p class='font-medium text-slate-400 italic leading-relaxed'>
                   {item.text}
                 </p>
               </div>
@@ -205,14 +203,13 @@ const outlineButtonStyle = `${buttonBase} border border-slate-300 hover:bg-slate
       </div>
     </section>
 
-    {/* --- H2: WHAT THIS HACK IS (Authority) --- */}
+    {/* --- H2: CLOAKING EXPLAINER --- */}
     <section class='mb-24'>
       <div class='mx-auto max-w-4xl text-center'>
-        <h2
-          class='mb-6 font-bold text-gray-900 dark:text-white text-3xl md:text-4xl'>
+        <h2 class='mb-6 font-bold text-white text-3xl md:text-4xl'>
           What Is Actually Happening? (Cloaking)
         </h2>
-        <p class='mb-12 text-slate-600 dark:text-slate-400 text-lg'>
+        <p class='mb-12 text-slate-400 text-lg'>
           Hackers are exploiting your <strong>Domain Authority</strong> to rank for
           illegal or high-value keywords.
         </p>
@@ -221,16 +218,14 @@ const outlineButtonStyle = `${buttonBase} border border-slate-300 hover:bg-slate
       <div class='gap-8 grid md:grid-cols-3 mx-auto max-w-6xl'>
         {/* Pharma */}
         <div
-          class='relative bg-white dark:bg-slate-900 p-8 border border-slate-200 hover:border-blue-200 dark:border-slate-800 dark:hover:border-blue-900 rounded-2xl overflow-hidden transition-colors'>
+          class='relative bg-slate-900 p-8 border border-slate-800 hover:border-blue-900 rounded-2xl overflow-hidden transition-colors'>
           <div
-            class='top-0 right-0 absolute bg-blue-100 dark:bg-blue-900/50 px-4 py-1.5 rounded-bl-2xl font-bold text-blue-700 dark:text-blue-300 text-xs tracking-wider'>
+            class='top-0 right-0 absolute bg-blue-900/50 px-4 py-1.5 rounded-bl-2xl font-bold text-blue-300 text-xs tracking-wider'>
             HIGH VALUE
           </div>
-          <Pill class='mb-6 w-12 h-12 text-blue-600 dark:text-blue-400' />
-          <h3 class='mb-3 font-bold text-slate-900 dark:text-white text-xl'>
-            The "Pharma" Hack
-          </h3>
-          <p class='text-slate-600 dark:text-slate-400 text-sm leading-relaxed'>
+          <Pill class='mb-6 w-12 h-12 text-blue-400' />
+          <h3 class='mb-3 font-bold text-white text-xl'>The "Pharma" Hack</h3>
+          <p class='text-slate-400 text-sm leading-relaxed'>
             Injecting pages for <strong>Viagra, Cialis, Xanax</strong>, and
             generic drugs. These have high "Purchase Intent" modifiers.
           </p>
@@ -238,16 +233,14 @@ const outlineButtonStyle = `${buttonBase} border border-slate-300 hover:bg-slate
 
         {/* Luxury */}
         <div
-          class='relative bg-white dark:bg-slate-900 p-8 border border-slate-200 hover:border-sky-200 dark:border-slate-800 dark:hover:border-sky-900 rounded-2xl overflow-hidden transition-colors'>
+          class='relative bg-slate-900 p-8 border border-slate-800 hover:border-sky-900 rounded-2xl overflow-hidden transition-colors'>
           <div
-            class='top-0 right-0 absolute bg-sky-100 dark:bg-sky-900/50 px-4 py-1.5 rounded-bl-2xl font-bold text-sky-700 dark:text-sky-300 text-xs tracking-wider'>
+            class='top-0 right-0 absolute bg-sky-900/50 px-4 py-1.5 rounded-bl-2xl font-bold text-sky-300 text-xs tracking-wider'>
             COUNTERFEIT
           </div>
-          <ShoppingBag class='mb-6 w-12 h-12 text-sky-600 dark:text-sky-400' />
-          <h3 class='mb-3 font-bold text-slate-900 dark:text-white text-xl'>
-            Luxury Brand Spam
-          </h3>
-          <p class='text-slate-600 dark:text-slate-400 text-sm leading-relaxed'>
+          <ShoppingBag class='mb-6 w-12 h-12 text-sky-400' />
+          <h3 class='mb-3 font-bold text-white text-xl'>Luxury Brand Spam</h3>
+          <p class='text-slate-400 text-sm leading-relaxed'>
             Fake product pages for{' '}
             <strong>Louis Vuitton, Gucci, Rolex</strong>. They use your site's
             trust to scam buyers.
@@ -256,16 +249,14 @@ const outlineButtonStyle = `${buttonBase} border border-slate-300 hover:bg-slate
 
         {/* Gambling */}
         <div
-          class='relative bg-white dark:bg-slate-900 p-8 border border-slate-200 hover:border-green-200 dark:border-slate-800 dark:hover:border-green-900 rounded-2xl overflow-hidden transition-colors'>
+          class='relative bg-slate-900 p-8 border border-slate-800 hover:border-green-900 rounded-2xl overflow-hidden transition-colors'>
           <div
-            class='top-0 right-0 absolute bg-green-100 dark:bg-green-900/50 px-4 py-1.5 rounded-bl-2xl font-bold text-green-700 dark:text-green-300 text-xs tracking-wider'>
+            class='top-0 right-0 absolute bg-green-900/50 px-4 py-1.5 rounded-bl-2xl font-bold text-green-300 text-xs tracking-wider'>
             TARGETED
           </div>
-          <Dice5 class='mb-6 w-12 h-12 text-green-600 dark:text-green-400' />
-          <h3 class='mb-3 font-bold text-slate-900 dark:text-white text-xl'>
-            Casino & Gambling
-          </h3>
-          <p class='text-slate-600 dark:text-slate-400 text-sm leading-relaxed'>
+          <Dice5 class='mb-6 w-12 h-12 text-green-400' />
+          <h3 class='mb-3 font-bold text-white text-xl'>Casino & Gambling</h3>
+          <p class='text-slate-400 text-sm leading-relaxed'>
             Keywords like <strong>"Slot Gacor", "Online Casino"</strong>. Often
             invisible on desktop but redirects mobile users.
           </p>
@@ -276,7 +267,7 @@ const outlineButtonStyle = `${buttonBase} border border-slate-300 hover:bg-slate
     {/* --- H2: WHY PLUGINS FAIL --- */}
     <section class='mb-24'>
       <div
-        class='relative px-6 md:px-12 py-16 md:py-20 rounded-3xl overflow-hidden'>
+        class='relative bg-slate-900 shadow-2xl px-6 md:px-12 py-16 md:py-20 border border-slate-800 rounded-3xl overflow-hidden'>
         <div class='z-10 relative mx-auto max-w-5xl'>
           <h2
             class='mb-12 font-bold text-white text-3xl md:text-4xl text-center'>
@@ -309,19 +300,12 @@ const outlineButtonStyle = `${buttonBase} border border-slate-300 hover:bg-slate
                     index.
                   </span>
                 </li>
-                <li class='flex gap-3'>
-                  <span class='font-bold text-red-500 text-lg'>×</span>
-                  <span class='leading-relaxed'>
-                    Nulled theme backdoors often regenerate the spam
-                    immediately.
-                  </span>
-                </li>
               </ul>
             </div>
 
             {/* The Win */}
             <div
-              class='bg-white/5 shadow-inner backdrop-blur p-8 border border-white/10 rounded-2xl'>
+              class='bg-slate-900/40 backdrop-blur p-8 border border-white/10 rounded-2xl'>
               <div
                 class='flex items-center gap-3 mb-6 font-bold text-green-400 text-xl'>
                 <ShieldCheck class='w-7 h-7' />
@@ -337,19 +321,9 @@ const outlineButtonStyle = `${buttonBase} border border-slate-300 hover:bg-slate
                 <li class='flex gap-3'>
                   <span class='font-bold text-green-400 text-lg'>✓</span>
                   <span class='leading-relaxed'>
-                    I use a <strong class='text-green-200'
+                    I use a <strong class='text-green-300'
                       >410 Gone Strategy</strong
                     > to purge Google's index fast.
-                  </span>
-                </li>
-                <li class='flex gap-3'>
-                  <span class='font-bold text-green-400 text-lg'>✓</span>
-                  <span class='leading-relaxed'>
-                    I perform a Database Audit to remove spam injected into{' '}
-                    <code
-                      class='bg-slate-900 px-1 py-0.5 rounded font-mono text-sm'
-                      >wp_options</code
-                    >.
                   </span>
                 </li>
               </ul>
@@ -359,32 +333,28 @@ const outlineButtonStyle = `${buttonBase} border border-slate-300 hover:bg-slate
       </div>
     </section>
 
-    {/* --- H2: CLEANUP PROCESS (Re-designed) --- */}
+    {/* --- H2: CLEANUP PROCESS --- */}
     <section id='process' class='mb-24'>
       <div class='mx-auto max-w-4xl text-center'>
-        <h2
-          class='mb-4 font-bold text-gray-900 dark:text-white text-3xl md:text-4xl'>
+        <h2 class='mb-4 font-bold text-white text-3xl md:text-4xl'>
           My Manual "De-Index & Clean" Protocol
         </h2>
-        <p class='mb-16 text-slate-600 dark:text-slate-400 text-lg'>
+        <p class='mb-16 text-slate-400 text-lg'>
           I don't just delete files. I ensure the spam is wiped from Google
           Search Console using a 5-step forensic process.
         </p>
       </div>
 
-      {/* NEW LAYOUT: Clean Grid without Numbers */}
       <div class='gap-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
         {/* STEP 01 */}
         <div
-          class='group bg-white dark:bg-slate-900 hover:shadow-xl p-8 border border-slate-200 dark:border-slate-800 rounded-2xl transition-all hover:-translate-y-1 duration-300'>
+          class='group bg-slate-900 hover:shadow-xl p-8 border border-slate-800 rounded-2xl transition-all hover:-translate-y-1 duration-300'>
           <div
-            class='flex justify-center items-center bg-red-100 dark:bg-red-900/20 mb-6 rounded-xl w-12 h-12 text-red-600 dark:text-red-400'>
+            class='flex justify-center items-center bg-red-900/20 mb-6 rounded-xl w-12 h-12 text-red-400'>
             <ScanSearch class='w-6 h-6' />
           </div>
-          <h3 class='mb-3 font-bold text-slate-900 dark:text-white text-xl'>
-            Backdoor Hunt
-          </h3>
-          <p class='text-slate-600 dark:text-slate-400 text-sm leading-relaxed'>
+          <h3 class='mb-3 font-bold text-white text-xl'>Backdoor Hunt</h3>
+          <p class='text-slate-400 text-sm leading-relaxed'>
             I manually scan your file system to locate hidden PHP shells, WSO
             shells, and Nulled Theme code that allows hackers to re-enter.
           </p>
@@ -392,161 +362,33 @@ const outlineButtonStyle = `${buttonBase} border border-slate-300 hover:bg-slate
 
         {/* STEP 02 */}
         <div
-          class='group bg-white dark:bg-slate-900 hover:shadow-xl p-8 border border-slate-200 dark:border-slate-800 rounded-2xl transition-all hover:-translate-y-1 duration-300'>
+          class='group bg-slate-900 hover:shadow-xl p-8 border border-slate-800 rounded-2xl transition-all hover:-translate-y-1 duration-300'>
           <div
-            class='flex justify-center items-center bg-orange-100 dark:bg-orange-900/20 mb-6 rounded-xl w-12 h-12 text-orange-600 dark:text-orange-400'>
+            class='flex justify-center items-center bg-orange-900/20 mb-6 rounded-xl w-12 h-12 text-orange-400'>
             <Trash2 class='w-6 h-6' />
           </div>
-          <h3 class='mb-3 font-bold text-slate-900 dark:text-white text-xl'>
-            Sitemap Wipe
-          </h3>
-          <p class='text-slate-600 dark:text-slate-400 text-sm leading-relaxed'>
+          <h3 class='mb-3 font-bold text-white text-xl'>Sitemap Wipe</h3>
+          <p class='text-slate-400 text-sm leading-relaxed'>
             Hackers inject dynamic XML sitemaps to feed spam to Google. I locate
             these generators and destroy the rogue sitemap files instantly.
           </p>
         </div>
 
-        {/* STEP 03 */}
+        {/* STEP 04 (Special Design) */}
         <div
-          class='group bg-white dark:bg-slate-900 hover:shadow-xl p-8 border border-slate-200 dark:border-slate-800 rounded-2xl transition-all hover:-translate-y-1 duration-300'>
+          class='group bg-slate-800 p-8 border border-sky-900 rounded-2xl transition-all hover:-translate-y-1 duration-300'>
           <div
-            class='flex justify-center items-center bg-amber-100 dark:bg-amber-900/20 mb-6 rounded-xl w-12 h-12 text-amber-600 dark:text-amber-400'>
-            <Database class='w-6 h-6' />
-          </div>
-          <h3 class='mb-3 font-bold text-slate-900 dark:text-white text-xl'>
-            Database Scrub
-          </h3>
-          <p class='text-slate-600 dark:text-slate-400 text-sm leading-relaxed'>
-            I run direct SQL queries on your <code>wp_posts</code> and <code
-              >wp_options</code
-            > tables to surgically remove Japanese text and "Slot Gacor" links.
-          </p>
-        </div>
-
-        {/* STEP 04 (Highlighted) */}
-        <div
-          class='group bg-white dark:bg-slate-900 hover:shadow-xl p-8 border border-slate-200 dark:border-slate-800 rounded-2xl transition-all hover:-translate-y-1 duration-300'>
-          <div
-            class='flex justify-center items-center bg-blue-100 bg-blue-500/20 rounded-xl w-12 h-12 text-blue-400 shrink-0'>
+            class='flex justify-center items-center bg-sky-500/20 mb-6 rounded-xl w-12 h-12 text-sky-400'>
             <ServerCrash class='w-6 h-6' />
           </div>
-          <div>
-            <h3
-              class='flex items-center gap-2 mb-3 font-bold text-white text-xl'>
-              The 410 Strategy
-            </h3>
-            <p class='max-w-2xl text-slate-300 text-sm leading-relaxed'>
-              Standard 404s take weeks to de-index. I implement a server-side <strong
-                >410 Gone</strong
-              > response for spam patterns. This signals Google to drop these pages
-              from the index <em>immediately</em>, recovering your SEO health
-              faster.
-            </p>
-          </div>
-        </div>
-
-        {/* STEP 05 */}
-        <div
-          class='group bg-white dark:bg-slate-900 hover:shadow-xl p-8 border border-slate-200 dark:border-slate-800 rounded-2xl transition-all hover:-translate-y-1 duration-300'>
-          <div
-            class='flex justify-center items-center bg-green-100 dark:bg-green-900/20 mb-6 rounded-xl w-12 h-12 text-green-600 dark:text-green-400'>
-            <FileCheck class='w-6 h-6' />
-          </div>
-          <h3 class='mb-3 font-bold text-slate-900 dark:text-white text-xl'>
-            GSC Audit
-          </h3>
-          <p class='text-slate-600 dark:text-slate-400 text-sm leading-relaxed'>
-            Final verification in Google Search Console. I submit removal
-            requests for stubborn URLs and verify the "Security Issues" tab is
-            clear.
+          <h3 class='mb-3 font-bold text-white text-xl'>The 410 Strategy</h3>
+          <p class='text-slate-300 text-sm leading-relaxed'>
+            Standard 404s take weeks. I implement a server-side <strong
+              class='text-sky-300'>410 Gone</strong
+            > response. This signals Google to drop these pages from the index <em
+              >immediately</em
+            >.
           </p>
-        </div>
-      </div>
-    </section>
-
-    {/* --- H2: REAL CASE REFERENCES --- */}
-    {
-      relatedPosts.length > 0 && (
-        <section class='mb-24 pt-16 border-slate-200 dark:border-slate-800 border-t'>
-          <div class='text-center'>
-            <h2 class='mb-4 font-bold text-gray-900 dark:text-white text-3xl md:text-4xl'>
-              Recent Cleanup Case Studies
-            </h2>
-            <p class='mb-12 text-slate-600 dark:text-slate-400 text-lg'>
-              See how I recovered sites with 50,000+ indexed spam pages.
-            </p>
-          </div>
-
-          <div class='gap-8 grid md:grid-cols-3'>
-            {relatedPosts.map((post) => (
-              <a
-                href={`/blog/${post.slug}`}
-                class='group flex flex-col bg-white dark:bg-slate-900 hover:shadow-xl border border-slate-200 hover:border-slate-300 dark:border-slate-800 dark:hover:border-slate-600 rounded-2xl overflow-hidden transition-all hover:-translate-y-1 duration-300 transform'>
-                {post.featuredImage && (
-                  <div class='relative bg-slate-100 dark:bg-slate-800 w-full h-56 overflow-hidden'>
-                    <img
-                      src={post.featuredImage.url}
-                      alt={post.title}
-                      class='w-full h-full object-cover group-hover:scale-105 transition-transform duration-500'
-                    />
-                  </div>
-                )}
-                <div class='flex flex-col flex-1 p-8'>
-                  <h3
-                    class='mb-4 font-bold text-slate-900 dark:group-hover:text-blue-400 dark:text-white group-hover:text-blue-600 text-xl leading-snug transition-colors'
-                    set:html={post.title}
-                  />
-
-                  <div class='flex items-center mt-auto pt-4 font-medium text-slate-500 dark:group-hover:text-white dark:text-slate-400 group-hover:text-slate-900 text-sm transition-colors'>
-                    Read Case Study{' '}
-                    <ArrowRight class='ml-2 w-4 h-4 transition-transform group-hover:translate-x-1' />
-                  </div>
-                </div>
-              </a>
-            ))}
-          </div>
-        </section>
-      )
-    }
-
-    {/* --- H2: FAQ --- */}
-    <section class='mb-24'>
-      <div class='mx-auto max-w-3xl'>
-        <h2
-          class='mb-12 font-bold text-gray-900 dark:text-white text-3xl text-center'>
-          Questions About Japanese SEO Spam
-        </h2>
-        <div class='space-y-4'>
-          {
-            [
-              {
-                q: 'Why does site:example.com still show spam after I deleted files?',
-                a: 'Deleting files isn\'t enough. Google has "cached" these spam pages. Until Google recrawls your site, they will remain. My "410 Gone" strategy forces Google to drop them faster.',
-              },
-              {
-                q: 'How long until my traffic recovers?',
-                a: 'For Japanese SEO spam, once the "410" status is active, we usually see spam dropping from the index in 5-10 days. Traffic recovery follows shortly after.',
-              },
-              {
-                q: 'Why do I see thousands of 404 errors in Search Console?',
-                a: "The hackers generated thousands of fake URLs. Now that (maybe) the hack is partially broken, those pages don't exist, causing 404s. I fix this by telling Google to ignore them completely.",
-              },
-              {
-                q: 'Is this caused by a plugin?',
-                a: 'Often, yes. This hack frequently enters through "Nulled" (pirated) plugins or unpatched vulnerabilities in older plugins. I will identify the exact entry point.',
-              },
-            ].map((faq) => (
-              <details class='group bg-slate-50 open:bg-white dark:bg-slate-900/50 dark:open:bg-slate-900 border border-slate-200 open:border-slate-300 dark:border-slate-800 dark:open:border-slate-700 rounded-xl transition-all duration-300'>
-                <summary class='flex items-center gap-4 p-6 font-bold text-slate-900 dark:text-white text-lg cursor-pointer select-none'>
-                  <HelpCircle class='w-5 h-5 text-slate-400 group-open:text-blue-500 transition-colors shrink-0' />
-                  {faq.q}
-                </summary>
-                <div class='px-6 pb-6 pl-16 text-slate-600 dark:text-slate-400 text-sm leading-relaxed'>
-                  {faq.a}
-                </div>
-              </details>
-            ))
-          }
         </div>
       </div>
     </section>
@@ -554,13 +396,11 @@ const outlineButtonStyle = `${buttonBase} border border-slate-300 hover:bg-slate
     {/* --- CTA --- */}
     <section
       id='diagnosis'
-      class='bg-slate-50 dark:bg-slate-900 mt-20 px-6 py-20 border border-slate-200 dark:border-slate-800 rounded-[2.5rem] text-center'>
-      <h2
-        class='mb-6 font-bold text-gray-900 dark:text-white text-3xl md:text-5xl tracking-tight'>
+      class='bg-slate-900 shadow-2xl mt-20 px-6 py-20 border border-slate-800 rounded-[2.5rem] text-center'>
+      <h2 class='mb-6 font-bold text-white text-3xl md:text-5xl tracking-tight'>
         Stop Selling "Viagra" or "Fake Gucci"
       </h2>
-      <p
-        class='mx-auto mb-10 max-w-2xl text-slate-600 dark:text-slate-400 text-lg md:text-xl'>
+      <p class='mx-auto mb-10 max-w-2xl text-slate-400 text-lg md:text-xl'>
         I will confirm if it's a false positive or a real attack, and give you a
         plan to fix it.
       </p>
@@ -569,7 +409,7 @@ const outlineButtonStyle = `${buttonBase} border border-slate-300 hover:bg-slate
           Get Free SEO Spam Diagnosis
         </a>
         <span
-          class='flex items-center font-medium text-red-500 dark:text-red-400 text-sm animate-pulse'>
+          class='flex items-center font-medium text-red-400 text-sm animate-pulse'>
           <Zap class='mr-2 w-4 h-4' />
           Response within 15 mins
         </span>

@@ -6,7 +6,7 @@ import ThemeToggle from './ThemeToggle.astro';
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class='border-slate-300/60 dark:border-slate-800 border-t'>
+<footer class='border-slate-800 border-t'>
   <ComponentWrapper class='py-8'>
     <div class='flex md:flex-row flex-col justify-between items-start gap-8'>
       {/* --- LOGO & DESCRIPTION --- */}
@@ -14,14 +14,14 @@ const currentYear = new Date().getFullYear();
         <a
           href='/'
           aria-label='Home'
-          class='flex items-center font-medium text-slate-950 dark:text-white text-lg'>
+          class='flex items-center font-medium text-white text-lg'>
           <div
-            class='flex justify-center items-center bg-sky-600 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded w-10 h-10'>
+            class='flex justify-center items-center bg-slate-800 border border-slate-700 rounded w-10 h-10'>
             <Rocket class='w-5 h-5 text-white' />
           </div>
           <span class='ml-2 font-semibold'>MD Pabel</span>
         </a>
-        <p class='max-w-xs text-slate-600 dark:text-slate-400 text-sm'>
+        <p class='max-w-xs text-slate-400 text-sm'>
           Building innovative solutions for the future. Subscribe to our
           newsletter for updates.
         </p>
@@ -29,14 +29,12 @@ const currentYear = new Date().getFullYear();
 
       {/* --- QUICK LINKS --- */}
       <div class='flex flex-col gap-4'>
-        <h4 class='font-semibold text-slate-950 dark:text-white text-lg'>
-          Quick Links
-        </h4>
+        <h4 class='font-semibold text-white text-lg'>Quick Links</h4>
         <ul class='flex flex-col gap-2'>
           <li>
             <a
               href='/about/'
-              class='flex items-center gap-2 text-slate-700 hover:text-slate-950 dark:hover:text-white dark:text-slate-300 transition-colors'>
+              class='flex items-center gap-2 text-slate-300 hover:text-white transition-colors'>
               <User class='w-4 h-4' />
               About
             </a>
@@ -44,7 +42,7 @@ const currentYear = new Date().getFullYear();
           <li>
             <a
               href='/wordpress-malware-removal/'
-              class='flex items-center gap-2 text-slate-700 hover:text-slate-950 dark:hover:text-white dark:text-slate-300 transition-colors'>
+              class='flex items-center gap-2 text-slate-300 hover:text-white transition-colors'>
               <Briefcase class='w-4 h-4' />
               WordPress Malware Removal
             </a>
@@ -52,7 +50,7 @@ const currentYear = new Date().getFullYear();
           <li>
             <a
               href='/blog/'
-              class='flex items-center gap-2 text-slate-700 hover:text-slate-950 dark:hover:text-white dark:text-slate-300 transition-colors'>
+              class='flex items-center gap-2 text-slate-300 hover:text-white transition-colors'>
               <Compass class='w-4 h-4' />
               Blog
             </a>
@@ -62,15 +60,13 @@ const currentYear = new Date().getFullYear();
 
       {/* --- GET IN TOUCH --- */}
       <div class='flex flex-col gap-4'>
-        <h4 class='font-semibold text-slate-950 dark:text-white text-lg'>
-          Get in Touch
-        </h4>
+        <h4 class='font-semibold text-white text-lg'>Get in Touch</h4>
         <ul class='flex flex-col gap-2'>
           <li>
             <a
               href='https://mdpabe1.substack.com/'
               target='_blank'
-              class='flex items-center gap-2 text-slate-700 hover:text-slate-950 dark:hover:text-white dark:text-slate-300 transition-colors'>
+              class='flex items-center gap-2 text-slate-300 hover:text-white transition-colors'>
               <Mail class='w-4 h-4' />
               Newsletter
             </a>
@@ -78,7 +74,7 @@ const currentYear = new Date().getFullYear();
           <li>
             <a
               href='/hire-me/'
-              class='flex items-center gap-2 text-slate-700 hover:text-slate-950 dark:hover:text-white dark:text-slate-300 transition-colors'>
+              class='flex items-center gap-2 text-slate-300 hover:text-white transition-colors'>
               <Contact class='w-4 h-4' />
               Hire Me
             </a>
@@ -88,13 +84,13 @@ const currentYear = new Date().getFullYear();
     </div>
 
     {/* --- COPYRIGHT --- */}
-    <div
-      class='mt-8 pt-4 border-slate-200 dark:border-slate-800 border-t text-center'>
+    <div class='mt-8 pt-4 border-slate-800 border-t text-center'>
       <div class='flex justify-center md:justify-between items-center'>
-        <p class='text-slate-600 dark:text-slate-400 text-sm'>
+        <p class='text-slate-400 text-sm'>
           &copy; {currentYear} MD Pabel. All rights reserved.
         </p>
 
+        {/* ThemeToggle removed as we are now dark-only */}
         <ThemeToggle />
       </div>
     </div>

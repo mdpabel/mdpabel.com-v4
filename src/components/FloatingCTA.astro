@@ -5,7 +5,7 @@
 <div id='cta-container'>
   <button
     id='cta-trigger'
-    class='hidden right-4 bottom-4 z-40 fixed flex justify-center items-center space-x-2 bg-white dark:bg-slate-800 shadow-lg py-2 border border-slate-300 dark:border-slate-700 rounded-full w-48 text-gray-900 dark:text-white text-sm hover:scale-105 transition-transform animate-bounce-slow cursor-pointer'>
+    class='hidden right-4 bottom-4 z-40 fixed flex justify-center items-center space-x-2 bg-slate-800 shadow-lg py-2 border border-slate-700 rounded-full w-48 text-white text-sm hover:scale-105 transition-transform animate-bounce-slow cursor-pointer'>
     <span class='text-xl'>🚨</span>
     <span>Free Malware Scan</span>
   </button>
@@ -15,22 +15,20 @@
     class='hidden z-50 fixed inset-0 flex justify-center items-center bg-slate-900/40 opacity-0 backdrop-blur-sm transition-opacity duration-300 pointer-events-none'>
     <div
       id='modal-content'
-      class='relative bg-white dark:bg-slate-900 shadow-2xl mx-4 p-6 border-2 border-slate-700 dark:border-slate-500 rounded-xl w-full max-w-md transition-transform translate-y-4 duration-300 transform'>
+      class='relative bg-slate-900 shadow-2xl mx-4 p-6 border-2 border-slate-500 rounded-xl w-full max-w-md transition-transform translate-y-4 duration-300 transform'>
       <button
         id='cta-close-x'
-        class='top-3 right-4 absolute text-gray-500 hover:text-black dark:hover:text-white dark:text-slate-400 text-xl'
+        class='top-3 right-4 absolute text-slate-400 hover:text-white text-xl'
         >✕</button
       >
 
-      <h2
-        class='mb-4 font-semibold text-gray-900 dark:text-white text-xl leading-tight'>
+      <h2 class='mb-4 font-semibold text-white text-xl leading-tight'>
         🚨 Is your WordPress site hacked? Get a free malware scan
       </h2>
 
       <form id='cta-form' class='space-y-4'>
         <div>
-          <label
-            class='block mb-1.5 font-medium text-gray-500 dark:text-slate-400 text-sm'
+          <label class='block mb-1.5 font-medium text-slate-400 text-sm'
             >Email</label
           >
           <input
@@ -38,13 +36,12 @@
             name='email'
             required
             placeholder='your@email.com'
-            class='bg-white dark:bg-slate-800 px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 w-full text-gray-900 dark:text-white transition-all'
+            class='bg-slate-800 px-4 py-2 border border-slate-700 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 w-full text-white transition-all'
           />
         </div>
 
         <div>
-          <label
-            class='block mb-1.5 font-medium text-gray-500 dark:text-slate-400 text-sm'
+          <label class='block mb-1.5 font-medium text-slate-400 text-sm'
             >Website URL</label
           >
           <input
@@ -52,7 +49,7 @@
             name='url'
             required
             placeholder='https://yourwebsite.com'
-            class='bg-white dark:bg-slate-800 px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 w-full text-gray-900 dark:text-white transition-all'
+            class='bg-slate-800 px-4 py-2 border border-slate-700 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 w-full text-white transition-all'
           />
         </div>
 
@@ -62,7 +59,7 @@
           <button
             type='button'
             id='cta-cancel'
-            class='px-4 py-2 font-medium text-gray-500 hover:text-gray-800 dark:hover:text-white transition-colors'
+            class='px-4 py-2 font-medium text-slate-400 hover:text-white transition-colors'
             >Cancel</button
           >
           <button

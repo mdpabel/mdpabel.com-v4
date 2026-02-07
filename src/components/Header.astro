@@ -44,7 +44,6 @@ interface NavDropdown {
 type NavItem = NavLink | NavDropdown;
 
 // --- 2. NAVIGATION DATA ---
-// Added trailing slashes to all hrefs
 const navItems: NavItem[] = [
   {
     name: 'About',
@@ -138,8 +137,8 @@ const navItems: NavItem[] = [
 
 <header
   id='main-header'
-  class='top-0 z-50 sticky bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-slate-100 dark:border-slate-800 border-b w-full overflow-x-clip transition-colors duration-300'>
-  <div class='py-4 text-black'>
+  class='top-0 z-50 sticky bg-slate-900/90 backdrop-blur-md border-slate-800 border-b w-full overflow-x-clip transition-colors duration-300'>
+  <div class='py-4'>
     <ComponentWrapper>
       <nav class='relative flex justify-between items-center mx-auto'>
         {/* --- LOGO --- */}
@@ -147,10 +146,10 @@ const navItems: NavItem[] = [
           <a
             href='/'
             aria-label='Home'
-            class='flex items-center gap-3 font-bold text-slate-900 dark:text-white text-xl tracking-tight'>
+            class='flex items-center gap-3 font-bold text-white text-xl tracking-tight'>
             <div
-              class='flex justify-center items-center bg-sky-600 dark:bg-white shadow-sm border border-sky-700 dark:border-slate-300 rounded-lg w-9 h-9'>
-              <Rocket class='w-5 h-5 text-white dark:text-slate-950' />
+              class='flex justify-center items-center bg-white shadow-sm border border-slate-300 rounded-lg w-9 h-9'>
+              <Rocket class='w-5 h-5 text-slate-950' />
             </div>
             <span>MD Pabel</span>
           </a>
@@ -162,37 +161,37 @@ const navItems: NavItem[] = [
                 item.type === 'link' ? (
                   <a
                     href={item.href}
-                    class='hover:bg-slate-50 dark:hover:bg-slate-800 px-3 py-2 rounded-full font-medium text-slate-600 hover:text-sky-600 dark:hover:text-white dark:text-slate-300 text-base transition-colors'
+                    class='hover:bg-slate-800 px-3 py-2 rounded-full font-medium text-slate-300 hover:text-white text-base transition-colors'
                     data-astro-prefetch={item.prefetch}>
                     {item.name}
                   </a>
                 ) : (
                   <div class='group relative px-4 py-2'>
-                    <button class='flex items-center gap-1 font-medium text-slate-600 dark:group-hover:text-white dark:text-slate-300 group-hover:text-sky-600 text-base transition-colors cursor-pointer'>
+                    <button class='flex items-center gap-1 font-medium text-slate-300 group-hover:text-white text-base transition-colors cursor-pointer'>
                       {item.name}
                       <ChevronDown class='w-4 h-4 group-hover:rotate-180 transition-transform' />
                     </button>
                     <div class='invisible group-hover:visible top-full left-1/2 z-50 absolute opacity-0 group-hover:opacity-100 pt-4 w-[600px] origin-top transition-all -translate-x-1/2 translate-y-2 group-hover:translate-y-0 duration-200 ease-out transform'>
-                      <div class='relative gap-2 grid grid-cols-2 bg-white dark:bg-slate-900 shadow-xl p-4 border border-slate-200 dark:border-slate-700 rounded-2xl'>
-                        <div class='-top-2 left-1/2 absolute bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 border-t border-l w-4 h-4 rotate-45 -translate-x-1/2 transform' />
+                      <div class='relative gap-2 grid grid-cols-2 bg-slate-900 shadow-xl p-4 border border-slate-700 rounded-2xl'>
+                        <div class='-top-2 left-1/2 absolute bg-slate-900 border-slate-700 border-t border-l w-4 h-4 rotate-45 -translate-x-1/2 transform' />
                         {item.children.map((subItem) => (
                           <a
                             href={subItem.href}
-                            class={`group/item relative flex items-start gap-4 p-3 rounded-xl transition-colors z-10 ${subItem.badge ? 'opacity-70 cursor-default' : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'}`}
+                            class={`group/item relative flex items-start gap-4 p-3 rounded-xl transition-colors z-10 ${subItem.badge ? 'opacity-70 cursor-default' : 'hover:bg-slate-800/50'}`}
                             onclick={subItem.badge ? 'return false;' : ''}>
-                            <div class='bg-sky-50 dark:bg-slate-800 group-hover/item:bg-sky-600 p-2 rounded-lg text-sky-600 dark:text-sky-400 group-hover/item:text-white transition-colors'>
+                            <div class='bg-slate-800 group-hover/item:bg-sky-600 p-2 rounded-lg text-sky-400 group-hover/item:text-white transition-colors'>
                               <subItem.icon class='w-5 h-5' />
                             </div>
                             <div>
-                              <div class='flex items-center gap-2 font-semibold text-slate-900 dark:text-white group-hover/item:text-sky-600 text-base transition-colors'>
+                              <div class='flex items-center gap-2 font-semibold text-white group-hover/item:text-sky-400 text-base transition-colors'>
                                 {subItem.name}
                                 {subItem.badge && (
-                                  <span class='bg-amber-100 dark:bg-amber-900/30 px-1.5 py-0.5 rounded font-bold text-[10px] text-amber-700 dark:text-amber-400 uppercase tracking-wide'>
+                                  <span class='bg-amber-900/30 px-1.5 py-0.5 rounded font-bold text-[10px] text-amber-400 uppercase tracking-wide'>
                                     {subItem.badge}
                                   </span>
                                 )}
                               </div>
-                              <p class='mt-0.5 text-slate-500 dark:text-slate-400 text-xs'>
+                              <p class='mt-0.5 text-slate-400 text-xs'>
                                 {subItem.desc}
                               </p>
                             </div>
@@ -212,7 +211,7 @@ const navItems: NavItem[] = [
           <li>
             <a
               href='/free-wordpress-scan/'
-              class='flex items-center gap-2 font-medium text-slate-600 hover:text-sky-600 dark:hover:text-white dark:text-slate-400 text-base transition-colors'>
+              class='flex items-center gap-2 font-medium text-slate-400 hover:text-white text-base transition-colors'>
               <ScanLine class='w-4 h-4' />
               Free Scan
             </a>
@@ -220,7 +219,7 @@ const navItems: NavItem[] = [
           <li>
             <a
               href='/hire-me/'
-              class='flex items-center gap-2 bg-sky-600 hover:bg-sky-700 dark:bg-white dark:hover:bg-slate-200 shadow-md hover:shadow-lg px-5 py-2.5 rounded-full font-semibold text-white dark:text-slate-900 text-sm transition-all hover:-translate-y-0.5 transform'
+              class='flex items-center gap-2 bg-white hover:bg-slate-200 shadow-md px-5 py-2.5 rounded-full font-semibold text-slate-900 text-sm transition-all hover:-translate-y-0.5 transform'
               data-astro-prefetch='load'>Hire Me</a
             >
           </li>
@@ -231,7 +230,7 @@ const navItems: NavItem[] = [
           <button
             id='menu-open-btn'
             aria-label='Open Menu'
-            class='hover:bg-slate-100 dark:hover:bg-slate-800 p-2 rounded-full text-slate-900 dark:text-white transition-colors cursor-pointer'>
+            class='hover:bg-slate-800 p-2 rounded-full text-white transition-colors cursor-pointer'>
             <Menu class='w-6 h-6' />
           </button>
         </div>
@@ -242,28 +241,26 @@ const navItems: NavItem[] = [
   {/* --- MOBILE MENU OVERLAY --- */}
   <div
     id='mobile-menu'
-    class='lg:hidden invisible z-[100] fixed inset-0 flex flex-col bg-white dark:bg-slate-900 transition-all translate-x-full duration-300 ease-in-out'
+    class='lg:hidden invisible z-[100] fixed inset-0 flex flex-col bg-slate-900 transition-all translate-x-full duration-300 ease-in-out'
     aria-hidden='true'>
     <div
-      class='flex justify-between items-center px-6 py-4 border-slate-100 dark:border-slate-800 border-b'>
+      class='flex justify-between items-center px-6 py-4 border-slate-800 border-b'>
       <div class='flex items-center gap-3'>
         <div
-          class='flex justify-center items-center bg-sky-600 dark:bg-white rounded-lg w-8 h-8'>
-          <Rocket class='w-4 h-4 text-white dark:text-slate-950' />
+          class='flex justify-center items-center bg-white rounded-lg w-8 h-8'>
+          <Rocket class='w-4 h-4 text-slate-950' />
         </div>
-        <span class='font-bold text-slate-900 dark:text-white text-lg'
-          >Menu</span
-        >
+        <span class='font-bold text-white text-lg'>Menu</span>
       </div>
       <button
         id='menu-close-btn'
         aria-label='Close Menu'
-        class='bg-slate-100 dark:bg-slate-800 p-2 rounded-full text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer'>
+        class='bg-slate-800 p-2 rounded-full text-slate-400 hover:text-white transition-colors cursor-pointer'>
         <X class='w-6 h-6' />
       </button>
     </div>
 
-    <div class='flex-1 bg-slate-50 dark:bg-slate-900 px-6 py-6'>
+    <div class='flex-1 bg-slate-900 px-6 py-6'>
       <ul class='space-y-2'>
         {
           navItems.map((item) =>
@@ -271,28 +268,28 @@ const navItems: NavItem[] = [
               <li>
                 <a
                   href={item.href}
-                  class='block py-3 border-slate-100 dark:border-slate-800/50 border-b font-medium text-slate-800 dark:text-slate-200 text-lg mobile-link'
+                  class='block py-3 border-slate-800/50 border-b font-medium text-slate-200 text-lg mobile-link'
                   data-astro-prefetch={item.prefetch}>
                   {item.name}
                 </a>
               </li>
             ) : (
-              <li class='border-slate-100 dark:border-slate-800/50 border-b'>
+              <li class='border-slate-800/50 border-b'>
                 <details class='group'>
-                  <summary class='flex justify-between items-center py-3 font-medium text-slate-800 dark:text-slate-200 text-lg cursor-pointer list-none'>
+                  <summary class='flex justify-between items-center py-3 font-medium text-slate-200 text-lg cursor-pointer list-none'>
                     {item.name}
-                    <ChevronDown class='w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform' />
+                    <ChevronDown class='w-5 h-5 text-slate-500 group-open:rotate-180 transition-transform' />
                   </summary>
                   <div class='space-y-4 pb-4 pl-4'>
                     {item.children.map((subItem) => (
                       <a
                         href={subItem.href}
-                        class={`flex items-center gap-3 py-2 ${subItem.badge ? 'opacity-60 cursor-default' : 'text-slate-600 hover:text-sky-600 dark:hover:text-sky-400 dark:text-slate-400 mobile-link'}`}
+                        class={`flex items-center gap-3 py-2 ${subItem.badge ? 'opacity-60 cursor-default' : 'mobile-link text-slate-400 hover:text-sky-400'}`}
                         onclick={subItem.badge ? 'return false;' : ''}>
                         <subItem.icon class='w-4 h-4' />
                         <span class='text-base'>{subItem.name}</span>
                         {subItem.badge && (
-                          <span class='bg-amber-100 dark:bg-amber-900/30 ml-auto px-1.5 py-0.5 rounded font-bold text-[10px] text-amber-700 dark:text-amber-400 uppercase tracking-wide'>
+                          <span class='bg-amber-900/30 ml-auto px-1.5 py-0.5 rounded font-bold text-[10px] text-amber-400 uppercase tracking-wide'>
                             {subItem.badge}
                           </span>
                         )}
@@ -307,8 +304,7 @@ const navItems: NavItem[] = [
       </ul>
     </div>
 
-    <div
-      class='bg-slate-50 dark:bg-slate-900 p-6 border-slate-200 dark:border-slate-800 border-t'>
+    <div class='bg-slate-900 p-6 border-slate-800 border-t'>
       <a
         href='/hire-me/'
         class='flex justify-center items-center bg-sky-600 hover:bg-sky-700 shadow-sm mb-3 py-3.5 rounded-xl w-full font-semibold text-white transition-colors'
@@ -316,7 +312,7 @@ const navItems: NavItem[] = [
       >
       <a
         href='/free-wordpress-scan/'
-        class='flex justify-center items-center gap-2 bg-white dark:bg-slate-800 py-3.5 border border-slate-200 dark:border-slate-600 rounded-xl w-full font-medium text-slate-700 dark:text-slate-300 transition-colors'>
+        class='flex justify-center items-center gap-2 bg-slate-800 py-3.5 border border-slate-600 rounded-xl w-full font-medium text-slate-300 transition-colors'>
         <ScanLine class='w-4 h-4' />
         Free Scan
       </a>

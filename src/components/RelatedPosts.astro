@@ -4,34 +4,31 @@ import type { WordPressPost } from '../lib/wordpress';
 
 interface Props {
   currentPostId: number;
-  categoryIds?: number[]; // Optional now, as we might pass 'posts' directly
+  categoryIds?: number[];
   limit?: number;
-  posts?: WordPressPost[]; // ✅ New Prop: Pre-fetched posts
+  posts?: WordPressPost[];
 }
 
 const { currentPostId, categoryIds = [], limit = 3, posts } = Astro.props;
 
 // ✅ OPTIMIZATION: Use pre-calculated posts if available.
-// Otherwise, fall back to fetching (Server-side) for backward compatibility.
 const relatedPosts =
   posts || (await wordpress.getRelatedPosts(currentPostId, categoryIds, limit));
 
 if (relatedPosts.length === 0) {
-  return null; // Don't render anything if no related posts found
+  return null;
 }
 ---
 
-<section class='mt-16 pt-12 border-slate-200 dark:border-slate-800 border-t'>
-  <h2 class='mb-8 font-bold text-slate-900 dark:text-white text-2xl'>
-    Read Next
-  </h2>
+<section class='mt-16 pt-12 border-slate-800 border-t'>
+  <h2 class='mb-8 font-bold text-white text-2xl'>Read Next</h2>
 
   <div class='gap-8 grid grid-cols-1 md:grid-cols-3'>
     {
       relatedPosts.map((post) => (
         <a href={`/blog/${post.slug}`} class='group flex flex-col gap-3'>
           {/* Thumbnail Fallback */}
-          <div class='bg-slate-100 dark:bg-slate-800/50 rounded-xl w-full aspect-video overflow-hidden'>
+          <div class='bg-slate-800/50 rounded-xl w-full aspect-video overflow-hidden'>
             {post.featuredImage ? (
               <img
                 src={post.featuredImage.url}
@@ -42,7 +39,7 @@ if (relatedPosts.length === 0) {
                 loading='lazy'
               />
             ) : (
-              <div class='flex justify-center items-center w-full h-full text-slate-300'>
+              <div class='flex justify-center items-center w-full h-full text-slate-600'>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   class='w-12 h-12'
@@ -61,10 +58,10 @@ if (relatedPosts.length === 0) {
           </div>
 
           <div class='flex flex-col gap-2'>
-            <h3 class='font-bold text-slate-900 dark:group-hover:text-blue-400 dark:text-slate-100 group-hover:text-blue-600 text-lg leading-snug transition-colors'>
+            <h3 class='font-bold text-slate-100 group-hover:text-sky-400 text-lg leading-snug transition-colors'>
               <span set:html={post.title} />
             </h3>
-            <time class='text-slate-500 dark:text-slate-400 text-sm'>
+            <time class='text-slate-400 text-sm'>
               {new Date(post.date).toLocaleDateString('en-US', {
                 year: 'numeric',
                 month: 'long',

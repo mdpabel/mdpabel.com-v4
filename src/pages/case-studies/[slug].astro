@@ -6,28 +6,25 @@ import SinglePost from '../../components/SinglePost.astro';
 import { wordpress } from '../../lib/wordpress';
 import Banner from '../../components/Banner.astro';
 import RelatedPosts from '../../components/RelatedPosts.astro';
-import { fields } from '../../../constant';
 
 export async function getStaticPaths() {
   // ✅ OPTIMIZATION: Fetch ALL case studies once (Cached).
-  // We explicitly ask for fields needed for the related posts logic.
   const posts = await wordpress.getAllPosts({
     postType: 'case-study',
   });
 
-  // Generate routes and pre-calculate related posts in memory (0ms latency)
+  // Generate routes and pre-calculate related posts in memory
   return posts.map((post) => {
-    // Filter related posts from the array we already have
     const relatedPosts = posts
       .filter(
         (p) =>
-          p.id !== post.id && // Exclude current post
+          p.id !== post.id &&
           p.categories.some((cat) =>
             post.categories.find((c) => c.id === cat.id),
           ),
       )
-      .sort(() => 0.5 - Math.random()) // Randomize
-      .slice(0, 3); // Limit to 3
+      .sort(() => 0.5 - Math.random())
+      .slice(0, 3);
 
     return {
       params: { slug: post.slug },
@@ -42,10 +39,27 @@ const { post, relatedPosts } = Astro.props;
 <Layout yoastHead={post.yoastHead}>
   <Banner />
 
-  <ComponentWrapper class='pb-20 max-w-4xl'>
-    <SinglePost post={post} parentSlug='case-studies' />
+  <ComponentWrapper class='bg-slate-950 pb-20 max-w-4xl'>
+    {/* Forensic Content Section */}
+    <div class='case-study-content'>
+      <SinglePost post={post} parentSlug='case-studies' />
+    </div>
 
-    {/* ✅ Pass pre-calculated posts to avoid API calls */}
-    <RelatedPosts currentPostId={post.id} posts={relatedPosts} />
+    {/* Footer Related Content Section */}
+    <div class='mt-20 pt-16 border-slate-800 border-t'>
+      <h2 class='mb-10 font-bold text-white text-2xl tracking-tight'>
+        Similar Forensic Investigations
+      </h2>
+      <RelatedPosts currentPostId={post.id} posts={relatedPosts} />
+    </div>
   </ComponentWrapper>
 </Layout>
+
+<style is:global>
+  /* Ensuring any dynamic content from WP matches the forensic report look */
+  .case-study-content .prose {
+    --tw-prose-invert-body: #cbd5e1; /* slate-300 */
+    --tw-prose-invert-headings: #ffffff;
+    --tw-prose-invert-links: #38bdf8; /* sky-400 */
+  }
+</style>

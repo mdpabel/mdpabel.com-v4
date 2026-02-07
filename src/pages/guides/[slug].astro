@@ -6,7 +6,6 @@ import SinglePost from '../../components/SinglePost.astro';
 import { wordpress } from '../../lib/wordpress';
 import Banner from '../../components/Banner.astro';
 import RelatedPosts from '../../components/RelatedPosts.astro';
-import { fields } from '../../../constant';
 
 export async function getStaticPaths() {
   // ✅ OPTIMIZATION: Fetch ALL guides once (Cached).
@@ -41,10 +40,16 @@ const { post, relatedPosts } = Astro.props;
 <Layout yoastHead={post.yoastHead}>
   <Banner />
 
-  <ComponentWrapper class='pb-20 max-w-4xl'>
+  <ComponentWrapper class='bg-slate-950 pb-20 max-w-4xl'>
+    {
+      /* SinglePost handles the Markdown/WP content with your dark-prose classes */
+    }
     <SinglePost post={post} parentSlug='guides' />
 
-    {/* ✅ Pass pre-calculated posts to avoid API calls */}
-    <RelatedPosts currentPostId={post.id} posts={relatedPosts} />
+    {/* Section Break and Related Content */}
+    <div class='mt-16 pt-12 border-slate-800 border-t'>
+      <h2 class='mb-8 font-bold text-white text-2xl'>More Security Guides</h2>
+      <RelatedPosts currentPostId={post.id} posts={relatedPosts} />
+    </div>
   </ComponentWrapper>
 </Layout>

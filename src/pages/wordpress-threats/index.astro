@@ -18,15 +18,14 @@ const threats: CollectionEntry<'wordpress-threats'>[] = (
   description='The latest WordPress security news today. A live database of active security vulnerabilities, zero-day malware, and bypass exploits detected in 2026.'>
   <ComponentWrapper class='py-14'>
     <div class='mx-auto mb-16 max-w-3xl text-center'>
-      <h1 class='mb-4 font-extrabold text-slate-900 dark:text-white text-4xl'>
-        WordPress Security <span class='text-blue-600'
+      <h1 class='mb-4 font-extrabold text-white text-4xl'>
+        WordPress Security <span class='text-blue-500'
           >& Threat Intelligence</span
         >
       </h1>
-      <p class='text-slate-600 dark:text-slate-400 text-lg'>
+      <p class='text-slate-400 text-lg'>
         Your source for <strong>WordPress security news today</strong>. Browse
-        our live archive of <span
-          class='font-medium text-slate-900 dark:text-white'
+        our live archive of <span class='font-medium text-white'
           >active vulnerabilities</span
         >,
         <strong>bypass URL exploits</strong>, and zero-day malware signatures
@@ -45,26 +44,26 @@ const threats: CollectionEntry<'wordpress-threats'>[] = (
           return (
             <a
               href={`/wordpress-threats/${threat.slug}`}
-              class='group relative bg-white dark:bg-slate-900 hover:shadow-xl p-6 border border-slate-200 dark:border-slate-800 rounded-xl transition-all hover:-translate-y-1 duration-300'>
+              class='group relative bg-slate-900 hover:shadow-xl p-6 border border-slate-800 rounded-xl transition-all hover:-translate-y-1 duration-300'>
               {/* Badges */}
               <div class='flex justify-between items-start mb-4'>
                 <span
                   class={`px-2 py-1 rounded text-[10px] font-bold uppercase ${
                     severity === 'Critical'
-                      ? 'bg-red-100 text-red-700 border border-red-200'
-                      : 'bg-blue-100 text-blue-700 border border-blue-200'
+                      ? 'bg-red-900/30 text-red-400 border border-red-800'
+                      : 'bg-blue-900/30 text-blue-400 border border-blue-800'
                   }`}>
                   {severity}
                 </span>
 
                 {isFUD && (
-                  <span class='bg-purple-100 px-2 py-1 border border-purple-200 rounded font-bold text-[10px] text-purple-700 uppercase animate-pulse'>
+                  <span class='bg-purple-900/30 px-2 py-1 border border-purple-800 rounded font-bold text-[10px] text-purple-400 uppercase animate-pulse'>
                     👻 Undetected
                   </span>
                 )}
               </div>
 
-              <h3 class='mb-2 font-bold text-slate-900 dark:text-white group-hover:text-blue-600 text-xl transition-colors'>
+              <h3 class='mb-2 font-bold text-white group-hover:text-blue-400 text-xl transition-colors'>
                 {title}
               </h3>
 
@@ -72,7 +71,7 @@ const threats: CollectionEntry<'wordpress-threats'>[] = (
                 Type: {threatType}
               </p>
 
-              <div class='flex items-center gap-2 pt-4 border-slate-100 dark:border-slate-800 border-t text-slate-400 text-xs'>
+              <div class='flex items-center gap-2 pt-4 border-slate-800 border-t text-slate-500 text-xs'>
                 <span>📅 Detected: {reportDate}</span>
               </div>
             </a>

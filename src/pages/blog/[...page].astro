@@ -12,37 +12,28 @@ export async function getStaticPaths() {
 
   // ✅ OPTIMIZATION: Fetch ALL posts once (Cached in memory).
   const allPosts = await wordpress.getAllPosts({
-    // Only fetch the fields needed for the listing cards
     postType: 'posts',
     _fields: fields,
   });
 
-  // Calculate total pages locally
   const totalPages = Math.ceil(allPosts.length / PER_PAGE);
 
-  // Generate routes and pass the specific slice of posts to each page
   return Array.from({ length: totalPages }, (_, i) => {
     const pageNum = i + 1;
-
-    // Slice the array for this specific page
     const start = i * PER_PAGE;
     const end = start + PER_PAGE;
     const pagePosts = allPosts.slice(start, end);
 
     return {
-      // ✅ CRITICAL: For /guides (root) to work, page 1 MUST be undefined
+      // ✅ CRITICAL: For /blog (root) to work, page 1 MUST be undefined
       params: { page: pageNum === 1 ? undefined : pageNum.toString() },
       props: { posts: pagePosts, totalPages, currentPage: pageNum },
     };
   });
 }
 
-// --- 2. Get Props & Params ---
-const { page } = Astro.params;
-// ✅ Receive the pre-sliced posts
-const { posts, totalPages } = Astro.props;
-
-const currentPage = page ? Number(page) : 1;
+// --- 2. Get Props ---
+const { posts, totalPages, currentPage } = Astro.props;
 
 // --- 3. Dynamic SEO Logic ---
 const isFirstPage = currentPage === 1;
@@ -64,7 +55,12 @@ const canonicalURL = isFirstPage ? baseUrl : `${baseUrl}/${currentPage}`;
   description={seoDesc}
   image='/images/blog-opengraph-image.png'
   canonical={canonicalURL}>
-  <ComponentWrapper class='pt-12'>
+  <ComponentWrapper class='bg-slate-950 pt-12'>
+    {
+      /* The BlogPosts component will now render its cards 
+        and pagination using your dark-theme slate palette.
+    */
+    }
     <BlogPosts
       posts={posts}
       totalPages={totalPages}
@@ -72,7 +68,7 @@ const canonicalURL = isFirstPage ? baseUrl : `${baseUrl}/${currentPage}`;
       page={currentPage}
       limit={10}
       title='Security, Malware Removal & Development Insights'
-      shortDescription='Insights on WordPress security, malware removal, error fixing, and web development best practices.'
+      shortDescription='Forensic insights on WordPress security, malware detection, and technical remediation strategies.'
       mode='all'
     />
   </ComponentWrapper>

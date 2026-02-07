@@ -1,165 +1,238 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ComponentWrapper from '../components/component-wrapper.astro';
-import { ShieldCheck, Zap, Lock, Globe, CheckCircle2, ChevronDown, AlertCircle } from '@lucide/astro';
+import {
+  ShieldCheck,
+  Zap,
+  Lock,
+  Globe,
+  CheckCircle2,
+  ChevronDown,
+  AlertCircle,
+} from '@lucide/astro';
 
 // SEO Constants
-const seoTitle = "Hire Me: Expert WordPress Security & Development Services by MD Pabel";
-const seoDesc = "Hire MD Pabel for professional WordPress security, malware removal, and custom development services.";
-const seoImage = "/md-pabel.png";
+const seoTitle =
+  'Hire Me: Expert WordPress Security & Development Services by MD Pabel';
+const seoDesc =
+  'Hire MD Pabel for professional WordPress security, malware removal, and custom development services.';
+const seoImage = '/md-pabel.png';
 
 // Configuration
 const wpApiUrl = import.meta.env.PUBLIC_WORDPRESS_API_URL;
-const formId = "1513"; 
+const formId = '1513';
 
 const services = [
   { value: 'malware-removal', label: 'Malware Removal', price: '$89' },
-  { value: 'website-development', label: 'Website Development', price: '$450 - $2900' },
+  {
+    value: 'website-development',
+    label: 'Website Development',
+    price: '$450 - $2900',
+  },
   { value: 'fix-errors', label: 'Fix Website Errors', price: '$50 - $95' },
-  { value: 'nextjs-fullstack', label: 'Next.js Full-Stack Development', price: '$1500+' },
-  { value: 'headless-wp', label: 'Headless WordPress with Next.js', price: '$1000+' },
+  {
+    value: 'nextjs-fullstack',
+    label: 'Next.js Full-Stack Development',
+    price: '$1500+',
+  },
+  {
+    value: 'headless-wp',
+    label: 'Headless WordPress with Next.js',
+    price: '$1000+',
+  },
   { value: 'other', label: 'Other/Custom', price: 'Custom Quote' },
 ];
 
-/* --- SHADCN/UI EXACT STYLES (Mapped to Slate) --- */
-const labelClasses = "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-slate-900 dark:text-slate-100";
-const inputClasses = "flex h-9 w-full rounded-md border border-slate-200 bg-transparent px-3 py-2 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-800 dark:placeholder:text-slate-400 dark:focus-visible:ring-slate-300";
-const textareaClasses = "flex min-h-[120px] w-full rounded-md border border-slate-200 bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-800 dark:placeholder:text-slate-400 dark:focus-visible:ring-slate-300";
-const buttonClasses = "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:ring-offset-slate-950 dark:focus-visible:ring-slate-300 bg-slate-900 text-slate-50 hover:bg-slate-900/90 dark:bg-slate-50 dark:text-slate-900 dark:hover:bg-slate-50/90 h-10 px-4 py-2 w-full mt-2";
-const errorClasses = "text-[0.8rem] font-medium text-red-500 dark:text-red-900 mt-1.5 flex items-center gap-1";
+/* --- DARK-ONLY STYLES --- */
+const labelClasses = 'text-sm font-medium leading-none text-slate-100';
+const inputClasses =
+  'flex h-9 w-full rounded-md border bg-transparent px-3 py-2 text-sm shadow-sm transition-colors placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-300 disabled:cursor-not-allowed disabled:opacity-50 border-slate-800 text-white';
+const textareaClasses =
+  'flex min-h-[120px] w-full rounded-md border bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-300 disabled:cursor-not-allowed disabled:opacity-50 border-slate-800 text-white';
+const buttonClasses =
+  'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ring-offset-slate-950 focus-visible:ring-slate-300 bg-slate-50 text-slate-900 hover:bg-slate-50/90 h-10 px-4 py-2 w-full mt-2';
+const errorClasses =
+  'text-[0.8rem] font-medium text-red-500 mt-1.5 flex items-center gap-1';
 ---
 
 <Layout title={seoTitle} description={seoDesc} image={seoImage}>
-  <ComponentWrapper class="py-12">
-    <div class="items-start gap-8 grid grid-cols-1 lg:grid-cols-2">
-      
+  <ComponentWrapper class='py-12'>
+    <div class='items-start gap-8 grid grid-cols-1 lg:grid-cols-2'>
       {/* LEFT COLUMN: Info */}
-      <div class="space-y-8">
+      <div class='space-y-8'>
         <div>
-          <h1 class="mb-2 font-bold text-gray-900 dark:text-white text-3xl md:text-4xl">
+          <h1 class='mb-2 font-bold text-white text-3xl md:text-4xl'>
             Hire a WordPress Security Expert
           </h1>
-          <p class="mt-6 text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
+          <p class='mt-6 text-slate-400 text-lg leading-relaxed'>
             Stop losing traffic and revenue to malware. I provide manual
-            cleanup, blacklist removal, and professional security hardening
-            for WordPress & Next.js sites.
+            cleanup, blacklist removal, and professional security hardening for
+            WordPress & Next.js sites.
           </p>
         </div>
 
-        <div class="space-y-4">
-          <div class="flex items-center gap-3 font-medium text-slate-700 dark:text-slate-300">
-            <ShieldCheck class="w-5 h-5 text-green-500" /> Guaranteed Malware Removal
+        <div class='space-y-4'>
+          <div class='flex items-center gap-3 font-medium text-slate-300'>
+            <ShieldCheck class='w-5 h-5 text-green-500' /> Guaranteed Malware Removal
           </div>
-          <div class="flex items-center gap-3 font-medium text-slate-700 dark:text-slate-300">
-            <Zap class="w-5 h-5 text-yellow-500" /> Fast 24-Hour Turnaround
+          <div class='flex items-center gap-3 font-medium text-slate-300'>
+            <Zap class='w-5 h-5 text-yellow-500' /> Fast 24-Hour Turnaround
           </div>
-          <div class="flex items-center gap-3 font-medium text-slate-700 dark:text-slate-300">
-            <Lock class="w-5 h-5 text-blue-500" /> Vulnerability Patching Included
+          <div class='flex items-center gap-3 font-medium text-slate-300'>
+            <Lock class='w-5 h-5 text-blue-500' /> Vulnerability Patching Included
           </div>
-          <div class="flex items-center gap-3 font-medium text-slate-700 dark:text-slate-300">
-            <Globe class="w-5 h-5 text-sky-500" /> Google Blacklist Removal
+          <div class='flex items-center gap-3 font-medium text-slate-300'>
+            <Globe class='w-5 h-5 text-sky-500' /> Google Blacklist Removal
           </div>
         </div>
 
-        <div class="bg-slate-50 dark:bg-slate-900 p-6 border border-slate-200 dark:border-slate-800 rounded-2xl">
-          <p class="text-slate-600 dark:text-slate-400 text-sm italic">
+        <div class='bg-slate-900 p-6 border border-slate-800 rounded-2xl'>
+          <p class='text-slate-400 text-sm italic'>
             "After my site was hacked with SEO spam, I tried 3 plugins and
             nothing worked. The manual cleanup here saved my business."
           </p>
-          <p class="mt-3 font-bold text-sm">— E-commerce Store Owner</p>
+          <p class='mt-3 font-bold text-slate-200 text-sm'>
+            — E-commerce Store Owner
+          </p>
         </div>
       </div>
 
       {/* RIGHT COLUMN: Form */}
-      <div class="relative bg-white dark:bg-slate-800/50 shadow-xl p-8 border border-slate-300 dark:border-slate-700 rounded-xl">
-        <h2 class="mb-6 font-bold text-slate-900 dark:text-white text-2xl">
-          Start Your Project
-        </h2>
+      <div
+        class='relative bg-slate-900/50 shadow-xl p-8 border border-slate-700 rounded-xl'>
+        <h2 class='mb-6 font-bold text-white text-2xl'>Start Your Project</h2>
 
         {/* Success Overlay */}
-        <div id="success-message" class="hidden z-10 absolute inset-0 flex-col justify-center items-center bg-white dark:bg-slate-800 p-8 rounded-xl text-center animate-in fade-in zoom-in-95">
-          <div class="flex justify-center items-center bg-green-100 dark:bg-green-900/30 mb-4 rounded-full w-16 h-16 text-green-600 dark:text-green-400">
-            <CheckCircle2 class="w-8 h-8" />
+        <div
+          id='success-message'
+          class='hidden z-10 absolute inset-0 flex-col justify-center items-center bg-slate-900 p-8 rounded-xl text-center animate-in fade-in zoom-in-95'>
+          <div
+            class='flex justify-center items-center bg-green-900/30 mb-4 rounded-full w-16 h-16 text-green-400'>
+            <CheckCircle2 class='w-8 h-8' />
           </div>
-          <h3 class="mb-2 font-bold text-slate-900 dark:text-white text-2xl">Inquiry Sent!</h3>
-          <p class="text-slate-600 dark:text-slate-400">I will review your request and reply within 12-24 hours.</p>
-          <button id="reset-form-btn" class="mt-6 font-medium text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 text-sm underline">
+          <h3 class='mb-2 font-bold text-white text-2xl'>Inquiry Sent!</h3>
+          <p class='text-slate-400'>
+            I will review your request and reply within 12-24 hours.
+          </p>
+          <button
+            id='reset-form-btn'
+            class='mt-6 font-medium text-slate-500 hover:text-slate-300 text-sm underline'>
             Send another message
           </button>
         </div>
 
-        <form 
-          id="hire-me-form" 
-          class="space-y-6" 
+        <form
+          id='hire-me-form'
+          class='space-y-6'
           novalidate
           data-wp-url={wpApiUrl}
-          data-form-id={formId}
-        >
+          data-form-id={formId}>
           {/* Row 1: Name & Email */}
-          <div class="gap-4 grid grid-cols-1 sm:grid-cols-2">
-            <div class="space-y-2">
-              <label for="your-name" class={labelClasses}>Name</label>
-              <input type="text" id="your-name" name="your-name" class={inputClasses} placeholder="" autocomplete="off" />
-              <p class={`${errorClasses} hidden`} id="err-name"><AlertCircle class="w-3 h-3" /> Name must be at least 2 characters</p>
+          <div class='gap-4 grid grid-cols-1 sm:grid-cols-2'>
+            <div class='space-y-2'>
+              <label for='your-name' class={labelClasses}>Name</label>
+              <input
+                type='text'
+                id='your-name'
+                name='your-name'
+                class={inputClasses}
+                placeholder='Your Name'
+                autocomplete='off'
+              />
+              <p class={`${errorClasses} hidden`} id='err-name'>
+                <AlertCircle class='w-3 h-3' /> Name must be at least 2 characters
+              </p>
             </div>
-            <div class="space-y-2">
-              <label for="your-email" class={labelClasses}>Email</label>
-              <input type="email" id="your-email" name="your-email" class={inputClasses} placeholder="" />
-              <p class={`${errorClasses} hidden`} id="err-email"><AlertCircle class="w-3 h-3" /> Please enter a valid email address</p>
+            <div class='space-y-2'>
+              <label for='your-email' class={labelClasses}>Email</label>
+              <input
+                type='email'
+                id='your-email'
+                name='your-email'
+                class={inputClasses}
+                placeholder='your@email.com'
+              />
+              <p class={`${errorClasses} hidden`} id='err-email'>
+                <AlertCircle class='w-3 h-3' /> Please enter a valid email address
+              </p>
             </div>
           </div>
 
           {/* Service Selection */}
-          <div class="space-y-2">
-            <label for="selected-service" class={labelClasses}>Service Needed</label>
-            <div class="relative">
-              <select id="selected-service" name="selected-service" class={`${inputClasses} appearance-none`}>
-                <option value="" disabled selected>Select a service</option>
-                {services.map((s) => (
-                  <option value={s.value} data-price={s.price} class="bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-200">
-                    {s.label}
-                  </option>
-                ))}
+          <div class='space-y-2'>
+            <label for='selected-service' class={labelClasses}
+              >Service Needed</label
+            >
+            <div class='relative'>
+              <select
+                id='selected-service'
+                name='selected-service'
+                class={`${inputClasses} appearance-none`}>
+                <option value='' disabled selected>Select a service</option>
+                {
+                  services.map((s) => (
+                    <option
+                      value={s.value}
+                      data-price={s.price}
+                      class='bg-slate-950 text-slate-200'>
+                      {s.label}
+                    </option>
+                  ))
+                }
               </select>
-              <div class="right-0 absolute inset-y-0 flex items-center px-3 text-slate-500 pointer-events-none">
-                <!-- <ChevronDown class="opacity-50 w-4 h-4" /> -->
-              </div>
             </div>
-            <p class={`${errorClasses} hidden`} id="err-service"><AlertCircle class="w-3 h-3" /> Please select a service</p>
+            <p class={`${errorClasses} hidden`} id='err-service'>
+              <AlertCircle class='w-3 h-3' /> Please select a service
+            </p>
           </div>
 
           {/* Dynamic Price Box */}
-          <div id="price-box" class="hidden bg-slate-50 dark:bg-slate-900/50 p-3 border border-slate-200 dark:border-slate-800 rounded-md animate-in fade-in">
-            <p class="text-slate-800 dark:text-slate-200 text-sm">
-              Estimated Starting Price: <strong id="price-display"></strong>
+          <div
+            id='price-box'
+            class='hidden bg-slate-800 p-3 border border-slate-700 rounded-md animate-in fade-in'>
+            <p class='text-slate-200 text-sm'>
+              Estimated Starting Price: <strong id='price-display'></strong>
             </p>
           </div>
 
           {/* Budget */}
-          <div class="space-y-2">
-            <label for="budget" class={labelClasses}>Estimated Budget ($)</label>
-            <input type="number" id="budget" name="budget" class={inputClasses} />
-            <p class={`${errorClasses} hidden`} id="err-budget"><AlertCircle class="w-3 h-3" /> Budget is required</p>
+          <div class='space-y-2'>
+            <label for='budget' class={labelClasses}>Estimated Budget ($)</label
+            >
+            <input
+              type='number'
+              id='budget'
+              name='budget'
+              class={inputClasses}
+              placeholder='e.g. 100'
+            />
+            <p class={`${errorClasses} hidden`} id='err-budget'>
+              <AlertCircle class='w-3 h-3' /> Budget is required
+            </p>
           </div>
 
           {/* Description */}
-          <div class="space-y-2">
-            <label for="description" class={labelClasses}>Project Details</label>
-            <textarea 
-              id="description" 
-              name="description" 
-              rows="3"
-              placeholder="Describe the issue or project goals..." 
-              class={textareaClasses}
-            ></textarea>
-            <p class={`${errorClasses} hidden`} id="err-description"><AlertCircle class="w-3 h-3" /> Please provide more detail (min 10 chars)</p>
+          <div class='space-y-2'>
+            <label for='description' class={labelClasses}>Project Details</label
+            >
+            <textarea
+              id='description'
+              name='description'
+              rows='3'
+              placeholder='Describe the issue or project goals...'
+              class={textareaClasses}></textarea>
+            <p class={`${errorClasses} hidden`} id='err-description'>
+              <AlertCircle class='w-3 h-3' /> Please provide more detail (min 10 chars)
+            </p>
           </div>
 
-          <button id="submit-btn" type="submit" class={buttonClasses}>
+          <button id='submit-btn' type='submit' class={buttonClasses}>
             Get a Free Quote
           </button>
-          
-          <div id="general-error" class="hidden bg-red-50 dark:bg-red-900/20 p-3 border border-red-200 rounded-md text-red-600 dark:text-red-400 text-sm">
+
+          <div
+            id='general-error'
+            class='hidden bg-red-900/20 p-3 border border-red-800 rounded-md text-red-400 text-sm'>
             Something went wrong. Please check your connection or try again.
           </div>
         </form>
@@ -170,7 +243,9 @@ const errorClasses = "text-[0.8rem] font-medium text-red-500 dark:text-red-900 m
 
 <script>
   const form = document.getElementById('hire-me-form') as HTMLFormElement;
-  const serviceSelect = document.getElementById('selected-service') as HTMLSelectElement;
+  const serviceSelect = document.getElementById(
+    'selected-service',
+  ) as HTMLSelectElement;
   const priceBox = document.getElementById('price-box');
   const priceDisplay = document.getElementById('price-display');
   const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
@@ -179,7 +254,7 @@ const errorClasses = "text-[0.8rem] font-medium text-red-500 dark:text-red-900 m
   const resetBtn = document.getElementById('reset-form-btn');
 
   // Handle Price Display
-  serviceSelect?.addEventListener('change', function() {
+  serviceSelect?.addEventListener('change', function () {
     const selectedOption = this.options[this.selectedIndex];
     const price = selectedOption.getAttribute('data-price');
     if (price && priceBox && priceDisplay) {
@@ -193,17 +268,18 @@ const errorClasses = "text-[0.8rem] font-medium text-red-500 dark:text-red-900 m
   // Handle Direct WP Submission
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
-    // Reset UI
-    document.querySelectorAll('[id^="err-"]').forEach(el => el.classList.add('hidden'));
-    document.querySelectorAll('input, select, textarea').forEach(el => {
+
+    document
+      .querySelectorAll('[id^="err-"]')
+      .forEach((el) => el.classList.add('hidden'));
+    document.querySelectorAll('input, select, textarea').forEach((el) => {
       el.classList.remove('border-red-500', 'focus-visible:ring-red-500');
     });
     errorMsg?.classList.add('hidden');
 
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
-    
+
     const wpUrl = form.dataset.wpUrl;
     const formId = form.dataset.formId;
 
@@ -212,19 +288,30 @@ const errorClasses = "text-[0.8rem] font-medium text-red-500 dark:text-red-900 m
     let isValid = true;
     const validateField = (id: string, condition: boolean) => {
       if (condition) {
-        document.getElementById(id)?.classList.add('border-red-500', 'focus-visible:ring-red-500');
-        // Correctly maps 'your-name' to 'err-name'
+        document
+          .getElementById(id)
+          ?.classList.add('border-red-500', 'focus-visible:ring-red-500');
         const errId = id.replace('your-', 'err-').replace('selected-', 'err-');
         document.getElementById(errId)?.classList.remove('hidden');
         isValid = false;
       }
     };
 
-    validateField('your-name', !data['your-name'] || (data['your-name'] as string).length < 2);
-    validateField('your-email', !data['your-email'] || !/^\S+@\S+\.\S+$/.test(data['your-email'] as string));
+    validateField(
+      'your-name',
+      !data['your-name'] || (data['your-name'] as string).length < 2,
+    );
+    validateField(
+      'your-email',
+      !data['your-email'] ||
+        !/^\S+@\S+\.\S+$/.test(data['your-email'] as string),
+    );
     validateField('selected-service', !data['selected-service']);
     validateField('budget', !data['budget']);
-    validateField('description', !data['description'] || (data['description'] as string).length < 10);
+    validateField(
+      'description',
+      !data['description'] || (data['description'] as string).length < 10,
+    );
 
     if (!isValid) return;
 
@@ -246,14 +333,16 @@ const errorClasses = "text-[0.8rem] font-medium text-red-500 dark:text-red-900 m
         successMsg?.classList.add('flex');
         form.classList.add('opacity-0', 'pointer-events-none');
         // @ts-ignore
-        if (window.dataLayer) window.dataLayer.push({
+        if (window.dataLayer)
+          window.dataLayer.push({
             event: 'hire_me_form_submitted',
             service_requested: data['selected-service'],
-            budget_estimate: data['budget']
-        });
+            budget_estimate: data['budget'],
+          });
       } else {
         errorMsg?.classList.remove('hidden');
-        if(errorMsg) errorMsg.textContent = result.message || "Submission failed.";
+        if (errorMsg)
+          errorMsg.textContent = result.message || 'Submission failed.';
       }
     } catch (err) {
       errorMsg?.classList.remove('hidden');

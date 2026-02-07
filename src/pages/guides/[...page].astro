@@ -8,7 +8,7 @@ import { wordpress } from '../../lib/wordpress';
 export async function getStaticPaths() {
   const PER_PAGE = 10;
 
-  // 1. Fetch all items
+  // 1. Fetch all items (using cached getAllPosts)
   const allGuides = await wordpress.getAllPosts({
     postType: 'guide',
   });
@@ -43,8 +43,8 @@ const seoTitle = isFirstPage
   : `Guides & Tutorials (Page ${currentPage}) | WordPress Security`;
 
 const seoDesc = isFirstPage
-  ? 'Explore step-by-step WordPress guides on security best practices, malware detection and removal...'
-  : `Page ${currentPage} of our WordPress tutorials archive.`;
+  ? 'Explore step-by-step WordPress guides on security best practices, malware detection and removal, and performance optimization.'
+  : `Page ${currentPage} of our WordPress tutorials archive. Learn manual malware removal and site hardening.`;
 
 const canonicalURL = isFirstPage ? baseUrl : `${baseUrl}/${currentPage}`;
 ---
@@ -54,7 +54,8 @@ const canonicalURL = isFirstPage ? baseUrl : `${baseUrl}/${currentPage}`;
   description={seoDesc}
   image='/images/blog-opengraph-image.png'
   canonical={canonicalURL}>
-  <ComponentWrapper class='pt-12'>
+  <ComponentWrapper class='bg-slate-950 pt-12'>
+    {/* The BlogPosts component now inherits the dark theme context */}
     <BlogPosts
       posts={posts}
       totalPages={totalPages}
@@ -63,7 +64,7 @@ const canonicalURL = isFirstPage ? baseUrl : `${baseUrl}/${currentPage}`;
       page={currentPage}
       limit={10}
       title='Security, Malware Removal & Optimization Tutorials'
-      shortDescription='Step-by-step tutorials on WordPress security...'
+      shortDescription='Detailed, step-by-step technical tutorials to help you master WordPress security hardening and malware remediation.'
       mode='all'
     />
   </ComponentWrapper>

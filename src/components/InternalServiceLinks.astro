@@ -1,48 +1,50 @@
 ---
-import { Bug, Code,  } from '@lucide/astro'; // Or @lucide/astro if installed
+import { Bug, Code } from '@lucide/astro';
 
 const services = [
   {
     title: 'WordPress Malware Removal',
     href: '/wordpress-malware-removal',
-    description: 'Professional WordPress malware removal to clean, secure & restore your hacked site fast — trusted by 2300+ clients.',
+    description:
+      'Professional WordPress malware removal to clean, secure & restore your hacked site fast — trusted by 2300+ clients.',
     icon: Bug,
   },
   {
     title: 'Blacklist Removal',
     href: '/blacklist-removal',
-    description: 'Remove your website from Google Search Console and other blacklists — get back in good standing with search engines.',
+    description:
+      'Remove your website from Google Search Console and other blacklists — get back in good standing with search engines.',
     icon: Code,
   },
- 
 ];
 ---
 
-<section class="mt-16">
-  <h2 class="mb-6 font-bold text-gray-900 dark:text-white text-2xl md:text-3xl">
+<section class='mt-16'>
+  <h2 class='mb-6 font-bold text-white text-2xl md:text-3xl'>
     Explore Our Security Services
   </h2>
-  
-  <div class="gap-6 grid md:grid-cols-2">
-    {services.map((service) => (
-      <a
-        href={service.href}
-        class="group block bg-white dark:bg-slate-900 shadow-sm hover:shadow-md p-6 border border-slate-200 dark:border-slate-700 rounded-2xl transition-all hover:-translate-y-1"
-      >
-        <div class="flex items-start gap-4">
-          <div class="bg-blue-50 dark:bg-slate-800 p-3 rounded-xl shrink-0">
-            <service.icon class="w-6 h-6 text-blue-600 dark:text-blue-400" />
+
+  <div class='gap-6 grid md:grid-cols-2'>
+    {
+      services.map((service) => (
+        <a
+          href={service.href}
+          class='group block bg-slate-900 shadow-sm hover:shadow-md p-6 border border-slate-700 rounded-2xl transition-all hover:-translate-y-1'>
+          <div class='flex items-start gap-4'>
+            <div class='bg-slate-800 p-3 rounded-xl shrink-0'>
+              <service.icon class='w-6 h-6 text-blue-400' />
+            </div>
+            <div>
+              <h3 class='mb-1 font-semibold text-white group-hover:text-blue-400 text-lg transition-colors'>
+                {service.title}
+              </h3>
+              <p class='text-slate-400 text-sm leading-relaxed'>
+                {service.description}
+              </p>
+            </div>
           </div>
-          <div>
-            <h3 class="mb-1 font-semibold text-gray-900 dark:group-hover:text-blue-400 dark:text-white group-hover:text-blue-600 text-lg transition-colors">
-              {service.title}
-            </h3>
-            <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-              {service.description}
-            </p>
-          </div>
-        </div>
-      </a>
-    ))}
+        </a>
+      ))
+    }
   </div>
 </section>

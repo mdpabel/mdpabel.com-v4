@@ -10,25 +10,17 @@ import {
   CheckCircle2,
   ArrowRight,
   Lock,
-  Server,
 } from '@lucide/astro';
 
 // --- SEO CONFIGURATION ---
 const seo = {
-  // Primary Keyword: "WordPress Scan for Vulnerabilities" (Low Difficulty, High Intent)
   title: 'Free WordPress Malware Scan & Vulnerability Check | MD Pabel',
-
-  // Description: Explicitly mentions "Manual" to differentiate from software tools.
   description:
     'Suspect a hack? Request a free manual WordPress scan for vulnerabilities. I personally check your files & database for backdoors. No automated bots.',
-
-  // Open Graph Image
   image: '/md-pabel-scan-og.png',
-
-  // KEYWORDS (Injected from your Research)
   keywords: [
-    'wordpress scan for vulnerabilities', // <--- The "Hidden Gem"
-    'scan wordpress site for malware', // <--- High Volume
+    'wordpress scan for vulnerabilities',
+    'scan wordpress site for malware',
     'manual wordpress security audit',
     'remove japanese seo spam',
     'wordpress database malware scan',
@@ -38,7 +30,6 @@ const seo = {
 };
 
 // --- JSON-LD: PROFESSIONAL SERVICE SCHEMA ---
-// Tells Google you are a Human Expert, not a Software Tool.
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
@@ -74,7 +65,6 @@ const jsonLd = {
 ---
 
 <Layout title={seo.title} description={seo.description} image={seo.image}>
-  {/* JSON-LD Injection */}
   <script
     type='application/ld+json'
     set:html={JSON.stringify(jsonLd)}
@@ -88,7 +78,7 @@ const jsonLd = {
         {/* Left: Value Proposition */}
         <div>
           <div
-            class='inline-flex items-center gap-2 bg-blue-50 dark:bg-blue-900/30 mb-6 px-3 py-1 border border-blue-100 dark:border-blue-800 rounded-full font-mono font-medium text-blue-700 dark:text-blue-300 text-xs'>
+            class='inline-flex items-center gap-2 bg-blue-900/30 mb-6 px-3 py-1 border border-blue-800 rounded-full font-mono font-medium text-blue-300 text-xs'>
             <span class='relative flex w-2 h-2'>
               <span
                 class='inline-flex absolute bg-blue-400 opacity-75 rounded-full w-full h-full animate-ping'
@@ -101,22 +91,20 @@ const jsonLd = {
           </div>
 
           <h1
-            class='mb-6 font-bold text-slate-900 dark:text-white text-4xl md:text-5xl leading-tight'>
+            class='mb-6 font-bold text-white text-4xl md:text-5xl leading-tight'>
             Is your WordPress site <span
-              class='bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500 text-transparent'
+              class='bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400 text-transparent'
               >silently infected?</span
             >
           </h1>
 
-          <p
-            class='mb-8 text-slate-600 dark:text-slate-400 text-lg leading-relaxed'>
+          <p class='mb-8 text-slate-300 text-lg leading-relaxed'>
             Automated plugins miss 40% of complex backdoors. Get a <strong
-              >manual expert review</strong
+              class='text-white'>manual expert review</strong
             > to scan your WordPress site for vulnerabilities and hidden malware.
           </p>
 
-          <div
-            class='flex flex-wrap gap-4 font-medium text-slate-700 dark:text-slate-300 text-sm'>
+          <div class='flex flex-wrap gap-4 font-medium text-slate-400 text-sm'>
             <div class='flex items-center gap-2'>
               <CheckCircle2 class='w-5 h-5 text-emerald-500' />
               <span>No Credit Card</span>
@@ -135,16 +123,16 @@ const jsonLd = {
         {/* Right: The Request Interface */}
         <div class='group relative'>
           <div
-            class='absolute -inset-1 bg-gradient-to-r from-blue-600 to-cyan-500 opacity-25 group-hover:opacity-50 rounded-2xl transition duration-1000 group-hover:duration-200 blur'>
+            class='absolute -inset-1 bg-gradient-to-r from-blue-600 to-cyan-500 opacity-15 group-hover:opacity-30 rounded-2xl transition duration-1000 group-hover:duration-200 blur'>
           </div>
 
           <div
-            class='relative bg-white dark:bg-slate-900 shadow-2xl p-6 md:p-8 border border-slate-200 dark:border-slate-700 rounded-xl'>
+            class='relative bg-slate-900 shadow-2xl p-6 md:p-8 border border-slate-700 rounded-xl'>
             <div
-              class='flex items-center gap-3 mb-6 pb-4 border-slate-100 dark:border-slate-800 border-b'>
-              <ShieldAlert class='w-6 h-6 text-blue-600' />
+              class='flex items-center gap-3 mb-6 pb-4 border-slate-800 border-b'>
+              <ShieldAlert class='w-6 h-6 text-blue-500' />
               <div>
-                <h3 class='font-bold text-slate-900 dark:text-white text-lg'>
+                <h3 class='font-bold text-white text-lg'>
                   Request Security Audit
                 </h3>
                 <p class='text-slate-500 text-xs'>
@@ -153,17 +141,16 @@ const jsonLd = {
               </div>
             </div>
 
-            {/* --- API CONNECTED FORM --- */}
+            {/* --- FORM --- */}
             <form id='scan-form' class='space-y-4'>
-              {/* URL Field */}
               <div>
                 <label
                   for='url'
-                  class='block mb-1 font-medium text-slate-700 dark:text-slate-300 text-sm'
+                  class='block mb-1 font-medium text-slate-300 text-sm'
                   >Target Website URL</label
                 >
                 <div class='relative'>
-                  <span class='top-3 left-3 absolute text-slate-400'>
+                  <span class='top-3 left-3 absolute text-slate-500'>
                     <Search class='w-5 h-5' />
                   </span>
                   <input
@@ -171,17 +158,16 @@ const jsonLd = {
                     id='url'
                     name='site-url'
                     placeholder='https://example.com'
-                    class='bg-slate-50 dark:bg-slate-800 py-3 pr-4 pl-10 border border-slate-200 dark:border-slate-700 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 w-full font-mono text-slate-900 dark:text-white text-sm transition-all'
+                    class='bg-slate-800 py-3 pr-4 pl-10 border border-slate-700 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 w-full font-mono text-white text-sm transition-all'
                     required
                   />
                 </div>
               </div>
 
-              {/* Email Field */}
               <div>
                 <label
                   for='email'
-                  class='block mb-1 font-medium text-slate-700 dark:text-slate-300 text-sm'
+                  class='block mb-1 font-medium text-slate-300 text-sm'
                   >Where to send the report?</label
                 >
                 <input
@@ -189,12 +175,11 @@ const jsonLd = {
                   id='email'
                   name='your-email'
                   placeholder='admin@example.com'
-                  class='bg-slate-50 dark:bg-slate-800 px-4 py-3 border border-slate-200 dark:border-slate-700 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 w-full font-mono text-slate-900 dark:text-white text-sm transition-all'
+                  class='bg-slate-800 px-4 py-3 border border-slate-700 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 w-full font-mono text-white text-sm transition-all'
                   required
                 />
               </div>
 
-              {/* Status Message */}
               <div
                 id='form-feedback'
                 class='hidden py-2 font-medium text-sm text-center'>
@@ -208,8 +193,7 @@ const jsonLd = {
                 <ArrowRight class='w-5 h-5' />
               </button>
 
-              <p
-                class='mt-4 text-slate-500 dark:text-slate-500 text-xs text-center'>
+              <p class='mt-4 text-slate-500 text-xs text-center'>
                 I strictly respect your privacy. No data is shared.
               </p>
             </form>
@@ -218,63 +202,55 @@ const jsonLd = {
       </div>
     </section>
 
-    {/* --- SECTION 2: SERVICE DETAILS (SEO Optimized) --- */}
+    {/* --- SECTION 2: SERVICE DETAILS --- */}
     <section class='mb-20 py-12'>
       <div class='mb-12 text-center'>
-        <h2 class='mb-4 font-bold text-slate-900 dark:text-white text-3xl'>
+        <h2 class='mb-4 font-bold text-white text-3xl'>
           A Deep-Dive Vulnerability Scan
         </h2>
-        <p class='mx-auto max-w-2xl text-slate-600 dark:text-slate-400'>
+        <p class='mx-auto max-w-2xl text-slate-400'>
           Most "free scanners" are just automated scripts. I check your
-          infrastructure manually.
+          infrastructure manually for things machines miss.
         </p>
       </div>
 
       <div class='gap-6 grid grid-cols-1 md:grid-cols-3'>
-        {/* Card 1: Matches "scan wordpress site for malware" */}
         <div
-          class='group bg-white dark:bg-slate-800/50 p-6 border border-slate-200 hover:border-blue-500/50 dark:border-slate-700 rounded-xl transition-colors'>
+          class='group bg-slate-800/50 p-6 border border-slate-700 hover:border-blue-500/50 rounded-xl transition-colors'>
           <div
-            class='flex justify-center items-center bg-blue-100 dark:bg-blue-900/30 mb-4 rounded-lg w-12 h-12 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform'>
+            class='flex justify-center items-center bg-blue-900/30 mb-4 rounded-lg w-12 h-12 text-blue-400 group-hover:scale-110 transition-transform'>
             <FileCode class='w-6 h-6' />
           </div>
-          <h3 class='mb-2 font-bold text-slate-900 dark:text-white text-xl'>
-            Core File Integrity
-          </h3>
-          <p class='text-slate-500 dark:text-slate-400 text-sm leading-relaxed'>
+          <h3 class='mb-2 font-bold text-white text-xl'>Core File Integrity</h3>
+          <p class='text-slate-400 text-sm leading-relaxed'>
             I compare your <code>wp-admin</code> and <code>wp-includes</code> files
-            against the official WordPress repository to find hidden backdoors and
-            modified core files.
+            against the official WordPress repository to find hidden backdoors.
           </p>
         </div>
 
-        {/* Card 2: Matches "wordpress database malware scan" */}
         <div
-          class='group bg-white dark:bg-slate-800/50 p-6 border border-slate-200 hover:border-blue-500/50 dark:border-slate-700 rounded-xl transition-colors'>
+          class='group bg-slate-800/50 p-6 border border-slate-700 hover:border-blue-500/50 rounded-xl transition-colors'>
           <div
-            class='flex justify-center items-center bg-orange-100 dark:bg-orange-900/30 mb-4 rounded-lg w-12 h-12 text-orange-600 dark:text-orange-400 group-hover:scale-110 transition-transform'>
+            class='flex justify-center items-center bg-orange-900/30 mb-4 rounded-lg w-12 h-12 text-orange-400 group-hover:scale-110 transition-transform'>
             <Database class='w-6 h-6' />
           </div>
-          <h3 class='mb-2 font-bold text-slate-900 dark:text-white text-xl'>
+          <h3 class='mb-2 font-bold text-white text-xl'>
             Database Malware Scan
           </h3>
-          <p class='text-slate-500 dark:text-slate-400 text-sm leading-relaxed'>
-            I scan <code>wp_posts</code> and <code>wp_options</code> for JavaScript
-            redirects, Japanese SEO spam links, and malicious admin user creation.
+          <p class='text-slate-400 text-sm leading-relaxed'>
+            I scan <code>wp_posts</code> for JavaScript redirects, Japanese SEO spam,
+            and malicious admin user creation.
           </p>
         </div>
 
-        {/* Card 3: Matches "wordpress scan for vulnerabilities" */}
         <div
-          class='group bg-white dark:bg-slate-800/50 p-6 border border-slate-200 hover:border-blue-500/50 dark:border-slate-700 rounded-xl transition-colors'>
+          class='group bg-slate-800/50 p-6 border border-slate-700 hover:border-blue-500/50 rounded-xl transition-colors'>
           <div
-            class='flex justify-center items-center bg-red-100 dark:bg-red-900/30 mb-4 rounded-lg w-12 h-12 text-red-600 dark:text-red-400 group-hover:scale-110 transition-transform'>
+            class='flex justify-center items-center bg-red-900/30 mb-4 rounded-lg w-12 h-12 text-red-400 group-hover:scale-110 transition-transform'>
             <Lock class='w-6 h-6' />
           </div>
-          <h3 class='mb-2 font-bold text-slate-900 dark:text-white text-xl'>
-            Vulnerability Check
-          </h3>
-          <p class='text-slate-500 dark:text-slate-400 text-sm leading-relaxed'>
+          <h3 class='mb-2 font-bold text-white text-xl'>Vulnerability Check</h3>
+          <p class='text-slate-400 text-sm leading-relaxed'>
             I check your plugins and themes for known CVEs and outdated versions
             that hackers exploit to gain entry.
           </p>
@@ -282,64 +258,60 @@ const jsonLd = {
       </div>
     </section>
 
-    {/* --- SECTION 3: FAQ (Long-tail Keywords) --- */}
+    {/* --- SECTION 3: FAQ --- */}
     <section class='mx-auto mb-20 max-w-3xl'>
-      <h2 class='mb-8 font-bold text-slate-900 dark:text-white text-2xl'>
+      <h2 class='mb-8 font-bold text-white text-2xl'>
         Frequently Asked Questions
       </h2>
 
       <div class='space-y-4'>
         <details
-          class='group bg-slate-50 dark:bg-slate-900 border border-slate-200 open:border-blue-500/50 dark:border-slate-800 rounded-lg transition-all'>
+          class='group bg-slate-900 border border-slate-800 open:border-blue-500/50 rounded-lg transition-all'>
           <summary
-            class='flex justify-between items-center p-4 font-medium text-slate-900 dark:text-slate-200 cursor-pointer'>
+            class='flex justify-between items-center p-4 font-medium text-slate-200 cursor-pointer'>
             Is this really free?
             <span
-              class='text-slate-400 group-open:rotate-180 transition-transform transform'
+              class='text-slate-500 group-open:rotate-180 transition-transform transform'
               >▼</span
             >
           </summary>
-          <div
-            class='px-4 pb-4 text-slate-600 dark:text-slate-400 text-sm leading-relaxed'>
+          <div class='px-4 pb-4 text-slate-400 text-sm leading-relaxed'>
             Yes. I offer this as a diagnostic tool. If I find malware, I'll
             provide a quote to fix it, but you are under no obligation to hire
-            me. You can use my report to fix it yourself or hire someone else.
+            me.
           </div>
         </details>
 
         <details
-          class='group bg-slate-50 dark:bg-slate-900 border border-slate-200 open:border-blue-500/50 dark:border-slate-800 rounded-lg transition-all'>
+          class='group bg-slate-900 border border-slate-800 open:border-blue-500/50 rounded-lg transition-all'>
           <summary
-            class='flex justify-between items-center p-4 font-medium text-slate-900 dark:text-slate-200 cursor-pointer'>
+            class='flex justify-between items-center p-4 font-medium text-slate-200 cursor-pointer'>
             Do you need my login details?
             <span
-              class='text-slate-400 group-open:rotate-180 transition-transform transform'
+              class='text-slate-500 group-open:rotate-180 transition-transform transform'
               >▼</span
             >
           </summary>
-          <div
-            class='px-4 pb-4 text-slate-600 dark:text-slate-400 text-sm leading-relaxed'>
-            No. This is a passive external analysis. I inspect your
-            public-facing code, headers, and DNS records. If deeper access is
-            required, I will request it securely after we speak.
+          <div class='px-4 pb-4 text-slate-400 text-sm leading-relaxed'>
+            No. This is an external analysis of your public-facing code,
+            headers, and DNS. If deeper access is required later, I will request
+            it securely.
           </div>
         </details>
 
         <details
-          class='group bg-slate-50 dark:bg-slate-900 border border-slate-200 open:border-blue-500/50 dark:border-slate-800 rounded-lg transition-all'>
+          class='group bg-slate-900 border border-slate-800 open:border-blue-500/50 rounded-lg transition-all'>
           <summary
-            class='flex justify-between items-center p-4 font-medium text-slate-900 dark:text-slate-200 cursor-pointer'>
+            class='flex justify-between items-center p-4 font-medium text-slate-200 cursor-pointer'>
             How long does the report take?
             <span
-              class='text-slate-400 group-open:rotate-180 transition-transform transform'
+              class='text-slate-500 group-open:rotate-180 transition-transform transform'
               >▼</span
             >
           </summary>
-          <div
-            class='px-4 pb-4 text-slate-600 dark:text-slate-400 text-sm leading-relaxed'>
+          <div class='px-4 pb-4 text-slate-400 text-sm leading-relaxed'>
             Because I <strong>manually check</strong> for complex issues like Japanese
-            SEO spam and cloaked backdoors, please allow 2-4 hours during business
-            days for your full report.
+            SEO spam, please allow 2-4 hours during business days for your full report.
           </div>
         </details>
       </div>
@@ -347,9 +319,7 @@ const jsonLd = {
   </ComponentWrapper>
 </Layout>
 
-{/* --- CLIENT SIDE SCRIPT: HANDLE FORM SUBMISSION --- */}
 <script>
-  // Configuration matched to your provided snippet
   const CONFIG = {
     WP_URL: 'https://cms.mdpabel.com',
     FORM_ID: '1514',
@@ -368,10 +338,9 @@ const jsonLd = {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      // UI State: Loading
       const originalBtnText = submitBtn.innerHTML;
       submitBtn.disabled = true;
-      submitBtn.innerHTML = `<span>Scanning Request...</span>`;
+      submitBtn.innerHTML = `<span>Requesting Scan...</span>`;
       feedbackDiv.classList.add('hidden');
 
       const formData = new FormData(form);
@@ -379,18 +348,15 @@ const jsonLd = {
       const url = formData.get('site-url') as string;
       const pathname = window.location.pathname;
 
-      // Construct Payload for Contact Form 7
       const payload = new FormData();
       payload.append('your-email', email);
       payload.append('site-url', url);
       payload.append('from-url', pathname);
 
-      // Hidden CF7 Fields
       payload.append('_wpcf7', CONFIG.FORM_ID);
       payload.append('_wpcf7_version', CONFIG.CF7_VERSION);
       payload.append('_wpcf7_locale', 'en_US');
       payload.append('_wpcf7_unit_tag', `wpcf7-f${CONFIG.FORM_ID}-p0-o1`);
-      payload.append('_wpcf7_container_post', '0');
 
       const apiEndPoint = `${CONFIG.WP_URL}/wp-json/contact-form-7/v1/contact-forms/${CONFIG.FORM_ID}/feedback`;
 
@@ -403,29 +369,25 @@ const jsonLd = {
         const result = await response.json();
 
         if (result.status === 'mail_sent') {
-          // Success State
           feedbackDiv.innerText =
             "Request received! I'll email your report shortly.";
           feedbackDiv.className =
-            'block py-3 px-4 rounded-lg bg-green-100 text-green-700 text-sm font-medium border border-green-200';
+            'block py-3 px-4 rounded-lg bg-green-900/20 text-green-400 text-sm font-medium border border-green-800';
           submitBtn.innerHTML = 'Request Sent ✓';
           form.reset();
         } else {
           throw new Error(result.message || 'Submission failed.');
         }
-      } catch (err: any) {
-        // Error State
-        console.error(err);
+      } catch (err) {
         feedbackDiv.innerText = 'Submission failed. Please try again.';
         feedbackDiv.className =
-          'block py-3 px-4 rounded-lg bg-red-100 text-red-700 text-sm font-medium border border-red-200';
+          'block py-3 px-4 rounded-lg bg-red-900/20 text-red-400 text-sm font-medium border border-red-800';
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalBtnText;
       }
     });
   }
 
-  // Initialize on Load and View Transitions
   initScanForm();
   document.addEventListener('astro:after-swap', initScanForm);
 </script>
