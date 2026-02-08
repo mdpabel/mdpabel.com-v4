@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PURGE_PROTOCOL | WP Security</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet" />
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Space Grotesk', 'sans-serif'],
+              mono: ['JetBrains Mono', 'monospace'],
+            },
+            colors: {
+              void: '#050505',
+              concrete: '#121212',
+              border: '#2A2A2A',
+              acid: '#CCFF00', // The 2025 trendy accent
+              alert: '#FF3300',
+            },
+            backgroundImage: {
+              'grid-pattern':
+                'linear-gradient(to right, #1a1a1a 1px, transparent 1px), linear-gradient(to bottom, #1a1a1a 1px, transparent 1px)',
+            },
+            animation: {
+              marquee: 'marquee 15s linear infinite',
+            },
+            keyframes: {
+              marquee: {
+                '0%': { transform: 'translateX(0%)' },
+                '100%': { transform: 'translateX(-100%)' },
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        background-color: #050505;
+        color: #e5e5e5;
+      }
+
+      /* Raw Grid Background */
+      .bg-grid {
+        background-size: 40px 40px;
+      }
+
+      /* Brutalist Scrollbar */
+      ::-webkit-scrollbar {
+        width: 12px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #050505;
+        border-left: 1px solid #2a2a2a;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #2a2a2a;
+        border: 1px solid #050505;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #ccff00;
+      }
+
+      /* Utility for noise texture */
+      .noise {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 50;
+        opacity: 0.03;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      }
+
+      .hover-invert {
+        transition: all 0.2s cubic-bezier(0, 0, 0.2, 1);
+      }
+      .hover-invert:hover {
+        background-color: #ccff00;
+        color: #000;
+      }
+
+      /* Marquee Text */
+      .marquee-container {
+        overflow: hidden;
+        white-space: nowrap;
+      }
+      .marquee-content {
+        display: inline-block;
+        animation: marquee 20s linear infinite;
+      }
+    </style>
+  </head>
+  <body class="relative antialiased">
+    <div class="noise"></div>
+
+    <div
+      class="top-0 left-0 z-40 fixed bg-void border-border border-b w-full h-4"></div>
+    <div
+      class="bottom-0 left-0 z-40 fixed flex justify-between items-center bg-void px-4 border-border border-t w-full h-4 font-mono text-[10px] text-zinc-500 uppercase">
+      <span>System: Online</span>
+      <span>Secure Connection</span>
+      <span>Latency: 12ms</span>
+    </div>
+    <div
+      class="top-0 left-0 z-40 fixed bg-void border-border border-r w-4 h-full"></div>
+    <div
+      class="top-0 right-0 z-40 fixed bg-void border-border border-l w-4 h-full"></div>
+
+    <main
+      class="relative bg-grid bg-grid-pattern mt-4 mr-4 mb-4 ml-4 min-h-screen">
+      <nav
+        class="top-4 z-30 sticky flex justify-between items-stretch bg-void/90 backdrop-blur-sm border-border border-b h-16">
+        <div
+          class="flex items-center px-6 border-border border-r min-w-[200px]">
+          <span class="font-bold text-2xl tracking-tighter">PURGE_</span>
+        </div>
+
+        <div class="hidden md:flex flex-1 justify-end">
+          <a
+            href="#audit"
+            class="flex items-center hover:bg-concrete px-8 border-border border-l font-mono hover:text-acid text-sm uppercase tracking-wider transition-colors"
+            >Audit</a
+          >
+          <a
+            href="#services"
+            class="flex items-center hover:bg-concrete px-8 border-border border-l font-mono hover:text-acid text-sm uppercase tracking-wider transition-colors"
+            >Protocol</a
+          >
+          <a
+            href="#pricing"
+            class="flex items-center hover:bg-concrete px-8 border-border border-l font-mono hover:text-acid text-sm uppercase tracking-wider transition-colors"
+            >Fees</a
+          >
+        </div>
+
+        <a
+          href="#contact"
+          class="flex items-center bg-acid hover:bg-white px-8 border-border border-l font-bold text-black text-sm uppercase tracking-tight transition-colors">
+          Initialize Fix
+        </a>
+      </nav>
+
+      <section class="flex flex-col border-border border-b min-h-[85vh]">
+        <div
+          class="flex flex-col flex-1 justify-center px-6 md:px-12 lg:px-24 py-20">
+          <div
+            class="mb-4 font-mono text-acid text-xs md:text-sm uppercase tracking-[0.2em]">
+            /// Critical Warning: Site Compromised
+          </div>
+
+          <h1
+            class="mb-8 font-bold text-white text-6xl md:text-8xl lg:text-9xl leading-[0.85] tracking-tighter">
+            WE KILL <br />
+            <span
+              class="stroke-text text-transparent"
+              style="-webkit-text-stroke: 2px #444; color: transparent"
+              >WORDPRESS</span
+            >
+            <br />
+            MALWARE.
+          </h1>
+
+          <div class="mb-10 py-2 pl-6 border-acid border-l-2 max-w-xl">
+            <p
+              class="font-light text-zinc-400 text-lg md:text-xl leading-relaxed">
+              No monthly retainers required. No sales calls. We surgically
+              remove backdoors and lift blacklists in under
+              <span class="bg-zinc-800 px-1 font-mono text-white"
+                >120 minutes</span
+              >.
+            </p>
+          </div>
+
+          <div
+            class="flex sm:flex-row flex-col gap-0 border border-border w-fit">
+            <button
+              class="bg-white hover:bg-acid px-8 py-4 border-border sm:border-r border-b sm:border-b-0 font-bold text-black uppercase transition-colors">
+              Start Cleaning ($149)
+            </button>
+            <button
+              class="flex items-center gap-2 bg-transparent px-8 py-4 font-mono text-zinc-400 hover:text-white text-sm uppercase transition-colors">
+              <span
+                class="bg-red-500 rounded-full w-2 h-2 animate-pulse"></span>
+              Live Incident Response
+            </button>
+          </div>
+        </div>
+
+        <div
+          class="flex items-center bg-acid border-border border-t h-12 overflow-hidden font-mono font-bold text-black text-sm uppercase tracking-widest">
+          <div class="w-full marquee-container">
+            <div class="marquee-content">
+              SQL INJECTION DETECTED +++ BRUTE FORCE BLOCKED +++ PHISHING
+              ATTEMPTS NULLIFIED +++ BLACKLIST STATUS: CLEAN +++ GOOGLE SAFE
+              BROWSING VERIFIED +++ BACKDOOR SHELLS REMOVED +++ SQL INJECTION
+              DETECTED +++ BRUTE FORCE BLOCKED +++ PHISHING ATTEMPTS NULLIFIED
+              +++ BLACKLIST STATUS: CLEAN +++ GOOGLE SAFE BROWSING VERIFIED +++
+              BACKDOOR SHELLS REMOVED +++
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid grid-cols-2 md:grid-cols-4 border-border border-b">
+        <div
+          class="group hover:bg-concrete p-8 border-border border-r border-b md:border-b-0 transition-colors">
+          <div class="mb-2 font-mono text-zinc-500 text-xs">RECOVERY TIME</div>
+          <div class="font-light text-white group-hover:text-acid text-4xl">
+            &lt; 2h
+          </div>
+        </div>
+        <div
+          class="group hover:bg-concrete p-8 border-border border-r border-b md:border-b-0 transition-colors">
+          <div class="mb-2 font-mono text-zinc-500 text-xs">SUCCESS RATE</div>
+          <div class="font-light text-white group-hover:text-acid text-4xl">
+            100%
+          </div>
+        </div>
+        <div
+          class="group hover:bg-concrete p-8 border-border border-r transition-colors">
+          <div class="mb-2 font-mono text-zinc-500 text-xs">GUARANTEE</div>
+          <div class="font-light text-white group-hover:text-acid text-4xl">
+            30d
+          </div>
+        </div>
+        <div class="group hover:bg-concrete p-8 transition-colors">
+          <div class="mb-2 font-mono text-zinc-500 text-xs">SUPPORT</div>
+          <div class="font-light text-white group-hover:text-acid text-4xl">
+            24/7
+          </div>
+        </div>
+      </section>
+
+      <section id="services" class="px-6 md:px-12 py-24 border-border border-b">
+        <div
+          class="gap-0 grid grid-cols-1 md:grid-cols-3 bg-void border border-border">
+          <div
+            class="md:col-span-1 bg-concrete p-10 border-border md:border-r border-b md:border-b-0">
+            <h2 class="mb-6 font-bold text-5xl tracking-tighter">
+              THE<br />FIX.
+            </h2>
+            <p class="mb-8 text-zinc-500">
+              Comprehensive sanitation of your digital infrastructure.
+            </p>
+            <div class="bg-acid w-12 h-1"></div>
+          </div>
+
+          <div
+            class="group hover:bg-concrete p-10 border-border md:border-r border-b md:border-b-0 transition-colors cursor-crosshair">
+            <div class="mb-4 font-mono text-acid text-xs">01 // PURGE</div>
+            <h3
+              class="mb-4 font-bold text-white text-2xl transition-transform group-hover:translate-x-2">
+              Core File Repair
+            </h3>
+            <p class="text-zinc-400 text-sm leading-6">
+              We don't just delete files. We compare your core WP files against
+              the official repository checksums and surgically replace infected
+              lines.
+            </p>
+          </div>
+
+          <div
+            class="group hover:bg-concrete p-10 border-border border-b md:border-b-0 transition-colors cursor-crosshair">
+            <div class="mb-4 font-mono text-acid text-xs">02 // DELIST</div>
+            <h3
+              class="mb-4 font-bold text-white text-2xl transition-transform group-hover:translate-x-2">
+              Blacklist Removal
+            </h3>
+            <p class="text-zinc-400 text-sm leading-6">
+              Direct API communication with Google Safe Browsing, McAfee, and
+              Norton to expedite the removal of "Deceptive Site Ahead" warnings.
+            </p>
+          </div>
+
+          <div
+            class="group hover:bg-concrete p-10 border-border md:border-r border-b md:border-b-0 transition-colors cursor-crosshair">
+            <div class="mb-4 font-mono text-acid text-xs">03 // HARDEN</div>
+            <h3
+              class="mb-4 font-bold text-white text-2xl transition-transform group-hover:translate-x-2">
+              Attack Surface Reduction
+            </h3>
+            <p class="text-zinc-400 text-sm leading-6">
+              Disabling XML-RPC, preventing PHP execution in upload folders, and
+              implementing aggressive WAF rules.
+            </p>
+          </div>
+
+          <div
+            class="group flex md:flex-row flex-col justify-between items-start md:items-center gap-6 md:col-span-2 hover:bg-concrete p-10 border-border transition-colors cursor-crosshair">
+            <div>
+              <div class="mb-4 font-mono text-acid text-xs">04 // REPORT</div>
+              <h3 class="mb-2 font-bold text-white text-2xl">
+                Forensic Analysis
+              </h3>
+              <p class="max-w-md text-zinc-400 text-sm">
+                You get a PDF report detailing exactly how they got in, what
+                they touched, and how we locked the door.
+              </p>
+            </div>
+            <div
+              class="flex justify-center items-center bg-black border border-zinc-700 rounded-none w-24 h-24 font-mono text-[10px] text-zinc-500">
+              [PDF_ICON]
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="pricing"
+        class="grid grid-cols-1 lg:grid-cols-2 border-border border-b">
+        <div
+          class="hover:bg-concrete p-12 md:p-24 border-border lg:border-r border-b lg:border-b-0 transition duration-500">
+          <div
+            class="inline-block mb-6 px-3 py-1 border border-acid font-mono text-acid text-xs uppercase">
+            Immediate Response
+          </div>
+          <h3 class="mb-2 font-bold text-white text-4xl">Emergency Clean</h3>
+          <div class="mb-8 font-bold text-white text-6xl tracking-tighter">
+            $149<span class="font-normal text-zinc-600 text-2xl">/fix</span>
+          </div>
+
+          <ul class="space-y-4 mb-12 font-mono text-zinc-300 text-sm">
+            <li class="flex items-start gap-3">
+              <span class="text-acid">-></span> 100% Malware Removal
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-acid">-></span> Google Blacklist Removal
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-acid">-></span> Backdoor Extermination
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-acid">-></span> 1 Year Free Re-Clean Guarantee
+            </li>
+          </ul>
+
+          <button
+            class="hover:bg-white py-4 border border-zinc-600 hover:border-white w-full font-bold text-white hover:text-black transition-all">
+            DEPLOY FIX
+          </button>
+        </div>
+
+        <div class="relative bg-concrete p-12 md:p-24 overflow-hidden">
+          <div
+            class="top-0 right-0 absolute bg-acid/5 blur-[80px] w-32 h-32"></div>
+
+          <div
+            class="inline-block bg-acid mb-6 px-3 py-1 font-mono font-bold text-black text-xs uppercase">
+            Recommended
+          </div>
+          <h3 class="mb-2 font-bold text-white text-4xl">Agency Ward</h3>
+          <div class="mb-8 font-bold text-white text-6xl tracking-tighter">
+            $49<span class="font-normal text-zinc-600 text-2xl">/mo</span>
+          </div>
+
+          <ul class="space-y-4 mb-12 font-mono text-zinc-300 text-sm">
+            <li class="flex items-start gap-3">
+              <span class="text-acid">-></span> Daily Deep Scans
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-acid">-></span> Real-time WAF (Firewall)
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-acid">-></span> Uptime Monitoring
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-acid">-></span> Weekly Plugin Updates
+            </li>
+          </ul>
+
+          <button
+            class="bg-acid hover:bg-transparent py-4 border border-acid w-full font-bold text-black hover:text-acid transition-all">
+            SUBSCRIBE
+          </button>
+        </div>
+      </section>
+
+      <footer id="contact" class="bg-void text-zinc-500">
+        <div class="grid grid-cols-1 lg:grid-cols-2">
+          <div
+            class="p-12 md:p-24 border-border lg:border-r border-b lg:border-b-0">
+            <h2 class="mb-8 font-bold text-white text-4xl tracking-tighter">
+              SECURE YOUR ASSETS.
+            </h2>
+            <form class="space-y-0">
+              <div class="grid grid-cols-1 border border-zinc-800">
+                <input
+                  type="text"
+                  placeholder="ENTER WEBSITE URL"
+                  class="bg-black focus:bg-zinc-900 p-6 border-zinc-800 border-b focus:outline-none w-full font-mono text-white text-sm" />
+                <input
+                  type="email"
+                  placeholder="YOUR EMAIL ADDRESS"
+                  class="bg-black focus:bg-zinc-900 p-6 border-zinc-800 border-b focus:outline-none w-full font-mono text-white text-sm" />
+                <textarea
+                  rows="3"
+                  placeholder="DESCRIBE SYMPTOMS"
+                  class="bg-black focus:bg-zinc-900 p-6 focus:outline-none w-full font-mono text-white text-sm resize-none"></textarea>
+              </div>
+              <button
+                class="bg-white hover:bg-acid mt-4 py-5 w-full font-bold text-black uppercase tracking-widest transition-colors">
+                Submit Ticket
+              </button>
+            </form>
+          </div>
+
+          <div class="flex flex-col justify-between p-12 md:p-24">
+            <div
+              class="gap-12 grid grid-cols-2 font-mono text-xs uppercase tracking-widest">
+              <div>
+                <h4 class="mb-4 text-white">Index</h4>
+                <ul class="space-y-2">
+                  <li><a href="#" class="hover:text-acid">Services</a></li>
+                  <li><a href="#" class="hover:text-acid">Pricing</a></li>
+                  <li><a href="#" class="hover:text-acid">Login</a></li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="mb-4 text-white">Legal</h4>
+                <ul class="space-y-2">
+                  <li><a href="#" class="hover:text-acid">Privacy</a></li>
+                  <li><a href="#" class="hover:text-acid">Terms</a></li>
+                  <li><a href="#" class="hover:text-acid">SLA</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="mt-20">
+              <div
+                class="font-bold text-[100px] text-zinc-900 leading-none select-none">
+                PURGE
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </main>
+  </body>
+</html>
