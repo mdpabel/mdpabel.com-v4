@@ -52,6 +52,6 @@
 /services/blacklist-removal-service /blacklist-removal/ 301
 /snippets/* /blog  301
 /faq /blog 301
-/blog/malware-detection-and-removal-from-woocommerce-checkout-page/ /woocommerce-fake-payment-form-skimmer-fix/ 301
+/blog/malware-detection-and-removal-from-woocommerce-checkout-page/ /blog/woocommerce-fake-payment-form-skimmer-fix/ 301
 /blog/malware-detection-and-removal-from-woocommerce-checkout-page
- /woocommerce-fake-payment-form-skimmer-fix/ 301
+ /blog/woocommerce-fake-payment-form-skimmer-fix/ 301
