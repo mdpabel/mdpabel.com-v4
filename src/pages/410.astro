@@ -1,0 +1,14 @@
+---
+export const prerender = false; // Required for SSR response
+Astro.response.status = 410;
+Astro.response.statusText = 'Gone';
+---
+
+<html>
+  <head><title>410 Gone</title></head>
+  <body>
+    <h1>Content Permanently Removed</h1>
+    <p>The page you are looking for has been permanently deleted.</p>
+    <a href='/'>Return Home</a>
+  </body>
+</html>

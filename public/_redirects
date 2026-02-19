@@ -1,12 +1,15 @@
 # Cloudflare Pages Redirects
+
 # Format: /source /destination 301
 
 # --- Main Navigation Redirects ---
+
 /explore /blog 301
 /services /wordpress-security-maintenance-service 301
 /contact /hire-me 301
 
 # --- Service Page Consolidations ---
+
 /bd/wordpress-malware-removal /wordpress-malware-removal 301
 /custom-website-development /wordpress-malware-removal 301
 /fix-wordpress-errors /wordpress-malware-removal 301
@@ -16,16 +19,19 @@
 /blacklist-removal-service /blacklist-removal 301
 
 # --- Legal & Misc ---
+
 /refund-policy / 301
 /terms / 301
 /privacy / 301
 /headless-wordpress-development / 301
 
 # --- Case Studies ---
+
 /case-studies/wordpress-hacked-how-i-restored-my-site-after-everything-was-deleted /case-studies/wordpress-hacked-how-i-restored-a-client-site-after-everything-was-deleted 301
 /wordpress-malware-case-study-removing-hidden-executable-files-after-a-bluehost-account-suspension /case-studies 301
 
 # --- Blog Post Redirections ---
+
 /blog/ai-powered-wordpress-attacks-in-2025-how-hackers-are-outsmarting-plugins-and-what-to-do /blog 301
 /blog/how-hackers-hide-backdoors-wordpress-examples-detection/ /blog 301
 /the-wp-security-phishing-plugin-analyzing-the-fake-wordpress-security-team-malware /blog 301
@@ -33,6 +39,7 @@
 /how-we-removed-a-cloudflare-redirect-virus-massive-seo-spam-injection-from-a-hacked-wordpress-site /blog 301
 
 # --- Blog Path Corrections ---
+
 /how-to-fix-the-wordpress-white-screen-of-death-caused-by-zeura-malware /blog/how-to-fix-the-wordpress-white-screen-of-death-caused-by-zeura-malware 301
 /hidden-backdoors-fake-plugins-how-hackers-live-in-your-wordpress-dashboard /blog/hidden-backdoors-fake-plugins-how-hackers-live-in-your-wordpress-dashboard 301
 /can-a-jpg-file-contain-malware-uncovering-the-fake-image-backdoor /blog/can-a-jpg-file-contain-malware-uncovering-the-fake-image-backdoor 301
@@ -50,8 +57,8 @@
 /wordpress-security-maintenance-service /wordpress-malware-removal/ 301
 
 /services/blacklist-removal-service /blacklist-removal/ 301
-/snippets/* /blog  301
+/snippets/\* /blog 301
 /faq /blog 301
 /blog/malware-detection-and-removal-from-woocommerce-checkout-page/ /blog/woocommerce-fake-payment-form-skimmer-fix/ 301
 /blog/malware-detection-and-removal-from-woocommerce-checkout-page
- /blog/woocommerce-fake-payment-form-skimmer-fix/ 301
+/blog/woocommerce-fake-payment-form-skimmer-fix/ 301
