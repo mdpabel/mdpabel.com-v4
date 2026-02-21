@@ -10,7 +10,7 @@ export default defineConfig({
 
   image: {
     service: passthroughImageService(),
-    domains: ['leetcard.jacoblin.cool'],
+    domains: ['cms.mdpabel.com', 'leetcard.jacoblin.cool'],
   },
   vite: {
     plugins: [tailwindcss()],
