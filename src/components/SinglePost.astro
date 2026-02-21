@@ -10,6 +10,7 @@ import {
 import InternalServiceLinks from './InternalServiceLinks.astro';
 import AboutAuthor from './AboutAuthor.astro';
 import type { WordPressPost } from '../lib/wordpress';
+import { Image } from 'astro:assets';
 
 interface Props {
   post: WordPressPost;
@@ -88,7 +89,7 @@ const malwareSectionBase =
     {/* --- FEATURED IMAGE --- */}
     {
       featuredImg && (
-        <img
+        <Image
           src={featuredImg}
           alt={featuredAlt}
           class='shadow-xl mb-10 border border-slate-800 rounded-2xl w-full h-auto object-cover'
