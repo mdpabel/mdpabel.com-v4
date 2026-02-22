@@ -1,4 +1,4 @@
-import { defineConfig, passthroughImageService } from 'astro/config';
+import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import critters from 'astro-critters';
 
@@ -9,7 +9,6 @@ export default defineConfig({
   integrations: [critters()],
 
   image: {
-    service: passthroughImageService(),
     domains: ['cms.mdpabel.com', 'leetcard.jacoblin.cool'],
   },
   vite: {
