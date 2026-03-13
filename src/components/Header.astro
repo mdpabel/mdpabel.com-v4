@@ -16,7 +16,7 @@ import {
   Cpu,
   Lock,
   ScanLine,
-  Search, // <-- Added Search Icon
+  Search,
 } from '@lucide/astro';
 import ComponentWrapper from './component-wrapper.astro';
 
@@ -136,126 +136,128 @@ const navItems: NavItem[] = [
 ];
 ---
 
-<header
-  id='main-header'
-  class='top-0 z-50 sticky bg-slate-900/90 backdrop-blur-md border-slate-800 border-b w-full overflow-x-clip transition-colors duration-300'>
-  <div class='py-4'>
-    <ComponentWrapper>
-      <nav class='relative flex justify-between items-center mx-auto'>
-        {/* --- LOGO --- */}
-        <div class='flex items-center gap-8'>
-          <a
-            href='/'
-            aria-label='Home'
-            class='flex items-center gap-3 font-bold text-white text-xl tracking-tight'>
-            <div
-              class='flex justify-center items-center bg-white shadow-sm border border-slate-300 rounded-lg w-9 h-9'>
-              <Rocket class='w-5 h-5 text-slate-950' />
-            </div>
-            <span>MD Pabel</span>
-          </a>
+<>
+  <header
+    id='main-header'
+    class='top-0 z-40 sticky bg-slate-900/90 backdrop-blur-md border-slate-800 border-b w-full overflow-x-clip transition-colors duration-300'>
+    <div class='py-4'>
+      <ComponentWrapper>
+        <nav class='relative flex justify-between items-center mx-auto'>
+          {/* --- LOGO --- */}
+          <div class='flex items-center gap-8'>
+            <a
+              href='/'
+              aria-label='Home'
+              class='flex items-center gap-3 font-bold text-white text-xl tracking-tight'>
+              <div
+                class='flex justify-center items-center bg-white shadow-sm border border-slate-300 rounded-lg w-9 h-9'>
+                <Rocket class='w-5 h-5 text-slate-950' />
+              </div>
+              <span>MD Pabel</span>
+            </a>
 
-          {/* --- DESKTOP NAVIGATION --- */}
-          <div class='hidden lg:flex items-center gap-1'>
-            {
-              navItems.map((item) =>
-                item.type === 'link' ? (
-                  <a
-                    href={item.href}
-                    class='hover:bg-slate-800 px-3 py-2 rounded-full font-medium text-slate-300 hover:text-white text-base transition-colors'
-                    data-astro-prefetch={item.prefetch}>
-                    {item.name}
-                  </a>
-                ) : (
-                  <div class='group relative px-4 py-2'>
-                    <button class='flex items-center gap-1 font-medium text-slate-300 group-hover:text-white text-base transition-colors cursor-pointer'>
+            {/* --- DESKTOP NAVIGATION --- */}
+            <div class='hidden lg:flex items-center gap-1'>
+              {
+                navItems.map((item) =>
+                  item.type === 'link' ? (
+                    <a
+                      href={item.href}
+                      class='hover:bg-slate-800 px-3 py-2 rounded-full font-medium text-slate-300 hover:text-white text-base transition-colors'
+                      data-astro-prefetch={item.prefetch}>
                       {item.name}
-                      <ChevronDown class='w-4 h-4 group-hover:rotate-180 transition-transform' />
-                    </button>
-                    <div class='invisible group-hover:visible top-full left-1/2 z-50 absolute opacity-0 group-hover:opacity-100 pt-4 w-[600px] origin-top transition-all -translate-x-1/2 translate-y-2 group-hover:translate-y-0 duration-200 ease-out transform'>
-                      <div class='relative gap-2 grid grid-cols-2 bg-slate-900 shadow-xl p-4 border border-slate-700 rounded-2xl'>
-                        <div class='-top-2 left-1/2 absolute bg-slate-900 border-slate-700 border-t border-l w-4 h-4 rotate-45 -translate-x-1/2 transform' />
-                        {item.children.map((subItem) => (
-                          <a
-                            href={subItem.href}
-                            class={`group/item relative flex items-start gap-4 p-3 rounded-xl transition-colors z-10 ${subItem.badge ? 'opacity-70 cursor-default' : 'hover:bg-slate-800/50'}`}
-                            onclick={subItem.badge ? 'return false;' : ''}>
-                            <div class='bg-slate-800 group-hover/item:bg-sky-600 p-2 rounded-lg text-sky-400 group-hover/item:text-white transition-colors'>
-                              <subItem.icon class='w-5 h-5' />
-                            </div>
-                            <div>
-                              <div class='flex items-center gap-2 font-semibold text-white group-hover/item:text-sky-400 text-base transition-colors'>
-                                {subItem.name}
-                                {subItem.badge && (
-                                  <span class='bg-amber-900/30 px-1.5 py-0.5 rounded font-bold text-[10px] text-amber-400 uppercase tracking-wide'>
-                                    {subItem.badge}
-                                  </span>
-                                )}
+                    </a>
+                  ) : (
+                    <div class='group relative px-4 py-2'>
+                      <button class='flex items-center gap-1 font-medium text-slate-300 group-hover:text-white text-base transition-colors cursor-pointer'>
+                        {item.name}
+                        <ChevronDown class='w-4 h-4 group-hover:rotate-180 transition-transform' />
+                      </button>
+                      <div class='invisible group-hover:visible top-full left-1/2 z-50 absolute opacity-0 group-hover:opacity-100 pt-4 w-[600px] origin-top transition-all -translate-x-1/2 translate-y-2 group-hover:translate-y-0 duration-200 ease-out transform'>
+                        <div class='relative gap-2 grid grid-cols-2 bg-slate-900 shadow-xl p-4 border border-slate-700 rounded-2xl'>
+                          <div class='-top-2 left-1/2 absolute bg-slate-900 border-slate-700 border-t border-l w-4 h-4 rotate-45 -translate-x-1/2 transform' />
+                          {item.children.map((subItem) => (
+                            <a
+                              href={subItem.href}
+                              class={`group/item relative flex items-start gap-4 p-3 rounded-xl transition-colors z-10 ${subItem.badge ? 'opacity-70 cursor-default' : 'hover:bg-slate-800/50'}`}
+                              onclick={subItem.badge ? 'return false;' : ''}>
+                              <div class='bg-slate-800 group-hover/item:bg-sky-600 p-2 rounded-lg text-sky-400 group-hover/item:text-white transition-colors'>
+                                <subItem.icon class='w-5 h-5' />
                               </div>
-                              <p class='mt-0.5 text-slate-400 text-xs'>
-                                {subItem.desc}
-                              </p>
-                            </div>
-                          </a>
-                        ))}
+                              <div>
+                                <div class='flex items-center gap-2 font-semibold text-white group-hover/item:text-sky-400 text-base transition-colors'>
+                                  {subItem.name}
+                                  {subItem.badge && (
+                                    <span class='bg-amber-900/30 px-1.5 py-0.5 rounded font-bold text-[10px] text-amber-400 uppercase tracking-wide'>
+                                      {subItem.badge}
+                                    </span>
+                                  )}
+                                </div>
+                                <p class='mt-0.5 text-slate-400 text-xs'>
+                                  {subItem.desc}
+                                </p>
+                              </div>
+                            </a>
+                          ))}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ),
-              )
-            }
+                  ),
+                )
+              }
+            </div>
           </div>
-        </div>
 
-        {/* --- RIGHT ACTIONS (Desktop) --- */}
-        <ul class='hidden lg:flex justify-end items-center gap-4'>
-          {/* --- DESKTOP SEARCH --- */}
-          <li>
-            <form class='relative flex items-center site-search-form'>
-              <Search class='left-3 absolute w-4 h-4 text-slate-400' />
-              <input
-                type='search'
-                name='q'
-                placeholder='Search...'
-                class='bg-slate-800/50 py-2 pr-4 pl-9 border border-slate-700 focus:border-sky-500 rounded-full focus:outline-none focus:ring-1 focus:ring-sky-500 w-48 text-slate-200 text-sm transition-all'
-                required
-              />
-            </form>
-          </li>
-          <li>
-            <a
-              href='/free-wordpress-scan/'
-              class='flex items-center gap-2 font-medium text-slate-400 hover:text-white text-base transition-colors'>
-              <ScanLine class='w-4 h-4' />
-              Free Scan
-            </a>
-          </li>
-          <li>
-            <a
-              href='/hire-me/'
-              class='flex items-center gap-2 bg-white hover:bg-slate-200 shadow-md px-5 py-2.5 rounded-full font-semibold text-slate-900 text-sm transition-all hover:-translate-y-0.5 transform'
-              data-astro-prefetch='load'>Hire Me</a
-            >
-          </li>
-        </ul>
+          {/* --- RIGHT ACTIONS (Desktop) --- */}
+          <ul class='hidden lg:flex justify-end items-center gap-4'>
+            {/* --- DESKTOP SEARCH --- */}
+            <li>
+              <form class='relative flex items-center site-search-form'>
+                <Search class='left-3 absolute w-4 h-4 text-slate-400' />
+                <input
+                  type='search'
+                  name='q'
+                  placeholder='Search...'
+                  class='bg-slate-800/50 py-2 pr-4 pl-9 border border-slate-700 focus:border-sky-500 rounded-full focus:outline-none focus:ring-1 focus:ring-sky-500 w-48 text-slate-200 text-sm transition-all'
+                  required
+                />
+              </form>
+            </li>
+            <li>
+              <a
+                href='/free-wordpress-scan/'
+                class='flex items-center gap-2 font-medium text-slate-400 hover:text-white text-base transition-colors'>
+                <ScanLine class='w-4 h-4' />
+                Free Scan
+              </a>
+            </li>
+            <li>
+              <a
+                href='/hire-me/'
+                class='flex items-center gap-2 bg-white hover:bg-slate-200 shadow-md px-5 py-2.5 rounded-full font-semibold text-slate-900 text-sm transition-all hover:-translate-y-0.5 transform'
+                data-astro-prefetch='load'>Hire Me</a
+              >
+            </li>
+          </ul>
 
-        {/* --- MOBILE HAMBURGER --- */}
-        <div class='lg:hidden flex items-center gap-4'>
-          <button
-            id='menu-open-btn'
-            aria-label='Open Menu'
-            class='hover:bg-slate-800 p-2 rounded-full text-white transition-colors cursor-pointer'>
-            <Menu class='w-6 h-6' />
-          </button>
-        </div>
-      </nav>
-    </ComponentWrapper>
-  </div>
+          {/* --- MOBILE HAMBURGER --- */}
+          <div class='lg:hidden flex items-center gap-4'>
+            <button
+              id='menu-open-btn'
+              aria-label='Open Menu'
+              class='hover:bg-slate-800 p-2 rounded-full text-white transition-colors cursor-pointer'>
+              <Menu class='w-6 h-6' />
+            </button>
+          </div>
+        </nav>
+      </ComponentWrapper>
+    </div>
+  </header>
 
-  {/* --- MOBILE MENU OVERLAY --- */}
+  {/* --- MOBILE MENU OVERLAY (Now safely outside the header trap!) --- */}
   <div
     id='mobile-menu'
-    class='lg:hidden invisible z-[100] fixed inset-0 flex flex-col bg-slate-900 transition-all translate-x-full duration-300 ease-in-out'
+    class='lg:hidden z-[100] fixed inset-0 flex flex-col bg-slate-900 transition-transform translate-x-full duration-300 ease-in-out'
     aria-hidden='true'>
     <div
       class='flex justify-between items-center px-6 py-4 border-slate-800 border-b'>
@@ -346,11 +348,10 @@ const navItems: NavItem[] = [
       </a>
     </div>
   </div>
-</header>
+</>
 
 <script>
   document.addEventListener('astro:page-load', () => {
-    // Mobile Menu Logic
     const menu = document.getElementById('mobile-menu');
     const openBtn = document.getElementById('menu-open-btn');
     const closeBtn = document.getElementById('menu-close-btn');
@@ -361,9 +362,13 @@ const navItems: NavItem[] = [
     const toggleMenu = (isOpen: boolean) => {
       if (isOpen) {
         menu.classList.remove('translate-x-full');
+        menu.classList.add('translate-x-0'); // Explicitly add visible state
+        menu.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
       } else {
+        menu.classList.remove('translate-x-0');
         menu.classList.add('translate-x-full');
+        menu.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
       }
     };
@@ -371,29 +376,21 @@ const navItems: NavItem[] = [
     openBtn.addEventListener('click', () => toggleMenu(true));
     closeBtn.addEventListener('click', () => toggleMenu(false));
 
-    // Close menu when a link is clicked
     mobileLinks.forEach((link) => {
       link.addEventListener('click', () => toggleMenu(false));
     });
 
-    // Site Search Logic
     const searchForms = document.querySelectorAll('.site-search-form');
-
     searchForms.forEach((form) => {
       form.addEventListener('submit', (e) => {
         e.preventDefault();
-        const input = (e.target as HTMLFormElement).querySelector(
-          'input[name="q"]',
-        ) as HTMLInputElement;
+        const input = e.target.querySelector('input[name="q"]');
 
         if (input && input.value.trim()) {
           const query = encodeURIComponent(
             input.value.trim() + ' site:mdpabel.com',
           );
-          // Open search results in a new tab
           window.open(`https://www.google.com/search?q=${query}`, '_blank');
-
-          // Clear the input and close menu if on mobile
           input.value = '';
           toggleMenu(false);
         }
