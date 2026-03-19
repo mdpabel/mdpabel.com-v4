@@ -9,6 +9,7 @@ export async function GET() {
     { url: 'wordpress-malware-removal', priority: 0.9 },
     { url: 'blacklist-removal', priority: 0.9 },
     { url: 'blog', priority: 0.8 },
+    { url: 'mcafee-blacklist-removal', priority: 0.8 },
     { url: 'case-studies', priority: 0.8 },
     { url: 'guides', priority: 0.8 },
     { url: 'hire-me', priority: 0.9 },

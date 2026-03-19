@@ -1,0 +1,330 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ComponentWrapper from '../components/component-wrapper.astro';
+import {
+  CheckCircle,
+  ShieldAlert,
+  AlertOctagon,
+  Search,
+  Lock,
+  Check,
+  XCircle,
+  Zap,
+  ExternalLink,
+  ShieldX,
+} from '@lucide/astro';
+
+// --- SEO Data ---
+const seoTitle = 'McAfee Blacklist Removal: Clear SiteAdvisor Warnings';
+const seoDesc =
+  'Need a fast McAfee blacklist removal? If your site is blocked by McAfee SiteAdvisor, learn the exact TrustedSource appeal process or hire my service today.';
+
+// --- JSON-LD Schema ---
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'McAfee Blacklist Removal Service',
+  provider: {
+    '@type': 'Person',
+    name: 'MD Pabel',
+    url: 'https://www.mdpabel.com',
+  },
+  description:
+    'Professional malware cleanup and dedicated McAfee TrustedSource and SiteAdvisor blacklist removal service.',
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'McAfee Removal Services',
+    itemListElement: [
+      {
+        '@type': 'Offer',
+        name: 'McAfee Submission Only (Clean Sites)',
+        price: '15.00',
+        priceCurrency: 'USD',
+      },
+      {
+        '@type': 'Offer',
+        name: 'Full Malware Cleanup & McAfee Delist',
+        price: '149.00',
+        priceCurrency: 'USD',
+      },
+    ],
+  },
+};
+
+// --- STYLES (Dark Defaults matching your site) ---
+const primaryButtonClass =
+  'inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 disabled:pointer-events-none disabled:opacity-50 h-11 px-8 bg-sky-600 hover:bg-sky-700 text-white shadow-lg shadow-sky-900/20 tracking-tight';
+const outlineButtonClass =
+  'inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 disabled:pointer-events-none disabled:opacity-50 h-11 px-8 border bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800';
+---
+
+<Layout title={seoTitle} description={seoDesc}>
+  <script
+    type='application/ld+json'
+    set:html={JSON.stringify(jsonLd)}
+    is:inline
+  />
+
+  <ComponentWrapper class='relative py-16 md:py-24'>
+    {/* Decorative Background */}
+    <div
+      class='top-0 left-0 -z-10 absolute w-full h-full overflow-hidden pointer-events-none'>
+      <div
+        class='-top-[20%] right-0 absolute bg-red-500/5 blur-3xl rounded-full w-[500px] h-[500px]'>
+      </div>
+      <div
+        class='top-[10%] -left-[10%] absolute bg-sky-500/5 blur-3xl rounded-full w-[400px] h-[400px]'>
+      </div>
+    </div>
+
+    {/* --- HERO SECTION --- */}
+    <section class='z-10 relative mb-20 text-center'>
+      <div
+        class='inline-flex items-center gap-2 bg-red-900/20 mb-8 px-4 py-1.5 border border-red-800/50 rounded-full animate-fade-in-up'>
+        <ShieldX class='w-4 h-4 text-red-400' />
+        <span class='font-semibold text-red-200 text-sm'>
+          Blocked by McAfee SiteAdvisor?
+        </span>
+      </div>
+
+      <h1 class='mb-6 font-bold text-white text-3xl md:text-5xl leading-tight'>
+        McAfee Blacklist Removal <br class='hidden md:block' />
+        <span
+          class='bg-clip-text bg-gradient-to-r from-sky-400 to-indigo-400 text-transparent'>
+          Fix Your Reputation Today
+        </span>
+      </h1>
+
+      <p class='mx-auto mb-10 max-w-2xl text-slate-400 text-lg leading-relaxed'>
+        If your customers are seeing a red warning screen from McAfee
+        SiteAdvisor, you need a fast <strong>McAfee blacklist removal</strong> strategy.
+        I will clean the hidden malware on your server and successfully appeal the
+        block through McAfee's TrustedSource system.
+      </p>
+
+      <div class='flex sm:flex-row flex-col justify-center items-center gap-4'>
+        <a href='#pricing' class={primaryButtonClass}> Start McAfee Removal </a>
+        <a href='#diy-guide' class={outlineButtonClass}> Read the DIY Guide </a>
+      </div>
+    </section>
+
+    {/* --- THE HARD TRUTH (ANTI-DOORWAY / HIGH VALUE CONTENT) --- */}
+    <section id='diy-guide' class='mx-auto mb-24 max-w-4xl scroll-mt-24'>
+      <div
+        class='bg-slate-900/80 p-8 md:p-12 border border-slate-800 rounded-3xl'>
+        <h2 class='mb-6 font-bold text-white text-2xl md:text-3xl'>
+          How McAfee TrustedSource and SiteAdvisor Work
+        </h2>
+
+        <div class='space-y-6 text-slate-400 leading-relaxed'>
+          <p>
+            Unlike Google, McAfee uses an entirely different system to classify
+            websites. Their database is powered by <strong
+              >TrustedSource.org</strong
+            > and enforced by browser integrations like <strong
+              >McAfee SiteAdvisor</strong
+            >. When they detect a suspicious script, a phishing page, or a
+            malicious redirect on your WordPress site, they flag your domain as
+            a "High Risk" threat.
+          </p>
+
+          <div
+            class='bg-red-900/10 my-8 p-6 border-red-500 border-l-4 rounded-r-lg'>
+            <h3
+              class='flex items-center gap-2 mb-2 font-bold text-red-400 text-lg'>
+              <AlertOctagon class='w-5 h-5' /> The Hard Truth About McAfee Appeals
+            </h3>
+            <p class='text-slate-300 text-sm'>
+              McAfee will absolutely reject your appeal if your site is still
+              infected. Automated security plugins usually miss the complex
+              database backdoors that trigger SiteAdvisor scanners. <strong
+                >You must ensure your server is 100% clean before submitting a
+                ticket</strong
+              >, or they will ignore your subsequent requests.
+            </p>
+          </div>
+
+          <h3 class='mt-8 mb-4 font-bold text-white text-xl'>
+            The DIY McAfee Blacklist Removal Steps
+          </h3>
+          <ul class='space-y-4 list-decimal list-inside'>
+            <li class='pl-2'>
+              <strong>Clean Your Server:</strong> Perform a deep forensic audit. Remove
+              all hidden fake plugins, clear the <code>wp_options</code> table of
+              Base64 scripts, and regenerate your <code>.htaccess</code> file.
+            </li>
+            <li class='pl-2'>
+              <strong>Go to TrustedSource:</strong> Visit <a
+                href='https://trustedsource.org'
+                target='_blank'
+                rel='noopener noreferrer'
+                class='inline-flex items-center gap-1 text-sky-400 hover:underline'
+                >TrustedSource.org <ExternalLink class='w-3 h-3' /></a
+              > and create a free account.
+            </li>
+            <li class='pl-2'>
+              <strong>Check Your URL:</strong> Enter your domain in the "Check Single
+              URL" tool. Select "McAfee SiteAdvisor" from the dropdown product menu.
+            </li>
+            <li class='pl-2'>
+              <strong>Submit the Dispute:</strong> Categorize your site properly (e.g.,
+              Business, Blog) to initiate the McAfee blacklist removal process, and
+              write a detailed comment explaining <em>exactly</em> how you removed
+              the malware.
+            </li>
+            <li class='pl-2'>
+              <strong>Wait:</strong> McAfee's lab analysts typically take 3 to 5 business
+              days to process a manual review.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    {/* --- THE SERVICE CTA (PROCESS) --- */}
+    <section class='mx-auto mb-24 max-w-4xl'>
+      <div class='mb-16 text-center'>
+        <h2 class='mb-4 font-bold text-white text-3xl md:text-4xl'>
+          Fast McAfee Blacklist Removal: Let Me Fix It.
+        </h2>
+        <p class='text-slate-400'>
+          If your appeal was rejected or you can't find the malware, I will find
+          it for you. Here is my 3-step recovery process.
+        </p>
+      </div>
+
+      <div class='relative gap-8 grid md:grid-cols-3'>
+        <div
+          class='hidden md:block top-8 right-[15%] left-[15%] -z-10 absolute bg-slate-800 h-0.5'>
+        </div>
+
+        <div
+          class='flex flex-col items-center bg-slate-900/80 p-6 border border-slate-800 rounded-xl text-center'>
+          <div
+            class='z-10 flex justify-center items-center bg-slate-900 shadow-sm mb-4 border-4 border-slate-800 rounded-full w-16 h-16'>
+            <Search class='w-7 h-7 text-sky-400' />
+          </div>
+          <h3 class='mb-2 font-bold text-white'>1. Deep Malware Audit</h3>
+          <p class='text-slate-400 text-sm leading-relaxed'>
+            I manually audit your WordPress core files and database to find the
+            exact code triggering McAfee SiteAdvisor.
+          </p>
+        </div>
+
+        <div
+          class='flex flex-col items-center bg-slate-900/80 p-6 border border-slate-800 rounded-xl text-center'>
+          <div
+            class='z-10 flex justify-center items-center bg-slate-900 shadow-sm mb-4 border-4 border-slate-800 rounded-full w-16 h-16'>
+            <Lock class='w-7 h-7 text-sky-400' />
+          </div>
+          <h3 class='mb-2 font-bold text-white'>2. Surgical Cleanup</h3>
+          <p class='text-slate-400 text-sm leading-relaxed'>
+            I remove the backdoors, patch the vulnerability, and lock down your
+            server so the hackers cannot return.
+          </p>
+        </div>
+
+        <div
+          class='flex flex-col items-center bg-slate-900/80 p-6 border border-slate-800 rounded-xl text-center'>
+          <div
+            class='z-10 flex justify-center items-center bg-slate-900 shadow-sm mb-4 border-4 border-slate-800 rounded-full w-16 h-16'>
+            <CheckCircle class='w-7 h-7 text-sky-400' />
+          </div>
+          <h3 class='mb-2 font-bold text-white'>3. Expedited Delisting</h3>
+          <p class='text-slate-400 text-sm leading-relaxed'>
+            I write the technical dispute report and submit it to McAfee's lab
+            to guarantee a successful McAfee blacklist removal.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* --- PRICING --- */}
+    <section id='pricing' class='mb-24 scroll-mt-24'>
+      <div class='mx-auto mb-12 max-w-3xl text-center'>
+        <h2 class='mb-4 font-bold text-white text-3xl md:text-4xl'>
+          McAfee Blacklist Removal Pricing
+        </h2>
+      </div>
+
+      <div class='items-start gap-8 grid md:grid-cols-2 mx-auto max-w-4xl'>
+        {/* $15 Option */}
+        <div
+          class='bg-slate-900/80 p-8 border border-slate-800 hover:border-slate-700 rounded-2xl transition-colors'>
+          <h3 class='mb-2 font-semibold text-white'>Submission Only</h3>
+          <div class='mb-6 font-bold text-white text-3xl'>
+            $15 <span class='font-normal text-slate-500 text-base'
+              >/ vendor</span
+            >
+          </div>
+          <p class='mb-6 pb-6 border-slate-800 border-b text-slate-400 text-sm'>
+            For clients who are <strong>100% certain</strong> their site is clean,
+            but need expert help navigating the McAfee TrustedSource ticketing system.
+          </p>
+          <ul class='space-y-4 mb-8 text-slate-400 text-sm'>
+            <li class='flex gap-2'>
+              <Check class='w-4 h-4 text-sky-500' /> Technical Ticket Submission
+            </li>
+            <li class='flex gap-2 text-slate-500'>
+              <XCircle class='w-4 h-4' /> No Malware Auditing
+            </li>
+          </ul>
+          <a href='/hire-me' class={`w-full ${outlineButtonClass}`}>
+            Select Submission Only
+          </a>
+        </div>
+
+        {/* $149 Option */}
+        <div
+          class='z-10 relative bg-slate-900 shadow-xl p-8 border border-sky-900 rounded-2xl ring-1 ring-sky-900 scale-105'>
+          <div
+            class='-top-4 left-1/2 absolute bg-sky-600 px-3 py-1 rounded-full font-bold text-white text-xs uppercase -translate-x-1/2'>
+            The Ultimate Fix
+          </div>
+          <h3 class='mb-2 font-semibold text-sky-400'>
+            Cleanup & McAfee Delist
+          </h3>
+          <div class='mb-6 font-bold text-white text-4xl'>
+            $149 <span class='font-normal text-slate-500 text-base'>/ site</span
+            >
+          </div>
+          <p class='mb-6 pb-6 border-slate-800 border-b text-slate-400 text-sm'>
+            The stress-free option. I log into your server, destroy the malware,
+            and handle the complete McAfee blacklist removal process.
+          </p>
+          <ul class='space-y-4 mb-8 font-medium text-slate-200 text-sm'>
+            <li class='flex gap-3'>
+              <CheckCircle class='w-5 h-5 text-sky-600' />
+              <strong>Deep Malware & Backdoor Removal</strong>
+            </li>
+            <li class='flex gap-3'>
+              <CheckCircle class='w-5 h-5 text-sky-600' />
+              <strong>McAfee TrustedSource Appeal</strong>
+            </li>
+            <li class='flex gap-3'>
+              <CheckCircle class='w-5 h-5 text-sky-600' />
+              <strong>Google & Norton Submissions Included</strong>
+            </li>
+          </ul>
+          <a href='/hire-me' class={`w-full ${primaryButtonClass}`}>
+            Fix & Unblock My Site
+          </a>
+        </div>
+      </div>
+    </section>
+
+    {/* --- FOOTER CTA --- */}
+    <section class='mt-24 text-center'>
+      <div
+        class='inline-flex items-center gap-2 mb-4 font-semibold text-red-400 animate-pulse'>
+        <Zap class='w-4 h-4' /> Every hour blocked = Lost Revenue & Trust
+      </div>
+      <h2 class='mb-6 font-bold text-white text-3xl md:text-4xl'>
+        Ready to remove the red warning screen?
+      </h2>
+      <a href='#pricing' class={`px-10 rounded-full ${primaryButtonClass}`}>
+        Hire The Expert Today
+      </a>
+    </section>
+  </ComponentWrapper>
+</Layout>
