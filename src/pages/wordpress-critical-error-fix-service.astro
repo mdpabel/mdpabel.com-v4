@@ -4,6 +4,7 @@ import ComponentWrapper from '../components/component-wrapper.astro';
 import { Image } from 'astro:assets';
 import {
   ShieldCheck,
+  AlertOctagon,
   Search,
   Check,
   Zap,
@@ -15,20 +16,20 @@ import {
   Lock,
   MessageSquare,
   CheckCircle,
-  MailCheck,
   Image as ImageIcon,
-  AlertOctagon,
+  TriangleAlert,
+  Wrench,
+  ServerCrash,
 } from '@lucide/astro';
 
-import mcafeeSingleClosedEmail from '../assets/a-email-from-mcafee-about-removing-the-blacklist.png';
-import mcafeeManyEmails from '../assets/hundreds-email-from-mcafee-about-blacklist-reconsideration-ticket.png';
-import mcafeeTicketingSystem from '../assets/mcafee-329-blacklist-removal.png';
+import fatalErrorScreenshot from '../assets/fatal-error.png';
+import criticalErrorScreenshot from '../assets/there-has-been-a-critical-error-on-this-website.png';
 
 // --- SEO DATA ---
 const seoTitle =
-  'McAfee Blacklist Removal Service | Fix WebAdvisor & SiteAdvisor Warnings';
+  'WordPress Critical Error Fix Service | “There Has Been a Critical Error on This Website”';
 const seoDesc =
-  'Need McAfee blacklist removal? I clean malware, spam pages, phishing content, backdoors, and hacked WordPress files, then help with McAfee WebAdvisor / SiteAdvisor review and reputation recovery.';
+  'Fix “There has been a critical error on this website” in WordPress. I repair plugin conflicts, theme crashes, fatal PHP errors, broken updates, and site-down issues fast.';
 
 // --- CTA BUTTONS ---
 const primaryButtonClass =
@@ -40,34 +41,37 @@ const secondaryButtonClass =
 // --- FAQ CONTENT ---
 const faqs = [
   {
-    question: 'What does McAfee blacklist removal mean?',
+    question:
+      'What does “There has been a critical error on this website” mean?',
     answer:
-      'McAfee blacklist removal means fixing the malware, phishing pages, spam URLs, malicious redirects, or hacked files that caused your site to be flagged, then following the McAfee review or re-evaluation process so the site reputation can be updated.',
+      'It usually means WordPress hit a fatal error and could not continue loading normally. Common causes include plugin conflicts, theme problems, PHP compatibility issues, broken code snippets, memory problems, or hacked files.',
   },
   {
-    question: 'Is McAfee SiteAdvisor the same as WebAdvisor?',
+    question:
+      'Can you fix a WordPress critical error without dashboard access?',
     answer:
-      'Many people still search for McAfee SiteAdvisor blacklist removal, but newer users often refer to McAfee WebAdvisor. This service page is built to help with both search intents and the same underlying website reputation problem.',
+      'Yes. Many critical error cases require fixing the site from hosting, file manager, FTP, logs, or wp-content rather than from inside wp-admin.',
   },
   {
-    question: 'Can you remove the warning before cleaning the site?',
+    question: 'Is this error always caused by a plugin?',
     answer:
-      'No. The correct process is cleanup first, review second. If the root cause is still present, the warning or bad reputation can remain or return.',
+      'No. Plugins are a common cause, but themes, custom code, PHP version changes, memory exhaustion, corrupted files, server-side issues, and even malware can also trigger it.',
   },
   {
-    question: 'Do you only help WordPress websites?',
+    question:
+      'Can malware cause “There has been a critical error on this website”?',
     answer:
-      'WordPress is my core specialty, especially hacked WordPress sites with fake plugins, cloaking spam, phishing pages, malicious redirects, and backdoors. I can also help with other PHP-based websites and shared hosting setups.',
+      'Yes. Hacked or modified files, fake plugins, injected PHP, broken backdoors, and corrupted code can all lead to fatal WordPress errors and site-down situations.',
   },
   {
-    question: 'How long does McAfee blacklist removal take?',
+    question: 'What if I never received the WordPress recovery email?',
     answer:
-      'The cleanup can often be done quickly, but the reputation or ticket review timing depends on the issue type, the condition of the website, and the external review process.',
+      'That is common. The site can still be diagnosed and repaired manually by checking logs, disabling the breaking component safely, reviewing recent changes, and inspecting the WordPress file structure.',
   },
   {
-    question: 'What do you need from me to start?',
+    question: 'How fast can you fix a WordPress critical error?',
     answer:
-      'Usually I need the website URL first. Depending on the situation, I may also need hosting access, WordPress access, or the relevant ticket details so I can investigate the infection and help with the review path.',
+      'It depends on the root cause, but many cases can be diagnosed quickly. The key is identifying whether the issue comes from a plugin, theme, PHP change, server issue, or malware before making changes.',
   },
 ];
 
@@ -76,10 +80,10 @@ const structuredData = JSON.stringify([
   {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    name: 'McAfee Blacklist Removal Service',
-    serviceType: 'McAfee WebAdvisor / SiteAdvisor Warning Removal',
+    name: 'WordPress Critical Error Fix Service',
+    serviceType: 'WordPress Fatal Error Repair',
     description:
-      'Manual malware cleanup, spam removal, phishing cleanup, backdoor removal, reputation review support, and website hardening for sites blocked or flagged by McAfee.',
+      'Repair service for “There has been a critical error on this website” in WordPress, including plugin conflicts, theme crashes, fatal PHP errors, broken updates, malware-related failures, and site-down recovery.',
     areaServed: 'Worldwide',
     provider: {
       '@type': 'Person',
@@ -112,7 +116,7 @@ const structuredData = JSON.stringify([
         class='-top-[10%] right-0 absolute bg-emerald-500/10 blur-3xl rounded-full w-[650px] h-[650px]'>
       </div>
       <div
-        class='top-[20%] left-[10%] absolute bg-red-500/5 blur-3xl rounded-full w-[380px] h-[380px]'>
+        class='top-[20%] left-[10%] absolute bg-amber-500/5 blur-3xl rounded-full w-[380px] h-[380px]'>
       </div>
       <div
         class='bottom-0 left-0 absolute bg-sky-500/5 blur-3xl rounded-full w-[500px] h-[500px]'>
@@ -125,36 +129,34 @@ const structuredData = JSON.stringify([
         class='inline-flex items-center gap-2 bg-emerald-900/20 mb-8 px-4 py-1.5 border border-emerald-800/50 rounded-full'>
         <ShieldCheck class='w-4 h-4 text-emerald-400' />
         <span class='font-semibold text-emerald-200 text-sm'>
-          Malware Cleanup • McAfee Review Help
+          WordPress Recovery • Fatal Error Repair
         </span>
       </div>
 
       <h1
         class='mx-auto mb-6 max-w-4xl font-bold text-white text-3xl md:text-4xl leading-[1.05] tracking-tight'>
-        McAfee Blacklist Removal Service
+        WordPress Critical Error Fix Service
         <span
           class='block bg-clip-text bg-gradient-to-r from-emerald-400 to-sky-400 mt-2 text-transparent'>
-          Fix WebAdvisor & SiteAdvisor Warnings Properly
+          Fix “There Has Been a Critical Error on This Website”
         </span>
       </h1>
 
       <p class='mx-auto mb-10 max-w-3xl text-slate-400 text-lg leading-relaxed'>
-        Need help with <strong class='text-slate-200'
-          >McAfee blacklist removal</strong
-        >? I clean the malware, phishing pages, spam URLs, fake plugins,
-        backdoors, and malicious redirects behind the warning, then help with
-        the McAfee review or reputation recovery process. This page is optimized
-        for both
-        <strong class='text-slate-200'> McAfee WebAdvisor</strong> and
-        <strong class='text-slate-200'> McAfee SiteAdvisor</strong> related searches.
+        If your site is down and showing
+        <strong class='text-slate-200'>
+          “There has been a critical error on this website”</strong
+        >, I can help repair the root cause fast. I fix plugin conflicts, theme
+        crashes, fatal PHP errors, broken updates, no-admin-access situations,
+        and malware-related WordPress failures.
       </p>
 
       <div
         class='flex sm:flex-row flex-col justify-center items-center gap-4 mb-12'>
         <a href='/hire-me/' class={primaryButtonClass}>
-          Request McAfee Removal Help
+          Request Critical Error Fix
         </a>
-        <a href='#proof' class={secondaryButtonClass}> See Real Proof </a>
+        <a href='#proof' class={secondaryButtonClass}> See Real Examples </a>
       </div>
 
       <div class='gap-4 grid sm:grid-cols-3 mx-auto max-w-4xl text-left'>
@@ -164,30 +166,30 @@ const structuredData = JSON.stringify([
             4,500+ hacked sites cleaned
           </div>
           <p class='text-slate-400 text-sm'>
-            Real malware cleanup experience across WordPress, shared hosting,
-            and hacked websites.
+            Deep WordPress repair experience across broken plugins, themes,
+            updates, and hacked files.
           </p>
         </div>
 
         <div class='bg-slate-900/60 p-5 border border-slate-800 rounded-2xl'>
           <div class='flex items-center gap-2 mb-2 font-semibold text-white'>
-            <MailCheck class='w-5 h-5 text-emerald-400' />
-            Repeated McAfee ticket results
+            <Wrench class='w-5 h-5 text-emerald-400' />
+            No dashboard access needed
           </div>
           <p class='text-slate-400 text-sm'>
-            Proof screenshots showing closed ticket reports and many past
-            submissions.
+            Many critical error cases are fixed from hosting, logs, file
+            manager, or FTP.
           </p>
         </div>
 
         <div class='bg-slate-900/60 p-5 border border-slate-800 rounded-2xl'>
           <div class='flex items-center gap-2 mb-2 font-semibold text-white'>
             <Lock class='w-5 h-5 text-emerald-400' />
-            Root-cause cleanup
+            Root-cause repair
           </div>
           <p class='text-slate-400 text-sm'>
-            I focus on fixing the infection first so the reputation issue can be
-            resolved correctly.
+            I focus on the actual cause, not just making the error message
+            disappear temporarily.
           </p>
         </div>
       </div>
@@ -198,146 +200,118 @@ const structuredData = JSON.stringify([
       <div
         class='bg-slate-900/50 p-8 md:p-10 border border-slate-800 rounded-3xl'>
         <h2 class='mb-5 font-bold text-white text-3xl'>
-          What is McAfee blacklist removal?
+          What does “There has been a critical error on this website” mean?
         </h2>
         <p class='mb-4 text-slate-400 leading-relaxed'>
-          McAfee blacklist removal means fixing the security problem that caused
-          your website to be flagged, blocked, or marked as risky, then moving
-          through the McAfee review, ticket, or reputation update process after
-          the site is actually clean. In real-world cases, that usually includes
-          malware removal, phishing cleanup, spam page cleanup, backdoor
-          detection, vulnerability patching, and post-cleanup hardening.
+          In plain English, it means WordPress hit a fatal error and could not
+          finish loading the site correctly. Sometimes the site is fully down.
+          Sometimes only the frontend breaks. In other cases, wp-admin also
+          becomes inaccessible.
         </p>
         <p class='text-slate-400 leading-relaxed'>
-          Many users still search for <strong class='text-slate-200'
-            >McAfee SiteAdvisor blacklist removal</strong
-          >, while others search for <strong class='text-slate-200'
-            >McAfee WebAdvisor warning removal</strong
-          >. This page is intentionally built to target both keyword groups
-          while keeping the service page useful for buyers who need fast, expert
-          help.
+          The most common causes are plugin conflicts, theme issues, fatal PHP
+          errors, broken code snippets, update-related compatibility problems,
+          server-side failures, and malware-related file corruption. This page
+          is optimized around both the exact phrase users search for and the
+          more natural commercial keyword
+          <strong class='text-slate-200'>
+            WordPress critical error fix service</strong
+          >.
         </p>
       </div>
     </section>
 
-    {/* --- PROOF SECTION --- */}
+    {/* --- PROOF / SCREENSHOTS --- */}
     <section id='proof' class='mx-auto mb-24 max-w-6xl'>
       <div class='mb-12 text-center'>
         <h2 class='mb-4 font-bold text-white text-3xl md:text-4xl'>
-          Real proof from McAfee blacklist removal work
+          Real examples of the WordPress critical error
         </h2>
         <p class='mx-auto max-w-3xl text-slate-400'>
-          These screenshots make the page stronger for both SEO and conversions
-          by showing repeatable real-world results.
+          These screenshots match the exact problem many site owners search for
+          before hiring help.
         </p>
       </div>
 
-      <div class='gap-8 grid lg:grid-cols-3'>
+      <div class='gap-8 grid lg:grid-cols-2'>
+        <div class='bg-slate-900/60 p-4 border border-slate-800 rounded-3xl'>
+          <div class='mb-4'>
+            <div
+              class='inline-flex items-center gap-2 bg-amber-900/20 px-3 py-1.5 border border-amber-900/40 rounded-full font-medium text-amber-300 text-xs'>
+              <ServerCrash class='w-4 h-4' />
+              Fatal PHP / theme-related crash
+            </div>
+          </div>
+
+          <Image
+            src={fatalErrorScreenshot}
+            alt='WordPress fatal error screen showing there has been a critical error on this website caused by theme or PHP issue'
+            class='border border-slate-800 rounded-2xl w-full h-auto object-cover'
+            loading='lazy'
+          />
+
+          <div class='pt-4'>
+            <h3 class='mb-2 font-semibold text-white text-xl'>
+              Full fatal error output
+            </h3>
+            <p class='text-slate-400 text-sm leading-relaxed'>
+              This type of crash often points to a broken theme file, function
+              call, plugin conflict, or PHP compatibility issue.
+            </p>
+          </div>
+        </div>
+
         <div class='bg-slate-900/60 p-4 border border-slate-800 rounded-3xl'>
           <div class='mb-4'>
             <div
               class='inline-flex items-center gap-2 bg-red-950/30 px-3 py-1.5 border border-red-900/40 rounded-full font-medium text-red-200 text-xs'>
-              <MailCheck class='w-4 h-4' />
-              Closed progress report
+              <TriangleAlert class='w-4 h-4' />
+              Generic WordPress critical error screen
             </div>
           </div>
 
           <Image
-            src={mcafeeSingleClosedEmail}
-            alt='McAfee email showing a closed progress report for URL submissions and updated web reputation'
+            src={criticalErrorScreenshot}
+            alt='WordPress screen showing there has been a critical error on this website'
             class='border border-slate-800 rounded-2xl w-full h-auto object-cover'
             loading='lazy'
           />
 
           <div class='pt-4'>
             <h3 class='mb-2 font-semibold text-white text-xl'>
-              Example of a completed McAfee ticket
+              The exact error many users see
             </h3>
             <p class='text-slate-400 text-sm leading-relaxed'>
-              This screenshot shows a closed McAfee progress report after a
-              website review and cleanup workflow.
-            </p>
-          </div>
-        </div>
-
-        <div class='bg-slate-900/60 p-4 border border-slate-800 rounded-3xl'>
-          <div class='mb-4'>
-            <div
-              class='inline-flex items-center gap-2 bg-sky-900/20 px-3 py-1.5 border border-sky-900/40 rounded-full font-medium text-sky-300 text-xs'>
-              <ImageIcon class='w-4 h-4' />
-              Many past submissions
-            </div>
-          </div>
-
-          <Image
-            src={mcafeeManyEmails}
-            alt='Gmail screenshot showing many emails from McAfee about URL submission tickets and reconsideration results'
-            class='border border-slate-800 rounded-2xl w-full h-auto object-cover'
-            loading='lazy'
-          />
-
-          <div class='pt-4'>
-            <h3 class='mb-2 font-semibold text-white text-xl'>
-              Repeated McAfee blacklist removal history
-            </h3>
-            <p class='text-slate-400 text-sm leading-relaxed'>
-              This screenshot supports the claim that I have handled many
-              McAfee-related website reputation and review cases.
-            </p>
-          </div>
-        </div>
-
-        <div class='bg-slate-900/60 p-4 border border-slate-800 rounded-3xl'>
-          <div class='mb-4'>
-            <div
-              class='inline-flex items-center gap-2 bg-emerald-900/20 px-3 py-1.5 border border-emerald-900/40 rounded-full font-medium text-emerald-300 text-xs'>
-              <CheckCircle class='w-4 h-4' />
-              329 tracked submissions
-            </div>
-          </div>
-
-          <Image
-            src={mcafeeTicketingSystem}
-            alt='McAfee customer URL ticketing system screenshot showing many closed website reputation submissions'
-            class='border border-slate-800 rounded-2xl w-full h-auto object-cover'
-            loading='lazy'
-          />
-
-          <div class='pt-4'>
-            <h3 class='mb-2 font-semibold text-white text-xl'>
-              Proof of scale and repeatability
-            </h3>
-            <p class='text-slate-400 text-sm leading-relaxed'>
-              This screenshot helps show long-term hands-on experience with
-              McAfee URL reputation and blacklist-related ticket handling.
+              This is the common WordPress site-down message users search for
+              when the website stops working.
             </p>
           </div>
         </div>
       </div>
     </section>
 
-    {/* --- WARNING TYPES --- */}
+    {/* --- CAUSES --- */}
     <section class='mx-auto mb-24 max-w-6xl'>
       <div class='mb-12 text-center'>
         <h2 class='mb-4 font-bold text-white text-3xl md:text-4xl'>
-          Why is my website blocked by McAfee?
+          Why your WordPress site shows a critical error
         </h2>
         <p class='mx-auto max-w-3xl text-slate-400'>
-          These are the most common reasons a site ends up needing McAfee
-          blacklist removal.
+          These are the most common reasons site owners need a WordPress
+          critical error fix service.
         </p>
       </div>
 
-      <div class='gap-6 grid md:grid-cols-3'>
+      <div class='gap-6 grid md:grid-cols-2 lg:grid-cols-4'>
         <div class='bg-slate-900/60 p-8 border border-slate-800 rounded-3xl'>
           <div
             class='flex items-center gap-3 mb-4 font-bold text-white text-xl'>
-            <ShieldAlert class='w-6 h-6 text-emerald-400' />
-            Malware & Malicious Scripts
+            <Bug class='w-6 h-6 text-emerald-400' />
+            Plugin conflicts
           </div>
           <p class='text-slate-400 leading-relaxed'>
-            Infected files, injected JavaScript, malicious downloads, or
-            compromised code can trigger a risky site classification.
+            A bad plugin update, incompatibility, or broken code path can crash
+            the whole site.
           </p>
         </div>
 
@@ -345,24 +319,35 @@ const structuredData = JSON.stringify([
           <div
             class='flex items-center gap-3 mb-4 font-bold text-white text-xl'>
             <AlertOctagon class='w-6 h-6 text-emerald-400' />
-            Phishing & Fake Pages
+            Theme crashes
           </div>
           <p class='text-slate-400 leading-relaxed'>
-            Attackers often inject fake login pages, phishing content, browser
-            warnings, or spam landing pages to abuse the site.
+            Broken theme files, missing functions, or bad template code often
+            trigger fatal errors.
           </p>
         </div>
 
         <div class='bg-slate-900/60 p-8 border border-slate-800 rounded-3xl'>
           <div
             class='flex items-center gap-3 mb-4 font-bold text-white text-xl'>
-            <Bug class='w-6 h-6 text-emerald-400' />
-            Hidden Persistence
+            <Zap class='w-6 h-6 text-emerald-400' />
+            PHP or server changes
           </div>
           <p class='text-slate-400 leading-relaxed'>
-            Fake plugins, cron reinfection, modified theme files, hidden users,
-            or root-level malware can keep bringing the issue back unless
-            cleaned properly.
+            PHP version mismatches, memory limits, missing extensions, or server
+            configuration changes can break WordPress.
+          </p>
+        </div>
+
+        <div class='bg-slate-900/60 p-8 border border-slate-800 rounded-3xl'>
+          <div
+            class='flex items-center gap-3 mb-4 font-bold text-white text-xl'>
+            <ShieldAlert class='w-6 h-6 text-emerald-400' />
+            Malware or file corruption
+          </div>
+          <p class='text-slate-400 leading-relaxed'>
+            Hacked files, fake plugins, injected PHP, and corrupted core files
+            can also cause fatal errors.
           </p>
         </div>
       </div>
@@ -372,23 +357,18 @@ const structuredData = JSON.stringify([
     <article
       class='prose-invert mx-auto mb-24 max-w-4xl text-slate-400 leading-relaxed prose'>
       <h2 class='mb-6 font-bold text-white text-3xl'>
-        McAfee SiteAdvisor vs WebAdvisor
+        Common causes of “There has been a critical error on this website”
       </h2>
       <p>
-        Many people still search for <strong
-          >McAfee SiteAdvisor blacklist removal</strong
-        >, while others search for <strong
-          >McAfee WebAdvisor warning removal</strong
-        >. From an SEO perspective, this is important because both keyword
-        groups represent the same buyer intent: the website has a reputation
-        problem, a warning is showing, and the owner needs expert help fixing
-        the root cause.
+        Not every WordPress critical error has the same root cause. Some happen
+        immediately after a plugin update. Others start after a theme change, a
+        PHP version switch, a custom code snippet, a server migration, or a
+        malware infection. That is why guessing often makes the problem worse.
       </p>
       <p>
-        That is why this service page intentionally uses both terms naturally
-        throughout the content. It helps the page rank for older search phrases
-        as well as newer terminology without making the copy feel stuffed or
-        unnatural.
+        In real repair work, the goal is not just to hide the error message. The
+        goal is to understand what actually broke, restore safe access to the
+        site, and prevent the same failure from happening again.
       </p>
 
       <div
@@ -396,31 +376,32 @@ const structuredData = JSON.stringify([
         <h3
           class='flex items-center gap-2 mb-4 font-bold text-emerald-400 text-xl'>
           <HeartHandshake class='w-6 h-6' />
-          Cleanup first, review second
+          I focus on diagnosis first, repair second
         </h3>
         <p>
-          A common mistake is trying to push a reputation change request before
-          the website is actually clean. My workflow focuses on malware cleanup,
-          phishing cleanup, spam page removal, backdoor removal, and hardening
-          first. Only then does it make sense to focus on the ticket, dispute,
-          or review step.
+          Many site owners panic and start disabling random files or
+          reinstalling WordPress without knowing the cause. My workflow starts
+          with identifying whether the issue is coming from a plugin, theme,
+          server change, PHP fatal error, custom code problem, or hacked file,
+          then repairing it carefully.
         </p>
       </div>
 
       <h2 class='mb-6 font-bold text-white text-3xl'>
-        McAfee blacklist removal for WordPress websites
+        Critical error after plugin update, theme update, or PHP version change
       </h2>
       <p>
-        WordPress websites often get flagged because of hidden fake plugins,
-        modified core files, malicious uploads, root-level PHP files, cloaked
-        spam pages, or cron-based reinfection. The homepage may still look
-        normal while the infection operates quietly in the background.
+        A large percentage of WordPress critical errors happen right after
+        something changes. That might be a plugin update, a theme update, a
+        WooCommerce update, a custom code edit, or a hosting-level PHP version
+        change. In those situations, the fix is usually not random trial and
+        error. It is controlled rollback, isolation, compatibility review, and
+        proper repair.
       </p>
       <p>
-        That is why my service is not limited to surface-level scanning. I
-        manually inspect the parts of the site that are commonly missed in
-        partial cleanups and focus on the root cause so the warning does not
-        keep coming back.
+        I also handle no-dashboard-access cases, where the site is down and
+        WordPress Recovery Mode is not available or the admin never received the
+        email. Those cases usually require direct hosting-level work.
       </p>
     </article>
 
@@ -428,72 +409,78 @@ const structuredData = JSON.stringify([
     <section class='mx-auto mb-24 max-w-6xl'>
       <div class='mb-12 text-center'>
         <h2 class='mb-4 font-bold text-white text-3xl md:text-4xl'>
-          What’s included in my McAfee blacklist removal service
+          What’s included in my WordPress critical error fix service
         </h2>
         <p class='mx-auto max-w-3xl text-slate-400'>
-          This service is built around the real cleanup and reputation-recovery
-          workflow.
+          This service is built around real site-down recovery, not generic
+          troubleshooting tips.
         </p>
       </div>
 
       <div class='gap-6 grid md:grid-cols-2 lg:grid-cols-3'>
         <div class='bg-slate-900 p-8 border border-slate-800 rounded-3xl'>
-          <Bug class='mb-4 w-6 h-6 text-emerald-400' />
-          <h3 class='mb-3 font-bold text-white text-xl'>Malware removal</h3>
+          <Search class='mb-4 w-6 h-6 text-emerald-400' />
+          <h3 class='mb-3 font-bold text-white text-xl'>
+            Root-cause diagnosis
+          </h3>
           <p class='text-slate-400'>
-            Removal of malicious files, injected scripts, backdoors, spam pages,
-            hacked URLs, and common WordPress malware payloads.
+            I identify whether the problem is a plugin, theme, PHP, server, code
+            snippet, or malware-related failure.
+          </p>
+        </div>
+
+        <div class='bg-slate-900 p-8 border border-slate-800 rounded-3xl'>
+          <Wrench class='mb-4 w-6 h-6 text-emerald-400' />
+          <h3 class='mb-3 font-bold text-white text-xl'>
+            Frontend & admin recovery
+          </h3>
+          <p class='text-slate-400'>
+            I restore safe access to the website and, where possible, bring both
+            the frontend and wp-admin back online.
+          </p>
+        </div>
+
+        <div class='bg-slate-900 p-8 border border-slate-800 rounded-3xl'>
+          <Bug class='mb-4 w-6 h-6 text-emerald-400' />
+          <h3 class='mb-3 font-bold text-white text-xl'>
+            Plugin & theme conflict repair
+          </h3>
+          <p class='text-slate-400'>
+            I repair plugin conflicts, broken theme functions, missing
+            dependencies, and update-related crashes.
           </p>
         </div>
 
         <div class='bg-slate-900 p-8 border border-slate-800 rounded-3xl'>
           <ShieldAlert class='mb-4 w-6 h-6 text-emerald-400' />
-          <h3 class='mb-3 font-bold text-white text-xl'>Phishing cleanup</h3>
-          <p class='text-slate-400'>
-            Cleanup of fake login pages, phishing content, deceptive landing
-            pages, malicious redirects, and compromised website sections.
-          </p>
-        </div>
-
-        <div class='bg-slate-900 p-8 border border-slate-800 rounded-3xl'>
-          <Search class='mb-4 w-6 h-6 text-emerald-400' />
-          <h3 class='mb-3 font-bold text-white text-xl'>Blacklist diagnosis</h3>
-          <p class='text-slate-400'>
-            Review of the warning type, ticket status, visible symptoms, and
-            likely infection path before the reputation step.
-          </p>
-        </div>
-
-        <div class='bg-slate-900 p-8 border border-slate-800 rounded-3xl'>
-          <Lock class='mb-4 w-6 h-6 text-emerald-400' />
           <h3 class='mb-3 font-bold text-white text-xl'>
-            Hardening & patching
+            Malware-related failure cleanup
           </h3>
           <p class='text-slate-400'>
-            Security fixes after cleanup, including vulnerability reduction,
-            access cleanup, plugin review, and reinfection prevention.
+            If the critical error is caused by hacked files, fake plugins, or
+            injected PHP, I investigate and clean that too.
           </p>
         </div>
 
         <div class='bg-slate-900 p-8 border border-slate-800 rounded-3xl'>
           <Globe class='mb-4 w-6 h-6 text-emerald-400' />
           <h3 class='mb-3 font-bold text-white text-xl'>
-            Ticket / review help
+            Hosting-level troubleshooting
           </h3>
           <p class='text-slate-400'>
-            Help with the McAfee URL ticketing or reputation recovery process
-            after the site is in the right condition.
+            I can work from file manager, FTP, logs, and server-level access
+            when the WordPress dashboard is unavailable.
           </p>
         </div>
 
         <div class='bg-slate-900 p-8 border border-slate-800 rounded-3xl'>
-          <Zap class='mb-4 w-6 h-6 text-emerald-400' />
+          <Lock class='mb-4 w-6 h-6 text-emerald-400' />
           <h3 class='mb-3 font-bold text-white text-xl'>
-            Manual investigation
+            Stability after repair
           </h3>
           <p class='text-slate-400'>
-            I do not stop at the first infected file. I look for persistence,
-            hidden users, cron abuse, and reinfection paths.
+            I aim for a real fix, including validation and prevention steps, not
+            just a temporary workaround.
           </p>
         </div>
       </div>
@@ -503,10 +490,11 @@ const structuredData = JSON.stringify([
     <section id='process' class='mx-auto mb-24 max-w-6xl'>
       <div class='mb-12 text-center'>
         <h2 class='mb-4 font-bold text-white text-3xl md:text-4xl'>
-          My McAfee blacklist removal process
+          My WordPress critical error fix process
         </h2>
         <p class='mx-auto max-w-3xl text-slate-400'>
-          The page is optimized around the exact workflow most buyers need.
+          A good repair process is what separates a quick patch from a stable
+          recovery.
         </p>
       </div>
 
@@ -516,10 +504,12 @@ const structuredData = JSON.stringify([
             class='inline-flex justify-center items-center bg-emerald-900/30 mb-5 rounded-full w-10 h-10 font-bold text-emerald-300 text-sm'>
             01
           </div>
-          <h3 class='mb-3 font-bold text-white text-xl'>Confirm the issue</h3>
+          <h3 class='mb-3 font-bold text-white text-xl'>
+            Confirm the failure type
+          </h3>
           <p class='text-slate-400'>
-            I identify whether the site is dealing with malware, phishing, spam,
-            hacked content, or a broader website reputation issue.
+            I determine whether the site is dealing with a fatal error, plugin
+            crash, theme issue, server problem, or malware-related break.
           </p>
         </div>
 
@@ -529,11 +519,11 @@ const structuredData = JSON.stringify([
             02
           </div>
           <h3 class='mb-3 font-bold text-white text-xl'>
-            Audit the website deeply
+            Inspect logs and recent changes
           </h3>
           <p class='text-slate-400'>
-            I inspect files, plugins, themes, uploads, admin users, redirects,
-            cron jobs, and the common places malware hides.
+            I review error patterns, recent updates, theme or plugin changes,
+            code edits, and the file structure.
           </p>
         </div>
 
@@ -543,11 +533,11 @@ const structuredData = JSON.stringify([
             03
           </div>
           <h3 class='mb-3 font-bold text-white text-xl'>
-            Remove malware & spam
+            Disable the breaking component safely
           </h3>
           <p class='text-slate-400'>
-            I remove the malicious files, phishing content, fake plugins,
-            backdoors, spam URLs, and persistence mechanisms.
+            I isolate the issue without causing unnecessary extra damage to the
+            website or its data.
           </p>
         </div>
 
@@ -557,11 +547,11 @@ const structuredData = JSON.stringify([
             04
           </div>
           <h3 class='mb-3 font-bold text-white text-xl'>
-            Secure the environment
+            Repair the root cause
           </h3>
           <p class='text-slate-400'>
-            After cleanup, I harden the website and reduce the chance of the
-            same issue coming back again.
+            I fix the underlying problem, whether that means code repair,
+            rollback, compatibility fixes, or malware cleanup.
           </p>
         </div>
 
@@ -571,11 +561,11 @@ const structuredData = JSON.stringify([
             05
           </div>
           <h3 class='mb-3 font-bold text-white text-xl'>
-            Handle the review path
+            Restore and test the site
           </h3>
           <p class='text-slate-400'>
-            Once the site is clean, I help with the correct ticket, status, or
-            reputation recovery path instead of rushing too early.
+            I verify the frontend, wp-admin, key pages, forms, and important
+            site functions after the repair.
           </p>
         </div>
 
@@ -585,11 +575,11 @@ const structuredData = JSON.stringify([
             06
           </div>
           <h3 class='mb-3 font-bold text-white text-xl'>
-            Monitor after recovery
+            Stabilize after recovery
           </h3>
           <p class='text-slate-400'>
-            I treat removal as part of a bigger security workflow, not just the
-            end of a ticket.
+            I recommend the right follow-up steps so the site does not break
+            again right after coming back online.
           </p>
         </div>
       </div>
@@ -600,7 +590,7 @@ const structuredData = JSON.stringify([
       <div class='items-start gap-8 grid lg:grid-cols-[1.1fr_.9fr]'>
         <div class='bg-slate-900/60 p-10 border border-slate-800 rounded-3xl'>
           <h2 class='mb-6 font-bold text-white text-3xl'>
-            Why site owners hire me for McAfee blacklist removal
+            Why site owners hire me for WordPress critical error repair
           </h2>
 
           <div class='space-y-5'>
@@ -608,12 +598,12 @@ const structuredData = JSON.stringify([
               <Check class='mt-1 w-5 h-5 text-emerald-400 shrink-0' />
               <div>
                 <h3 class='mb-1 font-semibold text-white'>
-                  I understand hacked website cleanup deeply
+                  I understand site-down WordPress recovery
                 </h3>
                 <p class='text-slate-400'>
-                  I have cleaned thousands of hacked sites, especially WordPress
-                  websites with SEO spam, phishing content, fake plugins,
-                  backdoors, and reinfection loops.
+                  I work on broken WordPress sites, fatal errors, update
+                  crashes, plugin conflicts, theme failures, and malware-related
+                  outages.
                 </p>
               </div>
             </div>
@@ -622,11 +612,11 @@ const structuredData = JSON.stringify([
               <Check class='mt-1 w-5 h-5 text-emerald-400 shrink-0' />
               <div>
                 <h3 class='mb-1 font-semibold text-white'>
-                  I do manual investigation
+                  I can work without wp-admin access
                 </h3>
                 <p class='text-slate-400'>
-                  I do not rely on a one-click scanner and stop there. I inspect
-                  the places where malware often hides after partial cleanups.
+                  Many of the hardest cases happen when the dashboard is
+                  completely unavailable. I handle those from the hosting side.
                 </p>
               </div>
             </div>
@@ -635,12 +625,11 @@ const structuredData = JSON.stringify([
               <Check class='mt-1 w-5 h-5 text-emerald-400 shrink-0' />
               <div>
                 <h3 class='mb-1 font-semibold text-white'>
-                  I built this page around search intent
+                  I don’t guess at the problem
                 </h3>
                 <p class='text-slate-400'>
-                  The content is structured to rank for McAfee blacklist
-                  removal, McAfee SiteAdvisor blacklist removal, and McAfee
-                  WebAdvisor warning removal.
+                  I focus on diagnosis, controlled repair, and proper validation
+                  instead of random troubleshooting.
                 </p>
               </div>
             </div>
@@ -649,11 +638,11 @@ const structuredData = JSON.stringify([
               <Check class='mt-1 w-5 h-5 text-emerald-400 shrink-0' />
               <div>
                 <h3 class='mb-1 font-semibold text-white'>
-                  I use visible proof
+                  I also understand malware-related breakage
                 </h3>
                 <p class='text-slate-400'>
-                  The screenshots on this page support trust, conversions, and
-                  first-hand credibility.
+                  If the critical error is caused by hacked files or persistence
+                  mechanisms, I can investigate that angle too.
                 </p>
               </div>
             </div>
@@ -668,17 +657,15 @@ const structuredData = JSON.stringify([
             Honest expectations
           </div>
           <h3 class='mb-4 font-bold text-white text-2xl'>
-            I don’t promise fake instant approval
+            I focus on a real fix, not a temporary patch
           </h3>
           <p class='mb-4 text-slate-400 leading-relaxed'>
-            I can move fast on the cleanup, but the review or status update
-            depends on the condition of the website and the external reputation
-            update process.
+            Some sites can be brought back online quickly, but the real goal is
+            identifying the exact failure point and fixing it correctly.
           </p>
           <p class='text-slate-400 leading-relaxed'>
-            What I do promise is proper cleanup, realistic guidance, and a
-            workflow designed to give your site the best chance of a successful
-            recovery.
+            What I do promise is careful diagnosis, practical recovery, and a
+            repair workflow designed to get your WordPress site stable again.
           </p>
         </div>
       </div>
@@ -711,28 +698,28 @@ const structuredData = JSON.stringify([
       <div
         class='inline-flex items-center gap-2 mb-4 font-semibold text-emerald-400'>
         <ShieldCheck class='w-5 h-5' />
-        McAfee blacklist recovery help
+        WordPress critical error recovery help
       </div>
 
       <h2 class='mb-6 font-bold text-white text-3xl md:text-4xl'>
-        Need help fixing a McAfee warning?
+        Need help fixing a WordPress site that is down?
       </h2>
 
       <p class='mx-auto mb-10 max-w-2xl text-slate-400'>
         Send me your website URL and I’ll review the issue, identify the likely
-        cause, and help you move toward the right cleanup and recovery process.
+        cause, and help you move toward the right repair path fast.
       </p>
 
       <div class='flex md:flex-row flex-col justify-center items-center gap-4'>
         <a
           href='/hire-me/'
           class={`px-12 py-4 rounded-full text-lg ${primaryButtonClass}`}>
-          Start My Cleanup
+          Start My Repair
         </a>
         <a
           href='#proof'
           class='px-12 py-4 border border-slate-700 rounded-full text-slate-200 hover:text-white text-lg transition-colors'>
-          View Proof
+          View Examples
         </a>
       </div>
     </section>
