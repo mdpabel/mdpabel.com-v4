@@ -1,0 +1,760 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ComponentWrapper from '../components/component-wrapper.astro';
+import { Image } from 'astro:assets';
+import {
+  ShieldCheck,
+  AlertOctagon,
+  Search,
+  Check,
+  Zap,
+  HeartHandshake,
+  ShieldAlert,
+  Info,
+  Bug,
+  Globe,
+  Lock,
+  MessageSquare,
+  CheckCircle,
+  MailCheck,
+  Image as ImageIcon,
+  TriangleAlert,
+} from '@lucide/astro';
+
+import blacklistedScreenshotRedWarning from '../assets/google-blacklist.png';
+import thousandOfWebsiteBlacklistRemovalEmails from '../assets/google-blacklist-screenshots.png';
+import oneWebsiteBlacklistRemovalEmailFromGoogle from '../assets/google-blacklist-screenshot.png';
+
+// --- SEO DATA ---
+const seoTitle =
+  'Google Blacklist Removal Service | Remove Safe Browsing Red Warning';
+const seoDesc =
+  'Google Safe Browsing blacklist removal service for hacked websites showing red warning screens like "Dangerous site", "Deceptive site ahead", or "This site may be hacked". Manual malware cleanup, review help, and hardening.';
+
+// --- CTA BUTTONS ---
+const primaryButtonClass =
+  'inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 disabled:pointer-events-none disabled:opacity-50 h-11 px-8 bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-900/20 tracking-tight';
+
+const secondaryButtonClass =
+  'inline-flex items-center justify-center rounded-md border border-slate-700 bg-slate-900/60 hover:bg-slate-800 text-slate-200 transition-colors h-11 px-8 text-sm font-medium';
+
+// --- FAQ CONTENT ---
+const faqs = [
+  {
+    question: 'What does "Google blacklist" mean?',
+    answer:
+      'Most website owners use the term "Google blacklist" to describe a Google Safe Browsing warning. It usually appears as a red browser warning such as "Deceptive site ahead", "Dangerous site", or "This site may be hacked".',
+  },
+  {
+    question: 'Can you remove the warning without cleaning the malware first?',
+    answer:
+      'No. The site needs to be cleaned properly first. That usually means removing malware, phishing pages, spam URLs, malicious redirects, fake plugins, backdoors, and any persistence that could cause reinfection.',
+  },
+  {
+    question: 'Do you only work on WordPress?',
+    answer:
+      'WordPress is my main specialty, especially hacked WordPress websites with SEO spam, cloaking malware, fake plugins, backdoors, and blacklist issues. I can also help with other PHP-based websites and shared hosting environments.',
+  },
+  {
+    question: 'How long does Google blacklist removal take?',
+    answer:
+      'The cleanup itself can often be done quickly, but Google review timing depends on the issue type, how severe the infection was, and whether the site is fully clean when the review is submitted.',
+  },
+  {
+    question: 'Can a website get blacklisted again after removal?',
+    answer:
+      'Yes, if the root cause is not fixed. That is why I focus on full malware cleanup, vulnerability patching, hidden admin checks, fake plugin removal, backdoor cleanup, and post-cleanup hardening.',
+  },
+  {
+    question: 'What do you need from me to start?',
+    answer:
+      'Usually I need the website URL first. If Search Console is involved, restricted access there can help. Depending on the infection, I may also need hosting or WordPress access to investigate server-side malware, cron jobs, and hidden files.',
+  },
+];
+
+// --- STRUCTURED DATA ---
+const structuredData = JSON.stringify([
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: 'Google Blacklist Removal Service',
+    serviceType: 'Google Safe Browsing Blacklist Removal',
+    description:
+      'Manual malware cleanup, blacklist review help, spam removal, fake plugin cleanup, backdoor removal, and website hardening for sites flagged by Google Safe Browsing.',
+    areaServed: 'Worldwide',
+    provider: {
+      '@type': 'Person',
+      name: 'Website Malware Removal Expert',
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  },
+]);
+---
+
+<Layout title={seoTitle} description={seoDesc}>
+  <script type='application/ld+json' set:html={structuredData} />
+
+  <ComponentWrapper class='relative py-16 md:py-24'>
+    {/* Decorative Background */}
+    <div
+      class='top-0 left-0 -z-10 absolute w-full h-full overflow-hidden pointer-events-none'>
+      <div
+        class='-top-[10%] right-0 absolute bg-emerald-500/10 blur-3xl rounded-full w-[650px] h-[650px]'>
+      </div>
+      <div
+        class='bottom-0 left-0 absolute bg-sky-500/5 blur-3xl rounded-full w-[500px] h-[500px]'>
+      </div>
+    </div>
+
+    {/* --- HERO --- */}
+    <section class='z-10 relative mx-auto mb-20 max-w-5xl text-center'>
+      <div
+        class='inline-flex items-center gap-2 bg-emerald-900/20 mb-8 px-4 py-1.5 border border-emerald-800/50 rounded-full'>
+        <ShieldCheck class='w-4 h-4 text-emerald-400' />
+        <span class='font-semibold text-emerald-200 text-sm'>
+          Manual Malware Cleanup • Google Review Help
+        </span>
+      </div>
+
+      <h1
+        class='mx-auto mb-6 max-w-4xl font-bold text-white text-3xl md:text-4xl leading-[1.05] tracking-tight'>
+        Google Blacklist Removal Service
+        <span
+          class='block bg-clip-text bg-gradient-to-r from-emerald-400 to-sky-400 mt-2 text-transparent'>
+          Fix Red Warning Screens Properly
+        </span>
+      </h1>
+
+      <p class='mx-auto mb-10 max-w-3xl text-slate-400 text-lg leading-relaxed'>
+        Seeing <strong class='text-slate-200'>"Dangerous site"</strong>,
+        <strong class='text-slate-200'> "Deceptive site ahead"</strong>, or
+        <strong class='text-slate-200'> "This site may be hacked"</strong>? I
+        remove the malware, phishing pages, spam URLs, fake plugins, backdoors,
+        and malicious redirects behind the warning, then help you through the
+        Google Safe Browsing review process.
+      </p>
+
+      <div
+        class='flex sm:flex-row flex-col justify-center items-center gap-4 mb-12'>
+        <a href='/hire-me/' class={primaryButtonClass}>
+          Request Blacklist Removal Help
+        </a>
+        <a href='#proof' class={secondaryButtonClass}> See Real Proof </a>
+      </div>
+
+      <div class='gap-4 grid sm:grid-cols-3 mx-auto max-w-4xl text-left'>
+        <div class='bg-slate-900/60 p-5 border border-slate-800 rounded-2xl'>
+          <div class='flex items-center gap-2 mb-2 font-semibold text-white'>
+            <CheckCircle class='w-5 h-5 text-emerald-400' />
+            4,500+ hacked sites cleaned
+          </div>
+          <p class='text-slate-400 text-sm'>
+            Real-world malware cleanup across WordPress and shared hosting
+            environments.
+          </p>
+        </div>
+
+        <div class='bg-slate-900/60 p-5 border border-slate-800 rounded-2xl'>
+          <div class='flex items-center gap-2 mb-2 font-semibold text-white'>
+            <MailCheck class='w-5 h-5 text-emerald-400' />
+            Hundreds of removals
+          </div>
+          <p class='text-slate-400 text-sm'>
+            Real review-success emails from Google after successful cleanup and
+            submission.
+          </p>
+        </div>
+
+        <div class='bg-slate-900/60 p-5 border border-slate-800 rounded-2xl'>
+          <div class='flex items-center gap-2 mb-2 font-semibold text-white'>
+            <Lock class='w-5 h-5 text-emerald-400' />
+            Root-cause cleanup
+          </div>
+          <p class='text-slate-400 text-sm'>
+            I clean the infection first, remove persistence, then help with the
+            review.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* --- QUICK ANSWER / SEO INTRO --- */}
+    <section class='mx-auto mb-24 max-w-4xl'>
+      <div
+        class='bg-slate-900/50 p-8 md:p-10 border border-slate-800 rounded-3xl'>
+        <h2 class='mb-5 font-bold text-white text-3xl'>
+          What is Google Safe Browsing blacklist removal?
+        </h2>
+        <p class='mb-4 text-slate-400 leading-relaxed'>
+          Google blacklist removal means fixing the security issue that caused
+          your website to trigger a browser or search warning, then submitting
+          the site for review after it is properly cleaned. In real cases, that
+          usually includes malware removal, phishing page cleanup, spam URL
+          cleanup, backdoor detection, vulnerability patching, and Search
+          Console review support.
+        </p>
+        <p class='text-slate-400 leading-relaxed'>
+          Website owners often search for <strong class='text-slate-200'
+            >Google blacklist removal</strong
+          >, while the official system behind the warning is usually
+          <strong class='text-slate-200'> Google Safe Browsing</strong>. This
+          page is written to rank for both: the phrase people search for and the
+          real technical process needed to remove the warning.
+        </p>
+      </div>
+    </section>
+
+    {/* --- PROOF SECTION --- */}
+    <section id='proof' class='mx-auto mb-24 max-w-6xl'>
+      <div class='mb-12 text-center'>
+        <h2 class='mb-4 font-bold text-white text-3xl md:text-4xl'>
+          Real proof from actual blacklist removals
+        </h2>
+        <p class='mx-auto max-w-3xl text-slate-400'>
+          These screenshots show real outcomes from blacklist cleanup and review
+          work.
+        </p>
+      </div>
+
+      <div class='gap-8 grid lg:grid-cols-[1.02fr_.98fr]'>
+        <div class='bg-slate-900/60 p-4 border border-slate-800 rounded-3xl'>
+          <div class='mb-4'>
+            <div
+              class='inline-flex items-center gap-2 bg-emerald-900/20 px-3 py-1.5 border border-emerald-900/40 rounded-full font-medium text-emerald-300 text-xs'>
+              <MailCheck class='w-4 h-4' />
+              Single client review success email
+            </div>
+          </div>
+
+          <Image
+            src={oneWebsiteBlacklistRemovalEmailFromGoogle}
+            alt='Google Search Console email showing review successful after blacklist removal'
+            class='border border-slate-800 rounded-2xl w-full h-auto object-cover'
+            loading='lazy'
+          />
+
+          <div class='pt-4'>
+            <h3 class='mb-2 font-semibold text-white text-xl'>
+              Example of a successful Google review outcome
+            </h3>
+            <p class='text-slate-400 text-sm leading-relaxed'>
+              After the malware and harmful links are removed properly, Google
+              can confirm the site no longer contains the dangerous content that
+              triggered the warning.
+            </p>
+          </div>
+        </div>
+
+        <div class='bg-slate-900/60 p-4 border border-slate-800 rounded-3xl'>
+          <div class='mb-4'>
+            <div
+              class='inline-flex items-center gap-2 bg-sky-900/20 px-3 py-1.5 border border-sky-900/40 rounded-full font-medium text-sky-300 text-xs'>
+              <ImageIcon class='w-4 h-4' />
+              Bulk proof from many client removals
+            </div>
+          </div>
+
+          <Image
+            src={thousandOfWebsiteBlacklistRemovalEmails}
+            alt='Gmail screenshot showing many Google review successful emails from blacklist removals'
+            class='border border-slate-800 rounded-2xl w-full h-auto object-cover'
+            loading='lazy'
+          />
+
+          <div class='pt-4'>
+            <h3 class='mb-2 font-semibold text-white text-xl'>
+              Repeated results across many hacked websites
+            </h3>
+            <p class='text-slate-400 text-sm leading-relaxed'>
+              This screenshot reflects repeated review-success emails from
+              Google after successful cleanup work and supports the credibility
+              of the service.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* --- WARNING TYPES --- */}
+    <section class='mx-auto mb-24 max-w-6xl'>
+      <div class='mb-12 text-center'>
+        <h2 class='mb-4 font-bold text-white text-3xl md:text-4xl'>
+          Which warning are you seeing?
+        </h2>
+        <p class='mx-auto max-w-3xl text-slate-400'>
+          Different users describe the same problem in different ways. These are
+          the warning phrases that most often lead people to search for Google
+          blacklist removal.
+        </p>
+      </div>
+
+      <div class='gap-6 grid md:grid-cols-3'>
+        <div class='bg-slate-900/60 p-8 border border-slate-800 rounded-3xl'>
+          <div
+            class='flex items-center gap-3 mb-4 font-bold text-white text-xl'>
+            <AlertOctagon class='w-6 h-6 text-emerald-400' />
+            Deceptive Site Ahead
+          </div>
+          <p class='text-slate-400 leading-relaxed'>
+            This often points to phishing pages, fake login forms,
+            browser-deception tactics, or social engineering content hidden on
+            the website.
+          </p>
+        </div>
+
+        <div class='bg-slate-900/60 p-8 border border-slate-800 rounded-3xl'>
+          <div
+            class='flex items-center gap-3 mb-4 font-bold text-white text-xl'>
+            <ShieldAlert class='w-6 h-6 text-emerald-400' />
+            Dangerous Site / Malware Warning
+          </div>
+          <p class='text-slate-400 leading-relaxed'>
+            This warning is commonly linked to malware, malicious scripts,
+            injected files, redirect payloads, infected JavaScript, or
+            server-side compromise.
+          </p>
+        </div>
+
+        <div class='bg-slate-900/60 p-8 border border-slate-800 rounded-3xl'>
+          <div
+            class='flex items-center gap-3 mb-4 font-bold text-white text-xl'>
+            <Search class='w-6 h-6 text-emerald-400' />
+            This Site May Be Hacked
+          </div>
+          <p class='text-slate-400 leading-relaxed'>
+            This usually means Google has detected hacked content, spam pages,
+            cloaked URLs, injected keywords, or other security issues affecting
+            search visibility.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* --- LONG FORM ARTICLE --- */}
+    <article
+      class='prose-invert mx-auto mb-24 max-w-4xl text-slate-400 leading-relaxed prose'>
+      <h2 class='mb-6 font-bold text-white text-3xl'>
+        Why websites get blacklisted by Google
+      </h2>
+      <p>
+        A Google Safe Browsing warning is not usually a random mistake. In most
+        cases, the website has been compromised or is serving something unsafe.
+        That may include malware, phishing content, spam pages, malicious
+        redirects, infected plugins, hidden backdoors, or third-party scripts
+        that have been tampered with.
+      </p>
+      <p>
+        On WordPress websites, I frequently see blacklist issues caused by
+        hidden fake plugins, spam landing pages, injected PHP files in the root
+        directory, modified core files, malicious JavaScript loaders, database
+        spam, and cron-based reinfection. Sometimes the homepage still looks
+        normal, which is exactly why these infections go unnoticed for so long.
+      </p>
+
+      <div
+        class='bg-slate-900/50 my-12 p-8 border border-slate-800 rounded-2xl'>
+        <h3
+          class='flex items-center gap-2 mb-4 font-bold text-emerald-400 text-xl'>
+          <HeartHandshake class='w-6 h-6' />
+          I focus on cleanup first, review second
+        </h3>
+        <p>
+          Many site owners make the mistake of requesting a Google review before
+          the website is actually clean. That usually leads to rejection or
+          delay. My process starts with confirming the problem, identifying the
+          root cause, removing the malicious files and persistence, securing the
+          website, and only then moving into the review stage.
+        </p>
+      </div>
+
+      <h2 class='mb-6 font-bold text-white text-3xl'>
+        This service is built for real blacklist recovery
+      </h2>
+      <p>
+        This is not a generic scanner-only service. I manually inspect the
+        website, look for hidden malware, trace suspicious files, investigate
+        spam URLs, check plugins and themes, and review the parts of the
+        installation that commonly get missed in partial cleanups.
+      </p>
+      <p>
+        If your site is on WordPress, I also check for fake plugins, hidden
+        admin users, compromised uploads, must-use plugin abuse, modified theme
+        files, suspicious database content, and server-side persistence. The
+        goal is simple: clean the site properly so the warning can actually be
+        removed and stay removed.
+      </p>
+    </article>
+
+    {/* --- BEFORE / AFTER VISUAL FLOW --- */}
+    <section class='mx-auto mb-24 max-w-6xl'>
+      <div class='mb-12 text-center'>
+        <h2 class='mb-4 font-bold text-white text-3xl md:text-4xl'>
+          From blacklisted to review successful
+        </h2>
+        <p class='mx-auto max-w-3xl text-slate-400'>
+          Showing the problem and the result on the same page makes the workflow
+          easier to understand.
+        </p>
+      </div>
+
+      <div class='gap-8 grid lg:grid-cols-2'>
+        <div class='bg-slate-900/60 p-4 border border-slate-800 rounded-3xl'>
+          <div
+            class='inline-flex items-center gap-2 bg-red-950/40 mb-4 px-3 py-1.5 border border-red-900/50 rounded-full font-medium text-red-200 text-xs'>
+            <TriangleAlert class='w-4 h-4' />
+            Before: website flagged
+          </div>
+
+          <Image
+            src={blacklistedScreenshotRedWarning}
+            alt='Dangerous site warning page shown before blacklist removal'
+            class='border border-slate-800 rounded-2xl w-full h-auto object-cover'
+            loading='lazy'
+          />
+        </div>
+
+        <div class='bg-slate-900/60 p-4 border border-slate-800 rounded-3xl'>
+          <div
+            class='inline-flex items-center gap-2 bg-emerald-950/40 mb-4 px-3 py-1.5 border border-emerald-900/50 rounded-full font-medium text-emerald-200 text-xs'>
+            <CheckCircle class='w-4 h-4' />
+            After: review successful
+          </div>
+
+          <Image
+            src={oneWebsiteBlacklistRemovalEmailFromGoogle}
+            alt='Google Search Console email showing review successful after site cleanup'
+            class='border border-slate-800 rounded-2xl w-full h-auto object-cover'
+            loading='lazy'
+          />
+        </div>
+      </div>
+    </section>
+
+    {/* --- WHAT'S INCLUDED --- */}
+    <section class='mx-auto mb-24 max-w-6xl'>
+      <div class='mb-12 text-center'>
+        <h2 class='mb-4 font-bold text-white text-3xl md:text-4xl'>
+          What’s included in my Google blacklist removal service
+        </h2>
+        <p class='mx-auto max-w-3xl text-slate-400'>
+          Everything on this page is designed around the actual recovery
+          workflow, not just a review submission.
+        </p>
+      </div>
+
+      <div class='gap-6 grid md:grid-cols-2 lg:grid-cols-3'>
+        <div class='bg-slate-900 p-8 border border-slate-800 rounded-3xl'>
+          <Bug class='mb-4 w-6 h-6 text-emerald-400' />
+          <h3 class='mb-3 font-bold text-white text-xl'>Malware removal</h3>
+          <p class='text-slate-400'>
+            Removal of malicious files, injected PHP, dangerous JavaScript,
+            backdoors, redirects, and common WordPress malware payloads.
+          </p>
+        </div>
+
+        <div class='bg-slate-900 p-8 border border-slate-800 rounded-3xl'>
+          <Search class='mb-4 w-6 h-6 text-emerald-400' />
+          <h3 class='mb-3 font-bold text-white text-xl'>Blacklist diagnosis</h3>
+          <p class='text-slate-400'>
+            Review of the warning type, likely infection path, visible symptoms,
+            and Search Console or browser warning context.
+          </p>
+        </div>
+
+        <div class='bg-slate-900 p-8 border border-slate-800 rounded-3xl'>
+          <ShieldAlert class='mb-4 w-6 h-6 text-emerald-400' />
+          <h3 class='mb-3 font-bold text-white text-xl'>Spam page cleanup</h3>
+          <p class='text-slate-400'>
+            Cleanup of spam URLs, cloaked content, phishing pages, hacked search
+            results, and SEO spam infections harming your domain reputation.
+          </p>
+        </div>
+
+        <div class='bg-slate-900 p-8 border border-slate-800 rounded-3xl'>
+          <Lock class='mb-4 w-6 h-6 text-emerald-400' />
+          <h3 class='mb-3 font-bold text-white text-xl'>
+            Hardening & patching
+          </h3>
+          <p class='text-slate-400'>
+            Security fixes after cleanup, including vulnerability reduction,
+            plugin review, access cleanup, and reinfection prevention steps.
+          </p>
+        </div>
+
+        <div class='bg-slate-900 p-8 border border-slate-800 rounded-3xl'>
+          <Globe class='mb-4 w-6 h-6 text-emerald-400' />
+          <h3 class='mb-3 font-bold text-white text-xl'>
+            Search Console support
+          </h3>
+          <p class='text-slate-400'>
+            Help understanding the issue, preparing the review request, and
+            making sure the site is in the right condition before submission.
+          </p>
+        </div>
+
+        <div class='bg-slate-900 p-8 border border-slate-800 rounded-3xl'>
+          <Zap class='mb-4 w-6 h-6 text-emerald-400' />
+          <h3 class='mb-3 font-bold text-white text-xl'>
+            Manual investigation
+          </h3>
+          <p class='text-slate-400'>
+            I do not stop at the first infected file. I look for hidden
+            persistence so the malware does not just come back after the warning
+            is lifted.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* --- PROCESS --- */}
+    <section id='process' class='mx-auto mb-24 max-w-6xl'>
+      <div class='mb-12 text-center'>
+        <h2 class='mb-4 font-bold text-white text-3xl md:text-4xl'>
+          My blacklist removal process
+        </h2>
+        <p class='mx-auto max-w-3xl text-slate-400'>
+          The page is structured around the actual work required to fix the
+          issue, not just the final review request.
+        </p>
+      </div>
+
+      <div class='gap-6 grid md:grid-cols-2 lg:grid-cols-3'>
+        <div class='bg-slate-900/70 p-8 border border-slate-800 rounded-3xl'>
+          <div
+            class='inline-flex justify-center items-center bg-emerald-900/30 mb-5 rounded-full w-10 h-10 font-bold text-emerald-300 text-sm'>
+            01
+          </div>
+          <h3 class='mb-3 font-bold text-white text-xl'>Confirm the warning</h3>
+          <p class='text-slate-400'>
+            I identify whether the issue is malware, phishing, hacked spam,
+            malicious redirects, or another warning type affecting the domain.
+          </p>
+        </div>
+
+        <div class='bg-slate-900/70 p-8 border border-slate-800 rounded-3xl'>
+          <div
+            class='inline-flex justify-center items-center bg-emerald-900/30 mb-5 rounded-full w-10 h-10 font-bold text-emerald-300 text-sm'>
+            02
+          </div>
+          <h3 class='mb-3 font-bold text-white text-xl'>
+            Audit the website deeply
+          </h3>
+          <p class='text-slate-400'>
+            I inspect files, themes, plugins, uploads, suspicious users, cron
+            jobs, redirects, injected code, and common persistence points.
+          </p>
+        </div>
+
+        <div class='bg-slate-900/70 p-8 border border-slate-800 rounded-3xl'>
+          <div
+            class='inline-flex justify-center items-center bg-emerald-900/30 mb-5 rounded-full w-10 h-10 font-bold text-emerald-300 text-sm'>
+            03
+          </div>
+          <h3 class='mb-3 font-bold text-white text-xl'>
+            Remove malware & spam
+          </h3>
+          <p class='text-slate-400'>
+            I remove the malicious files, fake plugins, spam URLs, phishing
+            content, backdoors, and reinfection mechanisms causing the blacklist
+            issue.
+          </p>
+        </div>
+
+        <div class='bg-slate-900/70 p-8 border border-slate-800 rounded-3xl'>
+          <div
+            class='inline-flex justify-center items-center bg-emerald-900/30 mb-5 rounded-full w-10 h-10 font-bold text-emerald-300 text-sm'>
+            04
+          </div>
+          <h3 class='mb-3 font-bold text-white text-xl'>
+            Secure the environment
+          </h3>
+          <p class='text-slate-400'>
+            After cleanup, I harden the website, reduce exposure, and help
+            address the weakness that let the infection happen in the first
+            place.
+          </p>
+        </div>
+
+        <div class='bg-slate-900/70 p-8 border border-slate-800 rounded-3xl'>
+          <div
+            class='inline-flex justify-center items-center bg-emerald-900/30 mb-5 rounded-full w-10 h-10 font-bold text-emerald-300 text-sm'>
+            05
+          </div>
+          <h3 class='mb-3 font-bold text-white text-xl'>Prepare the review</h3>
+          <p class='text-slate-400'>
+            Once the site is clean, I help prepare the correct review path and
+            make sure the request is not being submitted too early.
+          </p>
+        </div>
+
+        <div class='bg-slate-900/70 p-8 border border-slate-800 rounded-3xl'>
+          <div
+            class='inline-flex justify-center items-center bg-emerald-900/30 mb-5 rounded-full w-10 h-10 font-bold text-emerald-300 text-sm'>
+            06
+          </div>
+          <h3 class='mb-3 font-bold text-white text-xl'>
+            Monitor after removal
+          </h3>
+          <p class='text-slate-400'>
+            I do not treat delisting as the finish line. I want the warning gone
+            and the website stable afterward.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* --- WHY CHOOSE ME --- */}
+    <section class='mx-auto mb-24 max-w-6xl'>
+      <div class='items-start gap-8 grid lg:grid-cols-[1.1fr_.9fr]'>
+        <div class='bg-slate-900/60 p-10 border border-slate-800 rounded-3xl'>
+          <h2 class='mb-6 font-bold text-white text-3xl'>
+            Why site owners hire me for blacklist recovery
+          </h2>
+
+          <div class='space-y-5'>
+            <div class='flex gap-4'>
+              <Check class='mt-1 w-5 h-5 text-emerald-400 shrink-0' />
+              <div>
+                <h3 class='mb-1 font-semibold text-white'>
+                  I understand real-world infections
+                </h3>
+                <p class='text-slate-400'>
+                  I have cleaned thousands of hacked websites, including
+                  WordPress infections involving SEO spam, cloaking, fake
+                  plugins, malicious uploads, and reinfection loops.
+                </p>
+              </div>
+            </div>
+
+            <div class='flex gap-4'>
+              <Check class='mt-1 w-5 h-5 text-emerald-400 shrink-0' />
+              <div>
+                <h3 class='mb-1 font-semibold text-white'>
+                  I do manual investigation
+                </h3>
+                <p class='text-slate-400'>
+                  I do not rely on a one-click scanner and call it done. I
+                  inspect the areas that often get missed in partial cleanups.
+                </p>
+              </div>
+            </div>
+
+            <div class='flex gap-4'>
+              <Check class='mt-1 w-5 h-5 text-emerald-400 shrink-0' />
+              <div>
+                <h3 class='mb-1 font-semibold text-white'>
+                  I focus on the full workflow
+                </h3>
+                <p class='text-slate-400'>
+                  The goal is not just to remove one red screen. The goal is to
+                  clean the website, restore trust, and reduce the chance of the
+                  site being flagged again.
+                </p>
+              </div>
+            </div>
+
+            <div class='flex gap-4'>
+              <Check class='mt-1 w-5 h-5 text-emerald-400 shrink-0' />
+              <div>
+                <h3 class='mb-1 font-semibold text-white'>
+                  I have visible proof on this page
+                </h3>
+                <p class='text-slate-400'>
+                  The screenshots on this service page support credibility and
+                  show real outcomes from blacklist recovery work.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class='bg-emerald-900/10 p-10 border border-emerald-900/30 rounded-3xl'>
+          <div
+            class='inline-flex items-center gap-2 mb-4 font-semibold text-emerald-400'>
+            <MessageSquare class='w-5 h-5' />
+            Honest expectations
+          </div>
+          <h3 class='mb-4 font-bold text-white text-2xl'>
+            I don’t promise fake “instant removal”
+          </h3>
+          <p class='mb-4 text-slate-400 leading-relaxed'>
+            I can move fast on the cleanup, but review timing depends on the
+            issue type, how clean the site really is, and how quickly Google
+            processes the review.
+          </p>
+          <p class='text-slate-400 leading-relaxed'>
+            What I do promise is thorough cleanup, realistic guidance, and a
+            workflow designed to give your website the best chance of a
+            successful recovery.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* --- FAQ --- */}
+    <section class='mx-auto mb-24 max-w-4xl'>
+      <h2 class='mb-12 font-bold text-white text-3xl text-center'>
+        Frequently asked questions
+      </h2>
+
+      <div class='space-y-6'>
+        {
+          faqs.map((faq) => (
+            <div class='bg-slate-900/50 p-6 border border-slate-800 rounded-xl'>
+              <h3 class='flex items-center gap-2 mb-3 font-bold text-white'>
+                <Info class='w-5 h-5 text-sky-400' />
+                {faq.question}
+              </h3>
+              <p class='text-slate-400 text-sm leading-relaxed'>{faq.answer}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    {/* --- FINAL CTA --- */}
+    <section
+      class='bg-emerald-900/10 mt-24 py-20 border border-emerald-900/30 rounded-3xl text-center'>
+      <div
+        class='inline-flex items-center gap-2 mb-4 font-semibold text-emerald-400'>
+        <ShieldCheck class='w-5 h-5' />
+        Google Safe Browsing blacklist help
+      </div>
+
+      <h2 class='mb-6 font-bold text-white text-3xl md:text-4xl'>
+        Need help removing a Google blacklist warning?
+      </h2>
+
+      <p class='mx-auto mb-10 max-w-2xl text-slate-400'>
+        Send me your website URL and the warning you are seeing. I’ll review the
+        issue, identify the likely cause, and help you move toward a proper
+        cleanup and recovery.
+      </p>
+
+      <div class='flex md:flex-row flex-col justify-center items-center gap-4'>
+        <a
+          href='/hire-me/'
+          class={`px-12 py-4 rounded-full text-lg ${primaryButtonClass}`}>
+          Start My Cleanup
+        </a>
+        <a
+          href='#proof'
+          class='px-12 py-4 border border-slate-700 rounded-full text-slate-200 hover:text-white text-lg transition-colors'>
+          View Proof
+        </a>
+      </div>
+    </section>
+  </ComponentWrapper>
+</Layout>

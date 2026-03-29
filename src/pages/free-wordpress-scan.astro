@@ -323,7 +323,7 @@ const jsonLd = {
   const CONFIG = {
     WP_URL: 'https://cms.mdpabel.com',
     FORM_ID: '1514',
-    CF7_VERSION: '6.1.2',
+    CF7_VERSION: '6.1.5',
   };
 
   function initScanForm() {
@@ -367,6 +367,11 @@ const jsonLd = {
         });
 
         const result = await response.json();
+
+        console.log({
+          response,
+          result,
+        });
 
         if (result.status === 'mail_sent') {
           feedbackDiv.innerText =
