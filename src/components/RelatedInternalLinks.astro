@@ -1,0 +1,64 @@
+---
+import { internalPages } from '../data/internal-pages';
+
+interface Props {
+  currentSlug: string;
+  title?: string;
+  relatedSlugs?: string[];
+  maxItems?: number;
+}
+
+const {
+  currentSlug,
+  title = 'Related Services',
+  relatedSlugs = [],
+  maxItems = 3,
+} = Astro.props;
+
+let items = [];
+
+if (relatedSlugs.length > 0) {
+  items = internalPages.filter(
+    (page) => page.slug !== currentSlug && relatedSlugs.includes(page.slug),
+  );
+} else {
+  const currentPage = internalPages.find((page) => page.slug === currentSlug);
+
+  items = internalPages.filter(
+    (page) =>
+      page.slug !== currentSlug &&
+      currentPage &&
+      page.category === currentPage.category,
+  );
+}
+
+items = items.slice(0, maxItems);
+---
+
+{
+  items.length > 0 && (
+    <section class='mx-auto mt-20 max-w-6xl'>
+      <div class='mb-8 text-center'>
+        <h2 class='font-bold text-white text-2xl md:text-3xl'>{title}</h2>
+        <p class='mx-auto mt-3 max-w-2xl text-slate-400'>
+          Explore related services and recovery guides connected to this issue.
+        </p>
+      </div>
+
+      <div class='gap-6 grid md:grid-cols-3'>
+        {items.map((item) => (
+          <a
+            href={`/${item.slug}/`}
+            class='group block bg-slate-900/60 hover:bg-slate-900 p-6 border border-slate-800 rounded-2xl transition-colors'>
+            <h3 class='mb-3 font-semibold text-white group-hover:text-emerald-300 text-lg'>
+              {item.title}
+            </h3>
+            <p class='text-slate-400 text-sm leading-relaxed'>
+              {item.description}
+            </p>
+          </a>
+        ))}
+      </div>
+    </section>
+  )
+}

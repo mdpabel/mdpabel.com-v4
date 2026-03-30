@@ -24,6 +24,7 @@ import {
 import blacklistedScreenshotRedWarning from '../assets/google-blacklist.png';
 import thousandOfWebsiteBlacklistRemovalEmails from '../assets/google-blacklist-screenshots.png';
 import oneWebsiteBlacklistRemovalEmailFromGoogle from '../assets/google-blacklist-screenshot.png';
+import RelatedInternalLinks from '../components/RelatedInternalLinks.astro';
 
 // --- SEO DATA ---
 const seoTitle =
@@ -723,6 +724,8 @@ const structuredData = JSON.stringify([
         }
       </div>
     </section>
+
+    <RelatedInternalLinks currentSlug='google-blacklist-removal-service' />
 
     {/* --- FINAL CTA --- */}
     <section
