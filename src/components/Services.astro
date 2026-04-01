@@ -11,6 +11,7 @@ import {
   CheckCircle2,
   Activity,
   ArrowRight,
+  ServerCrash, // Added for Critical Error
 } from '@lucide/astro';
 ---
 
@@ -149,8 +150,9 @@ import {
       </div>
     </div>
 
+    {/* Expand bottom grid to a 2x2 layout to fit all 4 secondary services */}
     <div class='gap-6 grid md:grid-cols-2'>
-      {/* --- SERVICE 2: BLACKLIST REMOVAL --- */}
+      {/* --- SERVICE 2: GOOGLE BLACKLIST REMOVAL --- */}
       <div
         class='group relative flex flex-col bg-slate-900 p-8 border border-slate-800 hover:border-blue-500/40 rounded-3xl transition-all duration-300'>
         <div
@@ -163,7 +165,6 @@ import {
             <ShieldCheck class='w-6 h-6' />
           </div>
 
-          {/* SEO UPDATE: Specific "Google Blacklist" keyword */}
           <h3 class='mb-2 font-bold text-white text-xl'>
             Google Blacklist Removal
           </h3>
@@ -171,11 +172,12 @@ import {
             Seeing the "Deceptive Site Ahead" red screen? I identify the exact
             malicious payload, clean it, and manage the <strong
               >review request</strong
-            > with Google & McAfee to restore your traffic.
+            > with Google to restore your traffic.
           </p>
 
+          {/* Updated Link */}
           <a
-            href='/blacklist-removal/'
+            href='/google-blacklist-removal-service/'
             class='group/link inline-flex items-center gap-2 mb-6 w-fit font-bold text-blue-400 hover:text-blue-300 text-sm uppercase tracking-wider transition-colors'>
             Fix Red Screen Error
             <ArrowRight
@@ -196,7 +198,7 @@ import {
             </div>
             <div
               class='flex justify-between items-center bg-slate-950 p-3 border border-slate-800 rounded-lg text-sm'>
-              <span class='text-slate-400'>McAfee SiteAdvisor</span>
+              <span class='text-slate-400'>Norton Safe Web</span>
               <div class='flex items-center gap-1.5'>
                 <div class='bg-blue-400 rounded-full w-1.5 h-1.5'></div>
                 <span class='font-bold text-blue-400 text-xs tracking-wider'
@@ -219,7 +221,110 @@ import {
         </div>
       </div>
 
-      {/* --- SERVICE 3: JAPANESE SEO SPAM --- */}
+      {/* --- SERVICE 3: MCAFEE BLACKLIST REMOVAL (NEW) --- */}
+      <div
+        class='group relative flex flex-col bg-slate-900 p-8 border border-slate-800 hover:border-rose-500/40 rounded-3xl transition-all duration-300'>
+        <div
+          class='absolute inset-0 bg-gradient-to-br from-slate-900 to-rose-950/10 opacity-0 group-hover:opacity-100 transition-opacity'>
+        </div>
+
+        <div class='z-10 relative flex flex-col h-full'>
+          <div
+            class='flex justify-center items-center bg-slate-800 shadow-black/20 shadow-lg mb-6 border border-slate-700 rounded-xl w-12 h-12 text-rose-400 group-hover:scale-105 transition-transform'>
+            <ShieldAlert class='w-6 h-6' />
+          </div>
+
+          <h3 class='mb-2 font-bold text-white text-xl'>
+            McAfee Blacklist Removal
+          </h3>
+          <p class='mb-6 text-slate-400 text-sm'>
+            Blocked by McAfee WebAdvisor or SiteAdvisor? I clean the malware,
+            phishing, and spam content, then help you navigate the McAfee
+            reputation review to restore access.
+          </p>
+
+          <a
+            href='/mcafee-blacklist-removal/'
+            class='group/link inline-flex items-center gap-2 mb-6 w-fit font-bold text-rose-400 hover:text-rose-300 text-sm uppercase tracking-wider transition-colors'>
+            Fix McAfee Warning
+            <ArrowRight
+              class='w-4 h-4 transition-transform group-hover/link:translate-x-1'
+            />
+          </a>
+
+          <div class='space-y-3 mt-auto'>
+            <div
+              class='flex justify-between items-center bg-slate-950 p-3 border border-slate-800 rounded-lg text-sm'>
+              <span class='text-slate-400'>McAfee WebAdvisor</span>
+              <div class='flex items-center gap-1.5'>
+                <div class='bg-rose-400 rounded-full w-1.5 h-1.5'></div>
+                <span class='font-bold text-rose-400 text-xs tracking-wider'
+                  >CLEAN</span
+                >
+              </div>
+            </div>
+            <div
+              class='flex justify-between items-center bg-slate-950 p-3 border border-slate-800 rounded-lg text-sm'>
+              <span class='text-slate-400'>McAfee SiteAdvisor</span>
+              <div class='flex items-center gap-1.5'>
+                <div class='bg-rose-400 rounded-full w-1.5 h-1.5'></div>
+                <span class='font-bold text-rose-400 text-xs tracking-wider'
+                  >CLEAN</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* --- SERVICE 4: CRITICAL ERROR FIX (NEW) --- */}
+      <div
+        class='group relative flex flex-col bg-slate-900 p-8 border border-slate-800 hover:border-amber-500/40 rounded-3xl transition-all duration-300'>
+        <div
+          class='absolute inset-0 bg-gradient-to-br from-slate-900 to-amber-950/10 opacity-0 group-hover:opacity-100 transition-opacity'>
+        </div>
+
+        <div class='z-10 relative flex flex-col h-full'>
+          <div
+            class='flex justify-center items-center bg-slate-800 shadow-black/20 shadow-lg mb-6 border border-slate-700 rounded-xl w-12 h-12 text-amber-400 group-hover:scale-105 transition-transform'>
+            <ServerCrash class='w-6 h-6' />
+          </div>
+
+          <h3 class='mb-2 font-bold text-white text-xl'>Critical Error Fix</h3>
+          <p class='mb-6 text-slate-400 text-sm leading-relaxed'>
+            Seeing "There has been a critical error on this website"? I fix
+            fatal PHP errors, plugin conflicts, theme crashes, and site-down
+            issues safely from the server level.
+          </p>
+
+          <a
+            href='/wordpress-critical-error-fix-service/'
+            class='group/link inline-flex items-center gap-2 mb-6 w-fit font-bold text-amber-400 hover:text-amber-300 text-sm uppercase tracking-wider transition-colors'>
+            Restore Website
+            <ArrowRight
+              class='w-4 h-4 transition-transform group-hover/link:translate-x-1'
+            />
+          </a>
+
+          <div
+            class='space-y-3 bg-slate-950/50 mt-auto p-4 border border-slate-800 rounded-xl'>
+            <div class='flex items-center gap-3 text-slate-300 text-xs'>
+              <CheckCircle2 class='w-4 h-4 text-amber-400 shrink-0' />
+              <span>Frontend & Admin recovery</span>
+            </div>
+            <div class='flex items-center gap-3 text-slate-300 text-xs'>
+              <CheckCircle2 class='w-4 h-4 text-amber-400 shrink-0' />
+              <span>Plugin/Theme conflicts repaired</span>
+            </div>
+            <div class='flex items-center gap-3 text-slate-300 text-xs'>
+              <CheckCircle2 class='w-4 h-4 text-amber-400 shrink-0' />
+              <span>Root-cause diagnosis</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* --- SERVICE 5: JAPANESE SEO SPAM --- */}
       <div
         class='group relative flex flex-col bg-slate-900 p-8 border border-slate-800 hover:border-orange-500/40 rounded-3xl transition-all duration-300'>
         <div
@@ -232,7 +337,6 @@ import {
             <Globe class='w-6 h-6' />
           </div>
 
-          {/* SEO UPDATE: Specific "Japanese Keyword Hack" keyword */}
           <h3 class='mb-2 font-bold text-white text-xl'>
             Japanese Keyword Hack
           </h3>

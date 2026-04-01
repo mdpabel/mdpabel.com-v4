@@ -6,6 +6,7 @@ import SinglePost from '../../components/SinglePost.astro';
 import { wordpress } from '../../lib/wordpress';
 import Banner from '../../components/Banner.astro';
 import RelatedPosts from '../../components/RelatedPosts.astro';
+import BlogServiceCTA from '../../components/BlogServiceCTA.astro';
 
 export async function getStaticPaths() {
   // ✅ OPTIMIZATION: Fetch ALL guides once (Cached).
@@ -45,6 +46,8 @@ const { post, relatedPosts } = Astro.props;
       /* SinglePost handles the Markdown/WP content with your dark-prose classes */
     }
     <SinglePost post={post} parentSlug='guides' />
+
+    <BlogServiceCTA />
 
     {/* Section Break and Related Content */}
     <div class='mt-16 pt-12 border-slate-800 border-t'>

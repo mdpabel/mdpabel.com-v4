@@ -1,0 +1,128 @@
+---
+import {
+  ShieldAlert,
+  ShieldCheck,
+  ServerCrash,
+  ArrowRight,
+  Terminal,
+} from '@lucide/astro';
+
+export interface Props {
+  title?: string;
+  subtitle?: string;
+}
+
+const {
+  title = 'Need Professional WordPress Help?',
+  subtitle = 'If you are stuck, I can fix it for you. I specialize in manual malware removal, blacklist recovery, and critical error repairs.',
+} = Astro.props;
+---
+
+<div
+  class='relative bg-slate-900 shadow-2xl my-16 p-8 md:p-10 border border-slate-800 rounded-3xl overflow-hidden'>
+  {/* Decorative Background Glows */}
+  <div
+    class='-top-24 -right-24 absolute bg-emerald-500/10 blur-3xl rounded-full w-64 h-64 pointer-events-none'>
+  </div>
+  <div
+    class='-bottom-24 -left-24 absolute bg-sky-500/10 blur-3xl rounded-full w-64 h-64 pointer-events-none'>
+  </div>
+
+  <div class='z-10 relative'>
+    <div class='mb-8 text-center'>
+      <h3 class='mb-3 font-bold text-white text-2xl md:text-3xl tracking-tight'>
+        {title}
+      </h3>
+      <p class='mx-auto max-w-2xl text-slate-400 text-sm md:text-base'>
+        {subtitle}
+      </p>
+    </div>
+
+    <div class='gap-4 grid grid-cols-1 sm:grid-cols-2'>
+      {/* 1. Malware Removal */}
+      <a
+        href='/wordpress-malware-removal/'
+        class='group flex items-start gap-4 bg-slate-950/50 hover:bg-slate-800/80 p-5 border border-slate-800 hover:border-emerald-500/40 rounded-2xl transition-all duration-300'>
+        <div
+          class='bg-slate-900 p-2.5 border border-slate-700 rounded-xl text-emerald-400 group-hover:scale-110 transition-transform'>
+          <Terminal class='w-5 h-5' />
+        </div>
+        <div>
+          <h4
+            class='mb-1 font-bold text-white group-hover:text-emerald-400 text-base transition-colors'>
+            Manual Malware Removal
+          </h4>
+          <p class='text-slate-500 text-xs leading-relaxed'>
+            Fix redirects, backdoors, and SEO spam properly.
+          </p>
+        </div>
+      </a>
+
+      {/* 2. Google Blacklist */}
+      <a
+        href='/google-blacklist-removal-service/'
+        class='group flex items-start gap-4 bg-slate-950/50 hover:bg-slate-800/80 p-5 border border-slate-800 hover:border-blue-500/40 rounded-2xl transition-all duration-300'>
+        <div
+          class='bg-slate-900 p-2.5 border border-slate-700 rounded-xl text-blue-400 group-hover:scale-110 transition-transform'>
+          <ShieldCheck class='w-5 h-5' />
+        </div>
+        <div>
+          <h4
+            class='mb-1 font-bold text-white group-hover:text-blue-400 text-base transition-colors'>
+            Google Blacklist Fix
+          </h4>
+          <p class='text-slate-500 text-xs leading-relaxed'>
+            Remove "Deceptive Site Ahead" red screen warnings.
+          </p>
+        </div>
+      </a>
+
+      {/* 3. McAfee Blacklist */}
+      <a
+        href='/mcafee-blacklist-removal/'
+        class='group flex items-start gap-4 bg-slate-950/50 hover:bg-slate-800/80 p-5 border border-slate-800 hover:border-rose-500/40 rounded-2xl transition-all duration-300'>
+        <div
+          class='bg-slate-900 p-2.5 border border-slate-700 rounded-xl text-rose-400 group-hover:scale-110 transition-transform'>
+          <ShieldAlert class='w-5 h-5' />
+        </div>
+        <div>
+          <h4
+            class='mb-1 font-bold text-white group-hover:text-rose-400 text-base transition-colors'>
+            McAfee WebAdvisor Fix
+          </h4>
+          <p class='text-slate-500 text-xs leading-relaxed'>
+            Clear McAfee security blocks and reputation flags.
+          </p>
+        </div>
+      </a>
+
+      {/* 4. Critical Error */}
+      <a
+        href='/wordpress-critical-error-fix-service/'
+        class='group flex items-start gap-4 bg-slate-950/50 hover:bg-slate-800/80 p-5 border border-slate-800 hover:border-amber-500/40 rounded-2xl transition-all duration-300'>
+        <div
+          class='bg-slate-900 p-2.5 border border-slate-700 rounded-xl text-amber-400 group-hover:scale-110 transition-transform'>
+          <ServerCrash class='w-5 h-5' />
+        </div>
+        <div>
+          <h4
+            class='mb-1 font-bold text-white group-hover:text-amber-400 text-base transition-colors'>
+            Critical Error Repair
+          </h4>
+          <p class='text-slate-500 text-xs leading-relaxed'>
+            Recover broken sites, fatal errors, and crashed themes.
+          </p>
+        </div>
+      </a>
+    </div>
+
+    <div class='mt-8 text-center'>
+      <a
+        href='/hire-me/'
+        class='inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 shadow-emerald-900/20 shadow-lg px-8 py-3.5 rounded-lg font-bold text-white text-sm transition-colors'>
+        Request Expert Help Now
+        <ArrowRight class='w-4 h-4' />
+      </a>
+    </div>
+  </div>
+</div>

@@ -6,6 +6,7 @@ import SinglePost from '../../components/SinglePost.astro';
 import { wordpress } from '../../lib/wordpress';
 import Banner from '../../components/Banner.astro';
 import RelatedPosts from '../../components/RelatedPosts.astro';
+import BlogServiceCTA from '../../components/BlogServiceCTA.astro';
 
 export async function getStaticPaths() {
   // ✅ OPTIMIZATION: Fetch ALL case studies once (Cached).
@@ -44,6 +45,8 @@ const { post, relatedPosts } = Astro.props;
     <div class='case-study-content'>
       <SinglePost post={post} parentSlug='case-studies' />
     </div>
+
+    <BlogServiceCTA />
 
     {/* Footer Related Content Section */}
     <div class='mt-20 pt-16 border-slate-800 border-t'>

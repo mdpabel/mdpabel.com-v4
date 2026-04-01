@@ -6,6 +6,7 @@ import SinglePost from '../../components/SinglePost.astro';
 import { wordpress } from '../../lib/wordpress';
 import Banner from '../../components/Banner.astro';
 import RelatedPosts from '../../components/RelatedPosts.astro';
+import BlogServiceCTA from '../../components/BlogServiceCTA.astro';
 
 // 1. Generate Paths
 export async function getStaticPaths() {
@@ -42,10 +43,8 @@ const { post, relatedPosts } = Astro.props;
     {/* SinglePost handles the forensic dark-prose rendering */}
     <SinglePost post={post} parentSlug='blog' />
 
-    {/* Footer Section: Related Content */}
-    <div class='mt-16 pt-12 border-slate-800 border-t'>
-      <h2 class='mb-8 font-bold text-white text-2xl'>Continue Reading</h2>
-      <RelatedPosts currentPostId={post.id} posts={relatedPosts} />
-    </div>
+    <BlogServiceCTA />
+
+    <RelatedPosts currentPostId={post.id} posts={relatedPosts} />
   </ComponentWrapper>
 </Layout>
