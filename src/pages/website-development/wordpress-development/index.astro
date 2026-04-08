@@ -1,0 +1,576 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import ComponentWrapper from '../../../components/component-wrapper.astro';
+import {
+  Blocks,
+  ArrowRight,
+  CheckCircle2,
+  Search,
+  ShieldCheck,
+  Zap,
+  Database,
+  Wrench,
+  Workflow,
+  FileCode2,
+  MonitorSmartphone,
+  MessageSquare,
+  Sparkles,
+  Globe,
+  PenSquare,
+  Gauge,
+  Puzzle,
+  Layers3,
+} from '@lucide/astro';
+
+const seoTitle =
+  'WordPress Development Services | Custom WordPress Website Development';
+const seoDesc =
+  'Custom WordPress development services for business websites, content-driven platforms, and scalable CMS builds. Theme work, custom features, performance optimization, SEO-ready structure, and maintainable WordPress setups.';
+
+const primaryButtonClass =
+  'inline-flex items-center justify-center rounded-full text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 disabled:pointer-events-none disabled:opacity-50 h-12 px-7 bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-lg shadow-emerald-900/20 tracking-tight';
+
+const secondaryButtonClass =
+  'inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-900/60 hover:bg-slate-800 text-slate-100 transition-colors h-12 px-7 text-sm font-semibold';
+
+const fits = [
+  'Business websites that need a reliable CMS',
+  'Marketing sites with frequent content updates',
+  'Teams that want easy page and post editing',
+  'Projects that benefit from plugins and editorial workflows',
+  'Sites that need custom functionality without a fully custom app stack',
+];
+
+const services = [
+  {
+    title: 'Custom WordPress website builds',
+    desc: 'Tailored WordPress websites designed around your pages, content model, goals, and editing workflow instead of a bloated one-size-fits-all setup.',
+    icon: Blocks,
+  },
+  {
+    title: 'Theme development & customization',
+    desc: 'Classic or block-theme work, custom templates, layout systems, and maintainable styling aligned with your content structure.',
+    icon: PenSquare,
+  },
+  {
+    title: 'Plugin-based and custom features',
+    desc: 'The right mix of existing plugins and custom functionality to keep the build practical, maintainable, and scalable.',
+    icon: Puzzle,
+  },
+  {
+    title: 'Performance-focused WordPress builds',
+    desc: 'Cleaner page structure, lighter frontends, better plugin discipline, and practical speed work for stronger real-world performance.',
+    icon: Gauge,
+  },
+  {
+    title: 'SEO-ready structure',
+    desc: 'Clean information architecture, descriptive pages, internal linking opportunities, and content-friendly site structure that supports search visibility.',
+    icon: Search,
+  },
+  {
+    title: 'Ongoing improvements',
+    desc: 'Post-launch refinement for templates, performance, UX, and content workflows as the site grows.',
+    icon: Wrench,
+  },
+];
+
+const process = [
+  {
+    step: '01',
+    title: 'Plan the structure',
+    desc: 'I start with your business goals, core pages, content model, and editing needs before choosing the right WordPress architecture.',
+  },
+  {
+    step: '02',
+    title: 'Build the right CMS flow',
+    desc: 'The site is set up so your team can actually manage content without fighting the admin area or depending on a developer for every update.',
+  },
+  {
+    step: '03',
+    title: 'Keep the build lean',
+    desc: 'I avoid unnecessary complexity, reduce plugin bloat where possible, and focus on maintainable, performance-aware implementation.',
+  },
+  {
+    step: '04',
+    title: 'Launch with clarity',
+    desc: 'The goal is not just a finished site. It is a WordPress setup that is understandable, editable, and ready to grow.',
+  },
+];
+
+const faqs = [
+  {
+    q: 'When is WordPress the right choice?',
+    a: 'WordPress is often the right choice when your team needs a practical CMS, your site is content-heavy, and you want a flexible editing workflow without building a full custom application from scratch.',
+  },
+  {
+    q: 'Is WordPress still a good choice for SEO?',
+    a: 'Yes, when it is built carefully. WordPress can support strong SEO when the site structure is clear, the theme is well-built, the plugin stack is controlled, and the content model is designed properly.',
+  },
+  {
+    q: 'Should I choose WordPress or a headless setup?',
+    a: 'If your team wants a familiar all-in-one CMS and your site does not need a more complex decoupled architecture, WordPress is often simpler and more cost-effective. Headless is better when flexibility and custom frontend delivery matter more than simplicity.',
+  },
+  {
+    q: 'Can you build custom functionality in WordPress?',
+    a: 'Yes. WordPress can be extended with custom themes, custom templates, plugins, APIs, and tailored functionality when the project needs more than a standard brochure website.',
+  },
+  {
+    q: 'Do you only work on new WordPress websites?',
+    a: 'No. I can also help improve, refactor, or extend an existing WordPress site if the current setup is bloated, hard to manage, or underperforming.',
+  },
+];
+
+const structuredData = JSON.stringify([
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: 'WordPress Development Services',
+    serviceType: 'Custom WordPress Website Development',
+    description:
+      'Custom WordPress development services for business websites, content-driven platforms, and maintainable CMS builds.',
+    areaServed: 'Worldwide',
+    provider: {
+      '@type': 'Person',
+      name: 'MD Pabel',
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.a,
+      },
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Website Development',
+        item: 'https://www.mdpabel.com/website-development/',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'WordPress Development',
+        item: 'https://www.mdpabel.com/website-development/wordpress-development/',
+      },
+    ],
+  },
+]);
+---
+
+<Layout title={seoTitle} description={seoDesc}>
+  <script type='application/ld+json' set:html={structuredData} />
+
+  <ComponentWrapper class='relative py-16 md:py-24'>
+    <div class='-z-10 absolute inset-0 overflow-hidden pointer-events-none'>
+      <div
+        class='-top-24 right-0 absolute bg-emerald-500/10 blur-3xl rounded-full w-[42rem] h-[42rem]'>
+      </div>
+      <div
+        class='top-[22rem] -left-12 absolute bg-sky-500/10 blur-3xl rounded-full w-[24rem] h-[24rem]'>
+      </div>
+      <div
+        class='top-[8rem] left-1/2 absolute bg-fuchsia-500/5 blur-3xl rounded-full w-[16rem] h-[16rem] -translate-x-1/2'>
+      </div>
+      <div
+        class='absolute inset-0 opacity-[0.06]'
+        style='background-image:linear-gradient(to right,rgba(255,255,255,.12) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.12) 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(to bottom,rgba(0,0,0,1),rgba(0,0,0,.2));'>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <section class='relative mx-auto mb-20 max-w-6xl'>
+      <div
+        class='items-start gap-10 lg:gap-14 grid lg:grid-cols-[1.08fr_.92fr]'>
+        <div>
+          <div
+            class='inline-flex items-center gap-2 bg-emerald-900/20 mb-6 px-4 py-1.5 border border-emerald-800/50 rounded-full'>
+            <Sparkles class='w-4 h-4 text-emerald-400' />
+            <span class='font-semibold text-emerald-200 text-sm'
+              >Custom WordPress websites built for editing, growth, and search
+              clarity</span
+            >
+          </div>
+
+          <nav class='mb-5 text-slate-400 text-sm'>
+            <a
+              href='/website-development/'
+              class='hover:text-white transition-colors'>Website Development</a
+            >
+            <span class='mx-2 text-slate-600'>/</span>
+            <span class='text-slate-300'>WordPress Development</span>
+          </nav>
+
+          <h1
+            class='mb-5 max-w-4xl font-bold text-white text-3xl md:text-4xl leading-[1.02] tracking-tight'>
+            WordPress Development Services
+          </h1>
+
+          <p class='mb-8 max-w-2xl text-slate-300 text-lg leading-relaxed'>
+            I build custom WordPress websites for businesses that need a
+            flexible CMS, strong content workflows, and a site structure that
+            supports growth. The goal is not just “a WordPress site.” It is a
+            cleaner, more maintainable website that your team can actually
+            update and that search systems can understand.
+          </p>
+
+          <div
+            class='flex sm:flex-row flex-col items-start sm:items-center gap-4 mb-8'>
+            <a href='/hire-me/' class={primaryButtonClass}>
+              Start a WordPress Project <ArrowRight class='ml-2 w-4 h-4' />
+            </a>
+            <a href='/website-development/' class={secondaryButtonClass}>
+              Back to Website Development
+            </a>
+          </div>
+
+          <div class='flex flex-wrap gap-3 text-sm'>
+            <span
+              class='inline-flex items-center gap-2 bg-slate-900/70 px-3 py-2 border border-slate-800 rounded-full text-slate-300'>
+              <Search class='w-4 h-4 text-emerald-400' /> SEO-ready structure
+            </span>
+            <span
+              class='inline-flex items-center gap-2 bg-slate-900/70 px-3 py-2 border border-slate-800 rounded-full text-slate-300'>
+              <PenSquare class='w-4 h-4 text-sky-400' /> Easy content editing
+            </span>
+            <span
+              class='inline-flex items-center gap-2 bg-slate-900/70 px-3 py-2 border border-slate-800 rounded-full text-slate-300'>
+              <Gauge class='w-4 h-4 text-fuchsia-400' /> Leaner, maintainable builds
+            </span>
+          </div>
+        </div>
+
+        <div
+          class='bg-slate-900/60 backdrop-blur p-5 border border-slate-800 rounded-[2rem]'>
+          <div class='mb-4'>
+            <div class='font-semibold text-white text-lg'>
+              WordPress is usually the right choice when
+            </div>
+            <p class='mt-1 text-slate-400 text-sm'>
+              You need a practical CMS, a content-friendly workflow, and a site
+              that can grow without becoming impossible to manage.
+            </p>
+          </div>
+
+          <div class='space-y-3'>
+            {
+              fits.map((item) => (
+                <div class='bg-slate-950/70 p-4 border border-slate-800 rounded-2xl'>
+                  <div class='flex items-start gap-3'>
+                    <CheckCircle2 class='mt-0.5 w-4 h-4 text-emerald-400 shrink-0' />
+                    <p class='text-slate-300 text-sm'>{item}</p>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUICK ANSWER -->
+    <section class='mx-auto mb-20 max-w-4xl'>
+      <div
+        class='bg-slate-900/50 p-8 md:p-10 border border-slate-800 rounded-[2rem]'>
+        <h2 class='mb-5 font-bold text-white text-3xl'>
+          What this WordPress development page is about
+        </h2>
+        <p class='mb-4 text-slate-400 leading-relaxed'>
+          This page targets people looking for <strong class='text-white'
+            >WordPress development services</strong
+          >,
+          <strong class='text-white'> custom WordPress development</strong>, or
+          a practical way to build a content-driven business website. It is
+          designed to help users decide whether WordPress is the right stack,
+          understand what good WordPress implementation includes, and move
+          toward a clearer project conversation.
+        </p>
+        <p class='text-slate-400 leading-relaxed'>
+          WordPress remains the dominant CMS on the web, used by 42.5% of all
+          websites and 59.8% of websites with a known CMS, which is why there is
+          still strong demand for careful, modern WordPress work. The WordPress
+          developer docs also show that WordPress supports custom themes,
+          plugins, the block editor, and REST API-based integrations — so the
+          platform can range from a simple CMS to a more flexible application
+          foundation when used correctly.
+        </p>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class='mx-auto mb-20 max-w-6xl'>
+      <div class='mb-10 text-center'>
+        <div
+          class='inline-flex items-center gap-2 bg-emerald-900/20 mb-4 px-4 py-1.5 border border-emerald-900/40 rounded-full font-semibold text-emerald-300 text-xs uppercase tracking-[0.16em]'>
+          <Blocks class='w-3.5 h-3.5' /> What I build in WordPress
+        </div>
+        <h2 class='mb-3 font-bold text-white text-3xl md:text-4xl'>
+          Custom WordPress development that stays practical
+        </h2>
+        <p class='mx-auto max-w-3xl text-slate-400 text-lg'>
+          Good WordPress work is not about stacking plugins until the site
+          becomes slow and fragile. It is about choosing the right structure,
+          editing model, and feature approach from the start.
+        </p>
+      </div>
+
+      <div class='gap-5 grid md:grid-cols-2 lg:grid-cols-3'>
+        {
+          services.map((service) => {
+            const Icon = service.icon;
+            return (
+              <div class='bg-slate-900/60 p-6 border border-slate-800 rounded-[1.75rem]'>
+                <div class='inline-flex justify-center items-center bg-slate-950/70 mb-4 border border-slate-800 rounded-2xl w-12 h-12'>
+                  <Icon class='w-5 h-5 text-emerald-300' />
+                </div>
+                <h3 class='mb-3 font-bold text-white text-xl'>
+                  {service.title}
+                </h3>
+                <p class='text-slate-400 leading-relaxed'>{service.desc}</p>
+              </div>
+            );
+          })
+        }
+      </div>
+    </section>
+
+    <!-- WHY WORDPRESS -->
+    <section class='mx-auto mb-20 max-w-6xl'>
+      <div class='items-start gap-8 grid lg:grid-cols-[.95fr_1.05fr]'>
+        <div>
+          <div
+            class='inline-flex items-center gap-2 bg-sky-900/20 mb-4 px-4 py-1.5 border border-sky-900/40 rounded-full font-semibold text-sky-300 text-xs uppercase tracking-[0.16em]'>
+            <Globe class='w-3.5 h-3.5' /> Why choose WordPress
+          </div>
+          <h2 class='mb-4 font-bold text-white text-3xl md:text-4xl'>
+            A strong fit for content-driven business websites
+          </h2>
+          <p class='max-w-xl text-slate-400 text-lg leading-relaxed'>
+            WordPress is still one of the most practical choices when content
+            publishing, flexible page management, and editorial control matter.
+            It is especially strong for businesses that want ownership,
+            extensibility, and a familiar CMS experience without committing to a
+            more complex application stack too early.
+          </p>
+        </div>
+
+        <div class='gap-5 grid sm:grid-cols-2'>
+          <div
+            class='bg-slate-900/60 p-6 border border-slate-800 rounded-[1.75rem]'>
+            <PenSquare class='mb-4 w-6 h-6 text-emerald-400' />
+            <h3 class='mb-2 font-bold text-white text-xl'>Editorial control</h3>
+            <p class='text-slate-400'>
+              Your team can publish, edit, and manage content without needing a
+              developer for every routine change.
+            </p>
+          </div>
+          <div
+            class='bg-slate-900/60 p-6 border border-slate-800 rounded-[1.75rem]'>
+            <Puzzle class='mb-4 w-6 h-6 text-sky-400' />
+            <h3 class='mb-2 font-bold text-white text-xl'>
+              Extensible architecture
+            </h3>
+            <p class='text-slate-400'>
+              Themes, plugins, custom code, and APIs make WordPress flexible
+              enough for many business use cases.
+            </p>
+          </div>
+          <div
+            class='bg-slate-900/60 p-6 border border-slate-800 rounded-[1.75rem]'>
+            <Workflow class='mb-4 w-6 h-6 text-fuchsia-400' />
+            <h3 class='mb-2 font-bold text-white text-xl'>
+              Headless-ready if needed
+            </h3>
+            <p class='text-slate-400'>
+              The REST API can also support headless architectures if the
+              project grows beyond a traditional WordPress frontend.
+            </p>
+          </div>
+          <div
+            class='bg-slate-900/60 p-6 border border-slate-800 rounded-[1.75rem]'>
+            <Search class='mb-4 w-6 h-6 text-amber-400' />
+            <h3 class='mb-2 font-bold text-white text-xl'>
+              Search-friendly content model
+            </h3>
+            <p class='text-slate-400'>
+              WordPress works especially well when the site needs lots of
+              indexed content, organized templates, and ongoing publishing.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class='mx-auto mb-20 max-w-6xl'>
+      <div class='mb-10 text-center'>
+        <div
+          class='inline-flex items-center gap-2 bg-fuchsia-900/20 mb-4 px-4 py-1.5 border border-fuchsia-900/40 rounded-full font-semibold text-fuchsia-300 text-xs uppercase tracking-[0.16em]'>
+          <Wrench class='w-3.5 h-3.5' /> Workflow
+        </div>
+        <h2 class='mb-3 font-bold text-white text-3xl md:text-4xl'>
+          My WordPress development process
+        </h2>
+        <p class='mx-auto max-w-3xl text-slate-400 text-lg'>
+          The best WordPress build is not the one with the most features. It is
+          the one that supports the right content flow, performs well enough,
+          and stays maintainable after launch.
+        </p>
+      </div>
+
+      <div class='gap-5 grid sm:grid-cols-2 lg:grid-cols-4'>
+        {
+          process.map((item) => (
+            <div class='bg-slate-900/60 p-6 border border-slate-800 rounded-[1.75rem]'>
+              <div class='inline-flex justify-center items-center bg-slate-950/70 mb-4 border border-slate-800 rounded-2xl w-11 h-11 font-bold text-emerald-300'>
+                {item.step}
+              </div>
+              <h3 class='mb-2 font-bold text-white text-xl'>{item.title}</h3>
+              <p class='text-slate-400'>{item.desc}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- COMPARISON -->
+    <section class='mx-auto mb-20 max-w-6xl'>
+      <div
+        class='bg-slate-900/55 p-8 md:p-10 border border-slate-800 rounded-[2rem]'>
+        <div class='gap-8 grid lg:grid-cols-2'>
+          <div>
+            <h2 class='mb-4 font-bold text-white text-3xl'>
+              When WordPress is the better choice — and when it is not
+            </h2>
+            <p class='text-slate-400 leading-relaxed'>
+              One of the easiest ways to make a page more trustworthy is to
+              explain where the solution fits and where another option may be
+              better. WordPress is often the best route for editable business
+              websites, content-led brands, and teams that want a familiar CMS.
+              It is not automatically the best fit for every highly custom
+              application or every headless-first architecture.
+            </p>
+          </div>
+          <div class='space-y-3'>
+            <a
+              href='/website-development/astro-development/'
+              class='group block bg-slate-950/70 hover:bg-slate-950 p-4 border border-slate-800 rounded-2xl transition-colors'>
+              <div class='flex justify-between items-center gap-3'>
+                <div>
+                  <div
+                    class='font-semibold text-white group-hover:text-emerald-300'>
+                    Consider Astro
+                  </div>
+                  <p class='text-slate-400 text-sm'>
+                    When the site is content-heavy and raw performance is the
+                    top priority.
+                  </p>
+                </div>
+                <Zap class='w-5 h-5 text-sky-400 shrink-0' />
+              </div>
+            </a>
+            <a
+              href='/website-development/nextjs-fullstack-development/'
+              class='group block bg-slate-950/70 hover:bg-slate-950 p-4 border border-slate-800 rounded-2xl transition-colors'>
+              <div class='flex justify-between items-center gap-3'>
+                <div>
+                  <div
+                    class='font-semibold text-white group-hover:text-emerald-300'>
+                    Consider Next.js
+                  </div>
+                  <p class='text-slate-400 text-sm'>
+                    When the project needs more dynamic frontend logic or
+                    app-like workflows.
+                  </p>
+                </div>
+                <FileCode2 class='w-5 h-5 text-fuchsia-400 shrink-0' />
+              </div>
+            </a>
+            <a
+              href='/website-development/headless-development/'
+              class='group block bg-slate-950/70 hover:bg-slate-950 p-4 border border-slate-800 rounded-2xl transition-colors'>
+              <div class='flex justify-between items-center gap-3'>
+                <div>
+                  <div
+                    class='font-semibold text-white group-hover:text-emerald-300'>
+                    Consider headless
+                  </div>
+                  <p class='text-slate-400 text-sm'>
+                    When content needs to power multiple channels or a separate
+                    frontend stack.
+                  </p>
+                </div>
+                <Workflow class='w-5 h-5 text-amber-400 shrink-0' />
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class='mx-auto mb-20 max-w-4xl'>
+      <div class='mb-10 text-center'>
+        <h2 class='mb-3 font-bold text-white text-3xl md:text-4xl'>
+          Frequently asked questions
+        </h2>
+        <p class='text-slate-400'>
+          Questions buyers often ask before choosing WordPress for a new
+          project.
+        </p>
+      </div>
+
+      <div class='space-y-5'>
+        {
+          faqs.map((faq) => (
+            <div class='bg-slate-900/50 p-6 border border-slate-800 rounded-2xl'>
+              <h3 class='mb-2 font-bold text-white text-lg'>{faq.q}</h3>
+              <p class='text-slate-400 leading-relaxed'>{faq.a}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class='mx-auto max-w-6xl'>
+      <div
+        class='relative bg-slate-900/70 p-8 md:p-12 border border-slate-800 rounded-[2rem] overflow-hidden text-center'>
+        <div
+          class='absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(16,185,129,.16),transparent_40%),radial-gradient(circle_at_bottom_right,rgba(14,165,233,.12),transparent_35%)]'>
+        </div>
+        <div class='relative'>
+          <div
+            class='inline-flex items-center gap-2 bg-emerald-900/20 mb-4 px-4 py-1.5 border border-emerald-900/40 rounded-full font-semibold text-emerald-300 text-xs uppercase tracking-[0.16em]'>
+            <MessageSquare class='w-3.5 h-3.5' /> Start with the right CMS setup
+          </div>
+          <h2 class='mb-4 font-bold text-white text-3xl md:text-5xl'>
+            Need a WordPress site that is easier to manage and stronger in
+            search?
+          </h2>
+          <p class='mx-auto mb-8 max-w-2xl text-slate-400 text-lg'>
+            Tell me what your business needs to publish, who will manage the
+            content, and what the site needs to do — and I’ll help you shape the
+            right WordPress build.
+          </p>
+          <div
+            class='flex md:flex-row flex-col justify-center items-center gap-4'>
+            <a href='/hire-me/' class={primaryButtonClass}
+              >Discuss a WordPress Project</a
+            >
+            <a href='/about/' class={secondaryButtonClass}>About Me</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </ComponentWrapper>
+</Layout>

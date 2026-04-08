@@ -1,0 +1,607 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ComponentWrapper from '../../components/component-wrapper.astro';
+import {
+  Layers3,
+  ArrowRight,
+  CheckCircle2,
+  Globe,
+  Workflow,
+  FileCode2,
+  ShieldCheck,
+  Zap,
+  Search,
+  Database,
+  Server,
+  Blocks,
+  Wrench,
+  Code2,
+  MonitorSmartphone,
+  MessageSquare,
+  Sparkles,
+} from '@lucide/astro';
+
+const seoTitle =
+  'Website Development Services | WordPress, Astro, Next.js & Headless';
+const seoDesc =
+  'Custom website development services for WordPress, Astro, Next.js full-stack, MERN stack, and headless websites. Fast, SEO-ready, scalable builds tailored to your business goals.';
+
+const primaryButtonClass =
+  'inline-flex items-center justify-center rounded-full text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 disabled:pointer-events-none disabled:opacity-50 h-12 px-7 bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-lg shadow-emerald-900/20 tracking-tight';
+
+const secondaryButtonClass =
+  'inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-900/60 hover:bg-slate-800 text-slate-100 transition-colors h-12 px-7 text-sm font-semibold';
+
+const childPages = [
+  {
+    title: 'WordPress Development',
+    href: '/website-development/wordpress-development/',
+    icon: Blocks,
+    desc: 'Custom WordPress websites, theme work, plugin functionality, performance improvements, and maintainable CMS setups.',
+    bullets: [
+      'Best for content-heavy business sites',
+      'Easy editing for non-technical teams',
+      'Strong plugin and CMS ecosystem',
+    ],
+  },
+  {
+    title: 'Next.js Full-Stack Development',
+    href: '/website-development/nextjs-fullstack-development/',
+    icon: FileCode2,
+    desc: 'Modern full-stack builds using Next.js for dynamic websites, web apps, dashboards, portals, and custom product workflows.',
+    bullets: [
+      'SSR / SSG capable',
+      'Great for apps and custom flows',
+      'Strong React ecosystem',
+    ],
+  },
+  {
+    title: 'Astro Development',
+    href: '/website-development/astro-development/',
+    icon: Zap,
+    desc: 'Fast, content-driven websites with low JavaScript overhead and strong performance for marketing sites, blogs, and documentation.',
+    bullets: [
+      'Great for SEO and Core Web Vitals',
+      'Excellent for content sites',
+      'Clean, modern developer workflow',
+    ],
+  },
+  {
+    title: 'MERN Stack Development',
+    href: '/website-development/mern-stack-development/',
+    icon: Database,
+    desc: 'Full-stack JavaScript applications using MongoDB, Express, React, and Node.js for custom business platforms and web apps.',
+    bullets: [
+      'One-language stack',
+      'Flexible app architecture',
+      'Good for custom product builds',
+    ],
+  },
+  {
+    title: 'Headless Website Development',
+    href: '/website-development/headless-development/',
+    icon: Workflow,
+    desc: 'Decoupled frontend and CMS architecture for teams who need speed, flexibility, and scalable publishing across multiple channels.',
+    bullets: [
+      'Flexible frontend choices',
+      'API-first content workflows',
+      'Best for larger or more custom setups',
+    ],
+  },
+];
+
+const process = [
+  {
+    step: '01',
+    title: 'Strategy & scope',
+    desc: 'I help define what the site needs to do, who it serves, what content it needs, and which stack fits the project best.',
+  },
+  {
+    step: '02',
+    title: 'Architecture choice',
+    desc: 'WordPress, Astro, Next.js, MERN, or a headless setup — selected based on editing needs, performance goals, and complexity.',
+  },
+  {
+    step: '03',
+    title: 'Build for speed & clarity',
+    desc: 'I focus on clean structure, fast rendering, maintainability, and pages that users and search engines can understand.',
+  },
+  {
+    step: '04',
+    title: 'Launch & improve',
+    desc: 'After launch, the goal is not just “site done.” It is stable performance, easy updates, and a site that supports growth.',
+  },
+];
+
+const faqs = [
+  {
+    q: 'Which framework is best for SEO?',
+    a: 'It depends on the project. Astro is excellent for content-heavy websites and performance-focused builds. Next.js is strong when you need more dynamic rendering or app-like features. WordPress can also work very well when built carefully and kept lean.',
+  },
+  {
+    q: 'When should I choose WordPress over headless?',
+    a: 'Choose WordPress when your team wants a familiar CMS and your project does not need a more complex decoupled architecture. Go headless when flexibility, custom frontends, or multi-channel content delivery matter more than simplicity.',
+  },
+  {
+    q: 'Is Astro better than WordPress?',
+    a: 'Not in every case. Astro is often better for performance-focused, content-driven sites. WordPress is often better when the editing experience and plugin ecosystem matter more. The right choice depends on your team and goals.',
+  },
+  {
+    q: 'Do I need a full-stack framework like Next.js or MERN?',
+    a: 'Only if your project needs more custom application logic, dashboards, user flows, or dynamic backend functionality. Many business websites do not need that level of complexity.',
+  },
+];
+
+const structuredData = JSON.stringify([
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: 'Website Development Services',
+    serviceType: 'Custom Website Development',
+    description:
+      'Custom website development services for WordPress, Astro, Next.js full-stack, MERN stack, and headless websites.',
+    areaServed: 'Worldwide',
+    provider: {
+      '@type': 'Person',
+      name: 'MD Pabel',
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.a,
+      },
+    })),
+  },
+]);
+---
+
+<Layout title={seoTitle} description={seoDesc}>
+  <script type='application/ld+json' set:html={structuredData} />
+
+  <ComponentWrapper class='relative py-16 md:py-24'>
+    <div class='-z-10 absolute inset-0 overflow-hidden pointer-events-none'>
+      <div
+        class='-top-24 right-0 absolute bg-emerald-500/10 blur-3xl rounded-full w-[42rem] h-[42rem]'>
+      </div>
+      <div
+        class='top-[24rem] -left-12 absolute bg-sky-500/10 blur-3xl rounded-full w-[24rem] h-[24rem]'>
+      </div>
+      <div
+        class='top-[10rem] left-1/2 absolute bg-fuchsia-500/5 blur-3xl rounded-full w-[16rem] h-[16rem] -translate-x-1/2'>
+      </div>
+      <div
+        class='absolute inset-0 opacity-[0.06]'
+        style='background-image:linear-gradient(to right,rgba(255,255,255,.12) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.12) 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(to bottom,rgba(0,0,0,1),rgba(0,0,0,.2));'>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <section class='relative mx-auto mb-20 max-w-6xl'>
+      <div
+        class='items-start gap-10 lg:gap-14 grid lg:grid-cols-[1.08fr_.92fr]'>
+        <div>
+          <div
+            class='inline-flex items-center gap-2 bg-emerald-900/20 mb-6 px-4 py-1.5 border border-emerald-800/50 rounded-full'>
+            <Sparkles class='w-4 h-4 text-emerald-400' />
+            <span class='font-semibold text-emerald-200 text-sm'
+              >Custom websites built for performance, clarity, and growth</span
+            >
+          </div>
+
+          <h1
+            class='mb-5 max-w-4xl font-bold text-white text-3xl md:text-4xl leading-[0.98] tracking-tight'>
+            Website Development
+            <span
+              class='block bg-clip-text bg-gradient-to-r from-emerald-400 via-sky-400 to-fuchsia-400 text-transparent'>
+              services built around the right stack.
+            </span>
+          </h1>
+
+          <p
+            class='mb-8 max-w-2xl text-slate-300 text-lg md:text-xl leading-relaxed'>
+            I build custom websites with <strong class='text-white'
+              >WordPress</strong
+            >, <strong class='text-white'>Astro</strong>,
+            <strong class='text-white'> Next.js</strong>, <strong
+              class='text-white'>
+              MERN</strong
+            >, and
+            <strong class='text-white'> headless architectures</strong>. The
+            goal is not to force one framework everywhere. It is to choose the
+            right setup for your content, team, performance goals, and long-term
+            maintenance.
+          </p>
+
+          <div
+            class='flex sm:flex-row flex-col items-start sm:items-center gap-4 mb-8'>
+            <a href='/hire-me/' class={primaryButtonClass}>
+              Start a Project <ArrowRight class='ml-2 w-4 h-4' />
+            </a>
+            <a href='#solutions' class={secondaryButtonClass}>
+              Explore Solutions
+            </a>
+          </div>
+
+          <div class='flex flex-wrap gap-3 text-sm'>
+            <span
+              class='inline-flex items-center gap-2 bg-slate-900/70 px-3 py-2 border border-slate-800 rounded-full text-slate-300'>
+              <Search class='w-4 h-4 text-emerald-400' /> SEO-ready structure
+            </span>
+            <span
+              class='inline-flex items-center gap-2 bg-slate-900/70 px-3 py-2 border border-slate-800 rounded-full text-slate-300'>
+              <Zap class='w-4 h-4 text-sky-400' /> Performance-focused builds
+            </span>
+            <span
+              class='inline-flex items-center gap-2 bg-slate-900/70 px-3 py-2 border border-slate-800 rounded-full text-slate-300'>
+              <ShieldCheck class='w-4 h-4 text-fuchsia-400' /> Technical clarity &
+              maintainability
+            </span>
+          </div>
+        </div>
+
+        <div
+          class='bg-slate-900/60 backdrop-blur p-5 border border-slate-800 rounded-[2rem]'>
+          <div class='mb-4'>
+            <div class='font-semibold text-white text-lg'>
+              How I choose the stack
+            </div>
+            <p class='mt-1 text-slate-400 text-sm'>
+              The best website stack depends on what you need to publish,
+              update, scale, and measure.
+            </p>
+          </div>
+
+          <div class='space-y-3'>
+            <div
+              class='bg-slate-950/70 p-4 border border-slate-800 rounded-2xl'>
+              <div
+                class='flex items-center gap-2 mb-2 font-semibold text-white'>
+                <Blocks class='w-4 h-4 text-emerald-400' /> WordPress
+              </div>
+              <p class='text-slate-400 text-sm'>
+                Best when your team needs an easy CMS and strong day-to-day
+                editing.
+              </p>
+            </div>
+            <div
+              class='bg-slate-950/70 p-4 border border-slate-800 rounded-2xl'>
+              <div
+                class='flex items-center gap-2 mb-2 font-semibold text-white'>
+                <Zap class='w-4 h-4 text-sky-400' /> Astro
+              </div>
+              <p class='text-slate-400 text-sm'>
+                Best for content-focused websites where speed, clean HTML, and
+                low JS matter.
+              </p>
+            </div>
+            <div
+              class='bg-slate-950/70 p-4 border border-slate-800 rounded-2xl'>
+              <div
+                class='flex items-center gap-2 mb-2 font-semibold text-white'>
+                <FileCode2 class='w-4 h-4 text-fuchsia-400' /> Next.js / MERN
+              </div>
+              <p class='text-slate-400 text-sm'>
+                Best for more dynamic experiences, custom workflows, dashboards,
+                and app-like features.
+              </p>
+            </div>
+            <div
+              class='bg-slate-950/70 p-4 border border-slate-800 rounded-2xl'>
+              <div
+                class='flex items-center gap-2 mb-2 font-semibold text-white'>
+                <Workflow class='w-4 h-4 text-amber-400' /> Headless
+              </div>
+              <p class='text-slate-400 text-sm'>
+                Best when you need API-first content, publishing flexibility,
+                and a decoupled frontend.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTRO -->
+    <section class='mx-auto mb-20 max-w-4xl'>
+      <div
+        class='bg-slate-900/50 p-8 md:p-10 border border-slate-800 rounded-[2rem]'>
+        <h2 class='mb-5 font-bold text-white text-3xl'>
+          What this page is for
+        </h2>
+        <p class='mb-4 text-slate-400 leading-relaxed'>
+          This parent page is the main hub for my website development services.
+          It gives the broad overview, explains the main technology options, and
+          helps you navigate to the more specific child pages based on what you
+          actually need.
+        </p>
+        <p class='text-slate-400 leading-relaxed'>
+          Some projects need WordPress because content editing is the priority.
+          Others need Astro for speed, Next.js for more dynamic rendering, MERN
+          for full-stack app logic, or a headless setup for flexibility and
+          multi-channel publishing. This page helps you choose the right route
+          instead of guessing from buzzwords.
+        </p>
+      </div>
+    </section>
+
+    <!-- CHILD PAGES -->
+    <section id='solutions' class='mx-auto mb-20 max-w-6xl'>
+      <div class='mb-10 text-center'>
+        <div
+          class='inline-flex items-center gap-2 bg-emerald-900/20 mb-4 px-4 py-1.5 border border-emerald-900/40 rounded-full font-semibold text-emerald-300 text-xs uppercase tracking-[0.16em]'>
+          <Layers3 class='w-3.5 h-3.5' /> Child service pages
+        </div>
+        <h2 class='mb-3 font-bold text-white text-3xl md:text-4xl'>
+          Choose the website development path that fits the project
+        </h2>
+        <p class='mx-auto max-w-3xl text-slate-400 text-lg'>
+          Start with the broad service overview, then move into the
+          stack-specific page that matches your editing workflow, performance
+          needs, and product complexity.
+        </p>
+      </div>
+
+      <div class='gap-5 grid lg:grid-cols-2'>
+        {
+          childPages.map((page) => {
+            const Icon = page.icon;
+            return (
+              <a
+                href={page.href}
+                class='group block relative bg-slate-900/60 hover:bg-slate-900 p-6 md:p-7 border border-slate-800 rounded-[1.75rem] overflow-hidden transition-colors'>
+                <div class='absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,.12),transparent_35%),radial-gradient(circle_at_bottom_left,rgba(14,165,233,.10),transparent_35%)] opacity-0 group-hover:opacity-100 transition-opacity' />
+                <div class='relative'>
+                  <div class='flex justify-between items-start gap-4 mb-5'>
+                    <div class='inline-flex justify-center items-center bg-slate-950/70 border border-slate-800 rounded-2xl w-12 h-12 shrink-0'>
+                      <Icon class='w-5 h-5 text-emerald-300' />
+                    </div>
+                    <div class='inline-flex items-center gap-2 bg-slate-950/70 px-3 py-1.5 border border-slate-800 rounded-full font-semibold text-slate-300 text-xs uppercase tracking-[0.12em]'>
+                      Child page
+                    </div>
+                  </div>
+
+                  <h3 class='mb-3 font-bold text-white group-hover:text-emerald-300 text-2xl leading-tight'>
+                    {page.title}
+                  </h3>
+                  <p class='mb-5 max-w-2xl text-slate-400 leading-relaxed'>
+                    {page.desc}
+                  </p>
+
+                  <div class='mb-6'>
+                    <div class='mb-3 font-semibold text-white text-sm'>
+                      Best when you need
+                    </div>
+                    <div class='flex flex-wrap gap-2'>
+                      {page.bullets.map((bullet) => (
+                        <span class='inline-flex items-center gap-2 bg-slate-950/70 px-3 py-2 border border-slate-800 rounded-full text-slate-300 text-sm'>
+                          <CheckCircle2 class='w-4 h-4 text-emerald-400 shrink-0' />
+                          <span>{bullet}</span>
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div class='inline-flex items-center gap-2 font-semibold text-emerald-300'>
+                    View page{' '}
+                    <ArrowRight class='w-4 h-4 transition-transform group-hover:translate-x-1' />
+                  </div>
+                </div>
+              </a>
+            );
+          })
+        }
+      </div>
+    </section>
+
+    <!-- WHY THIS STRUCTURE -->
+    <section class='mx-auto mb-20 max-w-6xl'>
+      <div class='items-start gap-8 grid lg:grid-cols-[.95fr_1.05fr]'>
+        <div>
+          <div
+            class='inline-flex items-center gap-2 bg-sky-900/20 mb-4 px-4 py-1.5 border border-sky-900/40 rounded-full font-semibold text-sky-300 text-xs uppercase tracking-[0.16em]'>
+            <Search class='w-3.5 h-3.5' /> Why this service architecture works
+          </div>
+          <h2 class='mb-4 font-bold text-white text-3xl md:text-5xl'>
+            A cleaner SEO structure than one oversized page
+          </h2>
+          <p class='max-w-xl text-slate-400 text-lg leading-relaxed'>
+            A single generic “website development” page is usually too broad to
+            rank well for all intent types. A parent page plus child pages
+            creates a better content hierarchy, stronger internal linking, and
+            clearer user journeys.
+          </p>
+        </div>
+
+        <div class='gap-5 grid sm:grid-cols-2'>
+          <div
+            class='bg-slate-900/60 p-6 border border-slate-800 rounded-[1.75rem]'>
+            <Search class='mb-4 w-6 h-6 text-emerald-400' />
+            <h3 class='mb-2 font-bold text-white text-xl'>Broader discovery</h3>
+            <p class='text-slate-400'>
+              The parent page can target broad service intent like custom
+              website development and route users into the right technology
+              page.
+            </p>
+          </div>
+          <div
+            class='bg-slate-900/60 p-6 border border-slate-800 rounded-[1.75rem]'>
+            <Globe class='mb-4 w-6 h-6 text-sky-400' />
+            <h3 class='mb-2 font-bold text-white text-xl'>
+              Better internal linking
+            </h3>
+            <p class='text-slate-400'>
+              Each child page can link back to the parent and to the most
+              relevant siblings, which strengthens site structure.
+            </p>
+          </div>
+          <div
+            class='bg-slate-900/60 p-6 border border-slate-800 rounded-[1.75rem]'>
+            <MonitorSmartphone class='mb-4 w-6 h-6 text-fuchsia-400' />
+            <h3 class='mb-2 font-bold text-white text-xl'>
+              Stronger conversion paths
+            </h3>
+            <p class='text-slate-400'>
+              Visitors can land on the exact page that matches their problem,
+              stack preference, or feature needs.
+            </p>
+          </div>
+          <div
+            class='bg-slate-900/60 p-6 border border-slate-800 rounded-[1.75rem]'>
+            <Code2 class='mb-4 w-6 h-6 text-amber-400' />
+            <h3 class='mb-2 font-bold text-white text-xl'>
+              More useful AI summaries
+            </h3>
+            <p class='text-slate-400'>
+              Clear, focused pages are easier for search systems and AI-driven
+              experiences to understand and reference.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class='mx-auto mb-20 max-w-6xl'>
+      <div class='mb-10 text-center'>
+        <div
+          class='inline-flex items-center gap-2 bg-fuchsia-900/20 mb-4 px-4 py-1.5 border border-fuchsia-900/40 rounded-full font-semibold text-fuchsia-300 text-xs uppercase tracking-[0.16em]'>
+          <Wrench class='w-3.5 h-3.5' /> Workflow
+        </div>
+        <h2 class='mb-3 font-bold text-white text-3xl md:text-5xl'>
+          How I approach website development projects
+        </h2>
+        <p class='mx-auto max-w-3xl text-slate-400 text-lg'>
+          Good development decisions start before design polish or framework
+          choices. The right process reduces waste and leads to cleaner
+          outcomes.
+        </p>
+      </div>
+
+      <div class='gap-5 grid sm:grid-cols-2 lg:grid-cols-4'>
+        {
+          process.map((item) => (
+            <div class='bg-slate-900/60 p-6 border border-slate-800 rounded-[1.75rem]'>
+              <div class='inline-flex justify-center items-center bg-slate-950/70 mb-4 border border-slate-800 rounded-2xl w-11 h-11 font-bold text-emerald-300'>
+                {item.step}
+              </div>
+              <h3 class='mb-2 font-bold text-white text-xl'>{item.title}</h3>
+              <p class='text-slate-400'>{item.desc}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- DECISION GUIDE -->
+    <section class='mx-auto mb-20 max-w-6xl'>
+      <div
+        class='bg-slate-900/55 p-8 md:p-10 border border-slate-800 rounded-[2rem]'>
+        <div class='gap-8 grid lg:grid-cols-2'>
+          <div>
+            <h2 class='mb-4 font-bold text-white text-3xl'>
+              Which option is right for your project?
+            </h2>
+            <p class='text-slate-400 leading-relaxed'>
+              If your project is content-first and your team wants easy editing,
+              WordPress is often the most practical choice. If your site is
+              content-heavy and performance-focused, Astro is usually the
+              strongest fit. If you need more dynamic rendering or app-like
+              behavior, Next.js is often the better route. If you need a
+              full-stack JavaScript application, MERN may fit better. And if
+              content needs to power multiple frontends or channels, headless
+              becomes more attractive.
+            </p>
+          </div>
+          <div class='space-y-3'>
+            <div
+              class='bg-slate-950/70 p-4 border border-slate-800 rounded-2xl text-slate-300'>
+              <strong class='text-white'>Choose WordPress</strong> for editable business
+              sites, marketing pages, blogs, and teams that need a familiar CMS.
+            </div>
+            <div
+              class='bg-slate-950/70 p-4 border border-slate-800 rounded-2xl text-slate-300'>
+              <strong class='text-white'>Choose Astro</strong> for high-performance
+              content websites where speed and clean output matter.
+            </div>
+            <div
+              class='bg-slate-950/70 p-4 border border-slate-800 rounded-2xl text-slate-300'>
+              <strong class='text-white'>Choose Next.js</strong> for custom frontend-heavy
+              projects, portals, or dynamic web experiences.
+            </div>
+            <div
+              class='bg-slate-950/70 p-4 border border-slate-800 rounded-2xl text-slate-300'>
+              <strong class='text-white'>Choose MERN</strong> for product-like web
+              apps and fully custom JavaScript application architecture.
+            </div>
+            <div
+              class='bg-slate-950/70 p-4 border border-slate-800 rounded-2xl text-slate-300'>
+              <strong class='text-white'>Choose headless</strong> when flexibility,
+              API-first publishing, and decoupled architecture matter more than simplicity.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class='mx-auto mb-20 max-w-4xl'>
+      <div class='mb-10 text-center'>
+        <h2 class='mb-3 font-bold text-white text-3xl md:text-4xl'>
+          Frequently asked questions
+        </h2>
+        <p class='text-slate-400'>
+          Questions buyers often ask before choosing the stack or service page.
+        </p>
+      </div>
+
+      <div class='space-y-5'>
+        {
+          faqs.map((faq) => (
+            <div class='bg-slate-900/50 p-6 border border-slate-800 rounded-2xl'>
+              <h3 class='mb-2 font-bold text-white text-lg'>{faq.q}</h3>
+              <p class='text-slate-400 leading-relaxed'>{faq.a}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class='mx-auto max-w-6xl'>
+      <div
+        class='relative bg-slate-900/70 p-8 md:p-12 border border-slate-800 rounded-[2rem] overflow-hidden text-center'>
+        <div
+          class='absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(16,185,129,.16),transparent_40%),radial-gradient(circle_at_bottom_right,rgba(14,165,233,.12),transparent_35%)]'>
+        </div>
+        <div class='relative'>
+          <div
+            class='inline-flex items-center gap-2 bg-emerald-900/20 mb-4 px-4 py-1.5 border border-emerald-900/40 rounded-full font-semibold text-emerald-300 text-xs uppercase tracking-[0.16em]'>
+            <MessageSquare class='w-3.5 h-3.5' /> Start with the right stack
+          </div>
+          <h2 class='mb-4 font-bold text-white text-3xl md:text-5xl'>
+            Need help deciding between WordPress, Astro, Next.js, MERN, or
+            headless?
+          </h2>
+          <p class='mx-auto mb-8 max-w-2xl text-slate-400 text-lg'>
+            Tell me what you need the website to do, who will manage the
+            content, and what matters most — speed, editing, flexibility, or
+            application logic — and I’ll help you choose the right path.
+          </p>
+          <div
+            class='flex md:flex-row flex-col justify-center items-center gap-4'>
+            <a href='/hire-me/' class={primaryButtonClass}
+              >Discuss Your Project</a
+            >
+            <a href='/about/' class={secondaryButtonClass}>About Me</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </ComponentWrapper>
+</Layout>
