@@ -23,4 +23,12 @@ export default defineConfig({
   build: {
     inlineStylesheets: 'auto',
   },
+
+  redirects: {
+    // If you want ALL snippets to redirect to the main /blog page:
+    '/snippets/[...slug]': '/blog/',
+
+    // OR: If you want /snippets/my-post to go to /blog/my-post:
+    // '/snippets/[...slug]': '/blog/[...slug]',
+  },
 });

@@ -9,6 +9,7 @@ import type { WordPressPost } from '../lib/wordpress';
 interface Props {
   title?: string;
   mode?: 'single' | 'all' | 'featured';
+  orderBy?: 'date' | 'title' | 'slug' | 'modified' | 'menu_order';
   className?: string;
   postType?: 'case-study' | 'guide' | 'malware-log' | string;
   rootSlug?: string;
@@ -24,6 +25,7 @@ interface Props {
 const {
   title = 'Recent Posts',
   mode,
+  orderBy,
   className = '',
   postType,
   shortDescription,
@@ -65,12 +67,14 @@ if (preFetchedPosts) {
     perPage: limit,
     postType: 'case-study',
     _fields: ['id', 'title', 'slug', 'date'],
+    orderBy,
   });
 
   // 2. Fetch Blog Posts
   const blogPostsResponse = await wordpress.getPosts({
     perPage: limit,
     _fields: ['id', 'title', 'slug', 'date'],
+    orderBy,
   });
 
   // 3. Combine and Format Slugs manually for routing
@@ -100,6 +104,7 @@ if (preFetchedPosts) {
     _fields: ['id', 'title', 'slug', 'date'],
     page,
     postType: postType,
+    orderBy,
   });
 
   posts = response.posts;
