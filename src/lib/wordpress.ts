@@ -4,6 +4,11 @@ import type { CommentsQueryOptions, CommentsResponse } from '../../types/wp';
 
 // --- Interfaces ---
 
+export interface RankMathResponse {
+  success: boolean;
+  head: string;
+}
+
 export interface WordPressComment {
   id: number;
   postId: number;
@@ -273,6 +278,36 @@ class WordPressAPI {
   }
 
   // --- Public Methods ---
+
+  /**
+   * Fetches the Rank Math meta tags (head) for a specific URL.
+   * @param targetUrl The full URL of the webpage to get meta tags for.
+   */
+  async getRankMathHead(targetUrl: string): Promise<string | null> {
+    try {
+      const encodedUrl = encodeURIComponent(targetUrl);
+      const url = `${this.baseUrl}/wp-json/rankmath/v1/getHead?url=${encodedUrl}`;
+
+      console.log(`🌐 Fetching Rank Math Meta: ${url}`);
+      const response = await this.fetchWithRetry(url);
+
+      if (!response.ok) {
+        console.error(`❌ Rank Math API Error ${response.status}: ${url}`);
+        return null;
+      }
+
+      const data = (await response.json()) as RankMathResponse;
+
+      if (data && data.success && data.head) {
+        return data.head;
+      }
+
+      return null;
+    } catch (error) {
+      console.error('Error fetching Rank Math metadata:', error);
+      return null;
+    }
+  }
 
   async getTotalPages(
     options: { postType?: string; perPage?: number } = {},

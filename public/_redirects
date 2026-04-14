@@ -65,3 +65,7 @@
 /case-studies/wordpress-mobile-redirect-hack-fix/ /blog/how-i-caught-and-removed-a-hidden-malware-hijacking-google-traffic/ 301
 
 /blog/how-i-removed-50000-spam-urls-and-saved-a-hacked-website-the-ultimate-guide/ /case-studies/how-i-removed-50000-spam-urls-from-google-after-a-japanese-keyword-hack/ 301
+
+/snippets/uselocalstorage-hook /blog 301
+/snippets/usedebounce-hook /blog 301
+/snippets/\* /blog 301

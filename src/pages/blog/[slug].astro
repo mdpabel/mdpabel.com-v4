@@ -33,10 +33,26 @@ export async function getStaticPaths() {
 }
 
 const { post, relatedPosts } = Astro.props;
+
+// 2. SEO Plugin Logic
+const seoPlugin = import.meta.env.SEO_PLUGIN || 'yoast';
+let headTags = post.yoastHead || '';
+
+// If Rank Math is configured, fetch its metadata using the post's WordPress URL
+if (seoPlugin === 'rankmath') {
+  const rankMathHead = await wordpress.getRankMathHead(post.link);
+  if (rankMathHead) {
+    headTags = rankMathHead;
+  } else {
+    console.warn(
+      `⚠️ Rank Math data not found for ${post.slug}, falling back to default/Yoast.`,
+    );
+  }
+}
 ---
 
-{/* ✅ Pass 'yoastHead' directly for perfect SEO */}
-<Layout yoastHead={post.yoastHead}>
+{/* ✅ Passes dynamically chosen SEO tags based on your .env configuration */}
+<Layout yoastHead={headTags}>
   <Banner />
 
   <ComponentWrapper class='pb-20 max-w-4xl'>
