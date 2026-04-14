@@ -1,0 +1,14 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<div
+  class:list={[
+    'pointer-events-none absolute inset-0  bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_45%)]',
+    className,
+  ]}>
+</div>

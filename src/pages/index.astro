@@ -1,7 +1,7 @@
 ---
 // src/pages/index.astro
 import { CheckCircle, ShieldCheck, Star } from '@lucide/astro';
-
+import HeroGlow from '../components/HeroGlow.astro';
 import Layout from '../layouts/Layout.astro';
 import ComponentWrapper from '../components/component-wrapper.astro';
 
@@ -88,8 +88,12 @@ const jsonLd = {
 
   <ComponentWrapper>
     {/* 1. HERO SECTION */}
-    <section class='py-20'>
-      <div class='gap-x-10 gap-y-8 grid grid-cols-1 md:grid-cols-3'>
+    {/* 1. HERO SECTION */}
+    <section class='relative py-20 overflow-hidden'>
+      <HeroGlow />
+
+      <div
+        class='z-10 relative gap-x-10 gap-y-8 grid grid-cols-1 md:grid-cols-3'>
         {/* --- LEFT SECTION (Text Content) --- */}
         <div class='md:col-span-2'>
           {/* H1 Headline */}
@@ -169,7 +173,6 @@ const jsonLd = {
                 </clipPath>
               </defs>
 
-              {/* Base Shield Outline */}
               <path
                 d='M100 20C100 20 40 35 40 90C40 145 100 180 100 180C100 180 160 145 160 90C160 35 100 20 100 20Z'
                 fill='none'
@@ -177,13 +180,10 @@ const jsonLd = {
                 stroke-width='4'
                 class='text-slate-600'></path>
 
-              {/* Content inside the shield (masked) */}
               <g clip-path='url(#shieldMask)'>
-                {/* 1. The "Red Glitch/Malware" State */}
                 <g class='animate-malware-clear'>
                   <circle cx='100' cy='90' r='30' class='fill-red-900/30'
                   ></circle>
-                  {/* Abstract 'bug' dots */}
                   <circle
                     cx='90'
                     cy='80'
@@ -207,7 +207,6 @@ const jsonLd = {
                     class='animate-glitch-line'></path>
                 </g>
 
-                {/* 2. The "Scanner Bar" */}
                 <rect
                   x='0'
                   y='-50'
@@ -225,11 +224,9 @@ const jsonLd = {
                   class='shadow-[0_0_10px_rgb(16,185,129)] animate-scanner-line'
                 ></line>
 
-                {/* 3. The "Secure/Clean" State */}
                 <g class='opacity-0 animate-secure-appear'>
                   <circle cx='100' cy='90' r='35' class='fill-emerald-500/20'
                   ></circle>
-                  {/* Checkmark */}
                   <path
                     d='M80 95 L95 110 L125 75'
                     fill='none'
