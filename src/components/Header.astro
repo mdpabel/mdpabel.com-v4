@@ -20,7 +20,6 @@ import {
 } from '@lucide/astro';
 import ComponentWrapper from './component-wrapper.astro';
 
-// --- 1. TYPE DEFINITIONS ---
 interface NavLink {
   type: 'link';
   name: string;
@@ -44,7 +43,6 @@ interface NavDropdown {
 
 type NavItem = NavLink | NavDropdown;
 
-// --- 2. NAVIGATION DATA ---
 const navItems: NavItem[] = [
   {
     name: 'About',
@@ -143,7 +141,6 @@ const navItems: NavItem[] = [
     <div class='py-4'>
       <ComponentWrapper>
         <nav class='relative flex justify-between items-center mx-auto'>
-          {/* --- LOGO --- */}
           <div class='flex items-center gap-8'>
             <a
               href='/'
@@ -156,7 +153,6 @@ const navItems: NavItem[] = [
               <span>MD Pabel</span>
             </a>
 
-            {/* --- DESKTOP NAVIGATION --- */}
             <div class='hidden lg:flex items-center gap-1'>
               {
                 navItems.map((item) =>
@@ -169,18 +165,27 @@ const navItems: NavItem[] = [
                     </a>
                   ) : (
                     <div class='group relative px-4 py-2'>
-                      <button class='flex items-center gap-1 font-medium text-slate-300 group-hover:text-white text-base transition-colors cursor-pointer'>
+                      <button
+                        type='button'
+                        class='flex items-center gap-1 font-medium text-slate-300 group-hover:text-white text-base transition-colors cursor-pointer'>
                         {item.name}
                         <ChevronDown class='w-4 h-4 group-hover:rotate-180 transition-transform' />
                       </button>
+
                       <div class='invisible group-hover:visible top-full left-1/2 z-50 absolute opacity-0 group-hover:opacity-100 pt-4 w-[600px] origin-top transition-all -translate-x-1/2 translate-y-2 group-hover:translate-y-0 duration-200 ease-out transform'>
                         <div class='relative gap-2 grid grid-cols-2 bg-slate-900 shadow-xl p-4 border border-slate-700 rounded-2xl'>
                           <div class='-top-2 left-1/2 absolute bg-slate-900 border-slate-700 border-t border-l w-4 h-4 rotate-45 -translate-x-1/2 transform' />
                           {item.children.map((subItem) => (
                             <a
                               href={subItem.href}
-                              class={`group/item relative flex items-start gap-4 p-3 rounded-xl transition-colors z-10 ${subItem.badge ? 'opacity-70 cursor-default' : 'hover:bg-slate-800/50'}`}
-                              onclick={subItem.badge ? 'return false;' : ''}>
+                              class={`group/item relative flex items-start gap-4 p-3 rounded-xl transition-colors z-10 ${
+                                subItem.badge
+                                  ? 'opacity-70 cursor-default'
+                                  : 'hover:bg-slate-800/50'
+                              }`}
+                              onclick={
+                                subItem.badge ? 'return false;' : undefined
+                              }>
                               <div class='bg-slate-800 group-hover/item:bg-sky-600 p-2 rounded-lg text-sky-400 group-hover/item:text-white transition-colors'>
                                 <subItem.icon class='w-5 h-5' />
                               </div>
@@ -208,9 +213,7 @@ const navItems: NavItem[] = [
             </div>
           </div>
 
-          {/* --- RIGHT ACTIONS (Desktop) --- */}
           <ul class='hidden lg:flex justify-end items-center gap-4'>
-            {/* --- DESKTOP SEARCH --- */}
             <li>
               <form class='relative flex items-center site-search-form'>
                 <Search class='left-3 absolute w-4 h-4 text-slate-400' />
@@ -223,6 +226,7 @@ const navItems: NavItem[] = [
                 />
               </form>
             </li>
+
             <li>
               <a
                 href='/free-wordpress-scan/'
@@ -231,20 +235,24 @@ const navItems: NavItem[] = [
                 Free Scan
               </a>
             </li>
+
             <li>
               <a
                 href='/hire-me/'
                 class='flex items-center gap-2 bg-white hover:bg-slate-200 shadow-md px-5 py-2.5 rounded-full font-semibold text-slate-900 text-sm transition-all hover:-translate-y-0.5 transform'
-                data-astro-prefetch='load'>Hire Me</a
-              >
+                data-astro-prefetch='load'>
+                Hire Me
+              </a>
             </li>
           </ul>
 
-          {/* --- MOBILE HAMBURGER --- */}
           <div class='lg:hidden flex items-center gap-4'>
             <button
+              type='button'
               id='menu-open-btn'
               aria-label='Open Menu'
+              aria-controls='mobile-menu'
+              aria-expanded='false'
               class='hover:bg-slate-800 p-2 rounded-full text-white transition-colors cursor-pointer'>
               <Menu class='w-6 h-6' />
             </button>
@@ -254,7 +262,6 @@ const navItems: NavItem[] = [
     </div>
   </header>
 
-  {/* --- MOBILE MENU OVERLAY (Now safely outside the header trap!) --- */}
   <div
     id='mobile-menu'
     class='lg:hidden z-[100] fixed inset-0 flex flex-col bg-slate-900 transition-transform translate-x-full duration-300 ease-in-out'
@@ -268,7 +275,9 @@ const navItems: NavItem[] = [
         </div>
         <span class='font-bold text-white text-lg'>Menu</span>
       </div>
+
       <button
+        type='button'
         id='menu-close-btn'
         aria-label='Close Menu'
         class='bg-slate-800 p-2 rounded-full text-slate-400 hover:text-white transition-colors cursor-pointer'>
@@ -277,7 +286,6 @@ const navItems: NavItem[] = [
     </div>
 
     <div class='flex-1 bg-slate-900 px-6 py-6 overflow-y-auto'>
-      {/* --- MOBILE SEARCH --- */}
       <div class='mb-6 pb-6 border-slate-800/50 border-b'>
         <form class='relative flex items-center w-full site-search-form'>
           <Search class='left-3 absolute w-5 h-5 text-slate-400' />
@@ -310,12 +318,17 @@ const navItems: NavItem[] = [
                     {item.name}
                     <ChevronDown class='w-5 h-5 text-slate-500 group-open:rotate-180 transition-transform' />
                   </summary>
+
                   <div class='space-y-4 pb-4 pl-4'>
                     {item.children.map((subItem) => (
                       <a
                         href={subItem.href}
-                        class={`flex items-center gap-3 py-2 ${subItem.badge ? 'opacity-60 cursor-default' : 'mobile-link text-slate-400 hover:text-sky-400'}`}
-                        onclick={subItem.badge ? 'return false;' : ''}>
+                        class={`flex items-center gap-3 py-2 ${
+                          subItem.badge
+                            ? 'opacity-60 cursor-default'
+                            : 'mobile-link text-slate-400 hover:text-sky-400'
+                        }`}
+                        onclick={subItem.badge ? 'return false;' : undefined}>
                         <subItem.icon class='w-4 h-4' />
                         <span class='text-base'>{subItem.name}</span>
                         {subItem.badge && (
@@ -338,8 +351,10 @@ const navItems: NavItem[] = [
       <a
         href='/hire-me/'
         class='flex justify-center items-center bg-sky-600 hover:bg-sky-700 shadow-sm mb-3 py-3.5 rounded-xl w-full font-semibold text-white transition-colors'
-        data-astro-prefetch='load'>Hire Me</a
-      >
+        data-astro-prefetch='load'>
+        Hire Me
+      </a>
+
       <a
         href='/free-wordpress-scan/'
         class='flex justify-center items-center gap-2 bg-slate-800 py-3.5 border border-slate-600 rounded-xl w-full font-medium text-slate-300 transition-colors'>
@@ -350,25 +365,32 @@ const navItems: NavItem[] = [
   </div>
 </>
 
-<script>
-  document.addEventListener('astro:page-load', () => {
+<script is:inline>
+  function initMobileMenu() {
     const menu = document.getElementById('mobile-menu');
     const openBtn = document.getElementById('menu-open-btn');
     const closeBtn = document.getElementById('menu-close-btn');
     const mobileLinks = document.querySelectorAll('.mobile-link');
+    const searchForms = document.querySelectorAll('.site-search-form');
 
     if (!menu || !openBtn || !closeBtn) return;
+    if (openBtn.dataset.bound === 'true') return;
 
-    const toggleMenu = (isOpen: boolean) => {
+    openBtn.dataset.bound = 'true';
+    closeBtn.dataset.bound = 'true';
+
+    const toggleMenu = (isOpen) => {
       if (isOpen) {
         menu.classList.remove('translate-x-full');
-        menu.classList.add('translate-x-0'); // Explicitly add visible state
+        menu.classList.add('translate-x-0');
         menu.setAttribute('aria-hidden', 'false');
+        openBtn.setAttribute('aria-expanded', 'true');
         document.body.style.overflow = 'hidden';
       } else {
         menu.classList.remove('translate-x-0');
         menu.classList.add('translate-x-full');
         menu.setAttribute('aria-hidden', 'true');
+        openBtn.setAttribute('aria-expanded', 'false');
         document.body.style.overflow = '';
       }
     };
@@ -377,14 +399,20 @@ const navItems: NavItem[] = [
     closeBtn.addEventListener('click', () => toggleMenu(false));
 
     mobileLinks.forEach((link) => {
+      if (link.dataset.bound === 'true') return;
+      link.dataset.bound = 'true';
       link.addEventListener('click', () => toggleMenu(false));
     });
 
-    const searchForms = document.querySelectorAll('.site-search-form');
     searchForms.forEach((form) => {
+      if (form.dataset.bound === 'true') return;
+      form.dataset.bound = 'true';
+
       form.addEventListener('submit', (e) => {
         e.preventDefault();
-        const input = e.target.querySelector('input[name="q"]');
+
+        const currentForm = e.currentTarget;
+        const input = currentForm?.querySelector('input[name="q"]');
 
         if (input && input.value.trim()) {
           const query = encodeURIComponent(
@@ -396,5 +424,8 @@ const navItems: NavItem[] = [
         }
       });
     });
-  });
+  }
+
+  initMobileMenu();
+  document.addEventListener('astro:page-load', initMobileMenu);
 </script>
