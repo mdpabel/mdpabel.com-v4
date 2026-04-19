@@ -48,33 +48,66 @@ const sameAs = [
   'https://www.researchgate.net/publication/395318263_Real-time_Full-Stack_University_Bus_Tracking_System_Based_on_IoT',
 ].filter(Boolean);
 
-const jsonLd = {
+const schemaGraph = {
   '@context': 'https://schema.org',
-  '@type': 'Person',
-  name: siteData.personal.name,
-  url: 'https://www.mdpabel.com',
-  image: siteData.personal.avatar,
-  jobTitle: 'WordPress Security Expert & Malware Removal Specialist',
-  description: seo.description,
-  worksFor: [
-    { '@type': 'Organization', name: 'Upwork' },
-    { '@type': 'Organization', name: 'Fiverr' },
+  '@graph': [
     {
-      '@type': 'Organization',
-      name: '3Zero Digital',
-      sameAs: 'https://3zerodigital.com',
+      '@type': 'WebSite',
+      '@id': 'https://www.mdpabel.com/#website',
+      url: 'https://www.mdpabel.com/',
+      name: 'MD Pabel',
+      description: seo.description,
+      inLanguage: 'en',
+      publisher: {
+        '@id': 'https://www.mdpabel.com/#person',
+      },
+    },
+    {
+      '@type': 'WebPage',
+      '@id': 'https://www.mdpabel.com/#webpage',
+      url: 'https://www.mdpabel.com/',
+      name: 'MD Pabel | WordPress Malware Removal Expert',
+      description:
+        'MD Pabel is a WordPress malware removal expert helping hacked WordPress site owners with manual cleanup, blacklist recovery, Japanese SEO spam removal, and post-hack hardening.',
+      isPartOf: { '@id': 'https://www.mdpabel.com/#website' },
+      about: { '@id': 'https://www.mdpabel.com/#person' },
+      mainEntity: { '@id': 'https://www.mdpabel.com/#person' },
+      primaryImageOfPage: {
+        '@type': 'ImageObject',
+        '@id': 'https://www.mdpabel.com/#primaryimage',
+        url: 'https://www.mdpabel.com/md-pabel.png',
+      },
+      inLanguage: 'en',
+    },
+    {
+      '@type': 'Person',
+      '@id': 'https://www.mdpabel.com/#person',
+      name: 'MD Pabel',
+      url: 'https://www.mdpabel.com/',
+      image: {
+        '@type': 'ImageObject',
+        '@id': 'https://www.mdpabel.com/#personimage',
+        url: seo.image,
+      },
+      description:
+        'WordPress malware removal expert specializing in hacked site cleanup, blacklist recovery, Japanese SEO spam removal, and WordPress hardening.',
+      jobTitle: 'WordPress Malware Removal Expert',
+      sameAs,
+      knowsAbout: [
+        'WordPress malware removal',
+        'Hacked WordPress site cleanup',
+        'Google blacklist recovery',
+        'McAfee blacklist removal',
+        'Japanese SEO spam cleanup',
+        'Fake plugin malware removal',
+        'WordPress hardening',
+        'Website malware cleanup',
+      ],
+      mainEntityOfPage: {
+        '@id': 'https://www.mdpabel.com/#webpage',
+      },
     },
   ],
-  knowsAbout: [
-    'WordPress Security',
-    'Malware Removal',
-    'Cybersecurity',
-    'Ethical Hacking',
-    'Next.js',
-    'React',
-    'Node.js',
-  ],
-  sameAs,
 };
 ---
 
@@ -82,7 +115,7 @@ const jsonLd = {
   {/* --- JSON-LD INJECTION (Zero JS Cost) --- */}
   <script
     type='application/ld+json'
-    set:html={JSON.stringify(jsonLd)}
+    set:html={JSON.stringify(schemaGraph)}
     is:inline
   />
 
