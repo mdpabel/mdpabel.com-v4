@@ -1,0 +1,38 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+// Extend default anchor attributes so it behaves exactly like a normal <a> tag
+interface Props extends HTMLAttributes<'a'> {
+  href: string;
+}
+
+const { href, ...rest } = Astro.props;
+
+let processedHref = href;
+
+if (typeof href === 'string') {
+  // Check if it's an internal link
+  const isInternalAbsolute =
+    href.startsWith('https://www.mdpabel.com') ||
+    href.startsWith('https://mdpabel.com');
+  const isRelative = href.startsWith('/') && !href.startsWith('//');
+
+  if (isInternalAbsolute || isRelative) {
+    const [pathAndQuery, hash] = href.split('#');
+    const [path, query] = pathAndQuery.split('?');
+
+    // Add slash if it doesn't have one and isn't a file extension
+    if (!path.endsWith('/') && !path.match(/\.[a-z0-9]+$/i)) {
+      let newHref = `${path}/`;
+      if (query) newHref += `?${query}`;
+      if (hash) newHref += `#${hash}`;
+
+      processedHref = newHref;
+    }
+  }
+}
+---
+
+<a href={processedHref} {...rest}>
+  <slot />
+</a>
