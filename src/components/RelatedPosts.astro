@@ -26,7 +26,7 @@ if (relatedPosts.length === 0) {
   <div class='gap-8 grid grid-cols-1 md:grid-cols-3'>
     {
       relatedPosts.map((post) => (
-        <a href={`/blog/${post.slug}`} class='group flex flex-col gap-3'>
+        <a href={`/blog/${post.slug}/`} class='group flex flex-col gap-3'>
           {/* Thumbnail Fallback */}
           <div class='bg-slate-800/50 rounded-xl w-full aspect-video overflow-hidden'>
             {post.featuredImage ? (

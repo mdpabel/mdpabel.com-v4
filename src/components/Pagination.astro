@@ -22,10 +22,10 @@ const createPageURL = (pageNumber: number) => {
   // Ensure we are working with a string to avoid .replace errors
   const base = String(baseUrl || '');
 
-  if (pageNumber === 1) return base;
+  if (pageNumber === 1) return `${base}/`; // First page should be base URL without page number
 
   const cleanBase = base.replace(/\/$/, '');
-  return `${cleanBase}/${pageNumber}`;
+  return `${cleanBase}/${pageNumber}/`;
 };
 
 // --- 2. Calculate Page Range ---
