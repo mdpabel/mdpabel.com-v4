@@ -1,6 +1,7 @@
 ---
 // src/layouts/Layout.astro
 import Header from '../components/Header.astro';
+import MouseGlow from '../components/MouseGlow.astro';
 import '../styles/global.css';
 import Footer from '../components/Footer.astro';
 import FloatingCTA from '../components/FloatingCTA.astro';
@@ -54,6 +55,7 @@ const cleanYoastHead = yoastHead
     /* Locked to bg-slate-950 for a deeper forensic feel, text-slate-100 for readability */
   }
   <body>
+    <MouseGlow />
     <div
       class='flex flex-col bg-slate-900 selection:bg-sky-500/30 min-h-screen font-serif text-slate-100 selection:text-sky-200 antialiased'>
       <Header />

@@ -1,0 +1,96 @@
+<!-- <div id='spotlight' class='spotlight'></div>
+
+<script lang='ts'>
+  const spotlight = document.getElementById('spotlight');
+
+  if (spotlight instanceof HTMLDivElement) {
+    const updateSpotlight = (event) => {
+      spotlight.style.setProperty('--mx', `${event.clientX}px`);
+      spotlight.style.setProperty('--my', `${event.clientY}px`);
+      spotlight.style.opacity = '1';
+    };
+
+    const hideSpotlight = () => {
+      spotlight.style.opacity = '0';
+    };
+
+    window.addEventListener('mousemove', updateSpotlight);
+    window.addEventListener('mouseleave', hideSpotlight);
+  }
+</script> -->
+<style>
+  :global(:root) {
+    --glow-size: 650px;
+    --glow-color: rgba(29, 78, 216, 0.15);
+
+    --scrollbar-size: 10px;
+    --scrollbar-track: oklch(20.8% 0.042 265.755);
+    --scrollbar-thumb: #334155;
+    --scrollbar-thumb-hover: rgba(56, 189, 248, 0.45);
+  }
+
+  .spotlight {
+    --mx: 50%;
+    --my: 50%;
+
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+
+    background: radial-gradient(
+      var(--glow-size) circle at var(--mx, 50%) var(--my, 50%),
+      var(--glow-color),
+      transparent 60%
+    );
+  }
+
+  /* :global([data-theme='dark']) {
+    --glow-color: rgba(59, 130, 246, 0.14);
+    --scrollbar-track: rgba(2, 6, 23, 0.85);
+    --scrollbar-thumb: rgba(59, 130, 246, 0.3);
+    --scrollbar-thumb-hover: rgba(96, 165, 250, 0.5);
+  }
+
+  :global([data-theme='light']) {
+    --glow-color: rgba(14, 165, 233, 0.1);
+    --scrollbar-track: rgba(226, 232, 240, 0.7);
+    --scrollbar-thumb: rgba(14, 165, 233, 0.28);
+    --scrollbar-thumb-hover: rgba(2, 132, 199, 0.4);
+  } */
+
+  :global(html) {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  }
+
+  :global(::-webkit-scrollbar) {
+    width: var(--scrollbar-size);
+    height: var(--scrollbar-size);
+  }
+
+  :global(::-webkit-scrollbar-track) {
+    background: var(--scrollbar-track);
+  }
+
+  :global(::-webkit-scrollbar-thumb) {
+    background: linear-gradient(
+      180deg,
+      var(--scrollbar-thumb),
+      var(--scrollbar-thumb-hover)
+    );
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
+  :global(::-webkit-scrollbar-thumb:hover) {
+    background: linear-gradient(
+      180deg,
+      var(--scrollbar-thumb-hover),
+      var(--scrollbar-thumb)
+    );
+  }
+</style>

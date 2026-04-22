@@ -1,8 +1,8 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import ComponentWrapper from '../../components/component-wrapper.astro';
 
-// 1. Generate Static Paths
 export async function getStaticPaths() {
   const threats = await getCollection('wordpress-threats');
   return threats.map((entry) => ({
@@ -11,188 +11,366 @@ export async function getStaticPaths() {
   }));
 }
 
-// 2. Define the Type for Props
 interface Props {
   entry: CollectionEntry<'wordpress-threats'>;
 }
 
 const { entry } = Astro.props;
-
-// 3. Render Content
 const { Content } = await render(entry);
-const data = entry.data;
+const data = entry.data as Record<string, any>;
 
-// Logic for Badges
+const asString = (value: unknown): string => {
+  if (typeof value === 'string') return value.trim();
+  if (typeof value === 'number') return String(value);
+  return '';
+};
+
+const asArray = (value: unknown): string[] => {
+  if (Array.isArray(value)) {
+    return value
+      .flatMap((item) => (typeof item === 'string' ? [item.trim()] : []))
+      .filter(Boolean);
+  }
+  if (typeof value === 'string' && value.trim()) return [value.trim()];
+  return [];
+};
+
+const hasValue = (value: unknown): boolean => {
+  if (Array.isArray(value)) return value.length > 0;
+  if (typeof value === 'string') return value.trim().length > 0;
+  return value !== null && value !== undefined && value !== false;
+};
+
+const title = asString(data.title) || 'Threat Report';
+const description =
+  asString(data.description) ||
+  'Detailed analysis of WordPress threats, malware behavior, persistence, and cleanup guidance.';
+const reportDate = asString(data.reportDate);
+const severity = asString(data.severity) || 'Unknown';
+const threatType = asString(data.threatType);
+const vtScore = asString(data.vtScore);
+const vtLink = asString(data.vtLink);
+const fileHash = asString(data.fileHash);
+const reportType = asString(data.reportType);
+const sampleScope = asString(data.sampleScope);
+
+const screenshots = asArray(data.screenshots);
+const detectedPaths = asArray(data.detectedPaths);
+const affectedComponents = asArray(data.affectedComponents);
+const entryPoints = asArray(data.entryPoints);
+const persistencePoints = asArray(data.persistencePoints);
+
+const impact = asString(data.impact);
+const seenOn = asString(data.seenOn);
+const behavior = asString(data.behavior);
+const difficulty = asString(data.difficulty);
+const recurrence = asString(data.recurrence);
+const numberOfSiteFixed = asString(data.numberOfSiteFixed);
+
 const isFUD =
-  data.vtScore?.includes('0/') || data.vtScore?.includes('Undetected');
-const isZeroDay = data.vtScore?.includes('Zero-Day');
+  vtScore.includes('0/') ||
+  vtScore.toLowerCase().includes('undetected') ||
+  vtScore.toLowerCase().includes('fully undetected');
+const isZeroDay =
+  vtScore.toLowerCase().includes('zero-day') ||
+  vtScore.toLowerCase().includes('unique');
 
-// Severity Colors (Optimized for Dark Mode)
 const severityColor =
-  data.severity === 'Critical'
-    ? 'bg-red-900/40 text-red-400 border-red-800'
-    : data.severity === 'High'
-      ? 'bg-orange-900/40 text-orange-400 border-orange-800'
-      : 'bg-blue-900/40 text-blue-400 border-blue-800';
+  severity === 'Critical'
+    ? 'border-red-800 bg-red-900/40 text-red-300'
+    : severity === 'High'
+      ? 'border-orange-800 bg-orange-900/40 text-orange-300'
+      : severity === 'Medium'
+        ? 'border-amber-800 bg-amber-900/40 text-amber-300'
+        : 'border-blue-800 bg-blue-900/40 text-blue-300';
 
-// Difficulty Colors
-const diffColor =
-  data.difficulty === 'Hard'
-    ? 'text-red-500'
-    : data.difficulty === 'Moderate'
-      ? 'text-orange-500'
-      : 'text-green-500';
+const difficultyColor =
+  difficulty === 'Hard'
+    ? 'text-red-400'
+    : difficulty === 'Moderate'
+      ? 'text-orange-400'
+      : difficulty === 'Easy'
+        ? 'text-green-400'
+        : 'text-slate-200';
+
+const metaCards = [
+  {
+    label: 'Impact Radius',
+    value: seenOn || impact || '',
+    tone: 'text-white',
+  },
+  {
+    label: 'Removal Difficulty',
+    value: difficulty,
+    tone: difficultyColor,
+  },
+  {
+    label: 'Recurrence',
+    value: recurrence,
+    tone: 'text-white',
+  },
+  {
+    label: 'Key Symptom',
+    value: behavior,
+    tone: 'text-slate-300',
+    small: true,
+  },
+  {
+    label: 'Report Type',
+    value: reportType,
+    tone: 'text-white',
+  },
+  {
+    label: 'Sample Scope',
+    value: sampleScope,
+    tone: 'text-slate-300',
+    small: true,
+  },
+  {
+    label: 'Sites / Cases',
+    value: numberOfSiteFixed,
+    tone: 'text-white',
+  },
+  {
+    label: 'VirusTotal',
+    value: vtScore,
+    tone: 'text-white',
+  },
+].filter((card) => hasValue(card.value));
+
+const technicalLists = [
+  { title: 'Detected Paths', items: detectedPaths },
+  { title: 'Affected Components', items: affectedComponents },
+  { title: 'Entry Points', items: entryPoints },
+  { title: 'Persistence Points', items: persistencePoints },
+].filter((section) => section.items.length > 0);
 
 const proseClasses =
-  'prose-invert max-w-none prose prose-lg ' +
-  'prose-headings:font-bold prose-headings:text-white prose-headings:border-b prose-headings:border-slate-800 prose-headings:pb-2 ' +
-  'prose-p:text-slate-300 prose-p:leading-relaxed ' +
+  'prose prose-slate prose-invert max-w-none ' +
+  'prose-headings:mb-4 prose-headings:border-slate-800 prose-headings:pb-2 prose-headings:font-bold prose-headings:text-white md:prose-headings:border-b ' +
+  'prose-h2:mt-10 prose-h3:mt-8 ' +
+  'prose-p:text-slate-300 prose-p:leading-7 ' +
   'prose-strong:text-white ' +
-  'prose-ul:text-slate-300 prose-ol:text-slate-300 prose-li:mb-2 ' +
-  'prose-code:text-pink-400 prose-code:break-words ' +
-  'prose-img:rounded-lg prose-img:border prose-img:border-slate-700 prose-img:shadow-lg';
+  'prose-a:text-blue-400 prose-a:no-underline hover:prose-a:text-blue-300 ' +
+  'prose-ul:text-slate-300 prose-ol:text-slate-300 prose-li:my-1 ' +
+  'prose-code:break-words prose-code:rounded prose-code:bg-slate-900 prose-code:px-1 prose-code:py-0.5 prose-code:text-pink-400 ' +
+  'prose-pre:overflow-x-auto prose-pre:rounded-2xl prose-pre:border prose-pre:border-slate-800 prose-pre:bg-slate-950 prose-pre:p-4 md:prose-pre:p-5 ' +
+  'prose-img:rounded-2xl prose-img:border prose-img:border-slate-800 prose-img:shadow-lg';
 ---
 
-<Layout
-  title={`${data.title} | Threat Report`}
-  description={data.description ||
-    'Detailed analysis of WordPress threats and malware.'}>
-  <main class='mx-auto px-4 py-12 max-w-4xl'>
-    {/* --- HEADER --- */}
-    <header class='mb-8 pb-8 border-slate-800 border-b'>
-      <div class='flex flex-wrap items-center gap-3 mb-4'>
+<Layout title={`${title} | Threat Report`} description={description}>
+  <ComponentWrapper class='mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 lg:py-12'>
+    <header
+      class='bg-slate-950/70 mb-8 p-5 sm:p-6 lg:p-8 border border-slate-800 rounded-3xl'>
+      <div class='flex flex-wrap items-start gap-2 sm:gap-3 mb-4'>
         <span
-          class={`px-3 py-1 rounded-full text-xs font-bold border uppercase tracking-wide ${severityColor}`}>
-          {data.severity}
-        </span>
-
-        <span
-          class='bg-slate-800 px-3 py-1 border border-slate-700 rounded-full font-medium text-slate-400 text-xs'>
-          {data.threatType}
+          class={`rounded-full border px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em] ${severityColor}`}>
+          {severity}
         </span>
 
         {
-          isFUD && (
+          hasValue(threatType) && (
+            <span class='bg-slate-900 px-3 py-1 border border-slate-700 rounded-full font-medium text-[11px] text-slate-300 uppercase tracking-[0.18em]'>
+              {threatType}
+            </span>
+          )
+        }
+
+        {
+          isFUD && hasValue(vtLink) && (
             <a
-              href={data.vtLink}
+              href={vtLink}
               target='_blank'
-              class='flex items-center gap-2 bg-purple-900/40 hover:bg-purple-900/60 px-3 py-1 border border-purple-800 rounded-full font-bold text-purple-400 text-xs uppercase transition-colors animate-pulse'>
-              👻 Fully Undetected (0/61)
+              rel='noopener noreferrer'
+              class='bg-purple-900/40 hover:bg-purple-900/60 px-3 py-1 border border-purple-800 rounded-full font-bold text-[11px] text-purple-300 uppercase tracking-[0.18em] transition'>
+              Fully Undetected
             </a>
           )
         }
 
         {
           isZeroDay && (
-            <span class='bg-slate-700 px-3 py-1 border border-slate-600 rounded-full font-bold text-white text-xs uppercase'>
-              🛡️ Zero-Day Variant
+            <span class='bg-slate-800 px-3 py-1 border border-slate-700 rounded-full font-bold text-[11px] text-white uppercase tracking-[0.18em]'>
+              Zero-Day Variant
             </span>
           )
         }
       </div>
 
-      <h1 class='mb-2 font-extrabold text-white text-3xl md:text-4xl'>
-        {data.title}
+      <h1
+        class='max-w-4xl font-extrabold text-white text-2xl sm:text-3xl lg:text-4xl leading-tight'>
+        {title}
       </h1>
-      <p class='font-mono text-slate-500 text-sm'>
-        Case ID: {data.fileHash} • Detected: {data.reportDate}
-      </p>
+
+      {
+        hasValue(description) && (
+          <p class='mt-4 max-w-4xl text-slate-300 text-sm sm:text-base leading-6'>
+            {description}
+          </p>
+        )
+      }
+
+      <div
+        class='flex flex-wrap gap-x-4 gap-y-2 mt-5 text-slate-400 text-xs sm:text-sm'>
+        {
+          hasValue(fileHash) && (
+            <span class='break-all'>Case ID: {fileHash}</span>
+          )
+        }
+        {hasValue(reportDate) && <span>Detected: {reportDate}</span>}
+        {hasValue(reportType) && <span>Type: {reportType}</span>}
+      </div>
     </header>
 
-    {/* --- FIELD NOTES GRID --- */}
-    <div class='gap-4 grid grid-cols-2 md:grid-cols-4 mb-10'>
-      {/* Impact */}
-      <div class='bg-slate-900 p-4 border border-slate-800 rounded-xl'>
-        <span
-          class='block mb-1 text-[10px] text-slate-500 uppercase tracking-wider'
-          >Impact Radius</span
-        >
-        <div class='font-bold text-white text-lg leading-tight'>
-          {data.seenOn || 'Single Site'}
-        </div>
-      </div>
-
-      {/* Difficulty */}
-      <div class='bg-slate-900 p-4 border border-slate-800 rounded-xl'>
-        <span
-          class='block mb-1 text-[10px] text-slate-500 uppercase tracking-wider'
-          >Removal Difficulty</span
-        >
-        <div class={`font-bold text-lg ${diffColor}`}>
-          {data.difficulty || 'Unknown'}
-        </div>
-      </div>
-
-      {/* Recurrence */}
-      <div class='bg-slate-900 p-4 border border-slate-800 rounded-xl'>
-        <span
-          class='block mb-1 text-[10px] text-slate-500 uppercase tracking-wider'
-          >Recurrence Rate</span
-        >
-        <div class='font-bold text-white text-lg'>
-          {data.recurrence || 'Low'}
-        </div>
-      </div>
-
-      {/* Behavior */}
-      <div
-        class='col-span-2 md:col-span-1 bg-slate-900 p-4 border border-slate-800 rounded-xl'>
-        <span
-          class='block mb-1 text-[10px] text-blue-400 uppercase tracking-wider'
-          >Key Symptom</span
-        >
-        <div class='font-medium text-slate-300 text-xs leading-relaxed'>
-          {data.behavior ? data.behavior : 'No specific behavior noted.'}
-        </div>
-      </div>
-    </div>
-
-    {/* --- SCREENSHOT GALLERY --- */}
     {
-      data.screenshots && data.screenshots.length > 0 && (
-        <div class='mb-12'>
-          <h3 class='mb-4 font-bold text-slate-400 text-sm uppercase tracking-wider'>
-            Evidence Screenshots
-          </h3>
-          <div class='gap-4 grid grid-cols-1 md:grid-cols-2'>
-            {data.screenshots.map((img) => (
+      metaCards.length > 0 && (
+        <section class='gap-4 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 mb-8'>
+          {metaCards.map((card) => (
+            <div
+              class={`rounded-2xl border border-slate-800 bg-slate-900 p-4 ${card.small ? 'xl:col-span-2' : ''}`}>
+              <span class='block mb-2 text-[11px] text-slate-500 uppercase tracking-[0.18em]'>
+                {card.label}
+              </span>
+              <div
+                class={`leading-relaxed ${card.small ? 'text-sm' : 'text-base sm:text-lg'} ${card.tone}`}>
+                {card.value}
+              </div>
+            </div>
+          ))}
+        </section>
+      )
+    }
+
+    {
+      technicalLists.length > 0 && (
+        <section class='bg-slate-950/60 mb-10 p-5 sm:p-6 border border-slate-800 rounded-3xl'>
+          <div class='flex justify-between items-center gap-3 mb-5'>
+            <h2 class='font-bold text-white text-lg sm:text-xl'>
+              Threat Overview
+            </h2>
+            {hasValue(vtLink) && hasValue(vtScore) && (
+              <a
+                href={vtLink}
+                target='_blank'
+                rel='noopener noreferrer'
+                class='font-medium text-blue-400 hover:text-blue-300 text-xs sm:text-sm transition'>
+                VirusTotal: {vtScore}
+              </a>
+            )}
+          </div>
+
+          <div class='gap-4 grid grid-cols-1 lg:grid-cols-2'>
+            {technicalLists.map((section) => (
+              <div class='bg-slate-900/80 p-4 border border-slate-800 rounded-2xl'>
+                <h3 class='mb-3 font-semibold text-slate-400 text-sm uppercase tracking-[0.18em]'>
+                  {section.title}
+                </h3>
+                <ul class='space-y-2 text-slate-300 text-sm leading-6'>
+                  {section.items.map((item) => (
+                    <li class='flex gap-2'>
+                      <span class='bg-blue-400 mt-2 rounded-full w-1.5 h-1.5 shrink-0' />
+                      <span class='break-words'>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    {
+      screenshots.length > 0 && (
+        <section class='mb-10'>
+          <div class='flex justify-between items-center gap-3 mb-4'>
+            <h2 class='font-bold text-slate-400 text-sm uppercase tracking-[0.18em]'>
+              Evidence Screenshots
+            </h2>
+            <span class='text-slate-500 text-xs sm:text-sm'>
+              {screenshots.length} image{screenshots.length === 1 ? '' : 's'}
+            </span>
+          </div>
+
+          <div class='gap-4 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3'>
+            {screenshots.map((img, index) => (
               <a
                 href={img}
                 target='_blank'
-                class='block shadow-sm border border-slate-700 hover:border-slate-500 rounded-lg overflow-hidden transition-shadow'>
+                rel='noopener noreferrer'
+                class='group bg-slate-900 border border-slate-800 hover:border-slate-600 rounded-2xl overflow-hidden transition'>
                 <img
                   src={img}
-                  alt='Malware Evidence'
-                  class='w-full h-48 object-cover hover:scale-105 transition-transform duration-300'
+                  alt={`${title} screenshot ${index + 1}`}
+                  loading='lazy'
+                  class='w-full h-56 sm:h-64 object-cover group-hover:scale-[1.02] transition duration-300'
                 />
               </a>
             ))}
           </div>
-        </div>
+        </section>
       )
     }
 
-    {/* --- MARKDOWN CONTENT --- */}
-    <article class={proseClasses}>
-      <Content />
-    </article>
+    <section class='gap-8 grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_320px]'>
+      <article class={`${proseClasses} min-w-0`}>
+        <Content />
+      </article>
 
-    {/* --- CTA FOOTER --- */}
-    <div
-      class='bg-slate-900 mt-16 p-8 border border-slate-800 rounded-2xl text-center'>
-      <h3 class='mb-2 font-bold text-white text-xl'>
-        Need help removing this?
-      </h3>
-      <p class='mb-6 text-slate-400 text-sm'>
-        This malware is rated as <span class='font-bold text-white'
-          >{data.difficulty}</span
-        > difficulty. If you are unsure, do not attempt manual removal.
-      </p>
-      <a
-        href='/hire-me/'
-        class='inline-block bg-blue-600 hover:bg-blue-500 px-6 py-3 rounded-lg font-bold text-white transition-colors'>
-        Hire MD Pabel for Cleanup
-      </a>
-    </div>
-  </main>
+      <aside class='xl:top-24 xl:sticky xl:self-start space-y-4'>
+        {
+          hasValue(vtScore) && (
+            <div class='bg-slate-950/70 p-5 border border-slate-800 rounded-2xl'>
+              <h3 class='mb-2 font-bold text-slate-400 text-sm uppercase tracking-[0.18em]'>
+                Detection Status
+              </h3>
+              <p class='text-slate-300 text-sm leading-6'>{vtScore}</p>
+            </div>
+          )
+        }
+
+        {
+          detectedPaths.length > 0 && (
+            <div class='bg-slate-950/70 p-5 border border-slate-800 rounded-2xl'>
+              <h3 class='mb-3 font-bold text-slate-400 text-sm uppercase tracking-[0.18em]'>
+                Sample Files
+              </h3>
+              <ul class='space-y-2 text-slate-300 text-sm'>
+                {detectedPaths.slice(0, 8).map((item) => (
+                  <li class='bg-slate-900 px-3 py-2 rounded-lg break-words'>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
+
+        <div
+          class='bg-slate-900 p-5 border border-slate-800 rounded-2xl text-center'>
+          <h3 class='mb-2 font-bold text-white text-lg'>
+            Need help removing this?
+          </h3>
+          <p class='mb-5 text-slate-400 text-sm leading-6'>
+            {
+              hasValue(difficulty) ? (
+                <>
+                  This threat is rated{' '}
+                  <span class='font-semibold text-white'>{difficulty}</span>{' '}
+                  difficulty. If you are unsure, avoid partial cleanup.
+                </>
+              ) : (
+                'If you are unsure, avoid partial cleanup. These infections often persist through hidden loaders, fake plugins, or modified theme files.'
+              )
+            }
+          </p>
+          <a
+            href='/hire-me/'
+            class='inline-flex justify-center items-center bg-blue-600 hover:bg-blue-500 px-5 py-3 rounded-xl w-full font-bold text-white text-sm transition'>
+            Hire MD Pabel for Cleanup
+          </a>
+        </div>
+      </aside>
+    </section>
+  </ComponentWrapper>
 </Layout>
