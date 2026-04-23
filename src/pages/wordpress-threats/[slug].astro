@@ -147,19 +147,20 @@ const technicalLists = [
 
 const proseClasses =
   'prose prose-slate prose-invert max-w-none ' +
-  'prose-headings:mb-4 prose-headings:border-slate-800 prose-headings:pb-2 prose-headings:font-bold prose-headings:text-white md:prose-headings:border-b ' +
+  'prose-headings:mb-4 prose-headings:border-slate-800 prose-headings:pb-2 prose-headings:font-bold prose-headings:text-white prose-headings:break-words md:prose-headings:border-b ' +
   'prose-h2:mt-10 prose-h3:mt-8 ' +
-  'prose-p:text-slate-300 prose-p:leading-7 ' +
-  'prose-strong:text-white ' +
-  'prose-a:text-blue-400 prose-a:no-underline hover:prose-a:text-blue-300 ' +
-  'prose-ul:text-slate-300 prose-ol:text-slate-300 prose-li:my-1 ' +
-  'prose-code:break-words prose-code:rounded prose-code:bg-slate-900 prose-code:px-1 prose-code:py-0.5 prose-code:text-pink-400 ' +
-  'prose-pre:overflow-x-auto prose-pre:rounded-2xl prose-pre:border prose-pre:border-slate-800 prose-pre:bg-slate-950 prose-pre:p-4 md:prose-pre:p-5 ' +
-  'prose-img:rounded-2xl prose-img:border prose-img:border-slate-800 prose-img:shadow-lg';
+  'prose-p:text-slate-300 prose-p:leading-7 prose-p:break-words prose-p:[overflow-wrap:anywhere] ' +
+  'prose-strong:text-white prose-strong:break-words ' +
+  'prose-a:text-blue-400 prose-a:no-underline prose-a:break-all hover:prose-a:text-blue-300 ' +
+  'prose-ul:text-slate-300 prose-ol:text-slate-300 prose-li:my-1 prose-li:break-words prose-li:[overflow-wrap:anywhere] ' +
+  'prose-code:break-all prose-code:rounded prose-code:bg-slate-900 prose-code:px-1 prose-code:py-0.5 prose-code:text-pink-400 ' +
+  'prose-pre:max-w-full prose-pre:overflow-x-auto prose-pre:rounded-2xl prose-pre:border prose-pre:border-slate-800 prose-pre:bg-slate-950 prose-pre:p-4 md:prose-pre:p-5 ' +
+  'prose-img:max-w-full prose-img:rounded-2xl prose-img:border prose-img:border-slate-800 prose-img:shadow-lg';
 ---
 
 <Layout title={`${title} | Threat Report`} description={description}>
-  <ComponentWrapper class='mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 lg:py-12'>
+  <ComponentWrapper
+    class='mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 lg:py-12 max-w-full overflow-x-hidden'>
     <header
       class='bg-slate-950/70 mb-8 p-5 sm:p-6 lg:p-8 border border-slate-800 rounded-3xl'>
       <div class='flex flex-wrap items-start gap-2 sm:gap-3 mb-4'>
@@ -198,13 +199,13 @@ const proseClasses =
       </div>
 
       <h1
-        class='max-w-4xl font-extrabold text-white text-2xl sm:text-3xl lg:text-4xl leading-tight'>
+        class='max-w-4xl font-extrabold text-white text-2xl sm:text-3xl lg:text-4xl break-words leading-tight'>
         {title}
       </h1>
 
       {
         hasValue(description) && (
-          <p class='mt-4 max-w-4xl text-slate-300 text-sm sm:text-base leading-6'>
+          <p class='mt-4 max-w-4xl text-slate-300 text-sm sm:text-base break-words leading-6 [overflow-wrap:anywhere]'>
             {description}
           </p>
         )
@@ -232,7 +233,7 @@ const proseClasses =
                 {card.label}
               </span>
               <div
-                class={`leading-relaxed ${card.small ? 'text-sm' : 'text-base sm:text-lg'} ${card.tone}`}>
+                class={`break-words leading-relaxed [overflow-wrap:anywhere] ${card.small ? 'text-sm' : 'text-base sm:text-lg'} ${card.tone}`}>
                 {card.value}
               </div>
             </div>
@@ -244,7 +245,7 @@ const proseClasses =
     {
       technicalLists.length > 0 && (
         <section class='bg-slate-950/60 mb-10 p-5 sm:p-6 border border-slate-800 rounded-3xl'>
-          <div class='flex justify-between items-center gap-3 mb-5'>
+          <div class='flex flex-wrap justify-between items-center gap-3 mb-5'>
             <h2 class='font-bold text-white text-lg sm:text-xl'>
               Threat Overview
             </h2>
@@ -253,7 +254,7 @@ const proseClasses =
                 href={vtLink}
                 target='_blank'
                 rel='noopener noreferrer'
-                class='font-medium text-blue-400 hover:text-blue-300 text-xs sm:text-sm transition'>
+                class='font-medium text-blue-400 hover:text-blue-300 text-xs sm:text-sm break-all transition'>
                 VirusTotal: {vtScore}
               </a>
             )}
@@ -269,7 +270,9 @@ const proseClasses =
                   {section.items.map((item) => (
                     <li class='flex gap-2'>
                       <span class='bg-blue-400 mt-2 rounded-full w-1.5 h-1.5 shrink-0' />
-                      <span class='break-words'>{item}</span>
+                      <span class='break-words [overflow-wrap:anywhere]'>
+                        {item}
+                      </span>
                     </li>
                   ))}
                 </ul>
@@ -283,7 +286,7 @@ const proseClasses =
     {
       screenshots.length > 0 && (
         <section class='mb-10'>
-          <div class='flex justify-between items-center gap-3 mb-4'>
+          <div class='flex flex-wrap justify-between items-center gap-3 mb-4'>
             <h2 class='font-bold text-slate-400 text-sm uppercase tracking-[0.18em]'>
               Evidence Screenshots
             </h2>
@@ -313,7 +316,8 @@ const proseClasses =
     }
 
     <section class='gap-8 grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_320px]'>
-      <article class={`${proseClasses} min-w-0`}>
+      <article
+        class={`${proseClasses} min-w-0 max-w-full overflow-x-hidden break-words [overflow-wrap:anywhere]`}>
         <Content />
       </article>
 
@@ -324,7 +328,9 @@ const proseClasses =
               <h3 class='mb-2 font-bold text-slate-400 text-sm uppercase tracking-[0.18em]'>
                 Detection Status
               </h3>
-              <p class='text-slate-300 text-sm leading-6'>{vtScore}</p>
+              <p class='text-slate-300 text-sm break-words leading-6 [overflow-wrap:anywhere]'>
+                {vtScore}
+              </p>
             </div>
           )
         }
@@ -337,7 +343,7 @@ const proseClasses =
               </h3>
               <ul class='space-y-2 text-slate-300 text-sm'>
                 {detectedPaths.slice(0, 8).map((item) => (
-                  <li class='bg-slate-900 px-3 py-2 rounded-lg break-words'>
+                  <li class='bg-slate-900 px-3 py-2 rounded-lg break-words [overflow-wrap:anywhere]'>
                     {item}
                   </li>
                 ))}
@@ -351,7 +357,8 @@ const proseClasses =
           <h3 class='mb-2 font-bold text-white text-lg'>
             Need help removing this?
           </h3>
-          <p class='mb-5 text-slate-400 text-sm leading-6'>
+          <p
+            class='mb-5 text-slate-400 text-sm break-words leading-6 [overflow-wrap:anywhere]'>
             {
               hasValue(difficulty) ? (
                 <>
