@@ -1,0 +1,19 @@
+{
+  "publishReady": false,
+  "issues": [
+    "The title is a bit long and reads like a two-part label; it could be tightened for clearer publication.",
+    "The page says 'likely rootCause' is unknown in the evidence, but the draft still implies a concrete intrusion path in a few places; keep that framed as unknown.",
+    "Some phrasing in the summary and technical sections is slightly stronger than the screenshots prove, especially where it says the hidden account is attacker-controlled rather than just concealed and suspicious.",
+    "The screenshot section includes 'likelySearchQuery' style wording, which feels like internal search-note metadata rather than public-facing copy.",
+    "The proof statement names a specific analyst/source attribution; make sure that attribution is intended for publication and not internal-only.",
+    "The removal guidance suggests deleting the whole mu-plugins directory in some contexts; that should be softened to 'remove suspicious files after confirming legitimate custom mu-plugins.'"
+  ],
+  "fixes": [
+    "Shorten the title to something like 'Malicious mu-plugins backdoor with hidden admin user'.",
+    "Keep the root-cause language explicit that the original entry point is unknown and only the planted persistence is evidenced.",
+    "Change a few absolute claims to evidence-based phrasing, e.g. 'designed to hide' instead of 'attacker-controlled' unless the hidden account is confirmed.",
+    "Move 'likelySearchQuery' fields out of the public page or drop them entirely if this is meant for readers.",
+    "Verify whether the attribution in the proof statement belongs on the public page; if not, remove it.",
+    "Revise cleanup guidance to say 'review and remove suspicious mu-plugins' rather than implying the entire directory is malicious by default."
+  ]
+}
