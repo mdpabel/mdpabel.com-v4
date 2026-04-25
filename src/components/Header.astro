@@ -19,6 +19,7 @@ import {
   Search,
 } from '@lucide/astro';
 import ComponentWrapper from './component-wrapper.astro';
+import OfferTopbar from './offer-topbar.astro';
 
 interface NavLink {
   type: 'link';
@@ -138,6 +139,7 @@ const navItems: NavItem[] = [
   <header
     id='main-header'
     class='top-0 z-40 sticky bg-slate-900/90 backdrop-blur-md border-slate-800 border-b w-full overflow-x-clip transition-colors duration-300'>
+    <OfferTopbar />
     <div class='py-4'>
       <ComponentWrapper>
         <nav class='relative flex justify-between items-center mx-auto'>

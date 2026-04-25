@@ -1,0 +1,99 @@
+---
+import { X } from '@lucide/astro';
+import ComponentWrapper from './component-wrapper.astro';
+
+interface Props {
+  whatsappNumber?: string;
+  message?: string;
+  storageKey?: string;
+  dismissible?: boolean;
+}
+
+const {
+  whatsappNumber = '8801323390163',
+  message = 'Hi MD Pabel, I want to claim the $25 WordPress malware cleanup starter offer. My website is hacked.',
+  storageKey = 'mdpOfferTopbarClosed',
+  dismissible = true,
+} = Astro.props;
+
+const whatsappHref = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+---
+
+<div
+  data-mdp-offer-topbar
+  data-storage-key={storageKey}
+  class='bg-slate-950 border-emerald-500/20 border-b'>
+  <ComponentWrapper>
+    <div
+      class='relative flex justify-center items-center px-9 py-2 text-center'>
+      <p class='font-medium text-[13px] text-slate-300 sm:text-sm leading-snug'>
+        <span class='font-semibold text-emerald-400'>Starter Offer:</span>
+        WordPress Malware Cleanup From
+        <span class='font-bold text-white whitespace-nowrap'>$25</span>
+        <span class='hidden md:inline text-slate-500'>
+          — limited availability
+        </span>
+
+        <a
+          href={whatsappHref}
+          target='_blank'
+          rel='noopener noreferrer'
+          class='ml-2 font-semibold text-emerald-400 hover:text-emerald-300 underline underline-offset-4 whitespace-nowrap transition-colors'>
+          Claim on WhatsApp →
+        </a>
+      </p>
+
+      {
+        dismissible && (
+          <button
+            type='button'
+            data-mdp-offer-close
+            aria-label='Close offer'
+            class='top-1/2 right-0 absolute p-1 text-slate-500 hover:text-white transition-colors -translate-y-1/2 cursor-pointer'>
+            <X class='w-4 h-4' />
+          </button>
+        )
+      }
+    </div>
+  </ComponentWrapper>
+</div>
+
+<script is:inline>
+  function initMdpOfferTopbar() {
+    const topbars = document.querySelectorAll('[data-mdp-offer-topbar]');
+
+    topbars.forEach((topbar) => {
+      if (topbar.dataset.bound === 'true') return;
+
+      const closeBtn = topbar.querySelector('[data-mdp-offer-close]');
+      const storageKey =
+        topbar.getAttribute('data-storage-key') || 'mdpOfferTopbarClosed';
+
+      topbar.dataset.bound = 'true';
+
+      try {
+        if (localStorage.getItem(storageKey) === 'true') {
+          topbar.style.display = 'none';
+          return;
+        }
+      } catch (error) {
+        // Ignore localStorage issues.
+      }
+
+      if (!closeBtn) return;
+
+      closeBtn.addEventListener('click', () => {
+        topbar.style.display = 'none';
+
+        try {
+          localStorage.setItem(storageKey, 'true');
+        } catch (error) {
+          // Ignore localStorage issues.
+        }
+      });
+    });
+  }
+
+  initMdpOfferTopbar();
+  document.addEventListener('astro:page-load', initMdpOfferTopbar);
+</script>
