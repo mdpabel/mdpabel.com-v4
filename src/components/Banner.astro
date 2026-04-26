@@ -1,7 +1,7 @@
 ---
 import ComponentWrapper from './component-wrapper.astro';
 
-// 1. Get current path (Server Side)
+// Get current path server-side
 const currentPath = Astro.url.pathname;
 ---
 
@@ -15,6 +15,7 @@ const currentPath = Astro.url.pathname;
         <span class='opacity-90'>
           Professional cleaning and security hardening for just
         </span>
+
         {/* Desktop Price */}
         <span
           class='hidden md:block drop-shadow-md ml-1 font-black text-yellow-300 text-3xl tracking-tight hover:scale-110 transition-transform duration-500 cursor-default transform'>
@@ -35,6 +36,7 @@ const currentPath = Astro.url.pathname;
         href='/hire-me/'
         id='promo-banner-btn'
         data-location={currentPath}
+        data-clarity-event='promo_banner_get_started_click'
         class='block bg-white hover:bg-sky-50 shadow-lg px-6 py-2 rounded-full w-full md:w-auto font-semibold text-sky-600 text-center transition-colors'>
         Get Started
       </a>
@@ -43,27 +45,27 @@ const currentPath = Astro.url.pathname;
 </div>
 
 <script>
-  // 2. Client-Side GTM Event Handler
+  // Optional GTM event handler
   const btn = document.getElementById('promo-banner-btn');
 
   if (btn) {
     btn.addEventListener('click', () => {
       const location = btn.getAttribute('data-location') || '';
 
-      // Push to dataLayer (Standard GTM method)
+      // Push to dataLayer if GTM is installed
       // @ts-ignore
       window.dataLayer = window.dataLayer || [];
       // @ts-ignore
       window.dataLayer.push({
         event: 'select_promotion',
-        creative_name: 'malware_removal_banner_79',
+        creative_name: 'malware_removal_banner_89',
         promotion_name: 'wordpress_security_promo',
         location: location,
         items: [
           {
             item_id: 'malware_removal_service',
             item_name: 'WordPress Malware Removal',
-            price: 79,
+            price: 89,
           },
         ],
       });

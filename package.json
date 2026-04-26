@@ -25,6 +25,7 @@
     "@astrojs/vue": "^5.1.4",
     "@fontsource-variable/source-serif-4": "^5.2.9",
     "@lucide/astro": "^0.562.0",
+    "@microsoft/clarity": "^1.0.2",
     "@tailwindcss/vite": "^4.1.18",
     "@types/he": "^1.2.3",
     "@types/markdown-it": "^14.1.2",

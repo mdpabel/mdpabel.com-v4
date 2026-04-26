@@ -34,6 +34,7 @@ interface NavDropdownChild {
   desc: string;
   icon: any;
   badge?: string;
+  clarityEvent?: string;
 }
 
 interface NavDropdown {
@@ -60,18 +61,21 @@ const navItems: NavItem[] = [
         href: '/wordpress-malware-removal/',
         desc: 'Clean hacked sites & secure them',
         icon: ShieldAlert,
+        clarityEvent: 'nav_malware_removal_click',
       },
       {
         name: 'Japanese SEO Spam',
         href: '/remove-japanese-seo-spam/',
         desc: 'Fix cloaked spam & de-index pages',
         icon: Languages,
+        clarityEvent: 'nav_japanese_seo_spam_click',
       },
       {
         name: 'Blacklist Removal',
         href: '/blacklist-removal/',
         desc: 'Remove Google & McAfee warnings',
         icon: FileWarning,
+        clarityEvent: 'nav_blacklist_removal_click',
       },
       {
         name: 'Fullstack Dev',
@@ -105,30 +109,35 @@ const navItems: NavItem[] = [
         href: '/blog/',
         desc: 'Latest security news & tips',
         icon: BookOpen,
+        clarityEvent: 'nav_blog_click',
       },
       {
         name: 'Threat DB',
         href: '/wordpress-threats/',
         desc: 'Encyclopedia of known malware',
         icon: Bug,
+        clarityEvent: 'nav_threat_db_click',
       },
       {
         name: 'Case Studies',
         href: '/case-studies/',
         desc: 'Real cleanup stories & results',
         icon: Briefcase,
+        clarityEvent: 'nav_case_studies_click',
       },
       {
         name: 'Security Guides',
         href: '/guides/',
         desc: 'Step-by-step tutorials',
         icon: Compass,
+        clarityEvent: 'nav_security_guides_click',
       },
       {
         name: 'Malware Logs',
         href: '/malware-log/',
         desc: 'Raw forensic analysis logs',
         icon: FileTerminal,
+        clarityEvent: 'nav_malware_logs_click',
       },
     ],
   },
@@ -185,6 +194,9 @@ const navItems: NavItem[] = [
                                   ? 'opacity-70 cursor-default'
                                   : 'hover:bg-slate-800/50'
                               }`}
+                              data-clarity-event={
+                                subItem.badge ? undefined : subItem.clarityEvent
+                              }
                               onclick={
                                 subItem.badge ? 'return false;' : undefined
                               }>
@@ -232,7 +244,8 @@ const navItems: NavItem[] = [
             <li>
               <a
                 href='/free-wordpress-scan/'
-                class='flex items-center gap-2 font-medium text-slate-400 hover:text-white text-base transition-colors'>
+                class='flex items-center gap-2 font-medium text-slate-400 hover:text-white text-base transition-colors'
+                data-clarity-event='header_free_scan_click'>
                 <ScanLine class='w-4 h-4' />
                 Free Scan
               </a>
@@ -242,7 +255,8 @@ const navItems: NavItem[] = [
               <a
                 href='/hire-me/'
                 class='flex items-center gap-2 bg-white hover:bg-slate-200 shadow-md px-5 py-2.5 rounded-full font-semibold text-slate-900 text-sm transition-all hover:-translate-y-0.5 transform'
-                data-astro-prefetch='load'>
+                data-astro-prefetch='load'
+                data-clarity-event='header_hire_me_click'>
                 Hire Me
               </a>
             </li>
@@ -330,6 +344,11 @@ const navItems: NavItem[] = [
                             ? 'opacity-60 cursor-default'
                             : 'mobile-link text-slate-400 hover:text-sky-400'
                         }`}
+                        data-clarity-event={
+                          subItem.badge
+                            ? undefined
+                            : `mobile_${subItem.clarityEvent}`
+                        }
                         onclick={subItem.badge ? 'return false;' : undefined}>
                         <subItem.icon class='w-4 h-4' />
                         <span class='text-base'>{subItem.name}</span>
@@ -353,13 +372,15 @@ const navItems: NavItem[] = [
       <a
         href='/hire-me/'
         class='flex justify-center items-center bg-sky-600 hover:bg-sky-700 shadow-sm mb-3 py-3.5 rounded-xl w-full font-semibold text-white transition-colors'
-        data-astro-prefetch='load'>
+        data-astro-prefetch='load'
+        data-clarity-event='mobile_header_hire_me_click'>
         Hire Me
       </a>
 
       <a
         href='/free-wordpress-scan/'
-        class='flex justify-center items-center gap-2 bg-slate-800 py-3.5 border border-slate-600 rounded-xl w-full font-medium text-slate-300 transition-colors'>
+        class='flex justify-center items-center gap-2 bg-slate-800 py-3.5 border border-slate-600 rounded-xl w-full font-medium text-slate-300 transition-colors'
+        data-clarity-event='mobile_header_free_scan_click'>
         <ScanLine class='w-4 h-4' />
         Free Scan
       </a>

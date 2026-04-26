@@ -38,7 +38,8 @@ const whatsappHref = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
           href={whatsappHref}
           target='_blank'
           rel='noopener noreferrer'
-          class='ml-2 font-semibold text-emerald-400 hover:text-emerald-300 underline underline-offset-4 whitespace-nowrap transition-colors'>
+          class='ml-2 font-semibold text-emerald-400 hover:text-emerald-300 underline underline-offset-4 whitespace-nowrap transition-colors'
+          data-clarity-event='topbar_whatsapp_claim_click'>
           Claim on WhatsApp →
         </a>
       </p>
@@ -48,6 +49,7 @@ const whatsappHref = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
           <button
             type='button'
             data-mdp-offer-close
+            data-clarity-event='topbar_offer_dismiss_click'
             aria-label='Close offer'
             class='top-1/2 right-0 absolute p-1 text-slate-500 hover:text-white transition-colors -translate-y-1/2 cursor-pointer'>
             <X class='w-4 h-4' />
