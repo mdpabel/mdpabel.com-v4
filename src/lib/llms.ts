@@ -171,13 +171,14 @@ export const EXCLUDED_LLM_SLUGS = new Set([
   'a-complete-guide-to-next-js-server-actions-and-wordpress-contact-form-7-integration-for-building-modern-headless-forms',
   'secure-file-downloads-with-cloudflare-r2-and-next-js-complete-setup-guide',
 
-  // Exclude from llms-full.txt because these are general, commercial,
+  // Exclude from llms/llms-full because these are general, commercial,
   // comparison-based, or more likely to become outdated.
   'siteground-review-why-its-my-1-hosting-recommendation-after-4500-site-cleanups',
   'best-managed-wordpress-hosting-providers-for-speed-security-2',
   'why-choose-my-wordpress-malware-removal-service-over-major-competitors',
   'wordfence-vs-sucuri-which-is-better',
   'really-simple-security-review-secure-your-wordpress-site-with-ssl-hardening-2025-guide',
+  'how-to-enable-two-factor-authentication-in-wordpress-using-wordfence-2025-guide',
 ]);
 
 const includeTerms = [
@@ -656,18 +657,49 @@ export function selectImportantPosts(
 }
 
 export async function getLlmContent() {
+  const fetchPosts = async (label: LlmPostType, postTypes: string[]) => {
+    const bySlug = new Map<string, LlmPost>();
+
+    for (const postType of postTypes) {
+      try {
+        const items = (await wordpress.getAllPosts({
+          postType,
+        } as any)) as LlmPost[];
+
+        console.log(
+          `[llms] ${label} via postType="${postType}": ${items.length} items loaded`,
+        );
+
+        for (const item of items) {
+          if (item?.slug && !bySlug.has(item.slug)) {
+            bySlug.set(item.slug, item);
+          }
+        }
+
+        if (items.length > 0) break;
+      } catch (error) {
+        console.warn(
+          `[llms] Failed to load ${label} via postType="${postType}":`,
+          error,
+        );
+      }
+    }
+
+    return Array.from(bySlug.values());
+  };
+
   const [posts, caseStudies, guides, malwareLogs] = await Promise.all([
-    wordpress.getAllPosts({ postType: 'posts' }).catch(() => []),
-    wordpress.getAllPosts({ postType: 'case-study' }).catch(() => []),
-    wordpress.getAllPosts({ postType: 'guide' }).catch(() => []),
-    wordpress.getAllPosts({ postType: 'malware-log' }).catch(() => []),
+    fetchPosts('posts', ['posts', 'post']),
+    fetchPosts('case-study', ['case-study', 'case-studies']),
+    fetchPosts('guide', ['guide', 'guides']),
+    fetchPosts('malware-log', ['malware-log', 'malware-logs']),
   ]);
 
   return {
-    posts: posts as LlmPost[],
-    caseStudies: caseStudies as LlmPost[],
-    guides: guides as LlmPost[],
-    malwareLogs: malwareLogs as LlmPost[],
+    posts,
+    caseStudies,
+    guides,
+    malwareLogs,
   };
 }
 

@@ -48,6 +48,12 @@ function postToMarkdown(post: LlmPost, postType: LlmPostType) {
     .join('\n');
 }
 
+function fullSection(title: string, content: string) {
+  if (!content.trim()) return [];
+
+  return ['', `## ${title}`, '', content];
+}
+
 export async function GET() {
   const { posts, caseStudies, guides, malwareLogs } = await getLlmContent();
 
@@ -75,6 +81,22 @@ export async function GET() {
     LLMS_LIMITS.llmsFull.malwareLogs,
   ).filter((post) => hasUsefulFullText(post));
 
+  const postsContent = selectedPosts
+    .map((post) => postToMarkdown(post, 'posts'))
+    .join('\n\n---\n\n');
+
+  const caseStudiesContent = selectedCaseStudies
+    .map((post) => postToMarkdown(post, 'case-study'))
+    .join('\n\n---\n\n');
+
+  const guidesContent = selectedGuides
+    .map((post) => postToMarkdown(post, 'guide'))
+    .join('\n\n---\n\n');
+
+  const malwareLogsContent = selectedMalwareLogs
+    .map((post) => postToMarkdown(post, 'malware-log'))
+    .join('\n\n---\n\n');
+
   const body = [
     '# MD Pabel - Full AI Context',
     '',
@@ -95,35 +117,11 @@ export async function GET() {
         page.description,
       ].join('\n'),
     ),
-    '',
-    '## Selected WordPress malware removal articles',
-    '',
-    selectedPosts
-      .map((post) => postToMarkdown(post, 'posts'))
-      .join('\n\n---\n\n'),
-    '',
-    '## Selected forensic case studies',
-    '',
-    selectedCaseStudies
-      .map((post) => postToMarkdown(post, 'case-study'))
-      .join('\n\n---\n\n'),
-    '',
-    '## Selected security guides',
-    '',
-    selectedGuides
-      .map((post) => postToMarkdown(post, 'guide'))
-      .join('\n\n---\n\n'),
 
-    ...(selectedMalwareLogs.length
-      ? [
-          '',
-          '## Selected malware research logs',
-          '',
-          selectedMalwareLogs
-            .map((post) => postToMarkdown(post, 'malware-log'))
-            .join('\n\n---\n\n'),
-        ]
-      : []),
+    ...fullSection('Selected WordPress malware removal articles', postsContent),
+    ...fullSection('Selected forensic case studies', caseStudiesContent),
+    ...fullSection('Selected security guides', guidesContent),
+    ...fullSection('Selected malware research logs', malwareLogsContent),
   ].join('\n');
 
   return new Response(body.trim(), {

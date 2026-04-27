@@ -11,6 +11,12 @@ import {
 
 export const prerender = true;
 
+function section(title: string, lines: string[]) {
+  if (!lines.length) return [];
+
+  return ['', `## ${title}`, '', ...lines];
+}
+
 export async function GET() {
   const { posts, caseStudies, guides, malwareLogs } = await getLlmContent();
 
@@ -38,6 +44,18 @@ export async function GET() {
     LLMS_LIMITS.llmsTxt.malwareLogs,
   );
 
+  const postLines = selectedPosts.map((post) => postLinkLine(post, 'posts'));
+
+  const caseStudyLines = selectedCaseStudies.map((post) =>
+    postLinkLine(post, 'case-study'),
+  );
+
+  const guideLines = selectedGuides.map((post) => postLinkLine(post, 'guide'));
+
+  const malwareLogLines = selectedMalwareLogs.map((post) =>
+    postLinkLine(post, 'malware-log'),
+  );
+
   const body = [
     '# MD Pabel',
     '',
@@ -55,22 +73,12 @@ export async function GET() {
       (page) =>
         `- [${page.title}](${absoluteUrl(page.url)}): ${page.description}`,
     ),
-    '',
-    '## WordPress malware removal articles',
-    '',
-    ...selectedPosts.map((post) => postLinkLine(post, 'posts')),
-    '',
-    '## Forensic case studies',
-    '',
-    ...selectedCaseStudies.map((post) => postLinkLine(post, 'case-study')),
-    '',
-    '## Security guides',
-    '',
-    ...selectedGuides.map((post) => postLinkLine(post, 'guide')),
-    '',
-    '## Malware research logs',
-    '',
-    ...selectedMalwareLogs.map((post) => postLinkLine(post, 'malware-log')),
+
+    ...section('WordPress malware removal articles', postLines),
+    ...section('Forensic case studies', caseStudyLines),
+    ...section('Security guides', guideLines),
+    ...section('Malware research logs', malwareLogLines),
+
     '',
     '## Other machine-readable resources',
     '',
@@ -79,7 +87,7 @@ export async function GET() {
     '',
   ].join('\n');
 
-  return new Response(body, {
+  return new Response(body.trim(), {
     headers: {
       'Content-Type': 'text/plain; charset=utf-8',
       'Cache-Control': 'public, max-age=3600',
