@@ -15,6 +15,8 @@ export async function GET() {
     { url: 'case-studies', priority: 0.8 },
     { url: 'guides', priority: 0.8 },
     { url: 'hire-me', priority: 0.9 },
+    { url: 'llms.txt', priority: 0.5 },
+    { url: 'llms-full.txt', priority: 0.5 },
   ];
 
   // 1. Fetch from Local Cache
