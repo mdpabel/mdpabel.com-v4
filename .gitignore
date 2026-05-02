@@ -26,3 +26,6 @@ pnpm-debug.log*
 lab/_malware_dump/
 lab/_malware_dumpl_format/
 _trash
+_content
+_malware_dump
+_review

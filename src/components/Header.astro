@@ -17,6 +17,7 @@ import {
   Lock,
   ScanLine,
   Search,
+  MessageCircle,
 } from '@lucide/astro';
 import ComponentWrapper from './component-wrapper.astro';
 import OfferTopbar from './offer-topbar.astro';
@@ -111,13 +112,7 @@ const navItems: NavItem[] = [
         icon: BookOpen,
         clarityEvent: 'nav_blog_click',
       },
-      {
-        name: 'Threat DB',
-        href: '/wordpress-threats/',
-        desc: 'Encyclopedia of known malware',
-        icon: Bug,
-        clarityEvent: 'nav_threat_db_click',
-      },
+
       {
         name: 'Case Studies',
         href: '/case-studies/',
@@ -138,6 +133,14 @@ const navItems: NavItem[] = [
         desc: 'Raw forensic analysis logs',
         icon: FileTerminal,
         clarityEvent: 'nav_malware_logs_click',
+      },
+
+      {
+        name: 'Contact Me',
+        href: 'https://wa.me/8801323390163?text=Hi%2C%20my%20WordPress%20site%20may%20be%20hacked.%20Website%20URL%3A%20Issue%3A',
+        desc: 'Urgent help for hacked site',
+        icon: MessageCircle,
+        clarityEvent: 'nav_contact_whatsapp_click',
       },
     ],
   },

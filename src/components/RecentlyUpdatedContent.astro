@@ -1,0 +1,146 @@
+---
+import { ArrowUpRight } from '@lucide/astro';
+import ComponentWrapper from './component-wrapper.astro';
+import { cn } from '../lib/utils';
+import { wordpress } from '../lib/wordpress';
+import type { WordPressPost } from '../lib/wordpress';
+
+interface Props {
+  title?: string;
+  shortDescription?: string;
+  limit?: number;
+  fetchPerType?: number;
+  className?: string;
+}
+
+type ContentType = {
+  postType: string;
+  rootSlug: string;
+  label: string;
+};
+
+type ListedPost = WordPressPost & {
+  contentTypeLabel: string;
+};
+
+const {
+  title = 'Latest WordPress Security Guides & Case Studies',
+  shortDescription,
+  limit = 10,
+  fetchPerType = 10,
+  className = '',
+} = Astro.props;
+
+const contentTypes: ContentType[] = [
+  {
+    postType: 'posts',
+    rootSlug: 'blog',
+    label: 'Blog',
+  },
+  {
+    postType: 'guide',
+    rootSlug: 'guides',
+    label: 'Guide',
+  },
+  {
+    postType: 'case-study',
+    rootSlug: 'case-studies',
+    label: 'Case Study',
+  },
+];
+
+const stripHtml = (html = '') => html.replace(/<[^>]*>/g, '');
+
+const formatDate = (dateString?: string) => {
+  if (!dateString) return '';
+
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  }).format(new Date(dateString));
+};
+
+const responses = await Promise.all(
+  contentTypes.map(async (type) => {
+    const response = await wordpress.getPosts({
+      postType: type.postType,
+      perPage: fetchPerType,
+      orderBy: 'modified',
+      order: 'desc',
+      _fields: ['id', 'title', 'slug', 'date', 'modified'],
+    });
+
+    return response.posts.map((post) => ({
+      ...post,
+      slug: `${type.rootSlug}/${post.slug}`,
+      contentTypeLabel: type.label,
+    }));
+  }),
+);
+
+const posts: ListedPost[] = responses
+  .flat()
+  .sort((a, b) => {
+    const dateA = new Date(a.modified || a.date).getTime();
+    const dateB = new Date(b.modified || b.date).getTime();
+
+    return dateB - dateA;
+  })
+  .slice(0, limit);
+---
+
+<div class={cn('mb-16 md:pb-12', className)}>
+  <ComponentWrapper class='p-0'>
+    <h2 class='mb-6 font-bold text-white text-3xl text-center'>
+      {title}
+    </h2>
+
+    {
+      shortDescription && (
+        <p class='mx-auto mb-8 max-w-3xl text-slate-300 text-lg md:text-xl text-center'>
+          {shortDescription}
+        </p>
+      )
+    }
+
+    {
+      posts.length > 0 ? (
+        <ul class='space-y-4 mx-auto'>
+          {posts.map((post, index) => (
+            <li class='group flex justify-between items-center gap-4'>
+              <div class='flex sm:flex-row flex-col sm:items-start gap-3'>
+                <div>
+                  <span class='bg-slate-800 px-3 py-1 rounded font-medium text-slate-300'>
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                </div>
+
+                <div>
+                  <h3 class='font-medium text-slate-300 text-base'>
+                    <a
+                      href={`/${post.slug}/`}
+                      class='hover:text-white transition-colors'>
+                      <span class='break-words' set:html={post.title} />
+                    </a>
+                  </h3>
+                </div>
+              </div>
+
+              <a
+                href={`/${post.slug}/`}
+                aria-label={`Read more about ${stripHtml(post.title)}`}
+                class='hidden md:block text-slate-300 hover:text-slate-200 transition-colors group-hover:translate-x-1 duration-200'>
+                <ArrowUpRight class='w-5 h-5' />
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class='text-slate-400 text-center'>
+          No recently updated content found.
+        </p>
+      )
+    }
+  </ComponentWrapper>
+</div>

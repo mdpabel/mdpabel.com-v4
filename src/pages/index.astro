@@ -18,6 +18,7 @@ import { siteData } from '../data/siteData';
 import LiveThreatTerminal from '../components/LiveThreatTerminal.astro';
 import Hero from '../components/Hero.astro';
 import Services from '../components/Services.astro';
+import RecentlyUpdatedContent from '../components/RecentlyUpdatedContent.astro';
 
 // SEO Configuration
 const seo = {
@@ -268,9 +269,6 @@ const schemaGraph = {
   </section>
 
   <ComponentWrapper>
-    {/* 2. LIVE ACTIVITY LOG SECTION */}
-    <LiveThreatTerminal count={6} />
-
     <Services />
 
     {/* 3. SERVICES / PRICING SECTION */}
@@ -284,74 +282,76 @@ const schemaGraph = {
     </div>
 
     {/* 5. BLOG POSTS */}
-    <BlogPosts
+    <!-- <BlogPosts
       title='Recent Malware Removal Case Studies'
       mode='featured'
-      limit={5}
-    />
-  </ComponentWrapper>
-</Layout>
+      limit={10}
+    /> -->
 
-<style>
-  .animate-scanner,
-  .animate-scanner-line {
-    animation: scanDown 3s ease-in-out infinite;
-  }
+    <RecentlyUpdatedContent />
 
-  .animate-malware-clear {
-    animation: clearMalware 3s ease-in-out infinite;
-  }
+    <style>
+      .animate-scanner,
+      .animate-scanner-line {
+        animation: scanDown 3s ease-in-out infinite;
+      }
 
-  .animate-secure-appear {
-    animation: appearSecure 3s ease-in-out infinite;
-  }
+      .animate-malware-clear {
+        animation: clearMalware 3s ease-in-out infinite;
+      }
 
-  .animate-glitch-line {
-    animation: glitchX 0.2s steps(2) infinite;
-  }
+      .animate-secure-appear {
+        animation: appearSecure 3s ease-in-out infinite;
+      }
 
-  @keyframes scanDown {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-    45%,
-    55% {
-      transform: translateY(250px);
-    }
-  }
+      .animate-glitch-line {
+        animation: glitchX 0.2s steps(2) infinite;
+      }
 
-  @keyframes clearMalware {
-    0%,
-    25% {
-      opacity: 1;
-    }
-    40%,
-    100% {
-      opacity: 0;
-    }
-  }
+      @keyframes scanDown {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        45%,
+        55% {
+          transform: translateY(250px);
+        }
+      }
 
-  @keyframes appearSecure {
-    0%,
-    35% {
-      opacity: 0;
-    }
-    50%,
-    90% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
+      @keyframes clearMalware {
+        0%,
+        25% {
+          opacity: 1;
+        }
+        40%,
+        100% {
+          opacity: 0;
+        }
+      }
 
-  @keyframes glitchX {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(3px);
-    }
-  }
-</style>
+      @keyframes appearSecure {
+        0%,
+        35% {
+          opacity: 0;
+        }
+        50%,
+        90% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+
+      @keyframes glitchX {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(3px);
+        }
+      }
+    </style>
+  </ComponentWrapper></Layout
+>
