@@ -125,3 +125,25 @@
 /guides/how-to-install-a-wordpress-theme-3-methods/ /guides/ 301
 
 /blog/how-to-prevent-fake-hidden-plugins-from-reinstalling-on-wordpress/ /wordpress-malware-removal/ 301
+
+/blog/why-malware-keeps-coming-back-hidden-cron-job-hack-explained/ /blog/wordpress-cron-job-malware/ 301
+
+/case-studies/wordpress-site-blank-page-malware-case-study/ /case-studies/wordpress-site-blank-page-malware/ 301
+
+/case-studies/how-i-removed-12000-casino-gambling-posts-and-stopped-cron-job-malware-on-a-compromised-site/
+
+/case-studies/breaking-the-1-second-malware-regeneration-loop-in-cpanel-wordpress/ /blog/why-wordpress-malware-keeps-coming-back-and-how-to-stop-it-forever/ 301
+
+/services/blacklist-removal/ /blacklist-removal/ 301
+
+/blog/case-study-cleaning-1162-infected-htaccess-files-on-bluehost-the-lockout-hack/ /case-studies/bluehost-hacked-wordpress-site-recovery/ 301
+
+/blog/locked-out-why-a-403-forbidden-error-on-wp-admin-could-be-a-malicious-htaccess-hack/ /blog/wordpress-wp-admin-403-forbidden-lockout/ 301
+
+/blog/htaccess-malware-cookie-based-php-backdoor-explained-with-removal-guide/ /blog/wordpress-obfuscated-php-malware-detection/ 301
+
+/case-studies/wordpress-drive-by-malware-cleanup-case-study/ /case-studies/switch-domain-deactivation-drive-by-malware-fix/ 301
+
+/blog/how-to-remove-drive-by-malware-fix-a-switch-domain-deactivation-warning/ /case-studies/switch-domain-deactivation-drive-by-malware-fix/ 301
+
+/case-studies/removing-fake-google-adsense-malware-from-wordpress-website/ /blog/how-to-identify-and-remove-fake-google-adsense-malware-from-your-wordpress-site/ 301
