@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { TESTIMONIALS } from '../data/testimonials';
 import ComponentWrapper from '../components/component-wrapper.astro';
 import {
   CheckCircle,
@@ -22,8 +23,10 @@ import {
   HelpCircle,
   ArrowRight,
   FileCheck,
-  Quote,
 } from '@lucide/astro';
+import Testimonials from '../components/Testimonials.astro';
+
+// Real, verifiable reviews only — 2 GMB + 1 Facebook = 3 total
 
 // --- SEO Data ---
 const seoTitle = 'Website Blacklist Removal Service | Delisted in 72 Hours';
@@ -47,6 +50,23 @@ const serviceSchema = {
     ],
   },
   areaServed: 'Worldwide',
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '5.0',
+    reviewCount: '3',
+    bestRating: '5',
+    worstRating: '5',
+  },
+  review: TESTIMONIALS.map((t) => ({
+    '@type': 'Review',
+    reviewRating: {
+      '@type': 'Rating',
+      ratingValue: t.rating.toString(),
+      bestRating: '5',
+    },
+    author: { '@type': 'Person', name: t.author },
+    reviewBody: t.quote,
+  })),
   description:
     'Professional removal of websites from Google Safe Browsing, McAfee SiteAdvisor, Norton Safe Web, and 100+ antivirus and security vendor blacklists. Includes full WordPress malware cleanup, root-cause patching, and multi-vendor delisting submissions.',
 
@@ -287,28 +307,6 @@ const WHATS_INCLUDED = [
   {
     title: '30-Day Re-Infection Coverage',
     desc: "If the same malware returns within 30 days, I clean and re-delist at no extra cost. Most providers don't offer this.",
-  },
-];
-
-const TESTIMONIALS = [
-  {
-    quote: `Im very satisfied with MD Pabel service he can save my site from hackers, and remove all malware attacks. Highly Recommended...❤️`,
-    author: 'Hassan Infinkey.',
-    role: 'eCommerce Owner',
-    rating: 5,
-  },
-  {
-    quote:
-      'My website was suffering from some redirect malware. MD was able to take care of the problem for a reasonable fee. For me, he was a lifesaver. I will certainly go to him first should something like that happen again.',
-    author: 'Kendall Miller.',
-    role: 'Founder',
-    rating: 5,
-  },
-  {
-    quote: `Thanks for your support,Thanks for giving me a great support, you are very nice team.`,
-    author: 'Usama Javed.',
-    role: 'WordPress Agency',
-    rating: 5,
   },
 ];
 
@@ -749,40 +747,7 @@ const outlineButtonClass =
     </section>
 
     {/* --- TESTIMONIALS --- */}
-    <section class='mb-24'>
-      <div class='mx-auto mb-16 max-w-3xl text-center'>
-        <h2 class='mb-4 font-bold text-white text-3xl md:text-4xl'>
-          What Recovered Clients Say
-        </h2>
-        <p class='text-slate-400'>
-          Real recoveries from sites that were losing thousands per day.
-        </p>
-      </div>
-
-      <div class='gap-6 grid md:grid-cols-3 mx-auto max-w-6xl'>
-        {
-          TESTIMONIALS.map((t) => (
-            <div class='flex flex-col bg-slate-900 p-6 border border-slate-800 rounded-xl'>
-              <Quote class='mb-3 w-6 h-6 text-sky-500/50' />
-              <p class='flex-grow mb-4 text-slate-300 text-sm italic leading-relaxed'>
-                "{t.quote}"
-              </p>
-              <div class='flex justify-between items-center pt-4 border-slate-800 border-t'>
-                <div>
-                  <div class='font-bold text-white text-sm'>{t.author}</div>
-                  <div class='text-slate-500 text-xs'>{t.role}</div>
-                </div>
-                <div class='flex gap-0.5'>
-                  {Array.from({ length: t.rating }).map(() => (
-                    <Star class='fill-yellow-400 w-3.5 h-3.5 text-yellow-400' />
-                  ))}
-                </div>
-              </div>
-            </div>
-          ))
-        }
-      </div>
-    </section>
+    <Testimonials />
 
     {/* --- PRICING --- */}
     <section id='pricing' class='mb-24 scroll-mt-24'>

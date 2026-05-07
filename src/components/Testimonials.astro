@@ -1,0 +1,49 @@
+---
+import { Star, Quote } from '@lucide/astro';
+import { TESTIMONIALS } from '../data/testimonials';
+---
+
+<section class='mb-24'>
+  <div class='mx-auto mb-12 max-w-3xl text-center'>
+    <div class='flex justify-center items-center gap-2 mb-4'>
+      {
+        Array.from({ length: 5 }).map(() => (
+          <Star class='fill-yellow-400 w-5 h-5 text-yellow-400' />
+        ))
+      }
+    </div>
+    <h2 class='mb-4 font-bold text-white text-3xl md:text-4xl'>
+      What Real Clients Say
+    </h2>
+    <p class='text-slate-400'>
+      Verified reviews from Google Business and Facebook.
+    </p>
+  </div>
+
+  <div class='gap-6 grid md:grid-cols-3 mx-auto max-w-6xl'>
+    {
+      TESTIMONIALS.map((t) => (
+        <div class='flex flex-col bg-slate-900 p-6 border border-slate-800 rounded-xl'>
+          <Quote class='mb-3 w-6 h-6 text-sky-500/50' />
+          <p class='flex-grow mb-4 text-slate-300 text-sm italic leading-relaxed'>
+            "{t.quote}"
+          </p>
+          <div class='flex justify-between items-center pt-4 border-slate-800 border-t'>
+            <div>
+              <div class='font-bold text-white text-sm'>{t.author}</div>
+              <div class='text-slate-500 text-xs'>{t.role}</div>
+            </div>
+            <div class='flex flex-col items-end gap-1'>
+              <div class='flex gap-0.5'>
+                {Array.from({ length: t.rating }).map(() => (
+                  <Star class='fill-yellow-400 w-3.5 h-3.5 text-yellow-400' />
+                ))}
+              </div>
+              <div class='text-slate-500 text-xs'>{t.source}</div>
+            </div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>
