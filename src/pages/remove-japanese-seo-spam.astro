@@ -129,23 +129,6 @@ const serviceSchema = {
     availability: 'https://schema.org/InStock',
     url: 'https://www.mdpabel.com/hire-me/',
   },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '5.0',
-    reviewCount: TESTIMONIALS.length.toString(),
-    bestRating: '5',
-    worstRating: '5',
-  },
-  review: TESTIMONIALS.map((t) => ({
-    '@type': 'Review',
-    reviewRating: {
-      '@type': 'Rating',
-      ratingValue: t.rating.toString(),
-      bestRating: '5',
-    },
-    author: { '@type': 'Person', name: t.author },
-    reviewBody: t.quote,
-  })),
 };
 
 const faqSchema = {
@@ -899,8 +882,7 @@ curl -A "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X)" \
         class='inline-flex items-center gap-2 mb-4 font-semibold text-red-400 animate-pulse'>
         <Zap class='w-4 h-4' /> Every new spam URL can make search recovery harder
       </div>
-      <h2
-        class='mx-auto mb-6 max-w-2xl font-bold text-white text-3xl md:text-4xl'>
+      <h2 class='mx-auto mb-6 max-w-2xl font-bold text-white text-3xl'>
         Clean the Japanese Keyword Hack Before It Spreads Further
       </h2>
       <p class='mx-auto mb-8 max-w-xl text-slate-300 text-lg'>
