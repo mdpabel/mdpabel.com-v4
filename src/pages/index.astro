@@ -311,16 +311,15 @@ const schemaGraph = {
       description:
         'Manual WordPress malware removal, Japanese SEO spam cleanup, fake CAPTCHA malware removal, blacklist recovery, and WordPress hardening — performed by an expert with 4,500+ real cleanups.',
       priceRange: '$15 - $149',
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: '5.0',
-        bestRating: '5',
-        worstRating: '1',
-        ratingCount: '2100',
-        reviewCount: '2100',
-      },
+      // ❌ aggregateRating REMOVED — self-serving aggregateRating on
+      // ProfessionalService won't trigger rich snippets and the count
+      // must match visible on-page reviews.
       review: testimonials.map((t) => ({
         '@type': 'Review',
+        itemReviewed: {
+          '@type': 'Service',
+          name: 'WordPress Malware Removal Service',
+        },
         reviewRating: {
           '@type': 'Rating',
           ratingValue: t.rating.toString(),
@@ -329,6 +328,7 @@ const schemaGraph = {
         author: { '@type': 'Person', name: t.author },
         reviewBody: t.quote,
       })),
+
       hasOfferCatalog: {
         '@type': 'OfferCatalog',
         name: 'WordPress Malware Removal Services',
