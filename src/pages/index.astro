@@ -314,20 +314,6 @@ const schemaGraph = {
       // ❌ aggregateRating REMOVED — self-serving aggregateRating on
       // ProfessionalService won't trigger rich snippets and the count
       // must match visible on-page reviews.
-      review: testimonials.map((t) => ({
-        '@type': 'Review',
-        itemReviewed: {
-          '@type': 'Service',
-          name: 'WordPress Malware Removal Service',
-        },
-        reviewRating: {
-          '@type': 'Rating',
-          ratingValue: t.rating.toString(),
-          bestRating: '5',
-        },
-        author: { '@type': 'Person', name: t.author },
-        reviewBody: t.quote,
-      })),
 
       hasOfferCatalog: {
         '@type': 'OfferCatalog',
