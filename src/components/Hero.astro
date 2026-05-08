@@ -1,39 +1,36 @@
 ---
 // 1. Import Zero-JS Icons
 import { CheckCircle, ShieldCheck, Star } from '@lucide/astro';
-import me from '../assets/my-img.png';
 
-// 2. Import your Links component
-import Links from './Links.astro';
-import { Image } from 'astro:assets';
-
-// 3. Mock Data
-const siteData = {
-  personal: { name: 'MD Pabel' },
-};
+import ComponentWrapper from './component-wrapper.astro';
 ---
 
-<section class='py-20'>
-  <div class='gap-x-10 gap-y-8 grid grid-cols-1 md:grid-cols-3'>
+<section class='relative py-20 overflow-hidden'>
+  <!-- <HeroGlow /> -->
+
+  <ComponentWrapper
+    class='z-10 relative gap-x-10 gap-y-8 grid grid-cols-1 md:grid-cols-3'>
     {/* --- LEFT SECTION (Text Content) --- */}
     <div class='md:col-span-2'>
       {/* H1 Headline */}
       <h1 class='mb-2 font-bold text-white text-3xl md:text-4xl'>
-        WordPress Malware Removal & Security Expert
+        WordPress Malware Removal Service by a 4,500+ Cleanup Veteran
       </h1>
 
       {/* H2 Subheadline */}
       <h2 class='pt-2 pb-4 font-semibold text-slate-300 text-xl md:text-2xl'>
-        4500+ WordPress Sites Cleaned — Fast, Secure, Guaranteed
+        Manual hacked-site cleanup, Japanese SEO spam removal, fake CAPTCHA
+        malware, redirect fixes, and Google blacklist recovery — done by hand,
+        guaranteed.
       </h2>
 
       {/* Description */}
       <p class='my-4 text-slate-300 text-lg leading-relaxed'>
-        Hi, I'm {siteData.personal.name}. I don't just build websites; I protect
-        them. If your site is hacked, redirecting to spam, or blacklisted by
-        Google—I will
-        <strong class='font-semibold text-white'> manually clean it </strong>
-        and secure it against future attacks. No data loss, guaranteed.
+        Hi, I'm MD Pabel. If your WordPress site is hacked, redirecting to spam,
+        blacklisted by Google, or showing fake Cloudflare verification — I clean
+        it manually, file by file. No automated scripts that miss backdoors. No
+        data loss. 4,500+ real cleanups, 5★ on Fiverr (Level 2 Seller) and
+        Upwork (Top Rated).
       </p>
 
       {/* --- STATS INDICATORS --- */}
@@ -41,17 +38,23 @@ const siteData = {
         <div
           class='flex items-center gap-2 bg-slate-800 px-3 py-2 border border-slate-700 rounded-lg font-medium text-slate-300 text-sm'>
           <CheckCircle class='w-4 h-4 text-white' />
-          4,500+ Fixed
+          4,500+ sites cleaned
         </div>
         <div
           class='flex items-center gap-2 bg-slate-800 px-3 py-2 border border-slate-700 rounded-lg font-medium text-slate-300 text-sm'>
           <Star class='w-4 h-4 text-white' />
-          Top Rated
+          5.0 / 5 average rating
         </div>
         <div
           class='flex items-center gap-2 bg-slate-800 px-3 py-2 border border-slate-700 rounded-lg font-medium text-slate-300 text-sm'>
           <ShieldCheck class='w-4 h-4 text-white' />
-          Security Expert
+          4–24h typical turnaround
+        </div>
+
+        <div
+          class='flex items-center gap-2 bg-slate-800 px-3 py-2 border border-slate-700 rounded-lg font-medium text-slate-300 text-sm'>
+          <ShieldCheck class='w-4 h-4 text-white' />
+          30-day reinfection guarantee
         </div>
       </div>
     </div>
@@ -81,7 +84,6 @@ const siteData = {
             </clipPath>
           </defs>
 
-          {/* Base Shield Outline */}
           <path
             d='M100 20C100 20 40 35 40 90C40 145 100 180 100 180C100 180 160 145 160 90C160 35 100 20 100 20Z'
             fill='none'
@@ -89,12 +91,9 @@ const siteData = {
             stroke-width='4'
             class='text-slate-600'></path>
 
-          {/* Content inside the shield (masked) */}
           <g clip-path='url(#shieldMask)'>
-            {/* 1. The "Red Glitch/Malware" State */}
             <g class='animate-malware-clear'>
               <circle cx='100' cy='90' r='30' class='fill-red-900/30'></circle>
-              {/* Abstract 'bug' dots */}
               <circle cx='90' cy='80' r='4' class='fill-red-500 animate-pulse'
               ></circle>
               <circle
@@ -115,7 +114,6 @@ const siteData = {
                 class='animate-glitch-line'></path>
             </g>
 
-            {/* 2. The "Scanner Bar" */}
             <rect
               x='0'
               y='-50'
@@ -133,11 +131,9 @@ const siteData = {
               class='shadow-[0_0_10px_rgb(16,185,129)] animate-scanner-line'
             ></line>
 
-            {/* 3. The "Secure/Clean" State */}
             <g class='opacity-0 animate-secure-appear'>
               <circle cx='100' cy='90' r='35' class='fill-emerald-500/20'
               ></circle>
-              {/* Checkmark */}
               <path
                 d='M80 95 L95 110 L125 75'
                 fill='none'
@@ -151,7 +147,7 @@ const siteData = {
         </svg>
       </div>
     </div>
-  </div>
+  </ComponentWrapper>
 </section>
 
 <style>

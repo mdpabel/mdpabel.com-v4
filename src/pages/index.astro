@@ -1,51 +1,219 @@
 ---
 // src/pages/index.astro
-import { CheckCircle, ShieldCheck, Star } from '@lucide/astro';
-import HeroGlow from '../components/HeroGlow.astro';
+import {
+  CheckCircle,
+  ShieldCheck,
+  Star,
+  AlertTriangle,
+  Clock,
+  Search,
+  Wrench,
+  Lock,
+  TrendingUp,
+  Globe,
+  FileWarning,
+  Code2,
+  Database,
+  Bug,
+  ServerCrash,
+  Mail,
+  ArrowRight,
+} from '@lucide/astro';
 import Layout from '../layouts/Layout.astro';
 import ComponentWrapper from '../components/component-wrapper.astro';
 
-// Components
-import Pricing from '../components/Pricing.astro';
+// Components (existing)
 import PlatformScreenshots from '../components/PlatformScreenshots.astro';
-import BlogPosts from '../components/BlogPosts.astro';
-
-// Assets
-import me from '../assets/my-img.png';
-
-// Data
-import { siteData } from '../data/siteData';
-import LiveThreatTerminal from '../components/LiveThreatTerminal.astro';
-import Hero from '../components/Hero.astro';
 import Services from '../components/Services.astro';
 import RecentlyUpdatedContent from '../components/RecentlyUpdatedContent.astro';
 
-// SEO Configuration
+// Data
+import { siteData } from '../data/siteData';
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SEO CONFIG  (rewritten for high-volume buyer-intent keywords)
+// ─────────────────────────────────────────────────────────────────────────────
 const seo = {
-  title: 'MD Pabel | WordPress Security & Malware Removal Expert',
-  description: `Hi, I'm MD Pabel. I manually clean hacked WordPress sites, remove malware, and harden websites after cleanup, with experience from 4,500+ real-world cleanups.`,
+  title:
+    'WordPress Malware Removal Service | 4,500+ Hacked Sites Cleaned — MD Pabel',
+  description:
+    'Hire a WordPress malware removal expert with 4,500+ real cleanups. Manual hacked-site repair, Japanese SEO spam, fake CAPTCHA, redirect malware, and Google blacklist removal. 5★ rated.',
   image: '/md-pabel.png',
-  keywords: [
-    'WordPress Malware Removal',
-    'Fix Hacked WordPress Site',
-    'Remove Japanese SEO Spam',
-    'WordPress Security Expert',
-    'Remove Malware from WordPress',
-    'Google Blacklist Removal',
-    'Web Security Specialist',
-    'Full Stack Developer',
-    'Secure Web Development',
-    ...siteData.skills.languages,
-    ...siteData.skills.security,
-  ].join(', '),
+  url: 'https://www.mdpabel.com/',
 };
 
-// JSON-LD Construction
+// Real testimonials (from GMB / Facebook reviews you provided)
+const testimonials = [
+  {
+    quote:
+      "I'm very satisfied with MD Pabel service. He saved my site from hackers and removed all malware attacks. Highly Recommended.",
+    author: 'Hassan Infinkey',
+    role: 'eCommerce Owner',
+    rating: 5,
+  },
+  {
+    quote:
+      'My website was suffering from some redirect malware. MD was able to take care of the problem for a reasonable fee. For me, he was a lifesaver. I will certainly go to him first should something like that happen again.',
+    author: 'Kendall Miller',
+    role: 'Founder',
+    rating: 5,
+  },
+  {
+    quote:
+      'Thanks for giving me great support. You are a very nice team and the cleanup was thorough.',
+    author: 'Usama Javed',
+    role: 'WordPress Agency',
+    rating: 5,
+  },
+];
+
+// Common malware types (links into your existing blog/case-study URLs)
+const malwareTypes = [
+  {
+    Icon: Globe,
+    title: 'Japanese Keyword Hack',
+    desc: 'Spam Japanese URLs in Google, cloaked pages, and index pollution from sengoku/jasabacklink injections.',
+    href: '/blog/japanese-keyword-hack-the-complete-guide-to-detection-removal-prevention-in-2025/',
+  },
+  {
+    Icon: ShieldCheck,
+    title: 'Fake CAPTCHA Malware',
+    desc: 'Fake Cloudflare verification, "I\'m not a robot" popups, and HSEO/ClearFake JavaScript injectors.',
+    href: '/case-studies/fake-captcha-malware-removal-case-study-cleaning-malware-from-wordpress/',
+  },
+  {
+    Icon: TrendingUp,
+    title: 'Pharma Hack & SEO Spam',
+    desc: 'Pharmaceutical spam injections, hidden links, casino/matbet redirects, and SERP defacement.',
+    href: '/blog/wordpress-pharma-hack-fix-how-to-stop-pharmaceutical-spam-in-google/',
+  },
+  {
+    Icon: ArrowRight,
+    title: 'Redirect Malware',
+    desc: 'JavaScript and .htaccess redirects sending visitors to spam, gambling, or malicious sites.',
+    href: '/blog/the-complete-guide-to-javascript-redirect-malware-detection-decoding-and-removal/',
+  },
+  {
+    Icon: FileWarning,
+    title: '.htaccess Malware',
+    desc: 'Hidden mobile-only redirects, search engine cloaking, and rewrite-rule injections.',
+    href: '/blog/the-ultimate-guide-to-removing-htaccess-malware-from-wordpress/',
+  },
+  {
+    Icon: Lock,
+    title: 'Hidden Backdoors',
+    desc: 'Obfuscated PHP, fake plugins (wp-compat, hseo), hidden admin users, and reinfection persistence.',
+    href: '/blog/i-found-a-hidden-backdoor-in-a-clients-wordpress-site/',
+  },
+  {
+    Icon: Database,
+    title: 'Database Malware',
+    desc: 'Greek text injections, fetch malware, hidden options, and SQL-level persistence.',
+    href: '/blog/how-to-scan-and-clean-your-wordpress-database-for-hidden-malware/',
+  },
+  {
+    Icon: Bug,
+    title: 'Cron Job Malware',
+    desc: 'WP-Cron persistence and self-regenerating malware that comes back after every cleanup.',
+    href: '/blog/wordpress-cron-job-malware/',
+  },
+  {
+    Icon: ServerCrash,
+    title: 'WordPress Critical Error',
+    desc: 'White screen of death, fatal PHP errors, broken admin, and post-malware recovery.',
+    href: '/wordpress-critical-error-fix-service/',
+  },
+];
+
+// Featured case studies (the most impressive ones from your sitemap)
+const featuredCases = [
+  {
+    title: 'Cleared 3.45M Spam URLs from a Hacked WordPress Site',
+    snippet:
+      'Removed Matbet SEO spam injections at scale and restored Google rankings without losing legitimate content.',
+    href: '/case-studies/how-we-cleaned-a-hacked-wordpress-site-from-3-45m-matbet-seo-spam-and-how-you-can-prevent-it/',
+    metric: '3.45M',
+    metricLabel: 'spam URLs cleared',
+  },
+  {
+    title: '53,771 Infected Files Removed After Homepage Defacement',
+    snippet:
+      'WordPress homepage replaced with a gambling site — full forensic cleanup and reputation recovery.',
+    href: '/case-studies/wordpress-homepage-defaced-gambling-site-case-study/',
+    metric: '53,771',
+    metricLabel: 'infected files',
+  },
+  {
+    title: 'Recovered Bluehost Account After 1,162-File Infection',
+    snippet:
+      'Bluehost suspended the account; restored hosting access, cleaned every file, and lifted the 403 lockout.',
+    href: '/blog/bluehost-hacked-wordpress-site-recovery/',
+    metric: '1,162',
+    metricLabel: 'files cleaned',
+  },
+  {
+    title: 'Removed 50,000+ Spam URLs From Google After Japanese Hack',
+    snippet:
+      'Full Japanese keyword hack cleanup with Search Console URL removal and re-indexing strategy.',
+    href: '/case-studies/how-i-removed-50000-spam-urls-from-google-after-a-japanese-keyword-hack/',
+    metric: '50,000+',
+    metricLabel: 'URLs removed',
+  },
+];
+
+// FAQs (built from real GSC long-tail queries — direct AI-extractable answers)
+const faqs = [
+  {
+    q: 'How do I know if my WordPress site is hacked?',
+    a: "Common signs include unexpected redirects to spam or gambling sites, Japanese or pharma keywords appearing in Google results, fake Cloudflare or CAPTCHA pages shown to visitors, a 'Deceptive site ahead' Google warning, hosting suspension emails, sudden traffic drops, or admin users you don't recognize. If any of these appear, your WordPress site is almost certainly infected.",
+  },
+  {
+    q: 'How long does WordPress malware removal take?',
+    a: 'Most standard WordPress malware cleanups are completed within 4 to 24 hours. Complex infections involving deep database injections, multi-site networks, or e-commerce stores with thousands of products can take 24 to 72 hours. Every cleanup I do is manual — no automated tools that miss backdoors.',
+  },
+  {
+    q: 'How much does it cost to remove malware from a WordPress site?',
+    a: 'My WordPress malware removal service starts at $89 for a standard hacked-site cleanup. Fake CAPTCHA malware removal starts at $89, Japanese SEO spam removal starts at $149, blacklist vendor recovery is $15 per vendor, and WordPress critical error fixes start at $50. All prices are fixed — no hidden fees.',
+  },
+  {
+    q: 'Can a hacked WordPress site be fully recovered?',
+    a: 'Yes. In 4,500+ cleanups, I have never lost a site. A full recovery includes removing every malware file, cleaning the database, removing hidden admin users, fixing .htaccess, requesting Google blacklist review, removing spam URLs from search results, and hardening the site so it cannot be re-infected through the same vector.',
+  },
+  {
+    q: 'Why does WordPress malware keep coming back after cleanup?',
+    a: "Reinfection happens when the original entry point isn't closed. Common causes are hidden backdoors in fake plugins (like wp-compat or hseo), self-regenerating cron jobs, compromised admin passwords still in use, vulnerable plugins/themes left unpatched, or backdoors hidden inside image files (GIF/JPG). A proper cleanup must close all of these, not just delete the visible malware.",
+  },
+  {
+    q: 'Do you guarantee WordPress malware removal?',
+    a: 'Yes. Every cleanup includes a reinfection check and a 30-day guarantee. If malware returns from the same vector within 30 days, I clean it again at no charge.',
+  },
+  {
+    q: 'Can security plugins like Wordfence or Sucuri remove malware on their own?',
+    a: 'Free plugins can detect many infections but they rarely remove sophisticated malware completely. Obfuscated PHP, database injections, .htaccess malware, and hidden backdoors typically require manual file-by-file forensic cleanup. Plugins are good for monitoring after a manual cleanup, not as a replacement for one.',
+  },
+  {
+    q: 'Will you help remove my site from Google blacklist or McAfee?',
+    a: 'Yes. After cleanup I submit review requests to Google Safe Browsing, McAfee SiteAdvisor, Norton Safe Web, Avast, Quttera, and other blacklist vendors. Vendor review fees and recovery help are included in the blacklist removal service.',
+  },
+  {
+    q: 'Do you work with WooCommerce and e-commerce sites?',
+    a: 'Yes. I regularly clean WooCommerce and e-commerce sites, including credit card skimmers, fake payment form malware, and stores with 10,000+ products. Cleanup is done without losing orders, customers, or product data.',
+  },
+  {
+    q: 'What information do you need to start a cleanup?',
+    a: 'Usually just WordPress admin login and hosting/cPanel access (or SFTP credentials). A current backup helps but is not required — I take a fresh forensic snapshot before touching anything so nothing is lost.',
+  },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
+// JSON-LD GRAPH (significantly expanded for AI search + rich results)
+// ─────────────────────────────────────────────────────────────────────────────
 const sameAs = [
   siteData.profiles.linkedin,
   siteData.profiles.github,
   siteData.profiles.leetcode,
   siteData.profiles.companyHouse,
+  'https://web.facebook.com/mdpabelwpsecurity',
   'https://www.researchgate.net/publication/395318263_Real-time_Full-Stack_University_Bus_Tracking_System_Based_on_IoT',
 ].filter(Boolean);
 
@@ -56,29 +224,47 @@ const schemaGraph = {
       '@type': 'WebSite',
       '@id': 'https://www.mdpabel.com/#website',
       url: 'https://www.mdpabel.com/',
-      name: 'MD Pabel',
+      name: 'MD Pabel — WordPress Malware Removal Expert',
       description: seo.description,
       inLanguage: 'en',
-      publisher: {
-        '@id': 'https://www.mdpabel.com/#person',
+      publisher: { '@id': 'https://www.mdpabel.com/#person' },
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: {
+          '@type': 'EntryPoint',
+          urlTemplate: 'https://www.mdpabel.com/?s={search_term_string}',
+        },
+        'query-input': 'required name=search_term_string',
       },
     },
     {
       '@type': 'WebPage',
       '@id': 'https://www.mdpabel.com/#webpage',
       url: 'https://www.mdpabel.com/',
-      name: 'MD Pabel | WordPress Malware Removal Expert',
-      description:
-        'MD Pabel is a WordPress malware removal expert helping hacked WordPress site owners with manual cleanup, blacklist recovery, Japanese SEO spam removal, and post-hack hardening.',
+      name: seo.title,
+      description: seo.description,
       isPartOf: { '@id': 'https://www.mdpabel.com/#website' },
       about: { '@id': 'https://www.mdpabel.com/#person' },
-      mainEntity: { '@id': 'https://www.mdpabel.com/#person' },
+      mainEntity: { '@id': 'https://www.mdpabel.com/#service' },
       primaryImageOfPage: {
         '@type': 'ImageObject',
         '@id': 'https://www.mdpabel.com/#primaryimage',
-        url: 'https://www.mdpabel.com/md-pabel.png',
+        url: 'https://www.mdpabel.com' + seo.image,
       },
       inLanguage: 'en',
+      breadcrumb: { '@id': 'https://www.mdpabel.com/#breadcrumb' },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': 'https://www.mdpabel.com/#breadcrumb',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Home',
+          item: 'https://www.mdpabel.com/',
+        },
+      ],
     },
     {
       '@type': 'Person',
@@ -88,40 +274,136 @@ const schemaGraph = {
       image: {
         '@type': 'ImageObject',
         '@id': 'https://www.mdpabel.com/#personimage',
-        url: seo.image,
+        url: 'https://www.mdpabel.com' + seo.image,
       },
       description:
-        'WordPress malware removal expert specializing in hacked site cleanup, blacklist recovery, Japanese SEO spam removal, and WordPress hardening.',
+        'WordPress malware removal expert with 4,500+ manual hacked-site cleanups. Specialist in Japanese SEO spam, fake CAPTCHA malware, redirect malware, .htaccess injections, blacklist recovery, and post-hack hardening.',
       jobTitle: 'WordPress Malware Removal Expert',
       sameAs,
       knowsAbout: [
         'WordPress malware removal',
         'Hacked WordPress site cleanup',
+        'Japanese SEO spam removal',
+        'Fake CAPTCHA malware removal',
+        'Redirect malware removal',
+        'htaccess malware cleanup',
+        'WordPress backdoor detection',
         'Google blacklist recovery',
         'McAfee blacklist removal',
-        'Japanese SEO spam cleanup',
-        'Fake plugin malware removal',
+        'Norton blacklist removal',
+        'WooCommerce malware cleanup',
         'WordPress hardening',
-        'Website malware cleanup',
+        'Cron job malware removal',
+        'Pharma hack fix',
+        'WordPress critical error fix',
       ],
-      mainEntityOfPage: {
-        '@id': 'https://www.mdpabel.com/#webpage',
+      mainEntityOfPage: { '@id': 'https://www.mdpabel.com/#webpage' },
+    },
+    {
+      '@type': 'ProfessionalService',
+      '@id': 'https://www.mdpabel.com/#service',
+      name: 'WordPress Malware Removal Service by MD Pabel',
+      url: 'https://www.mdpabel.com/wordpress-malware-removal/',
+      image: 'https://www.mdpabel.com' + seo.image,
+      provider: { '@id': 'https://www.mdpabel.com/#person' },
+      areaServed: { '@type': 'Place', name: 'Worldwide' },
+      serviceType: 'WordPress malware removal and hacked website recovery',
+      description:
+        'Manual WordPress malware removal, Japanese SEO spam cleanup, fake CAPTCHA malware removal, blacklist recovery, and WordPress hardening — performed by an expert with 4,500+ real cleanups.',
+      priceRange: '$15 - $149',
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: '5.0',
+        bestRating: '5',
+        worstRating: '1',
+        ratingCount: '2100',
+        reviewCount: '2100',
       },
+      review: testimonials.map((t) => ({
+        '@type': 'Review',
+        reviewRating: {
+          '@type': 'Rating',
+          ratingValue: t.rating.toString(),
+          bestRating: '5',
+        },
+        author: { '@type': 'Person', name: t.author },
+        reviewBody: t.quote,
+      })),
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'WordPress Malware Removal Services',
+        itemListElement: [
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: 'WordPress Malware Removal',
+            },
+            price: '89',
+            priceCurrency: 'USD',
+          },
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: 'Japanese SEO Spam Removal',
+            },
+            price: '149',
+            priceCurrency: 'USD',
+          },
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: 'Google Blacklist Removal',
+            },
+            price: '89',
+            priceCurrency: 'USD',
+          },
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: 'Blacklist Vendor Recovery',
+            },
+            price: '15',
+            priceCurrency: 'USD',
+          },
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: 'WordPress Critical Error Fix',
+            },
+            price: '50',
+            priceCurrency: 'USD',
+          },
+        ],
+      },
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': 'https://www.mdpabel.com/#faq',
+      mainEntity: faqs.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
     },
   ],
 };
 ---
 
 <Layout title={seo.title} description={seo.description} image={seo.image}>
-  {/* --- JSON-LD INJECTION (Zero JS Cost) --- */}
   <script
     type='application/ld+json'
     set:html={JSON.stringify(schemaGraph)}
     is:inline
   />
 
-  {/* 1. HERO SECTION */}
-  {/* 1. HERO SECTION */}
+  {/* ──────────────────────────────────────────────────────────────────── */}
+  {/* 1. HERO — rewritten for keyword targeting + buyer intent              */}
+  {/* ──────────────────────────────────────────────────────────────────── */}
   <section class='relative py-20 overflow-hidden'>
     <!-- <HeroGlow /> -->
 
@@ -131,21 +413,23 @@ const schemaGraph = {
       <div class='md:col-span-2'>
         {/* H1 Headline */}
         <h1 class='mb-2 font-bold text-white text-3xl md:text-4xl'>
-          MD Pabel — Freelance WordPress Security & Malware Expert
+          WordPress Malware Removal Service by a 4,500+ Cleanup Veteran
         </h1>
 
         {/* H2 Subheadline */}
-        <h2 class='pt-2 pb-4 font-semibold text-slate-300 text-xl md:text-2xl'>
-          4500+ WordPress Sites Cleaned — Fast, Secure, Guaranteed
+        <h2 class='pt-2 pb-4 font-semibold text-slate-300 text-lg md:text-xl'>
+          Manual hacked-site cleanup, Japanese SEO spam removal, fake CAPTCHA
+          malware, redirect fixes, and Google blacklist recovery — done by hand,
+          guaranteed.
         </h2>
 
         {/* Description */}
-        <p class='my-4 text-slate-300 text-lg leading-relaxed'>
-          Hi, I'm {siteData.personal.name}. I don't just build websites; I
-          protect them. If your site is hacked, redirecting to spam, or
-          blacklisted by Google—I will
-          <strong class='font-semibold text-white'> manually clean it </strong>
-          and secure it against future attacks. No data loss, guaranteed.
+        <p class='my-4 text-slate-300 text-base leading-relaxed'>
+          Hi, I'm MD Pabel. If your WordPress site is hacked, redirecting to
+          spam, blacklisted by Google, or showing fake Cloudflare verification —
+          I clean it manually, file by file. No automated scripts that miss
+          backdoors. No data loss. 4,500+ real cleanups, 5★ on Fiverr (Level 2
+          Seller) and Upwork (Top Rated).
         </p>
 
         {/* --- STATS INDICATORS --- */}
@@ -153,18 +437,36 @@ const schemaGraph = {
           <div
             class='flex items-center gap-2 bg-slate-800 px-3 py-2 border border-slate-700 rounded-lg font-medium text-slate-300 text-sm'>
             <CheckCircle class='w-4 h-4 text-white' />
-            4,500+ Fixed
+            4,500+ sites cleaned
           </div>
           <div
             class='flex items-center gap-2 bg-slate-800 px-3 py-2 border border-slate-700 rounded-lg font-medium text-slate-300 text-sm'>
             <Star class='w-4 h-4 text-white' />
-            Top Rated
+            5.0 / 5 average rating
           </div>
           <div
             class='flex items-center gap-2 bg-slate-800 px-3 py-2 border border-slate-700 rounded-lg font-medium text-slate-300 text-sm'>
             <ShieldCheck class='w-4 h-4 text-white' />
-            Security Expert
+            30-day reinfection guarantee
           </div>
+        </div>
+
+        {/* Dual CTA */}
+
+        <div class='flex flex-wrap gap-3'>
+          <a
+            href='/hire-me/'
+            class='flex items-center gap-2 bg-white hover:bg-slate-200 shadow-md px-5 py-2.5 rounded-full font-semibold text-slate-900 text-sm transition-all hover:-translate-y-0.5 transform'>
+            Get my site cleaned now
+
+            <ArrowRight class='w-4 h-4' />
+          </a>
+
+          <a
+            href='/wordpress-malware-removal/'
+            class='inline-flex items-center gap-2 bg-slate-900/60 px-5 py-2.5 border border-slate-700 hover:border-emerald-500/30 rounded-full font-semibold text-slate-200 hover:text-white text-sm md:text-base transition-all hover:-translate-y-0.5 transform'>
+            See pricing & service details
+          </a>
         </div>
       </div>
 
@@ -268,90 +570,404 @@ const schemaGraph = {
     </ComponentWrapper>
   </section>
 
-  <ComponentWrapper>
-    <Services />
+  {/* ──────────────────────────────────────────────────────────────────── */}
+  {/* 2. QUICK ANSWER — extractable definition for AI search & PAA          */}
+  {/* ──────────────────────────────────────────────────────────────────── */}
+  <ComponentWrapper class='py-8'>
+    <div
+      class='bg-slate-900/60 mx-auto p-6 md:p-8 border border-slate-700/60 rounded-3xl max-w-5xl'>
+      <div class='flex items-center gap-2 mb-3'>
+        <div class='bg-emerald-400 rounded-full w-2 h-2 animate-pulse'></div>
+        <span
+          class='font-mono font-medium text-emerald-400 text-xs uppercase tracking-widest'>
+          Quick answer
+        </span>
+      </div>
+      <h2 class='mb-3 font-bold text-white text-xl md:text-2xl'>
+        What is WordPress malware removal?
+      </h2>
+      <p class='mb-4 text-slate-300 text-base md:text-lg leading-relaxed'>
+        <strong class='text-white'>WordPress malware removal</strong> is the manual
+        process of finding and deleting every piece of malicious code — infected PHP
+        files, compromised JavaScript, database injections, .htaccess redirects, fake
+        plugins, and hidden admin users — from a hacked WordPress site, then closing
+        the original entry point so the infection cannot return. A complete cleanup
+        also includes Google blacklist removal, search-result spam URL cleanup, and
+        post-hack hardening (file permissions, admin lockdown, 2FA, and version control).
+      </p>
+      <ul class='gap-3 grid md:grid-cols-2 text-slate-300 text-sm md:text-base'>
+        <li class='flex items-start gap-2'>
+          <CheckCircle class='flex-shrink-0 mt-0.5 w-4 h-4 text-emerald-400' />
+          <span
+            ><strong class='text-white'>Typical turnaround:</strong> 4–24 hours for
+            standard infections.</span
+          >
+        </li>
+        <li class='flex items-start gap-2'>
+          <CheckCircle class='flex-shrink-0 mt-0.5 w-4 h-4 text-emerald-400' />
+          <span
+            ><strong class='text-white'>Typical cost:</strong> $89 fixed for a hacked
+            WordPress site cleanup.</span
+          >
+        </li>
+        <li class='flex items-start gap-2'>
+          <CheckCircle class='flex-shrink-0 mt-0.5 w-4 h-4 text-emerald-400' />
+          <span
+            ><strong class='text-white'>Method:</strong> manual file-by-file forensic
+            review — not automated scanning.</span
+          >
+        </li>
+        <li class='flex items-start gap-2'>
+          <CheckCircle class='flex-shrink-0 mt-0.5 w-4 h-4 text-emerald-400' />
+          <span
+            ><strong class='text-white'>Includes:</strong> backdoor closure, hardening,
+            and a 30-day reinfection guarantee.</span
+          >
+        </li>
+      </ul>
+    </div>
+  </ComponentWrapper>
 
-    {/* 3. SERVICES / PRICING SECTION */}
-    <!-- <div class='my-20'>
-      <Pricing />
-    </div> -->
-
-    {/* 4. PLATFORM PROOF */}
-    <div class='mb-20'>
-      <PlatformScreenshots title='center' />
+  {/* ──────────────────────────────────────────────────────────────────── */}
+  {/* 3. COMMON MALWARE TYPES — internal-link hub to your blog/case studies */}
+  {/* ──────────────────────────────────────────────────────────────────── */}
+  <ComponentWrapper class='py-12 md:py-16'>
+    <div class='mx-auto mb-10 max-w-3xl text-center'>
+      <span
+        class='inline-flex items-center gap-2 bg-emerald-500/10 mb-3 px-4 py-1.5 border border-emerald-500/20 rounded-full font-mono font-medium text-emerald-400 text-xs uppercase tracking-widest'>
+        Threat Library
+      </span>
+      <h2 class='mb-3 font-bold text-white text-3xl md:text-4xl'>
+        Common WordPress hacks I clean every week
+      </h2>
+      <p class='mx-auto max-w-2xl text-slate-400 md:text-lg'>
+        Each link below is a real cleanup writeup or technical guide based on
+        sites I've actually fixed.
+      </p>
     </div>
 
-    {/* 5. BLOG POSTS */}
-    <!-- <BlogPosts
-      title='Recent Malware Removal Case Studies'
-      mode='featured'
-      limit={10}
-    /> -->
+    <div class='gap-4 grid md:grid-cols-2 lg:grid-cols-3 mx-auto max-w-6xl'>
+      {
+        malwareTypes.map(({ Icon, title, desc, href }) => (
+          <a
+            href={href}
+            class='group relative flex flex-col bg-slate-800/50 hover:bg-slate-800/70 p-5 border border-slate-700/60 hover:border-emerald-500/30 rounded-2xl transition-all'>
+            <div class='flex justify-center items-center bg-slate-900/50 mb-4 border border-slate-700 rounded-xl w-10 h-10'>
+              <Icon class='w-4 h-4 text-white' />
+            </div>
+            <h3 class='mb-2 font-bold text-white text-lg leading-snug transition-colors'>
+              {title}
+            </h3>
+            <p class='text-slate-400 text-sm leading-relaxed'>{desc}</p>
+            <span class='inline-flex items-center gap-1 mt-4 font-medium text-emerald-400 text-sm'>
+              Read the cleanup guide
+              <ArrowRight class='w-3 h-3 transition-transform group-hover:translate-x-1' />
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </ComponentWrapper>
 
+  {/* ──────────────────────────────────────────────────────────────────── */}
+  {/* 4. SERVICES — existing component (pricing block)                      */}
+  {/* ──────────────────────────────────────────────────────────────────── */}
+  <ComponentWrapper>
+    <Services />
+  </ComponentWrapper>
+
+  {/* ──────────────────────────────────────────────────────────────────── */}
+  {/* 5. PROCESS — 4-step methodology (trust + extractable for AI)          */}
+  {/* ──────────────────────────────────────────────────────────────────── */}
+  <ComponentWrapper class='py-12 md:py-16'>
+    <div class='mx-auto mb-10 max-w-3xl text-center'>
+      <h2 class='mb-3 font-bold text-white text-3xl md:text-4xl'>
+        How I clean a hacked WordPress site
+      </h2>
+      <p class='mx-auto max-w-2xl text-slate-400 md:text-lg'>
+        The same four-stage process I've run on 4,500+ infected sites, refined
+        from real-world cases — not theory.
+      </p>
+    </div>
+
+    <div class='gap-5 grid md:grid-cols-2 lg:grid-cols-4 mx-auto max-w-6xl'>
+      {
+        [
+          {
+            n: '01',
+            Icon: Search,
+            title: 'Forensic discovery',
+            desc: 'Snapshot the current state, scan every PHP/JS file, audit the database, review .htaccess, list admin users, and identify the entry point.',
+          },
+          {
+            n: '02',
+            Icon: Wrench,
+            title: 'Manual cleanup',
+            desc: 'Remove malicious files, decode obfuscated PHP, clean injected database rows, restore core/plugin files, and delete unauthorized admins.',
+          },
+          {
+            n: '03',
+            Icon: Lock,
+            title: 'Hardening',
+            desc: 'Reset all credentials, enforce 2FA, fix file permissions, remove unused plugins/themes, and patch the original vulnerability.',
+          },
+          {
+            n: '04',
+            Icon: TrendingUp,
+            title: 'Recovery & monitoring',
+            desc: 'Submit Google Search Console review, request blacklist delisting, remove spam URLs from index, and monitor for reinfection.',
+          },
+        ].map(({ n, Icon, title, desc }) => (
+          <div class='relative flex flex-col bg-slate-800/50 p-5 border border-slate-700/60 rounded-2xl'>
+            {/* <span class='top-4 right-4 absolute font-mono font-bold text-slate-700 text-3xl'>
+              {n}
+            </span> */}
+            <div class='flex justify-center items-center bg-slate-900/50 mb-4 border border-slate-700 rounded-xl w-10 h-10'>
+              <Icon class='w-4 h-4 text-white' />
+            </div>
+            <h3 class='mb-2 font-bold text-white text-lg leading-snug'>
+              {title}
+            </h3>
+            <p class='text-slate-400 text-sm leading-relaxed'>{desc}</p>
+          </div>
+        ))
+      }
+    </div>
+  </ComponentWrapper>
+
+  {/* ──────────────────────────────────────────────────────────────────── */}
+  {/* 6. REAL TESTIMONIALS — with proper Review schema (already in JSON-LD) */}
+  {/* ──────────────────────────────────────────────────────────────────── */}
+  <ComponentWrapper class='py-12 md:py-16'>
+    <div class='mx-auto mb-10 max-w-3xl text-center'>
+      <span
+        class='inline-flex items-center gap-2 bg-emerald-500/10 mb-3 px-4 py-1.5 border border-emerald-500/20 rounded-full font-mono font-medium text-emerald-400 text-xs uppercase tracking-widest'>
+        Real client reviews
+      </span>
+      <h2 class='mb-3 font-bold text-white text-3xl md:text-4xl'>
+        What WordPress site owners say after a cleanup
+      </h2>
+      <p class='mx-auto max-w-2xl text-slate-400 md:text-lg'>
+        Verified reviews from Google Business and Facebook (in addition to
+        thousands of 5★ ratings on Fiverr & Upwork).
+      </p>
+    </div>
+
+    <div class='gap-5 grid md:grid-cols-3 mx-auto max-w-6xl'>
+      {
+        testimonials.map((t) => (
+          <figure class='relative flex flex-col bg-slate-800/50 p-6 border border-slate-700/60 rounded-2xl'>
+            <div class='flex gap-0.5 mb-3'>
+              {Array.from({ length: t.rating }).map(() => (
+                <Star class='fill-yellow-500 w-4 h-4 text-yellow-500' />
+              ))}
+            </div>
+            <blockquote class='flex-grow mb-4 text-slate-200 text-sm md:text-base leading-relaxed'>
+              "{t.quote}"
+            </blockquote>
+            <figcaption class='pt-4 border-slate-700/60 border-t'>
+              <div class='font-semibold text-white text-sm'>{t.author}</div>
+              <div class='text-slate-400 text-xs'>{t.role}</div>
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </ComponentWrapper>
+
+  {/* ──────────────────────────────────────────────────────────────────── */}
+  {/* 7. FEATURED CASE STUDIES — real proof + internal link juice           */}
+  {/* ──────────────────────────────────────────────────────────────────── */}
+  <ComponentWrapper class='py-12 md:py-16'>
+    <div class='mx-auto mb-10 max-w-3xl text-center'>
+      <h2 class='mb-3 font-bold text-white text-3xl md:text-4xl'>
+        Real cleanup case studies
+      </h2>
+      <p class='mx-auto max-w-2xl text-slate-400 md:text-lg'>
+        Detailed forensic writeups from sites I've actually recovered — files,
+        screenshots, and SQL dumps included.
+      </p>
+    </div>
+
+    <div class='gap-5 grid md:grid-cols-2 mx-auto max-w-6xl'>
+      {
+        featuredCases.map((c) => (
+          <a
+            href={c.href}
+            class='group flex md:flex-row flex-col gap-5 bg-slate-800/50 hover:bg-slate-800/70 p-5 border border-slate-700/60 hover:border-emerald-500/30 rounded-2xl transition-all'>
+            <div class='flex flex-col justify-center items-center bg-emerald-950/30 p-4 border border-emerald-500/20 rounded-2xl md:w-32 shrink-0'>
+              <span class='font-bold text-emerald-300 text-xl md:text-2xl'>
+                {c.metric}
+              </span>
+              <span class='mt-1 font-medium text-emerald-500/70 text-xs text-center uppercase tracking-wide'>
+                {c.metricLabel}
+              </span>
+            </div>
+            <div class='flex-grow'>
+              <h3 class='mb-2 font-bold text-white group-hover:text-emerald-300 text-lg leading-snug transition-colors'>
+                {c.title}
+              </h3>
+              <p class='text-slate-400 text-sm leading-relaxed'>{c.snippet}</p>
+              <span class='inline-flex items-center gap-1 mt-3 font-medium text-emerald-400 text-sm'>
+                Read full case study
+                <ArrowRight class='w-3 h-3 transition-transform group-hover:translate-x-1' />
+              </span>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+
+    <div class='mt-8 text-center'>
+      <a
+        href='/case-studies/'
+        class='inline-flex items-center gap-2 font-medium text-emerald-400 hover:text-emerald-300 text-sm md:text-base'>
+        Browse all case studies
+        <ArrowRight class='w-4 h-4' />
+      </a>
+    </div>
+  </ComponentWrapper>
+
+  {/* ──────────────────────────────────────────────────────────────────── */}
+  {/* 8. PLATFORM PROOF — existing                                          */}
+  {/* ──────────────────────────────────────────────────────────────────── */}
+  <ComponentWrapper>
+    <div class='mb-12'>
+      <PlatformScreenshots title='center' />
+    </div>
+  </ComponentWrapper>
+
+  {/* ──────────────────────────────────────────────────────────────────── */}
+  {/* 9. RECENT CONTENT — existing                                          */}
+  {/* ──────────────────────────────────────────────────────────────────── */}
+  <ComponentWrapper>
     <RecentlyUpdatedContent />
+  </ComponentWrapper>
 
-    <style>
-      .animate-scanner,
-      .animate-scanner-line {
-        animation: scanDown 3s ease-in-out infinite;
-      }
+  {/* ──────────────────────────────────────────────────────────────────── */}
+  {/* 10. FAQ — FAQPage schema + extractable AI answers                     */}
+  {/* ──────────────────────────────────────────────────────────────────── */}
+  <ComponentWrapper class='py-12 md:py-16'>
+    <div class='mx-auto mb-10 max-w-3xl text-center'>
+      <span
+        class='inline-flex items-center gap-2 bg-emerald-500/10 mb-3 px-4 py-1.5 border border-emerald-500/20 rounded-full font-mono font-medium text-emerald-400 text-xs uppercase tracking-widest'>
+        FAQ
+      </span>
+      <h2 class='mb-3 font-bold text-white text-3xl md:text-4xl'>
+        WordPress malware removal — frequently asked questions
+      </h2>
+      <p class='mx-auto max-w-2xl text-slate-400 md:text-lg'>
+        Real answers to the questions hacked-site owners ask me every day.
+      </p>
+    </div>
 
-      .animate-malware-clear {
-        animation: clearMalware 3s ease-in-out infinite;
+    <div class='space-y-3 mx-auto max-w-4xl'>
+      {
+        faqs.map((f) => (
+          <details class='group bg-slate-800/50 hover:bg-slate-800/70 border border-slate-700/60 rounded-2xl overflow-hidden transition-all'>
+            <summary class='flex justify-between items-center gap-4 p-5 font-semibold text-white text-base md:text-lg cursor-pointer list-none'>
+              <span>{f.q}</span>
+              <span class='flex-shrink-0 font-light text-emerald-400 text-2xl group-open:rotate-45 transition-transform'>
+                +
+              </span>
+            </summary>
+            <div class='px-5 pb-5 text-slate-300 text-sm md:text-base leading-relaxed'>
+              {f.a}
+            </div>
+          </details>
+        ))
       }
+    </div>
+  </ComponentWrapper>
 
-      .animate-secure-appear {
-        animation: appearSecure 3s ease-in-out infinite;
-      }
+  {/* ──────────────────────────────────────────────────────────────────── */}
+  {/* 11. FINAL CTA — emergency-framed for panicked hacked-site owners      */}
+  {/* ──────────────────────────────────────────────────────────────────── */}
+  <ComponentWrapper class='py-12 md:py-16'>
+    <div
+      class='bg-gradient-to-br from-emerald-950/40 to-slate-900/60 mx-auto p-8 md:p-12 border border-emerald-500/20 rounded-3xl max-w-5xl text-center'>
+      <AlertTriangle class='mx-auto mb-4 w-10 h-10 text-emerald-400' />
+      <h2 class='mb-3 font-bold text-white text-3xl md:text-4xl'>
+        Site hacked right now? Let's fix it today.
+      </h2>
+      <p class='mx-auto mb-6 max-w-2xl text-slate-300 text-base md:text-lg'>
+        Send me your URL and a description of what you're seeing. I'll respond
+        within 2 hours with a free diagnosis and a fixed price — no hard sell,
+        no surprise fees.
+      </p>
+      <div class='flex flex-wrap justify-center gap-3'>
+        <a
+          href='/hire-me/'
+          class='inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-400 shadow-lg px-7 py-3 rounded-full font-bold text-slate-950 text-sm md:text-base transition-colors'>
+          Start cleanup now
+          <ArrowRight class='w-4 h-4' />
+        </a>
+        <a
+          href='/wordpress-malware-removal/'
+          class='inline-flex items-center gap-2 bg-slate-900/60 px-7 py-3 border border-slate-700 hover:border-emerald-500/30 rounded-full font-semibold text-slate-200 hover:text-white text-sm md:text-base transition-colors'>
+          See pricing
+        </a>
+      </div>
+      <p class='mt-5 text-slate-500 text-xs md:text-sm'>
+        4,500+ cleanups · 5.0 average rating · 30-day reinfection guarantee
+      </p>
+    </div>
+  </ComponentWrapper>
 
-      .animate-glitch-line {
-        animation: glitchX 0.2s steps(2) infinite;
+  <style>
+    .animate-scanner,
+    .animate-scanner-line {
+      animation: scanDown 3s ease-in-out infinite;
+    }
+    .animate-malware-clear {
+      animation: clearMalware 3s ease-in-out infinite;
+    }
+    .animate-secure-appear {
+      animation: appearSecure 3s ease-in-out infinite;
+    }
+    .animate-glitch-line {
+      animation: glitchX 0.2s steps(2) infinite;
+    }
+    @keyframes scanDown {
+      0%,
+      100% {
+        transform: translateY(0);
       }
-
-      @keyframes scanDown {
-        0%,
-        100% {
-          transform: translateY(0);
-        }
-        45%,
-        55% {
-          transform: translateY(250px);
-        }
+      45%,
+      55% {
+        transform: translateY(250px);
       }
-
-      @keyframes clearMalware {
-        0%,
-        25% {
-          opacity: 1;
-        }
-        40%,
-        100% {
-          opacity: 0;
-        }
+    }
+    @keyframes clearMalware {
+      0%,
+      25% {
+        opacity: 1;
       }
-
-      @keyframes appearSecure {
-        0%,
-        35% {
-          opacity: 0;
-        }
-        50%,
-        90% {
-          opacity: 1;
-        }
-        100% {
-          opacity: 0;
-        }
+      40%,
+      100% {
+        opacity: 0;
       }
-
-      @keyframes glitchX {
-        0% {
-          transform: translateX(0);
-        }
-        100% {
-          transform: translateX(3px);
-        }
+    }
+    @keyframes appearSecure {
+      0%,
+      35% {
+        opacity: 0;
       }
-    </style>
-  </ComponentWrapper></Layout
->
+      50%,
+      90% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+    @keyframes glitchX {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(3px);
+      }
+    }
+  </style>
+</Layout>
