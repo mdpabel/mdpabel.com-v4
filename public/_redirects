@@ -205,16 +205,12 @@
 /convert-wordpress-to-nextjs /blog/ 301
 /blog/action /blog/ 301
 
-# Snippets & Old Path Mapping
-
 /snippets /blog/ 301
 /snippets/manually-add-a-wordpress-admin-user-via-ftp-functions-php/ /blog/how-to-find-and-remove-hidden-admin-users-in-wordpress-malware-analysis/ 301
 /snippets/hide-wordpress-version-from-source-code/ /blog/wordpress-obfuscated-php-malware-detection/ 301
 /snippets/disable-xml-rpc-in-wordpress/ /blog/wordpress-obfuscated-php-malware-detection/ 301
 /snippets/uselocalstorage-hook/ /blog/ 301
 /snippets/generic-htaccess-redirect-www-to-non-www/ /blog/ 301
-
-# Specific Blog Fixes (Mapping 404s to Sitemap Slugs)
 
 /blog/hidden-links-malware-the-simple-guide-to-seo-spam-detection-and-removal/ /blog/hidden-links-malware-the-simple-guide-to-seo-spam-detection-cleanup-and-prevention/ 301
 /hacked-weird-greek-text-code-hidden-in-your-wordpress-database /blog/hacked-weird-greek-text-code-hidden-in-your-wordpress-database/ 301
@@ -227,8 +223,6 @@
 /blog/how-hackers-hide-backdoors-wordpress-examples-detection/ /blog/i-found-a-hidden-backdoor-in-a-clients-wordpress-site/ 301
 /convert-wordpress-to-nextjs/locked-out-why-a-403-forbidden-error-on-wp-admin-could-be-a-malicious-htaccess-hack /blog/wordpress-wp-admin-403-forbidden-lockout/ 301
 /guides/select-how-to-use-all-in-one-wp-migration-to-back-up-and-migrate-your-wordpress-site-2025-guide /guides/how-to-use-all-in-one-wp-migration-to-back-up-and-migrate-your-wordpress-site-2025-guide/ 301
-
-# Cleanup for Tag Pages
 
 /blog/tag/wordpress-backup-plugin /blog/ 301
 /blog/tag/backup-wordpress-site /blog/ 301
