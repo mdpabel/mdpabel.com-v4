@@ -197,34 +197,48 @@
 
 # Service & Structural Redirects
 
-/services/wordpress-malware-removal-service /wordpress-malware-removal/ 301
-/services/blacklist-removal-service /google-blacklist-removal-service/ 301
-/projects /case-studies/ 301
-/templates /guides/ 301
-/newsletter /about/ 301
-/convert-wordpress-to-nextjs /blog/ 301
-/blog/action /blog/ 301
+/services/wordpress-malware-removal-service/ /wordpress-malware-removal/ 301
+/services/blacklist-removal-service/ /google-blacklist-removal-service/ 301
+/projects/ /case-studies/ 301
+/templates/ /guides/ 301
+/newsletter/ /about/ 301
+/convert-wordpress-to-nextjs/ /blog/ 301
+/blog/action/ /blog/ 301
 
-/snippets /blog/ 301
+# Snippets & Old Path Mapping
+
+/snippets/ /blog/ 301
 /snippets/manually-add-a-wordpress-admin-user-via-ftp-functions-php/ /blog/how-to-find-and-remove-hidden-admin-users-in-wordpress-malware-analysis/ 301
 /snippets/hide-wordpress-version-from-source-code/ /blog/wordpress-obfuscated-php-malware-detection/ 301
 /snippets/disable-xml-rpc-in-wordpress/ /blog/wordpress-obfuscated-php-malware-detection/ 301
 /snippets/uselocalstorage-hook/ /blog/ 301
 /snippets/generic-htaccess-redirect-www-to-non-www/ /blog/ 301
 
+# Specific Blog Fixes
+
 /blog/hidden-links-malware-the-simple-guide-to-seo-spam-detection-and-removal/ /blog/hidden-links-malware-the-simple-guide-to-seo-spam-detection-cleanup-and-prevention/ 301
-/hacked-weird-greek-text-code-hidden-in-your-wordpress-database /blog/hacked-weird-greek-text-code-hidden-in-your-wordpress-database/ 301
-/what-to-do-after-fixing-a-hacked-wordpress-site-checklist-from-real-cleanups /blog/what-to-do-after-fixing-a-hacked-wordpress-site-checklist-from-real-cleanups/ 301
+/hacked-weird-greek-text-code-hidden-in-your-wordpress-database/ /blog/hacked-weird-greek-text-code-hidden-in-your-wordpress-database/ 301
+/what-to-do-after-fixing-a-hacked-wordpress-site-checklist-from-real-cleanups/ /blog/what-to-do-after-fixing-a-hacked-wordpress-site-checklist-from-real-cleanups/ 301
 /blog/how-to-fix-wordpress-white-screen-of-death-zeura-malware/ /blog/how-to-fix-the-wordpress-white-screen-of-death-caused-by-zeura-malware/ 301
 /blog/wordpress-malware-case-study-removing-hidden-executable-files-bluehost-suspension/ /blog/wordpress-malware-case-study-removing-hidden-executable-files-after-a-bluehost-account-suspension/ 301
 /blog/top-5-malware-types-i-keep-finding-on-hacked-wordpress-sites/ /blog/wordpress-malware-removal-expert-guide-to-clean-hacked-wordpress-site/ 301
-/blog/who-hacked-who-finding-root-level-malware-on-bluehost-servers /case-studies/bluehost-hacked-wordpress-site-recovery/ 301
-/blog/top-4-wordpress-hosting-providers-expert-review-after-working-with-4500-sites /blog/siteground-review-why-its-my-1-hosting-recommendation-after-4500-site-cleanups/ 301
+/blog/who-hacked-who-finding-root-level-malware-on-bluehost-servers/ /case-studies/bluehost-hacked-wordpress-site-recovery/ 301
+/blog/top-4-wordpress-hosting-providers-expert-review-after-working-with-4500-sites/ /blog/siteground-review-why-its-my-1-hosting-recommendation-after-4500-site-cleanups/ 301
 /blog/how-hackers-hide-backdoors-wordpress-examples-detection/ /blog/i-found-a-hidden-backdoor-in-a-clients-wordpress-site/ 301
-/convert-wordpress-to-nextjs/locked-out-why-a-403-forbidden-error-on-wp-admin-could-be-a-malicious-htaccess-hack /blog/wordpress-wp-admin-403-forbidden-lockout/ 301
-/guides/select-how-to-use-all-in-one-wp-migration-to-back-up-and-migrate-your-wordpress-site-2025-guide /guides/how-to-use-all-in-one-wp-migration-to-back-up-and-migrate-your-wordpress-site-2025-guide/ 301
+/convert-wordpress-to-nextjs/locked-out-why-a-403-forbidden-error-on-wp-admin-could-be-a-malicious-htaccess-hack/ /blog/wordpress-wp-admin-403-forbidden-lockout/ 301
+/guides/select-how-to-use-all-in-one-wp-migration-to-back-up-and-migrate-your-wordpress-site-2025-guide/ /guides/how-to-use-all-in-one-wp-migration-to-back-up-and-migrate-your-wordpress-site-2025-guide/ 301
 
-/blog/tag/wordpress-backup-plugin /blog/ 301
-/blog/tag/backup-wordpress-site /blog/ 301
-/blog/tag/updraftplus /blog/ 301
-/blog/tag/wordpress-backup /blog/ 301
+# Cleanup for Tag Pages
+
+/blog/tag/wordpress-backup-plugin/ /blog/ 301
+/blog/tag/backup-wordpress-site/ /blog/ 301
+/blog/tag/updraftplus/ /blog/ 301
+/blog/tag/wordpress-backup/ /blog/ 301
+
+# Fixing the Search Console Crawl Errors (Date Merged)
+
+/projects2026-02-01/ /case-studies/ 301
+/templates2026-01-28/ /guides/ 301
+/newsletter2026-02-14/ /about/ 301
+/blog/action2026-02-01/ /blog/ 301
+/snippets/2026-04-25/ /blog/ 301
