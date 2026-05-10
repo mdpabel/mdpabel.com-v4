@@ -51,7 +51,9 @@
 /how-to-scan-and-clean-your-wordpress-database-for-hidden-malware /blog/how-to-scan-and-clean-your-wordpress-database-for-hidden-malware 301
 /how-to-remove-fetch-malware-from-wordpress-database-sengatanlebah-jasabacklink /blog/how-to-remove-fetch-malware-from-wordpress-database-sengatanlebah-jasabacklink 301
 /best-managed-wordpress-hosting-providers-for-speed-security-2 /blog/best-managed-wordpress-hosting-providers-for-speed-security-2 301
-/case-study-cleaning-1162-infected-htaccess-files-on-bluehost-the-lockout-hack /blog/case-study-cleaning-1162-infected-htaccess-files-on-bluehost-the-lockout-hack 301
+
+/case-study-cleaning-1162-infected-htaccess-files-on-bluehost-the-lockout-hack /blog/case-study-cleaning-1162-infected-htaccess-files-on-bluehost-the-lockout-hack/ 301
+/case-study-cleaning-1162-infected-htaccess-files-on-bluehost-the-lockout-hack/ /blog/case-study-cleaning-1162-infected-htaccess-files-on-bluehost-the-lockout-hack/ 301
 
 /services/blacklist-removal /blacklist-removal/ 301
 /wordpress-security-maintenance-service /wordpress-malware-removal/ 301
@@ -69,18 +71,13 @@
 /snippets/uselocalstorage-hook /blog 301
 /snippets/usedebounce-hook /blog 301
 
-/blog/60-clear-signs-your-wordpress-site-is-hacked-and-how-to-fix-each-one-fast/ /blog/ 301
-/guides/is-freelancing-a-good-career-in-2025-skills-earnings-tips/ /blog/ 301
-
 /blog/how-to-secure-a-wordpress-site-15-practical-steps-that-prevent-hacks/ /blog/how-to-secure-a-wordpress-site/ 301
-
-/blog/the-complete-guide-to-website-blacklist-removal-a-step-by-step-process/ /blog/how-to-remove-your-website-from-a-blacklist-a-complete-recovery-guide/ 301
 
 /blog/top-5-malware-types-i-keep-finding-on-hacked-wordpress-sites/ /blog/how-to-detect-wordpress-malware/ 301
 /blog/headless-wordpress-seo-guide-fixing-yoast-schema-urls-for-astro-next-js/ /case-studies/how-we-reduced-headless-wordpress-build-times-by-90-29m-to-3m/ 301
 /blog/best-managed-wordpress-hosting-providers-for-speed-security-2/ /blog/siteground-review-why-its-my-1-hosting-recommendation-after-4500-site-cleanups/ 301
 /blog/wordpress-malware-removal-how-to-manually-clean-your-hacked-site/ /blog/wordpress-malware-removal-expert-guide-to-clean-hacked-wordpress-site/ 301
-/blog/the-complete-guide-to-website-blacklist-removal-a-step-by-step-process/ /blog/how-to-remove-your-website-from-a-blacklist-a-complete-recovery-guide/ 301
+
 /blog/understanding-backdoors-a-deep-dive-into-web-security-threats/ /blog/how-hackers-hide-backdoors-in-wordpress-real-examples-detection/ 301
 /blog/wordpress-website-maintenance-2025-time-saving-and-hack-proof-strategies/ /blog/how-to-secure-a-wordpress-site/ 301
 /blog/wordpress-security-tips-every-website-owner-must-know/ /blog/how-to-secure-a-wordpress-site/ 301
@@ -101,7 +98,7 @@
 /guides/why-your-website-loses-sales-even-with-perfect-seo-the-blacklist-problem/ /blacklist-removal/ 301
 /guides/fix-mailgun-authentication-failed-error-how-to-find-and-whitelist-the-right-outbound-ip/ /guides/ 301
 /guides/common-wordpress-vulnerabilities-a-complete-security-guide/ /blog/how-to-secure-a-wordpress-site/ 301
-/guides/wordpress-com-access-restrictions-in-mainland-china-2025-status-update/ /guides/ 301
+
 /guides/the-difference-between-a-hyphen-and-an-en-dash-in-urls-and-how-to-replace-them/ /guides/404-vs-410-why-google-wont-forget-your-deleted-pages/ 301
 /guides/wordpress-security-tips-keep-your-site-safe-in-2025/ /blog/how-to-secure-a-wordpress-site/ 301
 /guides/why-cheap-hosting-makes-your-wordpress-site-vulnerable-to-hackers/ /blog/siteground-review-why-its-my-1-hosting-recommendation-after-4500-site-cleanups/ 301
@@ -120,7 +117,7 @@
 /guides/headless-cms-vs-wordpress-when-headless-wordpress-wins-and-when-it-doesnt/ /case-studies/how-we-reduced-headless-wordpress-build-times-by-90-29m-to-3m/ 301
 /guides/avast-blacklist-removal-how-to-remove-your-url-from-avasts-block-list-step-by-step/ /blacklist-removal/ 301
 /guides/how-to-remove-a-wordpress-gutenberg-carousel-plugin/ /guides/ 301
-/guides/wordpress-speed-optimization-guide-2025/ /blog/how-we-optimized-a-woocommerce-website-with-37786-products-to-improve-performance-and-ux/ 301
+
 /guides/how-to-install-a-wordpress-theme-3-methods/ /guides/ 301
 
 /blog/how-to-prevent-fake-hidden-plugins-from-reinstalling-on-wordpress/ /wordpress-malware-removal/ 301
@@ -135,11 +132,10 @@
 
 /services/blacklist-removal/ /blacklist-removal/ 301
 
-/blog/case-study-cleaning-1162-infected-htaccess-files-on-bluehost-the-lockout-hack/ /case-studies/bluehost-hacked-wordpress-site-recovery/ 301
-
 /blog/locked-out-why-a-403-forbidden-error-on-wp-admin-could-be-a-malicious-htaccess-hack/ /blog/wordpress-wp-admin-403-forbidden-lockout/ 301
 
 /blog/htaccess-malware-cookie-based-php-backdoor-explained-with-removal-guide/ /blog/wordpress-obfuscated-php-malware-detection/ 301
+/blog/htaccess-malware-cookie-based-php-backdoor-explained-with-removal-guide /blog/wordpress-obfuscated-php-malware-detection/ 301
 
 /case-studies/wordpress-drive-by-malware-cleanup-case-study/ /case-studies/switch-domain-deactivation-drive-by-malware-fix/ 301
 
@@ -175,6 +171,7 @@
 /blog/how-hackers-create-hidden-admin-users-in-wordpress/ /blog/how-to-find-and-remove-hidden-admin-users-in-wordpress-malware-analysis/ 301
 
 /blog/found-suspicious-code-in-functions-php-the-ghost-admin-hack-explained/ /blog/how-to-find-and-remove-hidden-admin-users-in-wordpress-malware-analysis/ 301
+/blog/found-suspicious-code-in-functions-php-the-ghost-admin-hack-explained /blog/how-to-find-and-remove-hidden-admin-users-in-wordpress-malware-analysis/ 301
 
 /guides/404-vs-410-why-google-wont-forget-your-deleted-pages/ /remove-japanese-seo-spam/ 301
 
@@ -297,3 +294,62 @@
 /snippets/hide-wordpress-version-from-source-code] /blog/wordpress-obfuscated-php-malware-detection/ 301
 /snippets/hide-wordpress-version-from-source-code]/ /blog/wordpress-obfuscated-php-malware-detection/ 301
 /snippets/hide-wordpress-version-from-source-code%5D /blog/wordpress-obfuscated-php-malware-detection/ 301
+
+/blog/the-complete-guide-to-website-blacklist-removal-a-step-by-step-process /blacklist-removal/ 301
+/blog/the-complete-guide-to-website-blacklist-removal-a-step-by-step-process/ /blacklist-removal/ 301
+
+/guides/why-your-website-loses-sales-even-with-perfect-seo-the-blacklist-problem /blacklist-removal/ 301
+/guides/why-your-website-loses-sales-even-with-perfect-seo-the-blacklist-problem/ /blacklist-removal/ 301
+
+/blog/the-wp-security-phishing-plugin-analyzing-the-fake-wordpress-security-team-malware /wordpress-malware-removal/ 301
+/blog/the-wp-security-phishing-plugin-analyzing-the-fake-wordpress-security-team-malware/ /wordpress-malware-removal/ 301
+
+/guides/how-to-create-a-responsive-html-table-in-wordpress-3-easy-methods /guides/ 301
+/guides/how-to-create-a-responsive-html-table-in-wordpress-3-easy-methods/ /guides/ 301
+
+/guides/is-freelancing-a-good-career-in-2025-skills-earnings-tips /blog/ 301
+/guides/is-freelancing-a-good-career-in-2025-skills-earnings-tips/ /blog/ 301
+
+/blog/60-clear-signs-your-wordpress-site-is-hacked-and-how-to-fix-each-one-fast /blog/ 301
+/blog/60-clear-signs-your-wordpress-site-is-hacked-and-how-to-fix-each-one-fast/ /blog/ 301
+
+/blog/how-to-fix-the-403-forbidden-error-in-plesk /blog/locked-out-why-a-403-forbidden-error-on-wp-admin-could-be-a-malicious-htaccess-hack/ 301
+
+/case-studies/removing-fake-google-adsense-malware-from-wordpress-website /blog/how-to-identify-and-remove-fake-google-adsense-malware-from-your-wordpress-site/ 301
+/case-studies/removing-fake-google-adsense-malware-from-wordpress-website/ /blog/how-to-identify-and-remove-fake-google-adsense-malware-from-your-wordpress-site/ 301
+
+/guides/wordfence-vs-sucuri-which-is-better /blog/ 301
+/guides/wordfence-vs-sucuri-which-is-better/ /blog/ 301
+
+/guides/wordpress-com-access-restrictions-in-mainland-china-2025-status-update /blog/ 301
+/guides/wordpress-com-access-restrictions-in-mainland-china-2025-status-update/ /blog/ 301
+
+/guides/wordpress-speed-optimization-guide-2025/ /blog/how-we-optimized-a-woocommerce-website-with-37786-products-to-improve-performance-and-ux/ 301
+/guides/wordpress-speed-optimization-guide-2025 /blog/how-we-optimized-a-woocommerce-website-with-37786-products-to-improve-performance-and-ux/ 301
+
+/guides/why-you-shouldnt-keep-all-images-on-your-server-and-what-to-do-instead /blog/ 301
+/guides/why-you-shouldnt-keep-all-images-on-your-server-and-what-to-do-instead/ /blog/ 301
+
+/guides/bigcommerce-vs-wordpress-which-one-should-you-build-on /guides/ 301
+/guides/bigcommerce-vs-wordpress-which-one-should-you-build-on/ /guides/ 301
+
+/blog/enhance-your-wordpress-security-in-2025-lock-down-file-edits-with-these-2-wp-config-constants /blog/how-to-secure-a-wordpress-site/ 301
+/blog/enhance-your-wordpress-security-in-2025-lock-down-file-edits-with-these-2-wp-config-constants/ /blog/how-to-secure-a-wordpress-site/ 301
+
+/wordpress-threats /blog/ 301
+/wordpress-threats/ /blog/ 301
+
+/case-studies/case-study-how-we-debugged-and-fixed-high-cpu-usage-on-a-low-traffic-wordpress-site /blog/ 301
+/case-studies/case-study-how-we-debugged-and-fixed-high-cpu-usage-on-a-low-traffic-wordpress-site/ /blog/ 301
+
+/blog/new-malware-alert-the-fake-official-plugin-attack-wp-kludge-allow-variants /blog/ 301
+/blog/new-malware-alert-the-fake-official-plugin-attack-wp-kludge-allow-variants/ /blog/ 301
+
+/blog/overcoming-wordfence-blocks-in-avada-live-builder-mastering-learning-mode-for-seamless-saves-in-2025 /blog/ 301
+/blog/overcoming-wordfence-blocks-in-avada-live-builder-mastering-learning-mode-for-seamless-saves-in-2025/ /blog/ 301
+
+/i-found-a-hidden-backdoor-in-a-clients-wordpress-site /blog/ 301
+/i-found-a-hidden-backdoor-in-a-clients-wordpress-site/ /blog/ 301
+
+/the-hidden-threat-how-malware-hides-in-gif-files-on-wordpress /blog/ 301
+/the-hidden-threat-how-malware-hides-in-gif-files-on-wordpress/ /blog/ 301
