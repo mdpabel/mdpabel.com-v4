@@ -285,3 +285,15 @@
 /blog/tag/updraftplus/ /blog/ 301
 /blog/tag/wordpress-backup /blog/ 301
 /blog/tag/wordpress-backup/ /blog/ 301
+
+/guides/cloudflare-vs-namecheap-2025-registrar-dns-cdn-whats-best-for-your-site /blog/ 301
+/guides/cloudflare-vs-namecheap-2025-registrar-dns-cdn-whats-best-for-your-site/ /blog/ 301
+/& / 301
+/&/ / 301
+/guides/select-how-to-use-all‑in‑one-wp-migration-to-back-up-and-migrate-your-wordpress-site-2025-guide /blog/ 301
+
+# Catching the bracket typo from Search Console
+
+/snippets/hide-wordpress-version-from-source-code] /blog/wordpress-obfuscated-php-malware-detection/ 301
+/snippets/hide-wordpress-version-from-source-code]/ /blog/wordpress-obfuscated-php-malware-detection/ 301
+/snippets/hide-wordpress-version-from-source-code%5D /blog/wordpress-obfuscated-php-malware-detection/ 301
