@@ -1,0 +1,1111 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ComponentWrapper from '../components/component-wrapper.astro';
+import Testimonials from '../components/Testimonials.astro';
+import { wordpress, type WordPressPost } from '../lib/wordpress';
+import {
+  CheckCircle,
+  ShieldCheck,
+  AlertTriangle,
+  Clock,
+  Star,
+  ArrowRight,
+  Award,
+  Users,
+  FileCheck,
+  Calculator,
+  Eye,
+  PlayCircle,
+  Building2,
+  Briefcase,
+  FileText,
+  BadgeCheck,
+  FileSearch,
+  ShieldAlert,
+  Scan,
+  Globe,
+  Database,
+  HelpCircle,
+  ChevronDown,
+  Lock,
+  Activity,
+  ExternalLink,
+  Image as ImageIcon,
+  Video,
+  Mail,
+  Github,
+  Linkedin,
+  Facebook,
+  MessageSquare,
+} from '@lucide/astro';
+import { Image } from 'astro:assets';
+
+// --- 1. DATA FETCHING (Build Time) ---
+let caseStudies: WordPressPost[] = [];
+try {
+  const data = await wordpress.getPosts({
+    categories: ['case-studies', 'hacked-website', 'wordpress-malware'],
+  });
+  caseStudies = data.posts ? data.posts.slice(0, 6) : [];
+} catch (error) {
+  console.error('Failed to fetch case studies:', error);
+}
+
+// --- 2. SEO & SCHEMA ---
+const seo = {
+  title: 'Proof: 4,500+ WordPress Sites Cleaned | MD Pabel Track Record',
+  description:
+    'See the receipts behind 4,500+ WordPress malware cleanups — Fiverr stats, Upwork contracts, agency dashboards, McAfee/Norton/Google blacklist removals, and 20+ public case studies.',
+  image: '/md-pabel.png',
+};
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'MD Pabel',
+  url: 'https://www.mdpabel.com',
+  jobTitle: 'WordPress Security Specialist',
+  image: 'https://www.mdpabel.com/md-pabel.png',
+  knowsAbout: [
+    'WordPress malware removal',
+    'Google Safe Browsing blacklist removal',
+    'McAfee blacklist removal',
+    'Norton blacklist removal',
+    'Japanese keyword hack removal',
+    'WordPress security hardening',
+    'WooCommerce card skimmer removal',
+    'Hosting suspension recovery',
+    'WordPress database malware cleanup',
+  ],
+  sameAs: [
+    'https://www.linkedin.com/in/mdpabel',
+    'https://github.com/mdpabel',
+    'https://web.facebook.com/mdpabelwpsecurity',
+  ],
+};
+
+const serviceWithRatingSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: 'MD Pabel — WordPress Malware Removal & Security',
+  url: 'https://www.mdpabel.com/wordpress-malware-removal/',
+  image: 'https://www.mdpabel.com/md-pabel.png',
+  description: seo.description,
+  provider: {
+    '@type': 'Person',
+    name: 'MD Pabel',
+  },
+  areaServed: 'Worldwide',
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '5.0',
+    reviewCount: '3',
+    bestRating: '5',
+    worstRating: '1',
+  },
+};
+
+const proofFaqs = [
+  {
+    q: 'How do you arrive at the "4,500+ sites cleaned" figure?',
+    a: 'It is the sum of four documented sources: <strong>2,122 Fiverr orders</strong> (many covering 2–100 sites per agency order), <strong>158 Upwork contracts</strong>, <strong>1,661 sites</strong> managed under a long-term agency partnership via InfiniteWP and an internal monitoring portal, and roughly <strong>200+ direct clients</strong> acquired through this website, Google Business, Facebook, and referrals. The breakdown is shown above with screenshots and a video walkthrough.',
+  },
+  {
+    q: "Why can't you just link to your Fiverr or Upwork profile?",
+    a: 'Fiverr and Upwork Terms of Service prohibit redirecting communication off-platform from a profile. I can display screenshots of my own performance data — completed orders, reviews, badges — but linking out would violate platform policy. The screenshots on this page are unedited captures of my own seller and freelancer dashboards.',
+  },
+  {
+    q: 'Can I speak to the agency that you partnered with on 1,661 sites?',
+    a: 'Yes, on request. The agency owner has provided a written reference and a LinkedIn recommendation. Because their client list is confidential, the dashboard screenshots and video walkthrough below have client domain names blurred out. If you are evaluating me for a similar engagement, I can arrange a direct call with the agency owner under a mutual NDA.',
+  },
+  {
+    q: 'How do I verify the blacklist removals on my own?',
+    a: 'For Google Safe Browsing, the cleared status is visible in any domain\'s Google Search Console under "Security Issues." For McAfee and Norton, you can check the <a href="https://www.siteadvisor.com" target="_blank" rel="noopener">McAfee SiteAdvisor</a> and <a href="https://safeweb.norton.com" target="_blank" rel="noopener">Norton Safe Web</a> public lookup tools. I\'m happy to walk a prospective client through the verification of any specific domain I\'ve cleaned, with the client\'s permission.',
+  },
+  {
+    q: 'What if my reviewer wants third-party verified reviews instead of testimonials?',
+    a: 'In addition to <a href="https://www.google.com/search?q=md+Pabel+-+Full+Stack+Web+Developer+%26+Security+Specialist" target="_blank" rel="noopener">Google Business Profile reviews</a> and <a href="https://web.facebook.com/mdpabelwpsecurity" target="_blank" rel="noopener">Facebook page reviews</a> (linked in this page\'s schema markup), I publish over 20 public technical <a href="/case-studies/">case studies</a> and <a href="/blog/">deep-dive blog posts</a> with verifiable indicators of compromise (IOCs), file hashes, and decoded payloads. This is original research no fake operator could produce.',
+  },
+  {
+    q: 'How can I trust your before/after blacklist screenshots are real?',
+    a: 'Every blacklist removal leaves a paper trail. McAfee, Norton, and Google all timestamp their review submissions. On request I can provide the original submission IDs for a specific delisting, share the dated email confirmations from the vendor, or run a live VirusTotal scan during our intro call so you can see the verdict yourself.',
+  },
+  {
+    q: 'Do you have any independent third-party verification?',
+    a: 'I\'m actively expanding third-party verification. Current independent sources: Google Business Profile reviews, Facebook page reviews, LinkedIn endorsements, and public technical disclosures (including a <a href="/blog/exposing-a-dos-vulnerability-in-43-5-of-the-web/">DoS vulnerability disclosure affecting 43.5% of the web</a>). I do not currently link to Fiverr or Upwork due to their TOS restrictions on off-platform redirects.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: proofFaqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: f.a.replace(/<[^>]*>/g, ''),
+    },
+  })),
+};
+
+// --- 3. STYLE TOKENS (matches site) ---
+const btnBase =
+  'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-slate-950 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-11 px-8';
+const btnDefault = 'bg-sky-600 text-white hover:bg-sky-700 shadow-md';
+const btnOutline =
+  'border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-50';
+
+// --- 4. CONTENT DATA ---
+
+// Headline stats (mirrors style of malware page)
+const TRUST_STATS = [
+  { value: '4,500+', label: 'Sites Cleaned', icon: ShieldCheck },
+  { value: '2,280+', label: 'Verified Contracts', icon: BadgeCheck },
+  { value: '670+', label: 'Blacklists Lifted', icon: ShieldAlert },
+  { value: '8+ yrs', label: 'Specialist Experience', icon: Award },
+];
+
+// Math breakdown — the core of the page
+const MATH_BREAKDOWN = [
+  {
+    icon: Briefcase,
+    source: 'Fiverr',
+    count: '2,122',
+    countLabel: 'completed orders',
+    detail:
+      'Many orders covered multiple sites per client — some agencies had 2 to 100+ sites on a single order. A single completed order ≠ a single site.',
+    siteEstimate: '~2,500+ sites',
+    tag: 'Platform: Fiverr (TOS-compliant: screenshot only)',
+  },
+  {
+    icon: FileText,
+    source: 'Upwork',
+    count: '158',
+    countLabel: 'completed contracts',
+    detail:
+      'Job Success Score and Top Rated badge maintained across multi-site retainers and one-off cleanups.',
+    siteEstimate: '~200+ sites',
+    tag: 'Platform: Upwork (TOS-compliant: screenshot only)',
+  },
+  {
+    icon: Building2,
+    source: 'Agency Partnership',
+    count: '1,661',
+    countLabel: 'sites under direct management',
+    detail:
+      "Long-term partnership managing security across 1,661 client sites via InfiniteWP and the agency's internal monitoring portal. Reference letter on file.",
+    siteEstimate: '1,661 sites',
+    tag: 'Documented: InfiniteWP dashboard + internal tool + signed reference',
+  },
+  {
+    icon: Users,
+    source: 'Direct & Referral Clients',
+    count: '200+',
+    countLabel: 'clients via this site',
+    detail:
+      'Clients acquired through mdpabel.com, Google Business Profile, Facebook page, and word-of-mouth referrals over 8 years.',
+    siteEstimate: '~200+ sites',
+    tag: 'Public: Google + Facebook reviews verifiable',
+  },
+];
+
+// Blacklist removals
+const BLACKLIST_REMOVALS = [
+  {
+    icon: ShieldAlert,
+    vendor: 'McAfee SiteAdvisor / WebAdvisor',
+    count: '370+',
+    desc: "Sites delisted from McAfee's threat intelligence database after manual review submissions. Verifiable via McAfee SiteAdvisor public lookup.",
+    color: 'text-red-400',
+  },
+  {
+    icon: AlertTriangle,
+    vendor: 'Google Safe Browsing',
+    count: '200+',
+    desc: '"Deceptive Site Ahead" and "This site may harm your computer" warnings cleared via Google Search Console security review requests.',
+    color: 'text-amber-400',
+  },
+  {
+    icon: ShieldCheck,
+    vendor: 'Norton Safe Web',
+    count: '100+',
+    desc: "Sites cleared from Norton's threat database via the Norton Safe Web reputation submission process.",
+    color: 'text-yellow-400',
+  },
+];
+
+// Other verifiable proof items
+const PROOF_LAYERS = [
+  {
+    icon: FileSearch,
+    title: '20+ Public Technical Case Studies',
+    desc: 'Each case study documents the malware family, infection vector, decoded payload, file changes, and resolution — verifiable, original research that no fake operator could fabricate.',
+    link: '/case-studies/',
+    linkLabel: 'View case studies',
+  },
+  {
+    icon: FileText,
+    title: 'Malware Logs & IOCs',
+    desc: 'Indicators of compromise, file hashes, malicious URLs, and decoded obfuscated payloads from real cleanups — published openly for the security community.',
+    link: '/blog/',
+    linkLabel: 'Browse malware logs',
+  },
+  {
+    icon: ShieldAlert,
+    title: 'Original Vulnerability Disclosure',
+    desc: 'Published a denial-of-service vulnerability affecting 43.5% of the web — original research, not borrowed credibility.',
+    link: '/blog/exposing-a-dos-vulnerability-in-43-5-of-the-web/',
+    linkLabel: 'Read disclosure',
+  },
+  {
+    icon: MessageSquare,
+    title: 'Verified Google & Facebook Reviews',
+    desc: 'Public reviews from real clients on Google Business Profile and the Facebook business page — both with timestamped, verifiable feedback.',
+    link: 'https://www.google.com/search?q=md+Pabel+-+Full+Stack+Web+Developer+%26+Security+Specialist',
+    linkLabel: 'See Google reviews',
+    external: true,
+  },
+];
+
+// Verification methodology
+const VERIFICATION_METHODS = [
+  {
+    icon: Scan,
+    title: 'VirusTotal scan (70+ engines)',
+    desc: 'Every clean site is scanned across 70+ antivirus and threat-intel engines. The clean report is shared with the client before invoicing.',
+  },
+  {
+    icon: Eye,
+    title: 'Sucuri SiteCheck',
+    desc: 'Public scanner used as an independent verification step. Anyone can re-run it on a domain at any time.',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Wordfence verification',
+    desc: 'Server-side scan to confirm no residual malicious files, modified core, or rogue admin accounts remain after cleanup.',
+  },
+  {
+    icon: FileCheck,
+    title: 'Detailed change log',
+    desc: 'Every cleanup ships with a full report listing every file modified, every database row cleaned, and every vulnerability patched.',
+  },
+];
+---
+
+<Layout title={seo.title} description={seo.description} image={seo.image}>
+  <script
+    type='application/ld+json'
+    set:html={JSON.stringify(personSchema)}
+    is:inline
+  />
+  <script
+    type='application/ld+json'
+    set:html={JSON.stringify(serviceWithRatingSchema)}
+    is:inline
+  />
+  <script
+    type='application/ld+json'
+    set:html={JSON.stringify(faqSchema)}
+    is:inline
+  />
+
+  <ComponentWrapper class='py-12 md:py-20'>
+    {/* --- HERO SECTION --- */}
+    <section class='mb-16 text-center'>
+      <div class='flex justify-center mb-6'>
+        <div
+          class='inline-flex items-center gap-2 bg-slate-800/50 px-4 py-1.5 border border-slate-700 rounded-full font-medium text-slate-200 text-sm'>
+          <BadgeCheck class='w-4 h-4 text-sky-400' />
+          <span>Verified · Documented · Receipts inside</span>
+        </div>
+      </div>
+
+      <h1 class='mb-6 font-bold text-white text-3xl md:text-5xl tracking-tight'>
+        Proof of 4,500+ WordPress <br class='hidden md:block' />
+        <span
+          class='bg-clip-text bg-gradient-to-r from-sky-400 to-indigo-400 text-transparent'>
+          Sites Cleaned
+        </span>
+      </h1>
+
+      <p
+        class='mx-auto mb-4 max-w-3xl text-slate-300 text-lg md:text-xl leading-relaxed'>
+        Anyone can claim a number. This page shows the receipts: platform
+        screenshots, an agency dashboard with 1,661 monitored sites, blacklist
+        removal records from McAfee, Google, and Norton, plus 20+ public
+        technical case studies.
+      </p>
+
+      <p class='mx-auto mb-10 max-w-2xl text-slate-500 text-sm'>
+        Built so you don't have to take my word for any single source — each
+        layer is independently verifiable.
+      </p>
+
+      <div class='flex sm:flex-row flex-col justify-center items-center gap-4'>
+        <a
+          href='/wordpress-malware-removal/'
+          class={`${btnBase} ${btnDefault}`}>
+          See Malware Removal Service <ArrowRight class='ml-2 w-4 h-4' />
+        </a>
+        <a href='/hire-me/' class={`${btnBase} ${btnOutline}`}>
+          Talk to Me Directly
+        </a>
+      </div>
+    </section>
+
+    {/* --- QUICK ANSWER (for AI search / featured snippets) --- */}
+    <section class='mx-auto mb-20 max-w-4xl'>
+      <div
+        class='bg-sky-950/30 p-6 md:p-8 border border-sky-900/50 rounded-2xl'>
+        <div class='flex items-center gap-2 mb-3'>
+          <Calculator class='w-5 h-5 text-sky-400' />
+          <span
+            class='font-semibold text-sky-400 text-xs uppercase tracking-wider'>
+            Quick Answer
+          </span>
+        </div>
+        <p class='text-slate-200 text-base md:text-lg leading-relaxed'>
+          The <strong class='text-white'>4,500+ figure</strong> breaks down as: <strong
+            class='text-white'>2,122 Fiverr orders</strong
+          > (many covering multiple sites per client), <strong
+            class='text-white'>158 Upwork contracts</strong
+          >, <strong class='text-white'>1,661 sites managed</strong> in a long-term
+          agency partnership via InfiniteWP, and <strong class='text-white'
+            >200+ direct clients</strong
+          > through this site and referrals. Independent verification includes <strong
+            class='text-white'>370+ McAfee delistings</strong
+          >, <strong class='text-white'
+            >200+ Google Safe Browsing removals</strong
+          >, <strong class='text-white'>100+ Norton clearances</strong>, plus
+          20+ public technical case studies with original IOCs and decoded
+          payloads.
+        </p>
+      </div>
+    </section>
+
+    {/* --- TRUST STATS --- */}
+    <section class='mb-24'>
+      <div
+        class='gap-4 grid grid-cols-2 md:grid-cols-4 bg-slate-900/50 p-6 md:p-8 border border-slate-800 rounded-2xl'>
+        {
+          TRUST_STATS.map((stat) => (
+            <div class='flex flex-col items-center text-center'>
+              <stat.icon class='mb-2 w-6 h-6 text-sky-400' />
+              <div class='font-bold text-white text-2xl md:text-3xl'>
+                {stat.value}
+              </div>
+              <div class='text-slate-400 text-xs md:text-sm'>{stat.label}</div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    {/* --- THE MATH BREAKDOWN --- */}
+    <section class='mb-24'>
+      <div class='mx-auto mb-12 max-w-3xl text-center'>
+        <div class='inline-flex items-center gap-2 mb-4'>
+          <Calculator class='w-5 h-5 text-sky-400' />
+          <span
+            class='font-semibold text-sky-400 text-sm uppercase tracking-wider'>
+            The Math
+          </span>
+        </div>
+        <h2 class='mb-4 font-bold text-white text-3xl md:text-4xl'>
+          How the 4,500+ Number Adds Up
+        </h2>
+        <p class='text-slate-400'>
+          Four independently documented sources. Each is verifiable on its own —
+          together they cross 4,500 sites comfortably, with the actual number
+          almost certainly higher once Fiverr's multi-site orders are counted.
+        </p>
+      </div>
+
+      <div class='gap-6 grid md:grid-cols-2 mx-auto mb-8 max-w-5xl'>
+        {
+          MATH_BREAKDOWN.map((item) => (
+            <div class='bg-slate-900/50 p-6 md:p-8 border border-slate-800 hover:border-slate-700 rounded-xl transition-colors'>
+              <div class='flex justify-between items-start mb-4'>
+                <div class='flex justify-center items-center bg-slate-800 border border-slate-700 rounded-full w-12 h-12'>
+                  <item.icon class='w-6 h-6 text-sky-400' />
+                </div>
+                <span class='text-slate-500 text-xs uppercase tracking-wider'>
+                  {item.source}
+                </span>
+              </div>
+              <div class='mb-1 font-bold text-white text-4xl md:text-5xl'>
+                {item.count}
+              </div>
+              <div class='mb-4 text-slate-400 text-sm'>{item.countLabel}</div>
+              <p class='mb-4 text-slate-300 text-sm leading-relaxed'>
+                {item.detail}
+              </p>
+              <div class='flex justify-between items-center pt-4 border-slate-800 border-t'>
+                <span class='font-semibold text-sky-400 text-sm'>
+                  {item.siteEstimate}
+                </span>
+                <span class='text-slate-500 text-xs'>{item.tag}</span>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <div
+        class='bg-slate-900 mx-auto p-6 border border-slate-800 rounded-xl max-w-5xl text-center'>
+        <div
+          class='flex flex-wrap justify-center items-center gap-x-3 gap-y-2 text-slate-300 text-sm md:text-base'>
+          <span>~2,500+</span>
+          <span class='text-slate-600'>+</span>
+          <span>~200+</span>
+          <span class='text-slate-600'>+</span>
+          <span>1,661</span>
+          <span class='text-slate-600'>+</span>
+          <span>~200+</span>
+          <span class='text-slate-600'>=</span>
+          <span class='font-bold text-sky-400 text-lg md:text-xl'
+            >4,500+ sites</span
+          >
+        </div>
+        <p class='mt-3 text-slate-500 text-xs'>
+          Conservative count. The actual figure is likely higher once multi-site
+          Fiverr orders are fully tallied.
+        </p>
+      </div>
+    </section>
+
+    {/* --- FIVERR PROOF --- */}
+    <section class='mb-24'>
+      <div class='mx-auto mb-10 max-w-4xl'>
+        <div class='flex items-center gap-3 mb-4'>
+          <Briefcase class='w-6 h-6 text-sky-400' />
+          <h2 class='font-bold text-white text-2xl md:text-3xl'>
+            Fiverr Track Record — 2,122 Completed Orders
+          </h2>
+        </div>
+        <p class='text-slate-400'>
+          Fiverr's Terms of Service prohibit linking a profile from off-platform
+          marketing pages. The screenshot below is an unedited capture of my
+          Fiverr seller dashboard. To verify on Fiverr directly, search for my
+          seller name there.
+        </p>
+      </div>
+
+      <div class='mx-auto max-w-5xl'>
+        {
+          /* IMAGE PLACEHOLDER — replace src with actual Fiverr dashboard screenshot */
+        }
+        <div
+          class='relative bg-slate-900 mb-4 border border-slate-800 rounded-2xl overflow-hidden'>
+          <Image
+            src='/proof/fiverr-stats.png'
+            alt='MD Pabel Fiverr dashboard showing 2,122 completed orders and 5-star average rating across WordPress malware removal contracts'
+            width={1200}
+            height={700}
+            format='avif'
+            quality='high'
+            class='w-full h-auto'
+          />
+        </div>
+
+        <div class='gap-4 grid grid-cols-2 md:grid-cols-4'>
+          <div
+            class='bg-slate-900/50 p-4 border border-slate-800 rounded-xl text-center'>
+            <div class='font-bold text-white text-2xl'>2,122</div>
+            <div class='text-slate-400 text-xs'>Completed Orders</div>
+          </div>
+          <div
+            class='bg-slate-900/50 p-4 border border-slate-800 rounded-xl text-center'>
+            <div class='font-bold text-white text-2xl'>5.0★</div>
+            <div class='text-slate-400 text-xs'>Average Rating</div>
+          </div>
+          <div
+            class='bg-slate-900/50 p-4 border border-slate-800 rounded-xl text-center'>
+            <div class='font-bold text-white text-2xl'>Level 2</div>
+            <div class='text-slate-400 text-xs'>Verified Badge</div>
+          </div>
+          <div
+            class='bg-slate-900/50 p-4 border border-slate-800 rounded-xl text-center'>
+            <div class='font-bold text-white text-2xl'>8+ yrs</div>
+            <div class='text-slate-400 text-xs'>On Platform</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* --- UPWORK PROOF --- */}
+    <section class='mb-24'>
+      <div class='mx-auto mb-10 max-w-4xl'>
+        <div class='flex items-center gap-3 mb-4'>
+          <FileText class='w-6 h-6 text-sky-400' />
+          <h2 class='font-bold text-white text-2xl md:text-3xl'>
+            Upwork Track Record — 158 Completed Contracts
+          </h2>
+        </div>
+        <p class='text-slate-400'>
+          Upwork's TOS has the same restriction on off-platform redirects. The
+          screenshot below is my Upwork freelancer dashboard, captured directly
+          from the Upwork interface.
+        </p>
+      </div>
+
+      <div class='mx-auto max-w-5xl'>
+        {
+          /* IMAGE PLACEHOLDER — replace src with actual Upwork dashboard screenshot */
+        }
+        <div
+          class='relative bg-slate-900 mb-4 border border-slate-800 rounded-2xl overflow-hidden'>
+          <Image
+            src='/proof/upwork-stats.png'
+            alt='MD Pabel Upwork freelancer dashboard showing 158 completed contracts and Job Success Score for WordPress security work'
+            width={1200}
+            height={700}
+            format='avif'
+            quality='high'
+            class='w-full h-auto'
+          />
+        </div>
+
+        <div class='gap-4 grid grid-cols-2 md:grid-cols-4'>
+          <div
+            class='bg-slate-900/50 p-4 border border-slate-800 rounded-xl text-center'>
+            <div class='font-bold text-white text-2xl'>158</div>
+            <div class='text-slate-400 text-xs'>Contracts Closed</div>
+          </div>
+          <div
+            class='bg-slate-900/50 p-4 border border-slate-800 rounded-xl text-center'>
+            <div class='font-bold text-white text-2xl'>Top Rated</div>
+            <div class='text-slate-400 text-xs'>Status</div>
+          </div>
+          <div
+            class='bg-slate-900/50 p-4 border border-slate-800 rounded-xl text-center'>
+            <div class='font-bold text-white text-2xl'>100%</div>
+            <div class='text-slate-400 text-xs'>Job Success Score</div>
+          </div>
+          <div
+            class='bg-slate-900/50 p-4 border border-slate-800 rounded-xl text-center'>
+            <div class='font-bold text-white text-2xl'>5.0★</div>
+            <div class='text-slate-400 text-xs'>Client Rating</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* --- AGENCY PARTNERSHIP (1,661 sites) — the big one --- */}
+    <section
+      class='bg-slate-900/30 -mx-4 md:-mx-8 mb-24 px-6 md:px-12 py-16 border border-slate-800 rounded-3xl'>
+      <div class='mx-auto max-w-5xl'>
+        <div class='mb-10 text-center'>
+          <div class='inline-flex items-center gap-2 mb-4'>
+            <Building2 class='w-5 h-5 text-sky-400' />
+            <span
+              class='font-semibold text-sky-400 text-sm uppercase tracking-wider'>
+              Agency Partnership
+            </span>
+          </div>
+          <h2 class='mb-4 font-bold text-white text-3xl md:text-4xl'>
+            1,661 Sites Managed for a WordPress Maintenance Agency
+          </h2>
+          <p class='mx-auto max-w-3xl text-slate-400'>
+            Long-term security partnership with a WordPress maintenance agency.
+            All client domains in the dashboard below are blurred to respect the
+            agency's confidentiality. The totals (Infected, Blacklisted, Error,
+            Clean) are visible because they aggregate the whole portfolio.
+          </p>
+        </div>
+
+        {/* INTERNAL PORTAL SCREENSHOT — blurred */}
+        <div class='mb-10'>
+          <div class='flex items-center gap-2 mb-3'>
+            <ImageIcon class='w-4 h-4 text-slate-400' />
+            <span class='font-semibold text-slate-300 text-sm'>
+              Internal agency monitoring portal (domains blurred)
+            </span>
+          </div>
+          <div
+            class='relative bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden'>
+            {
+              /* Replace src with the agency internal-tool screenshot (blurred domains) */
+            }
+            <Image
+              src='/proof/agency-portal.png'
+              alt='Agency internal monitoring portal showing 1,644 clean sites, 10 infected, 7 errors, and 0 blacklisted across 1,661 managed WordPress sites; client domain names blurred for privacy'
+              width={1400}
+              height={800}
+              format='avif'
+              quality='high'
+              class='w-full h-auto'
+            />
+          </div>
+
+          <div class='gap-3 grid grid-cols-2 md:grid-cols-4 mt-4'>
+            <div
+              class='bg-emerald-950/30 p-4 border border-emerald-900/50 rounded-xl text-center'>
+              <div class='font-bold text-emerald-400 text-2xl'>1,644</div>
+              <div class='text-slate-400 text-xs'>Clean</div>
+            </div>
+            <div
+              class='bg-red-950/30 p-4 border border-red-900/50 rounded-xl text-center'>
+              <div class='font-bold text-red-400 text-2xl'>10</div>
+              <div class='text-slate-400 text-xs'>Infected (in queue)</div>
+            </div>
+            <div
+              class='bg-amber-950/30 p-4 border border-amber-900/50 rounded-xl text-center'>
+              <div class='font-bold text-amber-400 text-2xl'>7</div>
+              <div class='text-slate-400 text-xs'>Errors</div>
+            </div>
+            <div
+              class='bg-slate-800/50 p-4 border border-slate-700 rounded-xl text-center'>
+              <div class='font-bold text-white text-2xl'>0</div>
+              <div class='text-slate-400 text-xs'>Currently Blacklisted</div>
+            </div>
+          </div>
+        </div>
+
+        {/* INFINITEWP DASHBOARD VIDEO PLACEHOLDER */}
+        <div class='mb-10'>
+          <div class='flex items-center gap-2 mb-3'>
+            <Video class='w-4 h-4 text-slate-400' />
+            <span class='font-semibold text-slate-300 text-sm'>
+              InfiniteWP dashboard walkthrough (domains blurred)
+            </span>
+          </div>
+
+          {/* Replace with actual video tag or YouTube embed */}
+          <div
+            class='relative bg-slate-950 border border-slate-800 rounded-2xl aspect-video overflow-hidden'>
+            {/* OPTION A: Self-hosted video (uncomment when ready) */}
+            {
+              /* <video
+              controls
+              poster="/proof/infinitewp-poster.png"
+              class="w-full h-full object-cover"
+            >
+              <source src="/proof/infinitewp-walkthrough.mp4" type="video/mp4" />
+            </video> */
+            }
+
+            {/* OPTION B: YouTube embed (recommended for SEO + bandwidth) */}
+            <iframe
+              src='https://www.youtube.com/embed/REPLACE_VIDEO_ID'
+              title='InfiniteWP dashboard walkthrough — 1,661 WordPress sites managed (domains blurred)'
+              loading='lazy'
+              allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+              allowfullscreen
+              class='absolute inset-0 w-full h-full'></iframe>
+          </div>
+
+          <p class='mt-3 text-slate-500 text-sm'>
+            30-second screen recording of me logging into the InfiniteWP master
+            console showing all 1,661 sites. Every client domain is
+            pixel-blurred. Aggregate counts and the InfiniteWP UI are visible.
+          </p>
+        </div>
+
+        {/* Agency reference block */}
+        <div class='bg-slate-950 p-6 border border-slate-800 rounded-xl'>
+          <div class='flex items-start gap-4'>
+            <div
+              class='flex flex-shrink-0 justify-center items-center bg-slate-900 border border-slate-700 rounded-full w-12 h-12'>
+              <FileCheck class='w-5 h-5 text-sky-400' />
+            </div>
+            <div>
+              <h3 class='mb-2 font-bold text-white text-lg'>
+                Agency Owner Reference Available on Request
+              </h3>
+              <p class='mb-3 text-slate-400 text-sm leading-relaxed'>
+                The agency's owner has provided a signed reference letter and
+                LinkedIn recommendation confirming the engagement scope and site
+                count. For prospective clients evaluating a similar-scale
+                partnership, I can arrange a direct call with the agency owner
+                under a mutual NDA.
+              </p>
+              <a
+                href='/hire-me/'
+                class='inline-flex items-center gap-1 font-medium text-sky-400 hover:text-sky-300 text-sm'>
+                Request a reference call <ArrowRight class='w-3.5 h-3.5' />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* --- BLACKLIST REMOVAL RECEIPTS --- */}
+    <section class='mb-24'>
+      <div class='mx-auto mb-12 max-w-3xl text-center'>
+        <div class='inline-flex items-center gap-2 mb-4'>
+          <ShieldAlert class='w-5 h-5 text-sky-400' />
+          <span
+            class='font-semibold text-sky-400 text-sm uppercase tracking-wider'>
+            Blacklist Removal Track Record
+          </span>
+        </div>
+        <h2 class='mb-4 font-bold text-white text-3xl md:text-4xl'>
+          670+ Blacklist Listings Cleared
+        </h2>
+        <p class='text-slate-400'>
+          Every delisting leaves a paper trail. These figures are aggregated
+          from McAfee, Google, and Norton review submissions across all
+          channels. Each vendor's status is publicly verifiable on the vendor's
+          own lookup tool.
+        </p>
+      </div>
+
+      <div class='gap-6 grid md:grid-cols-3 mx-auto mb-10 max-w-6xl'>
+        {
+          BLACKLIST_REMOVALS.map((b) => (
+            <div class='bg-slate-900/50 p-6 border border-slate-800 hover:border-slate-700 rounded-xl transition-colors'>
+              <b.icon class={`mb-4 w-10 h-10 ${b.color}`} />
+              <div class='mb-1 font-bold text-white text-4xl'>{b.count}</div>
+              <h3 class='mb-2 font-semibold text-slate-200 text-base'>
+                {b.vendor}
+              </h3>
+              <p class='text-slate-400 text-sm leading-relaxed'>{b.desc}</p>
+            </div>
+          ))
+        }
+      </div>
+
+      {/* DASHBOARD SCREENSHOTS GRID */}
+      <div class='mx-auto max-w-6xl'>
+        <p class='mb-4 font-semibold text-slate-300 text-sm'>
+          Vendor dashboard screenshots
+        </p>
+        <div class='gap-4 grid md:grid-cols-3'>
+          {/* McAfee dashboard */}
+          <div
+            class='bg-slate-900 border border-slate-800 rounded-xl overflow-hidden'>
+            <Image
+              src='/proof/mcafee-dashboard.png'
+              alt='McAfee SiteAdvisor dashboard showing 370+ successfully reviewed and delisted WordPress sites previously flagged as malicious'
+              width={500}
+              height={350}
+              format='avif'
+              quality='high'
+              class='w-full h-auto'
+            />
+            <div class='p-4 text-center'>
+              <span class='text-slate-400 text-xs'>McAfee — 370+ removals</span>
+            </div>
+          </div>
+
+          {/* Google Search Console */}
+          <div
+            class='bg-slate-900 border border-slate-800 rounded-xl overflow-hidden'>
+            <Image
+              src='/proof/google-safe-browsing.png'
+              alt='Google Search Console security review history showing 200+ resolved Safe Browsing warnings (Deceptive Site Ahead) across managed WordPress sites'
+              width={500}
+              height={350}
+              format='avif'
+              quality='high'
+              class='w-full h-auto'
+            />
+            <div class='p-4 text-center'>
+              <span class='text-slate-400 text-xs'>Google — 200+ removals</span>
+            </div>
+          </div>
+
+          {/* Norton */}
+          <div
+            class='bg-slate-900 border border-slate-800 rounded-xl overflow-hidden'>
+            <Image
+              src='/proof/norton-dashboard.png'
+              alt=`Norton Safe Web submission history showing 100+ WordPress sites cleared from Norton\'s threat database after manual cleanup`
+              width={500}
+              height={350}
+              format='avif'
+              quality='high'
+              class='w-full h-auto'
+            />
+            <div class='p-4 text-center'>
+              <span class='text-slate-400 text-xs'>Norton — 100+ removals</span>
+            </div>
+          </div>
+        </div>
+
+        <div class='bg-sky-950/30 mt-6 p-5 border border-sky-900/50 rounded-xl'>
+          <p class='text-slate-300 text-sm leading-relaxed'>
+            <strong class='text-white'>Verify on your own:</strong> Any vendor's current
+            verdict is publicly checkable. Examples:
+            <a
+              href='https://www.siteadvisor.com'
+              target='_blank'
+              rel='noopener'
+              class='text-sky-400 hover:underline'>
+              McAfee SiteAdvisor lookup</a
+            >,
+            <a
+              href='https://safeweb.norton.com'
+              target='_blank'
+              rel='noopener'
+              class='text-sky-400 hover:underline'>
+              Norton Safe Web lookup</a
+            >, and any domain's Google Search Console security report.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* --- PUBLIC TECHNICAL PROOF (E-E-A-T) --- */}
+    <section class='mb-24'>
+      <div class='mx-auto mb-12 max-w-3xl text-center'>
+        <div class='inline-flex items-center gap-2 mb-4'>
+          <Award class='w-5 h-5 text-sky-400' />
+          <span
+            class='font-semibold text-sky-400 text-sm uppercase tracking-wider'>
+            Public Technical Authority
+          </span>
+        </div>
+        <h2 class='mb-4 font-bold text-white text-3xl md:text-4xl'>
+          Public Receipts a Fake Operator Could Not Produce
+        </h2>
+        <p class='text-slate-400'>
+          Numbers can be claimed. Original technical research, decoded malware
+          payloads, and dated vulnerability disclosures cannot. This is the
+          "Experience" pillar of E-E-A-T.
+        </p>
+      </div>
+
+      <div class='gap-6 grid md:grid-cols-2 mx-auto max-w-5xl'>
+        {
+          PROOF_LAYERS.map((p) => (
+            <a
+              href={p.link}
+              target={p.external ? '_blank' : '_self'}
+              rel={p.external ? 'noopener nofollow' : undefined}
+              class='group bg-slate-900/50 hover:shadow-lg p-6 border border-slate-800 hover:border-sky-700 rounded-xl transition-all'>
+              <p.icon class='mb-4 w-10 h-10 text-slate-300 group-hover:text-sky-400 transition-colors' />
+              <h3 class='mb-2 font-bold text-white group-hover:text-sky-400 text-lg transition-colors'>
+                {p.title}
+              </h3>
+              <p class='mb-3 text-slate-400 text-sm leading-relaxed'>
+                {p.desc}
+              </p>
+              <span class='inline-flex items-center gap-1 text-sky-500 group-hover:text-sky-400 text-sm'>
+                {p.linkLabel}
+                <ArrowRight class='w-3.5 h-3.5' />
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    {/* --- CASE STUDIES GRID --- */}
+    {
+      caseStudies.length > 0 && (
+        <section class='mb-24'>
+          <div class='mx-auto mb-12 max-w-3xl text-center'>
+            <h2 class='mb-4 font-bold text-white text-3xl md:text-4xl'>
+              Documented Cleanup Case Studies
+            </h2>
+            <p class='text-slate-400'>
+              Each one breaks down a real recovery — what was infected, how it
+              was found, and what was removed.
+            </p>
+          </div>
+
+          <div class='gap-6 grid md:grid-cols-2 lg:grid-cols-3 mx-auto max-w-6xl'>
+            {caseStudies.map((post) => (
+              <a
+                href={`/blog/${post.slug}/`}
+                class='group bg-slate-900/50 hover:shadow-lg border border-slate-800 hover:border-sky-700 rounded-xl overflow-hidden transition-all'>
+                {post.featuredImage && (
+                  <div class='relative bg-slate-800 w-full h-44 overflow-hidden'>
+                    <Image
+                      width={400}
+                      height={250}
+                      format='avif'
+                      quality='mid'
+                      src={post.featuredImage.url}
+                      alt={post.title}
+                      class='w-full h-full object-cover group-hover:scale-105 transition-transform duration-300'
+                    />
+                  </div>
+                )}
+                <div class='p-5'>
+                  <h3
+                    class='mb-2 font-semibold text-white group-hover:text-sky-400 text-base leading-snug transition-colors'
+                    set:html={post.title}
+                  />
+                  <span class='inline-flex items-center gap-1 text-sky-500 group-hover:text-sky-400 text-xs'>
+                    Read case study <ArrowRight class='w-3 h-3' />
+                  </span>
+                </div>
+              </a>
+            ))}
+          </div>
+
+          <div class='mt-10 text-center'>
+            <a
+              href='/case-studies/'
+              class='inline-flex items-center gap-2 text-sky-400 hover:text-sky-300 underline underline-offset-4'>
+              View all 20+ recovery case studies <ArrowRight class='w-4 h-4' />
+            </a>
+          </div>
+        </section>
+      )
+    }
+
+    {/* --- VERIFICATION METHODOLOGY --- */}
+    <section class='mb-24'>
+      <div class='mx-auto mb-12 max-w-3xl text-center'>
+        <div class='inline-flex items-center gap-2 mb-4'>
+          <Eye class='w-5 h-5 text-sky-400' />
+          <span
+            class='font-semibold text-sky-400 text-sm uppercase tracking-wider'>
+            Verification Methodology
+          </span>
+        </div>
+        <h2 class='mb-4 font-bold text-white text-3xl md:text-4xl'>
+          How Every Cleanup Is Verified
+        </h2>
+        <p class='text-slate-400'>
+          Every cleanup ships with a verification packet so clients can confirm
+          the work themselves before paying.
+        </p>
+      </div>
+
+      <div class='gap-6 grid md:grid-cols-2 mx-auto max-w-5xl'>
+        {
+          VERIFICATION_METHODS.map((v) => (
+            <div class='flex gap-4 bg-slate-900/50 p-6 border border-slate-800 rounded-xl'>
+              <div class='flex flex-shrink-0 justify-center items-center bg-slate-800 border border-slate-700 rounded-full w-12 h-12'>
+                <v.icon class='w-5 h-5 text-sky-400' />
+              </div>
+              <div>
+                <h3 class='mb-1 font-bold text-white'>{v.title}</h3>
+                <p class='text-slate-400 text-sm leading-relaxed'>{v.desc}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    {/* --- TESTIMONIALS (REAL GMB + Facebook reviews) --- */}
+    <Testimonials />
+
+    {/* --- IDENTITY / sameAs --- */}
+    <section class='mx-auto mb-24 max-w-4xl'>
+      <div
+        class='bg-slate-900/50 p-6 md:p-8 border border-slate-800 rounded-2xl'>
+        <h2 class='mb-2 font-bold text-white text-xl md:text-2xl'>
+          Verify My Identity on Independent Platforms
+        </h2>
+        <p class='mb-6 text-slate-400 text-sm'>
+          The schema markup on this page links these profiles as
+          <code class='text-sky-400 text-xs'>sameAs</code> for AI search engines and
+          Google's Knowledge Graph.
+        </p>
+
+        <div class='flex flex-wrap gap-3'>
+          <a
+            href='https://www.linkedin.com/in/mdpabel'
+            target='_blank'
+            rel='noopener'
+            class='inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 px-4 py-2 border border-slate-700 rounded-lg font-medium text-slate-200 text-sm transition-colors'>
+            <Linkedin class='w-4 h-4' /> LinkedIn
+          </a>
+          <a
+            href='https://github.com/mdpabel'
+            target='_blank'
+            rel='noopener'
+            class='inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 px-4 py-2 border border-slate-700 rounded-lg font-medium text-slate-200 text-sm transition-colors'>
+            <Github class='w-4 h-4' /> GitHub
+          </a>
+          <a
+            href='https://web.facebook.com/mdpabelwpsecurity'
+            target='_blank'
+            rel='noopener'
+            class='inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 px-4 py-2 border border-slate-700 rounded-lg font-medium text-slate-200 text-sm transition-colors'>
+            <Facebook class='w-4 h-4' /> Facebook Page
+          </a>
+          <a
+            href='https://www.google.com/search?q=md+Pabel+-+Full+Stack+Web+Developer+%26+Security+Specialist'
+            target='_blank'
+            rel='noopener'
+            class='inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 px-4 py-2 border border-slate-700 rounded-lg font-medium text-slate-200 text-sm transition-colors'>
+            <Star class='fill-yellow-400 w-4 h-4 text-yellow-400' /> Google Business
+            Reviews
+          </a>
+        </div>
+      </div>
+    </section>
+
+    {/* --- FAQ (proof-specific, with FAQPage schema) --- */}
+    <section class='mx-auto mb-24 max-w-3xl'>
+      <div class='mb-12 text-center'>
+        <div class='inline-flex items-center gap-2 mb-4'>
+          <HelpCircle class='w-5 h-5 text-sky-400' />
+          <span
+            class='font-semibold text-sky-400 text-sm uppercase tracking-wider'>
+            Verification FAQ
+          </span>
+        </div>
+        <h2 class='mb-4 font-bold text-white text-3xl md:text-4xl'>
+          Questions Skeptical Buyers Ask
+        </h2>
+        <p class='text-slate-400'>
+          Direct answers to the verification questions agency procurement teams
+          and security-conscious site owners typically ask.
+        </p>
+      </div>
+
+      <div class='space-y-3'>
+        {
+          proofFaqs.map((faq) => (
+            <details class='group bg-slate-900/50 border border-slate-800 hover:border-slate-700 rounded-xl transition-colors'>
+              <summary class='[&::-webkit-details-marker]:hidden flex justify-between items-center gap-4 p-5 font-semibold text-white cursor-pointer list-none'>
+                <span>{faq.q}</span>
+                <ChevronDown class='flex-shrink-0 w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform' />
+              </summary>
+              <div
+                class='px-5 pb-5 text-slate-400 text-sm leading-relaxed'
+                set:html={faq.a}
+              />
+            </details>
+          ))
+        }
+      </div>
+    </section>
+
+    {/* --- FINAL CTA --- */}
+    <section
+      class='bg-slate-800 mt-20 px-6 py-16 border border-slate-700 rounded-3xl text-center'>
+      <div class='inline-flex items-center gap-2 mb-4'>
+        <ShieldCheck class='w-4 h-4 text-sky-400' />
+        <span
+          class='font-semibold text-sky-400 text-sm uppercase tracking-wider'>
+          Ready when you are
+        </span>
+      </div>
+      <h2
+        class='mx-auto mb-6 max-w-2xl font-bold text-white text-3xl md:text-4xl'>
+        Receipts Checked. Now Let's Clean Your Site.
+      </h2>
+      <p class='mx-auto mb-8 max-w-xl text-slate-300 text-lg'>
+        Pay only after I deliver a verified-clean site. Direct line to me the
+        entire time. 30-day re-infection coverage on every cleanup.
+      </p>
+      <div class='flex sm:flex-row flex-col justify-center items-center gap-4'>
+        <a
+          href='/wordpress-malware-removal/'
+          class={`h-14 px-8 text-lg ${btnBase} ${btnDefault}`}>
+          See Pricing & Start <ArrowRight class='ml-2 w-5 h-5' />
+        </a>
+        <a
+          href='/hire-me/'
+          class={`h-14 px-8 text-lg ${btnBase} ${btnOutline}`}>
+          Ask Me Anything First
+        </a>
+      </div>
+      <p class='mt-6 text-slate-400 text-sm'>
+        <Clock class='inline mr-1 w-3.5 h-3.5' /> Response within 30 minutes
+      </p>
+    </section>
+  </ComponentWrapper>
+</Layout>
