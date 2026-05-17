@@ -56,8 +56,20 @@ function addTrailingSlashes(htmlContent: string | undefined | null) {
   return $.html();
 }
 
+// Helper to check if HTML content is non-empty (ignoring whitespace and empty tags)
+function hasContent(htmlContent: string | undefined | null): boolean {
+  if (!htmlContent) return false;
+  // Strip tags and whitespace to check for actual content
+  const stripped = htmlContent
+    .replace(/<[^>]*>/g, '')
+    .replace(/&nbsp;/g, '')
+    .trim();
+  return stripped.length > 0;
+}
+
 // Process the main content
 const processedContent = addTrailingSlashes(post.content);
+const hasPostContent = hasContent(post.content);
 
 // Process the ACF fields if they exist
 const processedAcf = post.acf
@@ -165,58 +177,69 @@ const malwareSectionBase =
 
     {/* --- CONTENT B: MALWARE LOG SPECIAL --- */}
     {
-      isMalwareLog && processedAcf && (
+      isMalwareLog && (
         <div class='space-y-12 blog-content'>
+          {/* Post Content (if exists) */}
+          {hasPostContent && (
+            <div class={proseClasses} set:html={processedContent} />
+          )}
+
           {/* Issue Reported */}
-          <section>
-            <div class='flex items-center gap-3 mb-4'>
-              <div class='bg-red-900/30 p-2 rounded-lg text-red-400'>
-                <Shield class='w-6 h-6' />
+          {processedAcf && hasContent(processedAcf.issue_reported) && (
+            <section>
+              <div class='flex items-center gap-3 mb-4'>
+                <div class='bg-red-900/30 p-2 rounded-lg text-red-400'>
+                  <Shield class='w-6 h-6' />
+                </div>
+                <h2 class='font-bold text-white text-2xl md:text-3xl'>
+                  Issue Reported
+                </h2>
               </div>
-              <h2 class='font-bold text-white text-2xl md:text-3xl'>
-                Issue Reported
-              </h2>
-            </div>
-            <div
-              class={malwareSectionBase}
-              set:html={processedAcf.issue_reported}
-            />
-          </section>
+              <div
+                class={malwareSectionBase}
+                set:html={processedAcf.issue_reported}
+              />
+            </section>
+          )}
 
           {/* Malware Type */}
-          <section>
-            <div class='flex items-center gap-3 mb-4'>
-              <div class='bg-orange-900/30 p-2 rounded-lg text-orange-400'>
-                <Code class='w-6 h-6' />
+          {processedAcf && hasContent(processedAcf.malware_type) && (
+            <section>
+              <div class='flex items-center gap-3 mb-4'>
+                <div class='bg-orange-900/30 p-2 rounded-lg text-orange-400'>
+                  <Code class='w-6 h-6' />
+                </div>
+                <h2 class='font-bold text-white text-2xl md:text-3xl'>
+                  Malware Analysis
+                </h2>
               </div>
-              <h2 class='font-bold text-white text-2xl md:text-3xl'>
-                Malware Analysis
-              </h2>
-            </div>
-            <div
-              class={malwareSectionBase}
-              set:html={processedAcf.malware_type}
-            />
-          </section>
+              <div
+                class={malwareSectionBase}
+                set:html={processedAcf.malware_type}
+              />
+            </section>
+          )}
 
           {/* Technical Breakdown */}
-          <section>
-            <div class='flex items-center gap-3 mb-4'>
-              <div class='bg-yellow-900/30 p-2 rounded-lg text-yellow-400'>
-                <Wrench class='w-6 h-6' />
+          {processedAcf && hasContent(processedAcf.location_of_infection) && (
+            <section>
+              <div class='flex items-center gap-3 mb-4'>
+                <div class='bg-yellow-900/30 p-2 rounded-lg text-yellow-400'>
+                  <Wrench class='w-6 h-6' />
+                </div>
+                <h2 class='font-bold text-white text-2xl md:text-3xl'>
+                  Technical Breakdown
+                </h2>
               </div>
-              <h2 class='font-bold text-white text-2xl md:text-3xl'>
-                Technical Breakdown
-              </h2>
-            </div>
-            <div
-              class={malwareSectionBase}
-              set:html={processedAcf.location_of_infection}
-            />
-          </section>
+              <div
+                class={malwareSectionBase}
+                set:html={processedAcf.location_of_infection}
+              />
+            </section>
+          )}
 
           {/* Cleanup Steps */}
-          {processedAcf.cleanup_steps && (
+          {processedAcf && hasContent(processedAcf.cleanup_steps) && (
             <section>
               <div class='flex items-center gap-3 mb-4'>
                 <div class='bg-green-900/30 p-2 rounded-lg text-green-400'>
@@ -234,42 +257,46 @@ const malwareSectionBase =
           )}
 
           {/* Result */}
-          <section class='bg-slate-800/50 p-6 border border-slate-700 rounded-2xl'>
-            <div class='flex items-center gap-3 mb-4'>
-              <CheckCircle class='w-6 h-6 text-sky-400' />
-              <h2 class='font-bold text-white text-xl'>Final Result</h2>
-            </div>
-            <div class={malwareSectionBase} set:html={processedAcf.result} />
-          </section>
-
-          {/* Screenshots */}
-          {processedAcf.screenshot && processedAcf.screenshot.length > 0 && (
-            <section>
-              <div class='flex items-center gap-3 mb-6'>
-                <ImageIcon class='w-6 h-6 text-purple-400' />
-                <h2 class='font-bold text-white text-2xl md:text-3xl'>
-                  Evidence & Screenshots
-                </h2>
+          {processedAcf && hasContent(processedAcf.result) && (
+            <section class='bg-slate-800/50 p-6 border border-slate-700 rounded-2xl'>
+              <div class='flex items-center gap-3 mb-4'>
+                <CheckCircle class='w-6 h-6 text-sky-400' />
+                <h2 class='font-bold text-white text-xl'>Final Result</h2>
               </div>
-              <div
-                class={`gap-6 grid ${processedAcf.screenshot.length > 1 ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1'}`}>
-                {processedAcf.screenshot.map((img: any, index: number) => (
-                  <div class='group relative'>
-                    <img
-                      src={img.full_image_url}
-                      alt={`Screenshot ${index + 1}`}
-                      class='shadow-md border border-slate-700 rounded-xl w-full h-auto object-cover group-hover:scale-[1.02] transition-transform'
-                      width={800}
-                      height={600}
-                    />
-                    <div class='bottom-2 left-2 absolute bg-black/60 backdrop-blur-sm px-2 py-1 rounded text-white text-xs'>
-                      Figure {index + 1}
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <div class={malwareSectionBase} set:html={processedAcf.result} />
             </section>
           )}
+
+          {/* Screenshots */}
+          {processedAcf &&
+            processedAcf.screenshot &&
+            processedAcf.screenshot.length > 0 && (
+              <section>
+                <div class='flex items-center gap-3 mb-6'>
+                  <ImageIcon class='w-6 h-6 text-purple-400' />
+                  <h2 class='font-bold text-white text-2xl md:text-3xl'>
+                    Evidence & Screenshots
+                  </h2>
+                </div>
+                <div
+                  class={`gap-6 grid ${processedAcf.screenshot.length > 1 ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1'}`}>
+                  {processedAcf.screenshot.map((img: any, index: number) => (
+                    <div class='group relative'>
+                      <img
+                        src={img.full_image_url}
+                        alt={`Screenshot ${index + 1}`}
+                        class='shadow-md border border-slate-700 rounded-xl w-full h-auto object-cover group-hover:scale-[1.02] transition-transform'
+                        width={800}
+                        height={600}
+                      />
+                      <div class='bottom-2 left-2 absolute bg-black/60 backdrop-blur-sm px-2 py-1 rounded text-white text-xs'>
+                        Figure {index + 1}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
         </div>
       )
     }
