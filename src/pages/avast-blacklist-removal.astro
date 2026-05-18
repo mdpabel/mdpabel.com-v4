@@ -1,0 +1,1089 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { TESTIMONIALS } from '../data/testimonials';
+import ComponentWrapper from '../components/component-wrapper.astro';
+import Testimonials from '../components/Testimonials.astro';
+import {
+  CheckCircle,
+  ShieldAlert,
+  ShieldCheck,
+  Star,
+  Activity,
+  AlertOctagon,
+  MailWarning,
+  Lock,
+  Search,
+  Zap,
+  Check,
+  XCircle,
+  ChevronDown,
+  Clock,
+  Award,
+  Users,
+  TrendingUp,
+  HelpCircle,
+  ArrowRight,
+  FileCheck,
+  AlertTriangle,
+  Eye,
+  RefreshCw,
+} from '@lucide/astro';
+
+// --- SEO ---
+const seoTitle =
+  'Avast Blacklist Removal Service | Off URL:Blacklist in 24–72h';
+const seoDesc =
+  'Avast blocked your website with URL:Blacklist? I clean the malware and remove your domain from Avast & AVG blocklists in 24–72 hours. 4,500+ sites recovered.';
+
+// --- JSON-LD: Service + Reviews ---
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Avast Blacklist Removal Service',
+  serviceType: 'Website Blacklist Removal',
+  description:
+    'Professional Avast and AVG blacklist removal. Manual WordPress malware cleanup plus dispute submission to Avast Threat Labs. Most domains delisted in 24–72 hours. Handles URL:Blacklist, URL:Mal, URL:Phishing, and false-positive disputes.',
+  url: 'https://www.mdpabel.com/avast-blacklist-removal/',
+  provider: {
+    '@type': 'Person',
+    name: 'MD Pabel',
+    jobTitle: 'WordPress Security Specialist',
+    url: 'https://www.mdpabel.com/about/',
+    sameAs: [
+      'https://www.linkedin.com/in/mdpabel',
+      'https://github.com/mdpabel',
+      'https://web.facebook.com/mdpabelwpsecurity',
+    ],
+  },
+  areaServed: 'Worldwide',
+  offers: {
+    '@type': 'Offer',
+    price: '45.00',
+    priceCurrency: 'USD',
+    availability: 'https://schema.org/InStock',
+    url: 'https://www.mdpabel.com/hire-me/',
+  },
+  review: [
+    {
+      '@type': 'Review',
+      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+      author: { '@type': 'Person', name: 'Hassan Infinkey' },
+      reviewBody:
+        "I'm very satisfied with MD Pabel service he can save my site from hackers, and remove all malware attacks. Highly Recommended.",
+    },
+    {
+      '@type': 'Review',
+      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+      author: { '@type': 'Person', name: 'Kendall Miller' },
+      reviewBody:
+        'My website was suffering from some redirect malware. MD was able to take care of the problem for a reasonable fee. For me, he was a lifesaver.',
+    },
+    {
+      '@type': 'Review',
+      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+      author: { '@type': 'Person', name: 'Usama Javed' },
+      reviewBody:
+        'Thanks for your support, Thanks for giving me a great support, you are very nice team.',
+    },
+  ],
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '5.0',
+    reviewCount: '3',
+    bestRating: '5',
+  },
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: "How do I check if my website is on Avast's blacklist?",
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: "Run your URL through VirusTotal — it queries Avast and AVG along with 90+ engines. If Avast shows Malware or Suspicious, you're on the blocklist. You can also check via threatlabs.avast.com, or open your site in a browser with Avast Free Antivirus installed — if Web Shield blocks it, you're listed.",
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What does URL:Blacklist mean in Avast?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: "URL:Blacklist is Avast's generic detection string for any URL on its blocklist. The underlying reason is usually malware on the site, a phishing page, SEO spam, an injected redirect, or — in roughly 15% of cases — a false positive caused by shared-IP reputation, a flagged outbound link, or a stale listing after an old hack was cleaned without filing a dispute.",
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How long does Avast take to remove a URL from their blacklist?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'For a properly-prepared dispute on a genuinely clean site, typically 24–72 hours, sometimes under 12. For sites where a previous dispute was rejected, the second review can take 5–10 days because it enters a slower manual queue. Disputes filed on still-infected sites usually fail silently within 48 hours.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: "If I'm flagged on Avast, will AVG flag me too?",
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Almost always, yes. Avast and AVG are both Gen Digital products and share the same URL reputation backend. If your domain shows on Avast Threat Labs, expect the AVG warning within hours. I file the AVG dispute in parallel with the Avast one — separate forms, identical evidence.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'My site is clean but Avast still flags it — is this a false positive?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Possibly. About 15% of Avast blocks are false positives. Common causes: stale listing after a fixed hack with no dispute filed, shared-hosting IP reputation damage from a neighbour, outbound links to a recently-flagged third-party domain, or aggressive affiliate redirect chains. Disputing as a false positive requires different framing than reporting a remediation — I handle both as part of standard service.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What if Avast already rejected my dispute once?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: "A rejected dispute usually means the rescan still found something — a residual database row, an old cached file, a missed injection. The path forward is a complete manual audit, removal of every remaining indicator, and re-submission with file-level evidence. Don't keep submitting the same form — each rejection pushes you deeper into the manual queue.",
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How do I unblock a website blocked by Avast?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'If you own the site, you cannot simply whitelist it for all Avast users — that requires a domain dispute at threatlabs.avast.com after cleaning the underlying issue. If you only need to access your own site for testing, you can add a temporary exception in Avast Settings → Exceptions, but other visitors will still see the block until the dispute is approved.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: "What's your guarantee if Avast doesn't remove the listing?",
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: "If a properly-cleaned site doesn't get delisted after my submission, I re-engage Avast Threat Labs and resubmit with additional evidence at no extra cost until it's cleared. Reinfection within 30 days that triggers a fresh listing is covered too — cleanup and re-delisting included.",
+      },
+    },
+  ],
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: 'https://www.mdpabel.com/',
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Blacklist Removal',
+      item: 'https://www.mdpabel.com/blacklist-removal/',
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: 'Avast Blacklist Removal',
+      item: 'https://www.mdpabel.com/avast-blacklist-removal/',
+    },
+  ],
+};
+
+// --- DATA ---
+const TRUST_STATS = [
+  { value: '4,500+', label: 'Sites Recovered', icon: ShieldCheck },
+  { value: '24–72h', label: 'Avg. Delisting Time', icon: Clock },
+  { value: '8+ yrs', label: 'Experience', icon: Award },
+  { value: '2,300+', label: 'Happy Clients', icon: Users },
+];
+
+const DETECTION_STRINGS = [
+  {
+    code: 'URL:Blacklist',
+    meaning: 'Generic blocklist hit — domain flagged in any threat category',
+    cause:
+      'Hacked WordPress site distributing malware, SEO spam, or phishing redirects',
+  },
+  {
+    code: 'URL:Mal',
+    meaning: 'Confirmed malware delivery from the URL',
+    cause: 'Drive-by JS injection, credit card skimmer, fake updater payload',
+  },
+  {
+    code: 'URL:Phishing',
+    meaning: 'Phishing kit detected on the domain',
+    cause: 'Compromised theme hosting a login-stealing landing page',
+  },
+  {
+    code: 'HTML:Script-inf',
+    meaning: 'Infected script tag found on the page',
+    cause:
+      'Injected <script> in header.php or in the wp_options database table',
+  },
+  {
+    code: 'JS:Miner',
+    meaning: 'Cryptojacking script detected',
+    cause: 'CoinHive-style miner injected into the theme footer',
+  },
+  {
+    code: 'URL:Browser-hijacker',
+    meaning: 'Search hijack or "Bad Search Engine" warning',
+    cause:
+      'Compromised plugin altering search behaviour, browser-extension-like payload',
+  },
+];
+
+const PROCESS_STEPS = [
+  {
+    icon: Search,
+    title: 'Multi-Vendor Audit',
+    desc: "I scan your domain against VirusTotal's 90+ engines, Sucuri SiteCheck, Google Safe Browsing, and Avast Threat Labs. Avast and AVG almost always appear together — I confirm whether Norton, McAfee, or Quttera are also flagging (they often are within 24–48 hours).",
+  },
+  {
+    icon: Lock,
+    title: 'Manual Cleanup + Patch',
+    desc: "Every infected file, every database injection, every backdoor — by hand. Common Avast triggers: obfuscated JS in theme footer.php, fake CAPTCHA injections, mobile-only .htaccess redirects, hidden admin users, eval'd payloads in mu-plugins. Then I close the entry point that let them in.",
+  },
+  {
+    icon: CheckCircle,
+    title: 'Parallel Delisting',
+    desc: 'I file the dispute at threatlabs.avast.com with file-level evidence Avast reviewers approve fastest, plus the AVG mirror dispute simultaneously. Structured submissions with evidence typically clear in 24–72 hours; generic "please review" submissions sit in the queue for weeks.',
+  },
+];
+
+const WHATS_INCLUDED = [
+  {
+    title: 'Avast Threat Labs Dispute Filing',
+    desc: 'Direct submission to threatlabs.avast.com with cleaned-file evidence, timestamp logs, and VirusTotal verification — the format reviewers approve on the first pass.',
+  },
+  {
+    title: 'AVG Parallel Submission',
+    desc: "Same Gen Digital backend = same flag on AVG. I file both disputes in the same window so you don't come back here for AVG in a week.",
+  },
+  {
+    title: 'Manual Malware Cleanup',
+    desc: 'Obfuscated PHP, JS injections, .htaccess redirects, fake CAPTCHA payloads, hidden admin users, database SEO spam — every Avast trigger removed by hand.',
+  },
+  {
+    title: 'False-Positive Dispute Handling',
+    desc: 'If your site is genuinely clean but Avast still blocks (stale listing, shared-IP reputation, downstream-link issue), I file as a false-positive dispute with the right framing.',
+  },
+  {
+    title: 'Root-Cause Patching + Hardening',
+    desc: 'Cloudflare WAF, 2FA on admin, file integrity monitoring, auto-updates. The site you get back is more secure than before the block.',
+  },
+  {
+    title: '30-Day Reinfection Guarantee',
+    desc: 'Same malware family within 30 days? I re-clean and re-delist at no extra cost — Avast, AVG, and any cascading vendors included.',
+  },
+];
+
+const FALSE_POSITIVE_CAUSES = [
+  {
+    icon: RefreshCw,
+    title: 'Stale Listing',
+    desc: "The hack was cleaned weeks ago but no dispute was filed. Avast's blocklist is sticky — listings can persist 90+ days without an explicit review request.",
+  },
+  {
+    icon: Users,
+    title: 'Shared-IP Reputation',
+    desc: "Cheap shared hosting with hundreds of sites per IP. One bad neighbour drags the IP's reputation down and your clean domain gets flagged anyway.",
+  },
+  {
+    icon: ArrowRight,
+    title: 'Downstream Link',
+    desc: 'Your site links to an affiliate or redirector that itself got flagged. Avast traces the chain and flags the source. Outbound link audit fixes it.',
+  },
+];
+
+const FAQS = [
+  {
+    q: "How do I check if my website is on Avast's blacklist?",
+    a: 'Run your URL through <strong>VirusTotal</strong> — it queries Avast and AVG along with 90+ engines. If Avast shows "Malware" or "Suspicious", you\'re on the blocklist. You can also check via <code>threatlabs.avast.com</code>, or open your site in a browser running Avast Free Antivirus — if Web Shield blocks it, you\'re listed.',
+  },
+  {
+    q: 'What does URL:Blacklist mean in Avast?',
+    a: "<code>URL:Blacklist</code> is Avast's generic detection for any URL on its blocklist. About 85% of the time there's a real malware payload, phishing page, SEO spam injection, or redirect on the domain. The remaining ~15% are false positives — stale listings, shared-IP reputation damage, or outbound links to a flagged third-party.",
+  },
+  {
+    q: 'How long does Avast take to remove a URL from their blacklist?',
+    a: 'For a properly-prepared dispute on a genuinely clean site: typically <strong>24–72 hours</strong>, sometimes under 12. Sites with a previously-rejected dispute go to a slower manual queue (5–10 days). Disputes filed on still-infected sites usually fail silently within 48 hours.',
+  },
+  {
+    q: "If I'm flagged on Avast, will AVG flag me too?",
+    a: 'Almost always, yes. Avast and AVG are both <strong>Gen Digital</strong> products and share the same URL reputation backend. If your domain shows on Avast Threat Labs, expect the AVG warning within hours. I file the AVG dispute in parallel with the Avast one — separate forms, identical evidence.',
+  },
+  {
+    q: 'My site is clean but Avast still flags it — is this a false positive?',
+    a: 'Possibly. Roughly <strong>15% of Avast blocks are false positives</strong>. Common causes: stale listing after a fixed hack, shared-hosting IP reputation, outbound links to a recently-flagged third-party domain, or affiliate redirect chains. Disputing as a false positive requires different framing than reporting a remediation — I handle both.',
+  },
+  {
+    q: 'What if Avast already rejected my dispute once?',
+    a: 'A rejected dispute means the rescan found something — a residual database row, a cached file, a missed injection. Path forward: complete manual audit, removal of every remaining indicator, re-submission with file-level evidence. Repeated identical submissions push you deeper into the manual queue.',
+  },
+  {
+    q: 'How do I unblock a website blocked by Avast for my own access?',
+    a: 'For temporary personal access: Avast Settings → Exceptions → add the URL. This unblocks it only on your machine — other Avast users still see the block. Permanent removal for all users requires a domain dispute at <code>threatlabs.avast.com</code> after cleaning the underlying issue.',
+  },
+  {
+    q: "Can Avast blacklist a WordPress site that hasn't been hacked?",
+    a: 'Rarely, but yes. Most common non-hack causes: shared-hosting IP reputation damage from a neighbour, outbound links to a flagged third-party, aggressive affiliate redirect chains, or a legitimate plugin that briefly served malicious code before being patched. I diagnose the cause before disputing.',
+  },
+  {
+    q: "What's your guarantee if Avast doesn't remove the listing?",
+    a: "If a properly-cleaned site doesn't get delisted after my submission, I re-engage Avast Threat Labs and resubmit with additional evidence at no extra cost until it's cleared. Reinfection within 30 days that triggers a fresh listing is covered too — cleanup and re-delisting included.",
+  },
+];
+
+// --- STYLES (match site palette) ---
+const primaryButtonClass =
+  'inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 disabled:pointer-events-none disabled:opacity-50 h-11 px-8 bg-sky-600 hover:bg-sky-700 text-white shadow-lg shadow-sky-900/20 tracking-tight';
+const outlineButtonClass =
+  'inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 disabled:pointer-events-none disabled:opacity-50 h-11 px-8 border bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800';
+---
+
+<Layout title={seoTitle} description={seoDesc}>
+  <script
+    type='application/ld+json'
+    set:html={JSON.stringify(serviceSchema)}
+    is:inline
+  />
+  <script
+    type='application/ld+json'
+    set:html={JSON.stringify(faqSchema)}
+    is:inline
+  />
+  <script
+    type='application/ld+json'
+    set:html={JSON.stringify(breadcrumbSchema)}
+    is:inline
+  />
+
+  <ComponentWrapper class='relative py-16 md:py-24'>
+    {/* Decorative Background */}
+    <div
+      class='top-0 left-0 -z-10 absolute w-full h-full overflow-hidden pointer-events-none'>
+      <div
+        class='-top-[20%] right-0 absolute bg-red-500/5 blur-3xl rounded-full w-[500px] h-[500px]'>
+      </div>
+      <div
+        class='top-[10%] -left-[10%] absolute bg-sky-500/5 blur-3xl rounded-full w-[400px] h-[400px]'>
+      </div>
+    </div>
+
+    {/* --- HERO --- */}
+    <section class='z-10 relative mb-16 text-center'>
+      <div
+        class='inline-flex items-center gap-2 bg-red-900/20 mb-8 px-4 py-1.5 border border-red-800/50 rounded-full animate-fade-in-up'>
+        <ShieldAlert class='w-4 h-4 text-red-400' />
+        <span class='font-semibold text-red-200 text-sm'>
+          Seeing "URL:Blacklist" or "This site has been blocked" from Avast?
+        </span>
+      </div>
+
+      <h1 class='mb-6 font-bold text-white text-3xl md:text-5xl tracking-tight'>
+        Avast Blacklist <br class='hidden md:block' />
+        <span
+          class='bg-clip-text bg-gradient-to-r from-sky-400 to-indigo-400 text-transparent'>
+          Removal Service
+        </span>
+      </h1>
+
+      <p class='mx-auto mb-6 max-w-2xl text-slate-300 text-lg leading-relaxed'>
+        I clean the underlying malware and remove your domain from{' '}
+        <span class='font-semibold text-white'>Avast Threat Labs</span> and{' '}
+        <span class='font-semibold text-white'>AVG</span> blocklists — usually in
+        <span class='font-semibold text-white'>24–72 hours</span>. False
+        positives handled too.
+      </p>
+
+      {/* Quick Answer — AI snippet bait, #151F33 highlight */}
+      <div
+        class='mx-auto mb-8 p-6 border border-slate-700/60 rounded-2xl max-w-3xl text-left'
+        style='background-color:#151F33'>
+        <div class='flex items-center gap-2 mb-3'>
+          <Zap class='w-4 h-4 text-sky-400' />
+          <span
+            class='font-semibold text-sky-400 text-xs uppercase tracking-wider'>
+            Quick Answer
+          </span>
+        </div>
+        <p class='text-slate-200 text-sm leading-relaxed'>
+          <strong>Avast blacklist removal in plain terms:</strong> If Avast shows
+          <code class='bg-slate-800 px-1.5 py-0.5 rounded text-sky-300 text-xs'
+            >URL:Blacklist</code
+          >,{' '}
+          <code class='bg-slate-800 px-1.5 py-0.5 rounded text-sky-300 text-xs'
+            >URL:Mal</code
+          >, or "This site has been blocked" when visitors hit your domain, your
+          URL is on Avast Threat Labs' blocklist — usually because malware,
+          phishing, or SEO spam was detected. The fix is two steps: (1) clean
+          every infected file and database row so the next scan returns clean;
+          (2) submit a domain dispute at <span class='text-sky-300'
+            >threatlabs.avast.com</span
+          >. Most domains are delisted in 24–72 hours <em
+            >once the site is genuinely clean</em
+          >. Requests filed before cleanup almost always fail.
+        </p>
+      </div>
+
+      <p class='mx-auto mb-10 max-w-2xl text-slate-500 text-sm'>
+        Trusted by 2,300+ clients · 4,500+ infected sites recovered · 8+ years
+        of WordPress security work
+      </p>
+
+      <div class='flex sm:flex-row flex-col justify-center items-center gap-4'>
+        <a href='#pricing' class={primaryButtonClass}>
+          Start Avast Removal <ArrowRight class='ml-2 w-4 h-4' />
+        </a>
+        <a href='#how-it-works' class={outlineButtonClass}> How It Works </a>
+      </div>
+    </section>
+
+    {/* --- TRUST BAR --- */}
+    <section class='mb-24'>
+      <div
+        class='gap-4 grid grid-cols-2 md:grid-cols-4 bg-slate-900/50 p-6 md:p-8 border border-slate-800 rounded-2xl'>
+        {
+          TRUST_STATS.map((stat) => (
+            <div class='flex flex-col items-center text-center'>
+              <stat.icon class='mb-2 w-6 h-6 text-sky-400' />
+              <div class='font-bold text-white text-2xl md:text-3xl'>
+                {stat.value}
+              </div>
+              <div class='text-slate-400 text-xs md:text-sm'>{stat.label}</div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    {/* --- WHY AVAST FLAGGED YOU --- */}
+    <section class='mb-24'>
+      <div class='mx-auto mb-12 max-w-3xl text-center'>
+        <h2 class='mb-4 font-bold text-white text-3xl md:text-4xl'>
+          Why Avast Blacklists a Website
+        </h2>
+        <p class='text-slate-400'>
+          And why filing the dispute before cleaning the cause makes it worse.
+        </p>
+      </div>
+
+      <div class='space-y-5 mx-auto max-w-4xl text-slate-300 leading-relaxed'>
+        <p>
+          Avast Threat Labs runs continuous URL scanning across browsers, mobile
+          apps, Avast Secure Browser, the Web Shield component of Avast Free
+          Antivirus, and the shared <strong>Gen Digital</strong> threat intelligence
+          feed that also powers AVG, CCleaner, and (in some categories) Norton. When
+          their scanner finds malware behaviour, phishing pages, suspicious redirects,
+          cryptojacking, or SEO-spam patterns on any URL on your domain, the <em
+            >entire</em
+          > domain gets tagged with a{' '}
+          <code class='bg-slate-800 px-1.5 py-0.5 rounded text-sky-300 text-xs'>
+            URL:Blacklist
+          </code>{' '}
+          classification.
+        </p>
+        <p>
+          What visitors see depends on the Avast product they have installed: a
+          red "This site has been blocked" full-page interstitial, a small "Web
+          Shield blocked a threat" toast, or a Chrome/Edge warning from the
+          Avast Online Security &amp; Privacy extension. On mobile, Avast One
+          just refuses to load the page. The result is the same — your
+          conversions drop to zero on every visitor running Avast or AVG,
+          roughly <strong>400 million users globally</strong>.
+        </p>
+        <p>
+          Here's the part most "blacklist removal" services get wrong:{' '}
+          <em
+            >submitting the dispute form on a still-infected site doesn't just
+            fail — it can extend your blacklist period</em
+          >. Avast re-scans the URL when you dispute it. If the malicious
+          payload, cloaked redirect, or injected script is still live (even on a
+          single page deep in <code
+            class='bg-slate-800 px-1 py-0.5 rounded text-xs'
+            >/wp-content/uploads/</code
+          >), the dispute is auto-rejected and the domain's reputation score
+          drops further. That's why my process always cleans first, disputes
+          second.
+        </p>
+      </div>
+    </section>
+
+    {/* --- DETECTION STRINGS TABLE --- */}
+    <section class='mb-24'>
+      <div class='mx-auto mb-12 max-w-3xl text-center'>
+        <div class='inline-flex items-center gap-2 mb-4'>
+          <Eye class='w-5 h-5 text-sky-400' />
+          <span
+            class='font-semibold text-sky-400 text-sm uppercase tracking-wider'>
+            What You're Seeing
+          </span>
+        </div>
+        <h2 class='mb-4 font-bold text-white text-3xl md:text-4xl'>
+          Avast Detection Strings, Decoded
+        </h2>
+        <p class='text-slate-400'>
+          The exact warning message tells me where the infection lives.
+        </p>
+      </div>
+
+      <div
+        class='bg-slate-900/50 mx-auto border border-slate-800 rounded-2xl max-w-5xl overflow-hidden'>
+        <table class='w-full text-sm'>
+          <thead class='bg-slate-900 text-left'>
+            <tr>
+              <th class='p-4 font-semibold text-white'>Detection String</th>
+              <th class='p-4 font-semibold text-white'>What It Means</th>
+              <th class='hidden md:table-cell p-4 font-semibold text-white'>
+                Common WordPress Cause
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              DETECTION_STRINGS.map((row) => (
+                <tr class='hover:bg-slate-900/50 border-slate-800 border-t transition-colors'>
+                  <td class='p-4 align-top'>
+                    <code class='bg-slate-800 px-2 py-1 rounded text-sky-300 text-xs'>
+                      {row.code}
+                    </code>
+                  </td>
+                  <td class='p-4 text-slate-300 align-top'>{row.meaning}</td>
+                  <td class='hidden md:table-cell p-4 text-slate-400 align-top'>
+                    {row.cause}
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    {/* --- AVAST + AVG / GEN DIGITAL --- */}
+    <section
+      class='bg-slate-900/50 -mx-4 md:-mx-8 mb-24 px-6 md:px-12 py-16 border border-slate-800 rounded-3xl'>
+      <div class='mx-auto max-w-4xl'>
+        <div class='mb-10 text-center'>
+          <div class='inline-flex items-center gap-2 mb-4'>
+            <AlertTriangle class='w-5 h-5 text-amber-400' />
+            <span
+              class='font-semibold text-amber-400 text-sm uppercase tracking-wider'>
+              The Gen Digital Connection
+            </span>
+          </div>
+          <h2 class='mb-4 font-bold text-white text-3xl md:text-4xl'>
+            One Avast Flag = an AVG Flag, Always
+          </h2>
+          <p class='text-slate-400'>
+            What most "Avast-only" removal services don't tell you.
+          </p>
+        </div>
+
+        <div class='space-y-4 mb-8 text-slate-300 leading-relaxed'>
+          <p>
+            Avast and AVG are both owned by Gen Digital (formerly
+            NortonLifeLock), and they share threat intelligence at the backend.
+            In practice this means three things you should know before paying
+            anyone for Avast-only removal:
+          </p>
+        </div>
+
+        <div class='space-y-4'>
+          <div
+            class='flex gap-4 bg-slate-900/70 p-5 border border-slate-800 rounded-xl'>
+            <CheckCircle class='flex-shrink-0 mt-1 w-5 h-5 text-sky-500' />
+            <p class='text-slate-300 text-sm leading-relaxed'>
+              If Avast flags your URL, <strong
+                >AVG shows the same flag within hours</strong
+              >. Submit both disputes together or you'll be back here for AVG in
+              a week.
+            </p>
+          </div>
+          <div
+            class='flex gap-4 bg-slate-900/70 p-5 border border-slate-800 rounded-xl'>
+            <CheckCircle class='flex-shrink-0 mt-1 w-5 h-5 text-sky-500' />
+            <p class='text-slate-300 text-sm leading-relaxed'>
+              Norton Safe Web uses a partially separate dataset, so a Norton
+              flag isn't guaranteed — but it appears in{' '}
+              <strong>roughly 40% of my Avast cases</strong>.
+            </p>
+          </div>
+          <div
+            class='flex gap-4 bg-slate-900/70 p-5 border border-slate-800 rounded-xl'>
+            <CheckCircle class='flex-shrink-0 mt-1 w-5 h-5 text-sky-500' />
+            <p class='text-slate-300 text-sm leading-relaxed'>
+              Gen Digital data feeds smaller third-party tools too (browser
+              extensions, parental controls, school/enterprise content filters).
+              Clearing Avast/AVG usually clears these automatically within 7–14
+              days.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* --- WHAT'S INCLUDED --- */}
+    <section id='whats-included' class='mb-24'>
+      <div class='mx-auto mb-16 max-w-3xl text-center'>
+        <div class='inline-flex items-center gap-2 mb-4'>
+          <FileCheck class='w-5 h-5 text-sky-400' />
+          <span
+            class='font-semibold text-sky-400 text-sm uppercase tracking-wider'>
+            What's Included
+          </span>
+        </div>
+        <h2 class='mb-4 font-bold text-white text-3xl md:text-4xl'>
+          Cleanup + Dispute + Hardening, End-to-End
+        </h2>
+        <p class='text-slate-400'>
+          Not just filing the form — the actual fix Avast needs to see.
+        </p>
+      </div>
+
+      <div class='gap-6 grid md:grid-cols-2 mx-auto max-w-5xl'>
+        {
+          WHATS_INCLUDED.map((item) => (
+            <div class='flex gap-4 bg-slate-900 p-6 border border-slate-800 rounded-xl'>
+              <CheckCircle class='flex-shrink-0 mt-1 w-5 h-5 text-sky-500' />
+              <div>
+                <h3 class='mb-2 font-bold text-white'>{item.title}</h3>
+                <p class='text-slate-400 text-sm leading-relaxed'>
+                  {item.desc}
+                </p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    {/* --- PROCESS --- */}
+    <section id='how-it-works' class='mx-auto mb-24 max-w-5xl scroll-mt-24'>
+      <div class='mb-16 text-center'>
+        <h2 class='mb-4 font-bold text-white text-3xl md:text-4xl'>
+          The Avast Removal Process
+        </h2>
+        <p class='text-slate-400'>
+          Clean first, dispute second, harden third. Filing in the wrong order
+          is why most DIY attempts fail.
+        </p>
+      </div>
+
+      <div class='relative gap-6 grid md:grid-cols-3'>
+        <div
+          class='hidden md:block top-8 right-[15%] left-[15%] -z-10 absolute bg-slate-800 h-0.5'>
+        </div>
+
+        {
+          PROCESS_STEPS.map((step, i) => (
+            <div class='flex flex-col items-center bg-slate-900/80 p-6 border border-slate-800 rounded-xl text-center'>
+              <div class='z-10 flex justify-center items-center bg-slate-900 shadow-sm mb-4 border-4 border-slate-800 rounded-full w-16 h-16'>
+                <step.icon class='w-7 h-7 text-sky-400' />
+              </div>
+              <div class='mb-1 font-bold text-sky-400 text-sm'>
+                STEP {i + 1}
+              </div>
+              <h3 class='mb-2 font-bold text-white'>{step.title}</h3>
+              <p class='text-slate-400 text-sm leading-relaxed'>{step.desc}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    {/* --- FALSE POSITIVES --- */}
+    <section class='mb-24'>
+      <div class='mx-auto mb-12 max-w-3xl text-center'>
+        <div class='inline-flex items-center gap-2 mb-4'>
+          <AlertTriangle class='w-5 h-5 text-amber-400' />
+          <span
+            class='font-semibold text-amber-400 text-sm uppercase tracking-wider'>
+            False Positives
+          </span>
+        </div>
+        <h2 class='mb-4 font-bold text-white text-3xl md:text-4xl'>
+          "My Site Is Clean — Why Is Avast Still Blocking It?"
+        </h2>
+        <p class='text-slate-400'>
+          About 15% of Avast blocks are false positives. Here are the three
+          patterns I see most.
+        </p>
+      </div>
+
+      <div class='gap-6 grid md:grid-cols-3 mx-auto max-w-5xl'>
+        {
+          FALSE_POSITIVE_CAUSES.map((item) => (
+            <div class='bg-slate-900 p-6 border border-slate-800 hover:border-slate-700 rounded-xl transition-colors'>
+              <div class='flex justify-center items-center bg-amber-900/20 mb-4 rounded-xl w-12 h-12'>
+                <item.icon class='w-6 h-6 text-amber-400' />
+              </div>
+              <h3 class='mb-2 font-bold text-white'>{item.title}</h3>
+              <p class='text-slate-400 text-sm leading-relaxed'>{item.desc}</p>
+            </div>
+          ))
+        }
+      </div>
+
+      <div
+        class='mx-auto mt-10 p-6 border border-slate-700 rounded-2xl max-w-3xl text-slate-300 text-sm leading-relaxed'
+        style='background-color:#151F33'>
+        <strong class='text-white'>Important:</strong> Submitting a "false positive"
+        claim on an actually-infected site triggers a{' '}
+        <em>longer</em> block, not a faster review. Avast's first response to a false-positive
+        dispute is to re-scan — if the scan still finds something, the listing hardens
+        and future disputes go to a slower manual queue. I audit before assuming false
+        positive.
+      </div>
+    </section>
+
+    {/* --- TIMELINE --- */}
+    <section class='mb-24'>
+      <div class='mx-auto mb-12 max-w-3xl text-center'>
+        <h2 class='mb-4 font-bold text-white text-3xl md:text-4xl'>
+          How Long Avast Blacklist Removal Actually Takes
+        </h2>
+        <p class='text-slate-400'>
+          Realistic timeline from a properly-prepared submission.
+        </p>
+      </div>
+
+      <div
+        class='bg-slate-900/50 mx-auto border border-slate-800 rounded-2xl max-w-3xl overflow-hidden'>
+        <table class='w-full text-sm'>
+          <thead class='bg-slate-900'>
+            <tr>
+              <th class='p-4 font-semibold text-white text-left'>Stage</th>
+              <th class='p-4 font-semibold text-white text-left'
+                >Typical Time</th
+              >
+            </tr>
+          </thead>
+          <tbody class='text-slate-300'>
+            <tr class='border-slate-800 border-t'>
+              <td class='p-4'
+                >Malware cleanup (1–3 infected sites' worth of files)</td
+              >
+              <td class='p-4 text-sky-300'>4–12 hours</td>
+            </tr>
+            <tr class='border-slate-800 border-t'>
+              <td class='p-4'>Vulnerability patch + hardening</td>
+              <td class='p-4 text-sky-300'>1–3 hours</td>
+            </tr>
+            <tr class='border-slate-800 border-t'>
+              <td class='p-4'>Avast dispute review (post-clean)</td>
+              <td class='p-4 text-sky-300'>24–72 hours, sometimes &lt; 12</td>
+            </tr>
+            <tr class='border-slate-800 border-t'>
+              <td class='p-4'>AVG mirror dispute (filed in parallel)</td>
+              <td class='p-4 text-sky-300'>Same review window</td>
+            </tr>
+            <tr class='bg-slate-900/70 border-slate-800 border-t'>
+              <td class='p-4 font-semibold text-white'>
+                Total: domain to clean Avast status
+              </td>
+              <td class='p-4 font-semibold text-sky-300'>
+                Most cases: 24–72 hours
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    {/* --- TESTIMONIALS --- */}
+    <Testimonials />
+
+    {/* --- PRICING --- */}
+    <section id='pricing' class='mb-24 scroll-mt-24'>
+      <div class='mx-auto mb-12 max-w-3xl text-center'>
+        <h2 class='mb-4 font-bold text-white text-3xl md:text-4xl'>
+          Simple, Fixed Pricing
+        </h2>
+        <p class='text-slate-400'>
+          Choose based on whether your site is still infected or already clean.
+        </p>
+      </div>
+
+      <div class='items-start gap-8 grid md:grid-cols-2 mx-auto max-w-4xl'>
+        <div
+          class='bg-slate-900/80 p-8 border border-slate-800 hover:border-slate-700 rounded-2xl transition-colors'>
+          <h3 class='mb-2 font-semibold text-white'>Avast Submission Only</h3>
+          <p class='mb-4 text-slate-500 text-xs'>
+            For developers who already cleaned their site
+          </p>
+          <div class='mb-6 font-bold text-white text-3xl'>
+            $45
+            <span class='font-normal text-slate-500 text-base'>
+              {' '}/ submission
+            </span>
+          </div>
+          <p class='mb-6 pb-6 border-slate-800 border-b text-slate-400 text-sm'>
+            You've removed the malware yourself. I draft and submit the dispute
+            to Avast Threat Labs (and AVG in parallel — same Gen Digital
+            backend) using the file-evidence format that gets approved fastest.
+          </p>
+          <ul class='space-y-3 mb-8 text-slate-400 text-sm'>
+            <li class='flex gap-2'>
+              <Check class='w-4 h-4 text-sky-500' />
+              Pre-submission verification scan
+            </li>
+            <li class='flex gap-2'>
+              <Check class='w-4 h-4 text-sky-500' />
+              Custom-written Avast + AVG dispute
+            </li>
+            <li class='flex gap-2'>
+              <Check class='w-4 h-4 text-sky-500' />
+              False-positive framing if applicable
+            </li>
+            <li class='flex gap-2 text-slate-500'>
+              <XCircle class='w-4 h-4' />
+              Malware cleanup not included
+            </li>
+            <li class='flex gap-2 text-slate-500'>
+              <XCircle class='w-4 h-4' />
+              Other vendor blacklists not handled
+            </li>
+          </ul>
+          <a href='/hire-me/' class={`w-full ${outlineButtonClass}`}>
+            Get Started
+          </a>
+        </div>
+
+        <div
+          class='z-10 relative bg-slate-900 shadow-xl p-8 border border-sky-900 rounded-2xl ring-1 ring-sky-900 scale-105'>
+          <div
+            class='-top-4 left-1/2 absolute bg-sky-600 px-3 py-1 rounded-full font-bold text-white text-xs uppercase -translate-x-1/2'>
+            Most Popular
+          </div>
+          <h3 class='mb-2 font-semibold text-sky-400'>
+            Full Cleanup + Avast Delisting
+          </h3>
+          <p class='mb-4 text-slate-500 text-xs'>
+            For sites still infected, or flagged by Avast and other vendors
+          </p>
+          <div class='mb-6 font-bold text-white text-4xl'>
+            $149
+            <span class='font-normal text-slate-500 text-base'> / site</span>
+          </div>
+          <p class='mb-6 pb-6 border-slate-800 border-b text-slate-400 text-sm'>
+            Complete recovery, end-to-end. I clean the malware, patch the
+            vulnerability, and handle removal from{' '}
+            <strong>every blacklist</strong> flagging your domain — Avast, AVG, and
+            any cascading vendors (Norton, McAfee, Bitdefender, etc.) — usually within
+            24–72 hours.
+          </p>
+          <ul class='space-y-3 mb-8 font-medium text-slate-200 text-sm'>
+            <li class='flex gap-3'>
+              <CheckCircle class='flex-shrink-0 w-5 h-5 text-sky-500' />
+              <span>Full manual malware cleanup</span>
+            </li>
+            <li class='flex gap-3'>
+              <CheckCircle class='flex-shrink-0 w-5 h-5 text-sky-500' />
+              <span>Database SEO spam removal</span>
+            </li>
+            <li class='flex gap-3'>
+              <CheckCircle class='flex-shrink-0 w-5 h-5 text-sky-500' />
+              <span>Backdoor &amp; rogue admin removal</span>
+            </li>
+            <li class='flex gap-3'>
+              <CheckCircle class='flex-shrink-0 w-5 h-5 text-sky-500' />
+              <span>
+                Removal from <strong
+                  >Avast, AVG &amp; all cascading vendors</strong
+                >
+              </span>
+            </li>
+            <li class='flex gap-3'>
+              <CheckCircle class='flex-shrink-0 w-5 h-5 text-sky-500' />
+              <span>Cloudflare WAF + 2FA setup</span>
+            </li>
+            <li class='flex gap-3'>
+              <CheckCircle class='flex-shrink-0 w-5 h-5 text-sky-500' />
+              <span>30-day reinfection guarantee</span>
+            </li>
+          </ul>
+          <a href='/hire-me/' class={`w-full ${primaryButtonClass}`}>
+            Fix My Site Completely
+            <ArrowRight class='ml-2 w-4 h-4' />
+          </a>
+        </div>
+      </div>
+
+      <p class='mt-8 text-slate-500 text-sm text-center'>
+        🔒 Most recoveries complete within 24–72 hours · Pay only after I
+        confirm clean status
+      </p>
+    </section>
+
+    {/* --- FAQ --- */}
+    <section class='mx-auto mb-24 max-w-3xl'>
+      <div class='mb-12 text-center'>
+        <div class='inline-flex items-center gap-2 mb-4'>
+          <HelpCircle class='w-5 h-5 text-sky-400' />
+          <span
+            class='font-semibold text-sky-400 text-sm uppercase tracking-wider'>
+            FAQ
+          </span>
+        </div>
+        <h2 class='mb-4 font-bold text-white text-3xl md:text-4xl'>
+          Avast Blacklist Removal — FAQ
+        </h2>
+        <p class='text-slate-400'>
+          The questions clients ask before hiring me. If yours isn't here,{' '}
+          <a href='/hire-me/' class='text-sky-400 hover:underline'>
+            send a message
+          </a>
+          .
+        </p>
+      </div>
+
+      <div class='space-y-3'>
+        {
+          FAQS.map((faq) => (
+            <details class='group bg-slate-900/50 border border-slate-800 hover:border-slate-700 rounded-xl transition-colors'>
+              <summary class='[&::-webkit-details-marker]:hidden flex justify-between items-center gap-4 p-5 font-semibold text-white cursor-pointer list-none'>
+                <span>{faq.q}</span>
+                <ChevronDown class='flex-shrink-0 w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform' />
+              </summary>
+              <div
+                class='px-5 pb-5 text-slate-400 text-sm leading-relaxed'
+                set:html={faq.a}
+              />
+            </details>
+          ))
+        }
+      </div>
+    </section>
+
+    {/* --- RELATED --- */}
+    <section class='mb-24'>
+      <div class='mx-auto mb-12 max-w-3xl text-center'>
+        <h2 class='mb-4 font-bold text-white text-2xl md:text-3xl'>
+          Related Recovery Services &amp; Guides
+        </h2>
+        <p class='text-slate-400 text-sm'>
+          Flagged by more than just Avast? Jump straight to the right resource.
+        </p>
+      </div>
+
+      <div class='gap-4 grid md:grid-cols-3 mx-auto max-w-5xl'>
+        <a
+          href='/blacklist-removal/'
+          class='group bg-slate-900 p-6 border border-slate-800 hover:border-sky-700 rounded-xl transition-colors'>
+          <h3
+            class='mb-2 font-bold text-white group-hover:text-sky-400 transition-colors'>
+            All Blacklist Removal →
+          </h3>
+          <p class='text-slate-400 text-sm leading-relaxed'>
+            Multi-vendor recovery — 100+ blacklists supported, filed in
+            parallel.
+          </p>
+        </a>
+
+        <a
+          href='/google-blacklist-removal-service/'
+          class='group bg-slate-900 p-6 border border-slate-800 hover:border-sky-700 rounded-xl transition-colors'>
+          <h3
+            class='mb-2 font-bold text-white group-hover:text-sky-400 transition-colors'>
+            Google Blacklist Removal →
+          </h3>
+          <p class='text-slate-400 text-sm leading-relaxed'>
+            "Deceptive Site Ahead" red screen from Google Safe Browsing.
+          </p>
+        </a>
+
+        <a
+          href='/mcafee-blacklist-removal/'
+          class='group bg-slate-900 p-6 border border-slate-800 hover:border-sky-700 rounded-xl transition-colors'>
+          <h3
+            class='mb-2 font-bold text-white group-hover:text-sky-400 transition-colors'>
+            McAfee Blacklist Removal →
+          </h3>
+          <p class='text-slate-400 text-sm leading-relaxed'>
+            McAfee SiteAdvisor / WebAdvisor warning fix and dispute.
+          </p>
+        </a>
+
+        <a
+          href='/wordpress-malware-removal/'
+          class='group bg-slate-900 p-6 border border-slate-800 hover:border-sky-700 rounded-xl transition-colors'>
+          <h3
+            class='mb-2 font-bold text-white group-hover:text-sky-400 transition-colors'>
+            WordPress Malware Removal →
+          </h3>
+          <p class='text-slate-400 text-sm leading-relaxed'>
+            Underlying cause: hacked WordPress, redirects, fake admins, SEO
+            spam.
+          </p>
+        </a>
+
+        <a
+          href='/blog/case-study-anatomy-of-a-sophisticated-mobile-targeted-javascript-trojan/'
+          class='group bg-slate-900 p-6 border border-slate-800 hover:border-sky-700 rounded-xl transition-colors'>
+          <h3
+            class='mb-2 font-bold text-white group-hover:text-sky-400 transition-colors'>
+            Mobile JS Trojan Case Study →
+          </h3>
+          <p class='text-slate-400 text-sm leading-relaxed'>
+            Real Avast trigger pattern — mobile-only payload that desktop scans
+            miss.
+          </p>
+        </a>
+
+        <a
+          href='/case-studies/how-i-found-and-fixed-a-wordpress-mobile-redirect-hack-using-access-logs/'
+          class='group bg-slate-900 p-6 border border-slate-800 hover:border-sky-700 rounded-xl transition-colors'>
+          <h3
+            class='mb-2 font-bold text-white group-hover:text-sky-400 transition-colors'>
+            Mobile Redirect Cleanup →
+          </h3>
+          <p class='text-slate-400 text-sm leading-relaxed'>
+            Case study: hidden mobile redirect found via access logs and
+            removed.
+          </p>
+        </a>
+      </div>
+    </section>
+
+    {/* --- FINAL CTA --- */}
+    <section class='mt-24 text-center'>
+      <div
+        class='inline-flex items-center gap-2 mb-4 font-semibold text-red-400 animate-pulse'>
+        <Zap class='w-4 h-4' /> Every hour blocked by Avast = lost revenue
+      </div>
+      <h2
+        class='mx-auto mb-6 max-w-2xl font-bold text-white text-3xl md:text-4xl'>
+        Get Your Domain Off Avast — Usually in 72 Hours
+      </h2>
+      <p class='mx-auto mb-8 max-w-xl text-slate-400'>
+        4,500+ sites recovered. 8+ years of WordPress security work. You talk to
+        the specialist directly, not a support queue.
+      </p>
+      <a href='#pricing' class={`px-10 rounded-full ${primaryButtonClass}`}>
+        Start Avast Removal Now <ArrowRight class='ml-2 w-4 h-4' />
+      </a>
+    </section>
+
+    {/* --- AUTHOR / EEAT --- */}
+    <section class='mx-auto mt-16 max-w-3xl text-center'>
+      <p class='text-slate-500 text-sm'>
+        <em>
+          Last updated: May 19, 2026 by{' '}
+          <a href='/about/' class='text-sky-400 hover:underline'> MD Pabel </a>
+          , WordPress Security Specialist — 4,500+ sites cleaned across 8+ years.
+          ·{' '}
+
+          href='https://web.facebook.com/mdpabelwpsecurity' class='text-sky-400
+          hover:underline'> Facebook
+        </em>{' '}
+        ·{' '}
+        <a href='/case-studies/' class='text-sky-400 hover:underline'>
+          Case studies
+        </a>
+      </p>
+    </section>
+  </ComponentWrapper>
+</Layout>
