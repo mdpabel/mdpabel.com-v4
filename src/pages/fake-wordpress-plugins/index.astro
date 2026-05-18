@@ -1,0 +1,140 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ComponentWrapper from '../../components/component-wrapper.astro';
+import Pagination from '../../components/Pagination.astro';
+import { ArrowUpRight, ShieldAlert } from '@lucide/astro';
+import { wordpress } from '../../lib/wordpress';
+
+// Handle pagination via URL params (e.g., ?page=2)
+const page = Number(Astro.url.searchParams.get('page')) || 1;
+const limit = 20; // Show more items per page since it's a database list
+
+// Fetch fake plugins using your custom WP wrapper
+const response = await wordpress.getPosts({
+  postType: 'fake_plugin',
+  page: page,
+  perPage: limit,
+});
+
+// Extract data from the wrapper's response
+const plugins = response.posts || [];
+const total = response.total || plugins.length;
+const totalPages = response.totalPages || 1;
+
+// Generate ItemList Schema for AI Overviews / Rich Snippets
+const itemListSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  itemListElement: plugins.map((plugin: any, index: number) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: plugin.acf?.plugin_display_name || plugin.title, // Updated to plugin.title based on wrapper output
+    url: `${Astro.site || 'https://yoursite.com'}/fake-wordpress-plugins/${plugin.slug}/`,
+  })),
+};
+
+const title = 'Fake WordPress Plugin Database';
+const shortDescription =
+  'A constantly updated, searchable index of malicious and fake WordPress plugins discovered during forensic malware cleanups.';
+---
+
+<Layout
+  title={`${title} - Malware Intelligence`}
+  description={shortDescription}
+  image='/images/security-opengraph-image.png'>
+  {/* Inject ItemList Schema for Google AI / Rich Snippets */}
+  <script
+    type='application/ld+json'
+    set:html={JSON.stringify(itemListSchema)}
+  />
+
+  <ComponentWrapper class='pt-12 pb-16 md:pb-24'>
+    {/* --- HEADER --- */}
+    <div class='mb-12 text-center'>
+      <div class='flex justify-center items-center gap-2 mb-4 text-red-500'>
+        <ShieldAlert class='w-6 h-6' />
+        <span class='font-semibold text-sm uppercase tracking-wider'>
+          Threat Intelligence
+        </span>
+      </div>
+      <h1 class='mb-6 font-bold text-white text-3xl md:text-5xl'>{title}</h1>
+      <p class='mx-auto max-w-3xl text-slate-300 text-lg md:text-xl'>
+        {shortDescription}
+      </p>
+    </div>
+
+    {/* --- DATABASE LIST --- */}
+    <div class='mb-16 md:pb-12'>
+      <ul class='space-y-4 mx-auto max-w-5xl'>
+        {
+          plugins.map((plugin: any, index: number) => {
+            // Extract ACF fields safely
+            const acf = plugin.acf || {};
+            // Updated to use plugin.title based on your wrapper's data structure
+            const displayName = acf.plugin_display_name || plugin.title;
+            const folderName = acf.plugin_folder_name || '';
+            const malwareFamily = acf.malware_family || '';
+
+            return (
+              <li class='group flex justify-between items-center bg-slate-900/30 hover:bg-slate-800/50 p-4 border border-slate-800/60 hover:border-slate-700 rounded-lg transition-all duration-200'>
+                <div class='flex sm:flex-row flex-col sm:items-center gap-4 w-full'>
+                  {/* Number Badge */}
+                  <div class='shrink-0'>
+                    <span class='bg-slate-800 px-3 py-1.5 rounded font-mono text-slate-400 group-hover:text-slate-300 text-sm transition-colors'>
+                      {String(index + 1 + (page - 1) * limit).padStart(3, '0')}
+                    </span>
+                  </div>
+
+                  {/* Plugin Title & Meta info */}
+                  <div class='flex sm:flex-row flex-col flex-grow sm:items-center gap-2 sm:gap-4'>
+                    <h2 class='font-semibold text-slate-200 text-lg'>
+                      <a
+                        href={`/fake-wordpress-plugins/${plugin.slug}/`}
+                        class='flex items-center gap-2 hover:text-white transition-colors'>
+                        <span class='break-words' set:html={displayName} />
+                      </a>
+                    </h2>
+
+                    {/* Metadata Tags (Folder & Family) */}
+                    <div class='flex flex-wrap items-center gap-2'>
+                      {folderName && (
+                        <span class='bg-slate-950 px-2 py-0.5 border border-slate-800 rounded font-mono text-slate-400 text-xs'>
+                          /{folderName}/
+                        </span>
+                      )}
+                      {malwareFamily && (
+                        <span class='bg-red-950/40 px-2 py-0.5 border border-red-900/40 rounded font-medium text-red-400 text-xs'>
+                          {malwareFamily}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Arrow Icon */}
+                <a
+                  href={`/fake-wordpress-plugins/${plugin.slug}/`}
+                  aria-label={`View details for ${displayName}`}
+                  class='hidden md:flex justify-center items-center bg-slate-800/50 hover:bg-blue-600 ml-4 rounded-full w-10 h-10 text-slate-400 hover:text-white transition-all group-hover:translate-x-1 duration-200 shrink-0'>
+                  <ArrowUpRight class='w-5 h-5' />
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+
+    {/* --- PAGINATION --- */}
+    {
+      totalPages > 1 && (
+        <Pagination
+          total={total}
+          totalPages={totalPages}
+          currentPage={page}
+          baseUrl='/fake-wordpress-plugins'
+        />
+      )
+    }
+  </ComponentWrapper>
+</Layout>

@@ -20,6 +20,7 @@ import {
   MessageCircle,
   ServerCrash,
   MousePointerClick,
+  Database,
 } from '@lucide/astro';
 import ComponentWrapper from './component-wrapper.astro';
 import OfferTopbar from './offer-topbar.astro';
@@ -135,6 +136,14 @@ const navItems: NavItem[] = [
         desc: 'Raw forensic analysis logs',
         icon: FileTerminal,
         clarityEvent: 'nav_malware_logs_click',
+      },
+
+      {
+        name: 'Fake Plugin List',
+        href: '/fake-wordpress-plugins/',
+        desc: 'Fake Hidden Malicious plugins',
+        icon: Database,
+        clarityEvent: 'nav_fake_wp_plugin_db_click',
       },
 
       {
