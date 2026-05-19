@@ -35,63 +35,97 @@ const seoTitle =
 const seoDesc =
   'Avast blocked your website with URL:Blacklist? I clean the malware and remove your domain from Avast & AVG blocklists in 24–72 hours. 4,500+ sites recovered.';
 
-// --- JSON-LD: Service + Reviews ---
+// --- JSON-LD: Service + ProfessionalService (carries reviews) ---
 const serviceSchema = {
   '@context': 'https://schema.org',
-  '@type': 'Service',
-  name: 'Avast Blacklist Removal Service',
-  serviceType: 'Website Blacklist Removal',
-  description:
-    'Professional Avast and AVG blacklist removal. Manual WordPress malware cleanup plus dispute submission to Avast Threat Labs. Most domains delisted in 24–72 hours. Handles URL:Blacklist, URL:Mal, URL:Phishing, and false-positive disputes.',
-  url: 'https://www.mdpabel.com/avast-blacklist-removal/',
-  provider: {
-    '@type': 'Person',
-    name: 'MD Pabel',
-    jobTitle: 'WordPress Security Specialist',
-    url: 'https://www.mdpabel.com/about/',
-    sameAs: [
-      'https://www.linkedin.com/in/mdpabel',
-      'https://github.com/mdpabel',
-      'https://web.facebook.com/mdpabelwpsecurity',
-    ],
-  },
-  areaServed: 'Worldwide',
-  offers: {
-    '@type': 'Offer',
-    price: '45.00',
-    priceCurrency: 'USD',
-    availability: 'https://schema.org/InStock',
-    url: 'https://www.mdpabel.com/hire-me/',
-  },
-  review: [
+  '@graph': [
     {
-      '@type': 'Review',
-      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-      author: { '@type': 'Person', name: 'Hassan Infinkey' },
-      reviewBody:
-        "I'm very satisfied with MD Pabel service he can save my site from hackers, and remove all malware attacks. Highly Recommended.",
+      '@type': 'Service',
+      '@id': 'https://www.mdpabel.com/avast-blacklist-removal/#service',
+      name: 'Avast Blacklist Removal Service',
+      serviceType: 'Website Blacklist Removal',
+      description:
+        'Professional Avast and AVG blacklist removal. Manual WordPress malware cleanup plus dispute submission to Avast Threat Labs. Most domains delisted in 24–72 hours. Handles URL:Blacklist, URL:Mal, URL:Phishing, and false-positive disputes.',
+      url: 'https://www.mdpabel.com/avast-blacklist-removal/',
+      areaServed: 'Worldwide',
+      provider: { '@id': 'https://www.mdpabel.com/#business' },
+      offers: {
+        '@type': 'Offer',
+        price: '45.00',
+        priceCurrency: 'USD',
+        availability: 'https://schema.org/InStock',
+        url: 'https://www.mdpabel.com/hire-me/',
+      },
     },
     {
-      '@type': 'Review',
-      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-      author: { '@type': 'Person', name: 'Kendall Miller' },
-      reviewBody:
-        'My website was suffering from some redirect malware. MD was able to take care of the problem for a reasonable fee. For me, he was a lifesaver.',
-    },
-    {
-      '@type': 'Review',
-      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-      author: { '@type': 'Person', name: 'Usama Javed' },
-      reviewBody:
-        'Thanks for your support, Thanks for giving me a great support, you are very nice team.',
+      '@type': 'ProfessionalService',
+      '@id': 'https://www.mdpabel.com/#business',
+      name: 'MD Pabel — WordPress Security Specialist',
+      url: 'https://www.mdpabel.com/',
+      image: 'https://www.mdpabel.com/og-image.jpg',
+      priceRange: '$45–$149',
+      areaServed: 'Worldwide',
+      founder: {
+        '@type': 'Person',
+        name: 'MD Pabel',
+        jobTitle: 'WordPress Security Specialist',
+        url: 'https://www.mdpabel.com/about/',
+        sameAs: [
+          'https://www.linkedin.com/in/mdpabel',
+          'https://github.com/mdpabel',
+          'https://web.facebook.com/mdpabelwpsecurity',
+        ],
+      },
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: '5.0',
+        reviewCount: '3',
+        bestRating: '5',
+        worstRating: '1',
+      },
+      review: [
+        {
+          '@type': 'Review',
+          itemReviewed: { '@id': 'https://www.mdpabel.com/#business' },
+          reviewRating: {
+            '@type': 'Rating',
+            ratingValue: '5',
+            bestRating: '5',
+            worstRating: '1',
+          },
+          author: { '@type': 'Person', name: 'Hassan Infinkey' },
+          reviewBody:
+            "I'm very satisfied with MD Pabel service he can save my site from hackers, and remove all malware attacks. Highly Recommended.",
+        },
+        {
+          '@type': 'Review',
+          itemReviewed: { '@id': 'https://www.mdpabel.com/#business' },
+          reviewRating: {
+            '@type': 'Rating',
+            ratingValue: '5',
+            bestRating: '5',
+            worstRating: '1',
+          },
+          author: { '@type': 'Person', name: 'Kendall Miller' },
+          reviewBody:
+            'My website was suffering from some redirect malware. MD was able to take care of the problem for a reasonable fee. For me, he was a lifesaver.',
+        },
+        {
+          '@type': 'Review',
+          itemReviewed: { '@id': 'https://www.mdpabel.com/#business' },
+          reviewRating: {
+            '@type': 'Rating',
+            ratingValue: '5',
+            bestRating: '5',
+            worstRating: '1',
+          },
+          author: { '@type': 'Person', name: 'Usama Javed' },
+          reviewBody:
+            'Thanks for your support, Thanks for giving me a great support, you are very nice team.',
+        },
+      ],
     },
   ],
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '5.0',
-    reviewCount: '3',
-    bestRating: '5',
-  },
 };
 
 const faqSchema = {
