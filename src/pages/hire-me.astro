@@ -212,11 +212,12 @@ const errorClasses =
               type='number'
               id='budget'
               name='budget'
+              min='1'
               class={inputClasses}
               placeholder='e.g. 100'
             />
             <p class={`${errorClasses} hidden`} id='err-budget'>
-              <AlertCircle class='w-3 h-3' /> Budget is required
+              <AlertCircle class='w-3 h-3' /> Please enter a budget greater than 0
             </p>
           </div>
 
@@ -266,16 +267,72 @@ const errorClasses =
 </Layout>
 
 <script>
+  declare global {
+    interface Window {
+      dataLayer: any[];
+    }
+  }
+
   const form = document.getElementById('hire-me-form') as HTMLFormElement;
   const serviceSelect = document.getElementById(
     'selected-service',
   ) as HTMLSelectElement;
-  const priceBox = document.getElementById('price-box');
-  const priceDisplay = document.getElementById('price-display');
+  const priceBox = document.getElementById('price-box') as HTMLDivElement;
+  const priceDisplay = document.getElementById('price-display') as HTMLElement;
   const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
-  const successMsg = document.getElementById('success-message');
-  const errorMsg = document.getElementById('general-error');
-  const resetBtn = document.getElementById('reset-form-btn');
+  const successMsg = document.getElementById(
+    'success-message',
+  ) as HTMLDivElement;
+  const errorMsg = document.getElementById('general-error') as HTMLDivElement;
+  const resetBtn = document.getElementById(
+    'reset-form-btn',
+  ) as HTMLButtonElement;
+
+  // --- Live Validation ---
+  const formElements = form?.querySelectorAll('input, select, textarea');
+
+  formElements?.forEach((element) => {
+    element.addEventListener('input', (e) => {
+      const target = e.target as
+        | HTMLInputElement
+        | HTMLSelectElement
+        | HTMLTextAreaElement;
+      const id = target.id;
+      const value = target.value;
+
+      const baseId = id.replace('your-', '').replace('selected-', '');
+      const errId = `err-${baseId}`;
+      const errElement = document.getElementById(errId);
+
+      // 1. Check validity based on the specific field
+      let isInvalid = false;
+      if (id === 'your-name') isInvalid = value.trim().length < 2;
+      if (id === 'your-email') isInvalid = !/^\S+@\S+\.\S+$/.test(value);
+      if (id === 'selected-service') isInvalid = !value;
+
+      // Changed budget validation to reject empty, 0, or negative numbers
+      if (id === 'budget') isInvalid = !value || Number(value) < 1;
+
+      if (id === 'description') isInvalid = value.trim().length < 10;
+
+      // 2. Toggle error visibility dynamically
+      if (isInvalid) {
+        target.classList.add(
+          'border-red-500',
+          'focus-visible:ring-red-500',
+          'focus-visible:border-red-500',
+        );
+        errElement?.classList.remove('hidden');
+      } else {
+        target.classList.remove(
+          'border-red-500',
+          'focus-visible:ring-red-500',
+          'focus-visible:border-red-500',
+        );
+        errElement?.classList.add('hidden');
+      }
+    });
+  });
 
   // Handle Price Display
   serviceSelect?.addEventListener('change', function () {
@@ -290,9 +347,10 @@ const errorClasses =
   });
 
   // Handle Direct WP Submission
-  form?.addEventListener('submit', async (e) => {
+  form?.addEventListener('submit', async (e: SubmitEvent) => {
     e.preventDefault();
 
+    // Clear Previous Errors globally on new submit
     document
       .querySelectorAll('[id^="err-"]')
       .forEach((el) => el.classList.add('hidden'));
@@ -306,7 +364,7 @@ const errorClasses =
     errorMsg?.classList.add('hidden');
 
     const formData = new FormData(form);
-    const data = Object.fromEntries(formData);
+    const data = Object.fromEntries(formData) as Record<string, string>;
 
     const wpUrl = form.dataset.wpUrl;
     const formId = form.dataset.formId;
@@ -314,6 +372,7 @@ const errorClasses =
     if (!wpUrl || !formId) return;
 
     let isValid = true;
+
     const validateField = (id: string, condition: boolean) => {
       if (condition) {
         document
@@ -323,7 +382,10 @@ const errorClasses =
             'focus-visible:ring-red-500',
             'focus-visible:border-red-500',
           );
-        const errId = id.replace('your-', 'err-').replace('selected-', 'err-');
+
+        const baseId = id.replace('your-', '').replace('selected-', '');
+        const errId = `err-${baseId}`;
+
         document.getElementById(errId)?.classList.remove('hidden');
         isValid = false;
       }
@@ -331,18 +393,20 @@ const errorClasses =
 
     validateField(
       'your-name',
-      !data['your-name'] || (data['your-name'] as string).length < 2,
+      !data['your-name'] || data['your-name'].trim().length < 2,
     );
     validateField(
       'your-email',
-      !data['your-email'] ||
-        !/^\S+@\S+\.\S+$/.test(data['your-email'] as string),
+      !data['your-email'] || !/^\S+@\S+\.\S+$/.test(data['your-email']),
     );
     validateField('selected-service', !data['selected-service']);
-    validateField('budget', !data['budget']);
+
+    // Changed budget submit validation to catch 0 or negative numbers
+    validateField('budget', !data['budget'] || Number(data['budget']) < 1);
+
     validateField(
       'description',
-      !data['description'] || (data['description'] as string).length < 10,
+      !data['description'] || data['description'].trim().length < 10,
     );
 
     if (!isValid) return;
@@ -364,13 +428,14 @@ const errorClasses =
         successMsg?.classList.remove('hidden');
         successMsg?.classList.add('flex');
         form.classList.add('opacity-0', 'pointer-events-none');
-        // @ts-ignore
-        if (window.dataLayer)
+
+        if (window.dataLayer) {
           window.dataLayer.push({
             event: 'hire_me_form_submitted',
             service_requested: data['selected-service'],
             budget_estimate: data['budget'],
           });
+        }
       } else {
         errorMsg?.classList.remove('hidden');
         if (errorMsg)
@@ -390,5 +455,17 @@ const errorClasses =
     form.classList.remove('opacity-0', 'pointer-events-none');
     form.reset();
     priceBox?.classList.add('hidden');
+
+    // Extra cleanup just in case reset leaves red borders
+    document.querySelectorAll('input, select, textarea').forEach((el) => {
+      el.classList.remove(
+        'border-red-500',
+        'focus-visible:ring-red-500',
+        'focus-visible:border-red-500',
+      );
+    });
+    document
+      .querySelectorAll('[id^="err-"]')
+      .forEach((el) => el.classList.add('hidden'));
   });
 </script>
