@@ -34,10 +34,9 @@ import { siteData } from '../data/siteData';
 // SEO CONFIG  (rewritten for high-volume buyer-intent keywords)
 // ─────────────────────────────────────────────────────────────────────────────
 const seo = {
-  title:
-    'WordPress Malware Removal Service | 4,500+ Hacked Sites Cleaned — MD Pabel',
+  title: 'MD Pabel | WordPress Malware Removal Specialist',
   description:
-    'Hire a WordPress malware removal expert with 4,500+ real cleanups. Manual hacked-site repair, Japanese SEO spam, fake CAPTCHA, redirect malware, and Google blacklist removal. 5★ rated.',
+    'Independent WordPress security specialist with 4,500+ hacked site cleanups since 2018. Manual malware removal, redirect cleanup, SEO spam cleanup, blacklist recovery, and reinfection prevention.',
   image: '/md-pabel.png',
   url: 'https://www.mdpabel.com/',
 };
@@ -147,7 +146,7 @@ const featuredCases = [
     title: 'Recovered Bluehost Account After 1,162-File Infection',
     snippet:
       'Bluehost suspended the account; restored hosting access, cleaned every file, and lifted the 403 lockout.',
-    href: '/blog/bluehost-hacked-wordpress-site-recovery/',
+    href: '/case-studies/bluehost-hacked-wordpress-site-recovery/',
     metric: '1,162',
     metricLabel: 'files cleaned',
   },
@@ -165,43 +164,43 @@ const featuredCases = [
 const faqs = [
   {
     q: 'How do I know if my WordPress site is hacked?',
-    a: "Common signs include unexpected redirects to spam or gambling sites, Japanese or pharma keywords appearing in Google results, fake Cloudflare or CAPTCHA pages shown to visitors, a 'Deceptive site ahead' Google warning, hosting suspension emails, sudden traffic drops, or admin users you don't recognize. If any of these appear, your WordPress site is almost certainly infected.",
+    a: "Common signs include redirects to spam or gambling sites, Japanese or pharma keywords in Google results, fake CAPTCHA or Cloudflare verification pages, Google Safe Browsing warnings, hosting suspension emails, unknown admin users, suspicious PHP files, or malware that returns after a previous cleanup.",
+  },
+  {
+    q: 'What does your WordPress malware cleanup include?',
+    a: 'A proper cleanup includes checking WordPress core files, plugins, themes, uploads, .htaccess, suspicious PHP and JavaScript, database options, admin users, fake plugins, MU plugins, cron jobs, redirects, and blacklist symptoms. The goal is to remove the malware and close the source of reinfection.',
+  },
+  {
+    q: 'How did you reach 4,500+ hacked site cleanups?',
+    a: 'The 4,500+ number comes from real client cleanup work since 2018, including freelance-platform projects, agency support, direct website owners, referrals, and emergency hacked-site recovery jobs. These were practical cleanup cases, not demo scans or test sites.',
   },
   {
     q: 'How long does WordPress malware removal take?',
-    a: 'Most standard WordPress malware cleanups are completed within 4 to 24 hours. Complex infections involving deep database injections, multi-site networks, or e-commerce stores with thousands of products can take 24 to 72 hours. Every cleanup I do is manual — no automated tools that miss backdoors.',
-  },
-  {
-    q: 'How much does it cost to remove malware from a WordPress site?',
-    a: 'My WordPress malware removal service starts at $89 for a standard hacked-site cleanup. Fake CAPTCHA malware removal starts at $89, Japanese SEO spam removal starts at $149, blacklist vendor recovery is $15 per vendor, and WordPress critical error fixes start at $50. All prices are fixed — no hidden fees.',
-  },
-  {
-    q: 'Can a hacked WordPress site be fully recovered?',
-    a: 'Yes. In 4,500+ cleanups, I have never lost a site. A full recovery includes removing every malware file, cleaning the database, removing hidden admin users, fixing .htaccess, requesting Google blacklist review, removing spam URLs from search results, and hardening the site so it cannot be re-infected through the same vector.',
+    a: 'Many standard WordPress malware cleanups can be handled the same day, but timing depends on the infection size, hosting access, database damage, blacklist status, and whether the malware has reinfection persistence. Complex SEO spam or large file infections can take longer.',
   },
   {
     q: 'Why does WordPress malware keep coming back after cleanup?',
-    a: "Reinfection happens when the original entry point isn't closed. Common causes are hidden backdoors in fake plugins (like wp-compat or hseo), self-regenerating cron jobs, compromised admin passwords still in use, vulnerable plugins/themes left unpatched, or backdoors hidden inside image files (GIF/JPG). A proper cleanup must close all of these, not just delete the visible malware.",
+    a: "Malware usually comes back when the original backdoor or access point was not removed. Common causes include hidden admin users, fake plugins, MU-plugin backdoors, self-regenerating cron jobs, vulnerable plugins, stolen credentials, infected uploads, or .htaccess/database injections that were missed.",
   },
   {
-    q: 'Do you guarantee WordPress malware removal?',
-    a: 'Yes. Every cleanup includes a reinfection check and a 30-day guarantee. If malware returns from the same vector within 30 days, I clean it again at no charge.',
+    q: 'Can you help with Google blacklist or browser warnings?',
+    a: 'Yes. The malware must be cleaned first. After cleanup, I can help with Google Safe Browsing, Search Console review steps, spam URL cleanup, and guidance for other blacklist warnings such as McAfee, Norton, Avast, Quttera, and hosting security alerts.',
   },
   {
-    q: 'Can security plugins like Wordfence or Sucuri remove malware on their own?',
-    a: 'Free plugins can detect many infections but they rarely remove sophisticated malware completely. Obfuscated PHP, database injections, .htaccess malware, and hidden backdoors typically require manual file-by-file forensic cleanup. Plugins are good for monitoring after a manual cleanup, not as a replacement for one.',
+    q: 'Do you use security scanners or manual review?',
+    a: 'I may use scanners as one signal, but I do not depend on scanner results only. Real WordPress malware often hides in database rows, fake plugins, admin users, cron jobs, obfuscated PHP, redirects, and server rules that need manual investigation.',
   },
   {
-    q: 'Will you help remove my site from Google blacklist or McAfee?',
-    a: 'Yes. After cleanup I submit review requests to Google Safe Browsing, McAfee SiteAdvisor, Norton Safe Web, Avast, Quttera, and other blacklist vendors. Vendor review fees and recovery help are included in the blacklist removal service.',
+    q: 'How much does hacked WordPress cleanup cost?',
+    a: 'Pricing depends on the infection type and damage level. A normal hacked WordPress cleanup starts from the service pricing shown on the malware removal page, while blacklist vendor recovery, Japanese SEO spam, eCommerce infections, and large reinfection cases may need separate review.',
   },
   {
-    q: 'Do you work with WooCommerce and e-commerce sites?',
-    a: 'Yes. I regularly clean WooCommerce and e-commerce sites, including credit card skimmers, fake payment form malware, and stores with 10,000+ products. Cleanup is done without losing orders, customers, or product data.',
+    q: 'Do you clean WooCommerce and business websites?',
+    a: 'Yes. I work with WooCommerce stores, business websites, agency-managed WordPress sites, and content sites. Cleanup is done carefully to avoid losing orders, customers, products, posts, or legitimate files.',
   },
   {
-    q: 'What information do you need to start a cleanup?',
-    a: 'Usually just WordPress admin login and hosting/cPanel access (or SFTP credentials). A current backup helps but is not required — I take a fresh forensic snapshot before touching anything so nothing is lost.',
+    q: 'What information do you need to check my site?',
+    a: 'For an initial check, the site URL and a short description of the issue are enough. For full cleanup, I usually need WordPress admin access and hosting, cPanel, SFTP, or file manager access so I can review files, database, users, redirects, and server rules safely.',
   },
 ];
 
@@ -224,7 +223,7 @@ const schemaGraph = {
       '@type': 'WebSite',
       '@id': 'https://www.mdpabel.com/#website',
       url: 'https://www.mdpabel.com/',
-      name: 'MD Pabel — WordPress Malware Removal Expert',
+      name: 'MD Pabel — WordPress Malware Removal Specialist',
       description: seo.description,
       inLanguage: 'en',
       publisher: { '@id': 'https://www.mdpabel.com/#person' },
@@ -277,8 +276,8 @@ const schemaGraph = {
         url: 'https://www.mdpabel.com' + seo.image,
       },
       description:
-        'WordPress malware removal expert with 4,500+ manual hacked-site cleanups. Specialist in Japanese SEO spam, fake CAPTCHA malware, redirect malware, .htaccess injections, blacklist recovery, and post-hack hardening.',
-      jobTitle: 'WordPress Malware Removal Expert',
+        'Independent WordPress security specialist with 4,500+ hacked site cleanups since 2018. Helps site owners, agencies, freelance-platform clients, and direct referrals recover from WordPress malware, redirect hacks, SEO spam, fake CAPTCHA malware, hidden backdoors, blacklist warnings, and reinfections.',
+      jobTitle: 'Independent WordPress Security Specialist',
       sameAs,
       knowsAbout: [
         'WordPress malware removal',
@@ -309,7 +308,7 @@ const schemaGraph = {
       areaServed: { '@type': 'Place', name: 'Worldwide' },
       serviceType: 'WordPress malware removal and hacked website recovery',
       description:
-        'Manual WordPress malware removal, Japanese SEO spam cleanup, fake CAPTCHA malware removal, blacklist recovery, and WordPress hardening — performed by an expert with 4,500+ real cleanups.',
+        'Manual WordPress malware removal, hacked site recovery, Japanese SEO spam cleanup, redirect malware cleanup, fake CAPTCHA malware removal, blacklist recovery, and WordPress hardening by an independent specialist with 4,500+ real cleanups since 2018.',
       priceRange: '$15 - $149',
       // ❌ aggregateRating REMOVED — self-serving aggregateRating on
       // ProfessionalService won't trigger rich snippets and the count
@@ -399,23 +398,24 @@ const schemaGraph = {
       <div class='md:col-span-2'>
         {/* H1 Headline */}
         <h1 class='mb-2 font-bold text-white text-3xl md:text-4xl'>
-          WordPress Malware Removal Service by a 4,500+ Cleanup Veteran
+          MD Pabel — WordPress Malware Removal Specialist
         </h1>
 
         {/* H2 Subheadline */}
         <h2 class='pt-2 pb-4 font-semibold text-slate-300 text-lg md:text-xl'>
-          Manual hacked-site cleanup, Japanese SEO spam removal, fake CAPTCHA
-          malware, redirect fixes, and Google blacklist recovery — done by hand,
-          guaranteed.
+          Manual hacked-site recovery for redirects, SEO spam, hidden backdoors,
+          fake CAPTCHA malware, blacklist warnings, and reinfections.
         </h2>
 
         {/* Description */}
         <p class='my-4 text-slate-300 text-base leading-relaxed'>
-          Hi, I'm MD Pabel. If your WordPress site is hacked, redirecting to
-          spam, blacklisted by Google, or showing fake Cloudflare verification —
-          I clean it manually, file by file. No automated scripts that miss
-          backdoors. No data loss. 4,500+ real cleanups, 5★ on Fiverr (Level 2
-          Seller) and Upwork (Top Rated).
+          Hi, I'm MD Pabel. Since 2018, I've worked as an independent
+          WordPress security specialist, cleaning hacked sites for business
+          owners, agencies, freelance-platform clients, and direct referrals. If
+          your WordPress site is redirecting to spam, blacklisted by Google, or
+          showing fake verification pages, I investigate the files, database,
+          users, plugins, themes, and server rules manually — then close the
+          source so the malware does not come back.
         </p>
 
         {/* --- STATS INDICATORS --- */}
@@ -423,17 +423,17 @@ const schemaGraph = {
           <div
             class='flex items-center gap-2 bg-slate-800 px-3 py-2 border border-slate-700 rounded-lg font-medium text-slate-300 text-sm'>
             <CheckCircle class='w-4 h-4 text-white' />
-            4,500+ sites cleaned
+            4,500+ real cleanups
           </div>
           <div
             class='flex items-center gap-2 bg-slate-800 px-3 py-2 border border-slate-700 rounded-lg font-medium text-slate-300 text-sm'>
             <Star class='w-4 h-4 text-white' />
-            5.0 / 5 average rating
+            Since 2018
           </div>
           <div
             class='flex items-center gap-2 bg-slate-800 px-3 py-2 border border-slate-700 rounded-lg font-medium text-slate-300 text-sm'>
             <ShieldCheck class='w-4 h-4 text-white' />
-            30-day reinfection guarantee
+            Manual cleanup + hardening
           </div>
         </div>
 
@@ -441,9 +441,9 @@ const schemaGraph = {
 
         <div class='flex flex-wrap gap-3'>
           <a
-            href='/hire-me/'
+            href='/free-wordpress-scan/'
             class='flex items-center gap-2 bg-white hover:bg-slate-200 shadow-md px-5 py-2.5 rounded-full font-semibold text-slate-900 text-sm transition-all hover:-translate-y-0.5 transform'>
-            Get my site cleaned now
+            Request a free malware scan
 
             <ArrowRight class='w-4 h-4' />
           </a>
@@ -451,7 +451,7 @@ const schemaGraph = {
           <a
             href='/wordpress-malware-removal/'
             class='inline-flex items-center gap-2 bg-slate-900/60 px-5 py-2.5 border border-slate-700 hover:border-emerald-500/30 rounded-full font-semibold text-slate-200 hover:text-white text-sm md:text-base transition-all hover:-translate-y-0.5 transform'>
-            See pricing & service details
+            View malware removal service
           </a>
         </div>
       </div>
@@ -570,44 +570,43 @@ const schemaGraph = {
         </span>
       </div>
       <h2 class='mb-3 font-bold text-white text-xl md:text-2xl'>
-        What is WordPress malware removal?
+        What I help with
       </h2>
       <p class='mb-4 text-slate-300 text-base md:text-lg leading-relaxed'>
-        <strong class='text-white'>WordPress malware removal</strong> is the manual
-        process of finding and deleting every piece of malicious code — infected PHP
-        files, compromised JavaScript, database injections, .htaccess redirects, fake
-        plugins, and hidden admin users — from a hacked WordPress site, then closing
-        the original entry point so the infection cannot return. A complete cleanup
-        also includes Google blacklist removal, search-result spam URL cleanup, and
-        post-hack hardening (file permissions, admin lockdown, 2FA, and version control).
+        I help hacked WordPress site owners recover from malware redirects,
+        Japanese SEO spam, fake CAPTCHA popups, suspicious PHP files, hidden
+        backdoors, database injections, blacklist warnings, hosting suspensions,
+        and reinfections. The work is manual: I look beyond scanner alerts and
+        check where attackers usually hide persistence, including plugins,
+        themes, uploads, admin users, cron jobs, .htaccess, and database options.
       </p>
       <ul class='gap-3 grid md:grid-cols-2 text-slate-300 text-sm md:text-base'>
         <li class='flex items-start gap-2'>
           <CheckCircle class='flex-shrink-0 mt-0.5 w-4 h-4 text-emerald-400' />
           <span
-            ><strong class='text-white'>Typical turnaround:</strong> 4–24 hours for
-            standard infections.</span
+            ><strong class='text-white'>Best fit:</strong> hacked WordPress sites,
+            redirects, SEO spam, fake plugins, and blacklist warnings.</span
           >
         </li>
         <li class='flex items-start gap-2'>
           <CheckCircle class='flex-shrink-0 mt-0.5 w-4 h-4 text-emerald-400' />
           <span
-            ><strong class='text-white'>Typical cost:</strong> $89 fixed for a hacked
-            WordPress site cleanup.</span
+            ><strong class='text-white'>Experience:</strong> 4,500+ real cleanup jobs
+            since 2018 through freelance work, agencies, and direct clients.</span
           >
         </li>
         <li class='flex items-start gap-2'>
           <CheckCircle class='flex-shrink-0 mt-0.5 w-4 h-4 text-emerald-400' />
           <span
-            ><strong class='text-white'>Method:</strong> manual file-by-file forensic
-            review — not automated scanning.</span
+            ><strong class='text-white'>Method:</strong> manual file, database, user,
+            plugin, theme, redirect, and server-rule review.</span
           >
         </li>
         <li class='flex items-start gap-2'>
           <CheckCircle class='flex-shrink-0 mt-0.5 w-4 h-4 text-emerald-400' />
           <span
-            ><strong class='text-white'>Includes:</strong> backdoor closure, hardening,
-            and a 30-day reinfection guarantee.</span
+            ><strong class='text-white'>Goal:</strong> remove the visible malware and
+            close the reason it keeps coming back.</span
           >
         </li>
       </ul>
@@ -627,8 +626,8 @@ const schemaGraph = {
         Common WordPress hacks I clean every week
       </h2>
       <p class='mx-auto max-w-2xl text-slate-400 md:text-lg'>
-        Each link below is a real cleanup writeup or technical guide based on
-        sites I've actually fixed.
+        These are the malware patterns I see most often while cleaning hacked
+        WordPress sites for clients.
       </p>
     </div>
 
@@ -671,8 +670,8 @@ const schemaGraph = {
         How I clean a hacked WordPress site
       </h2>
       <p class='mx-auto max-w-2xl text-slate-400 md:text-lg'>
-        The same four-stage process I've run on 4,500+ infected sites, refined
-        from real-world cases — not theory.
+        My cleanup process is built around finding the real infection source,
+        not only deleting the files a scanner reports.
       </p>
     </div>
 
@@ -734,8 +733,8 @@ const schemaGraph = {
         What WordPress site owners say after a cleanup
       </h2>
       <p class='mx-auto max-w-2xl text-slate-400 md:text-lg'>
-        Verified reviews from Google Business and Facebook (in addition to
-        thousands of 5★ ratings on Fiverr & Upwork).
+        The 4,500+ cleanup number comes from years of real client work across
+        freelance platforms, agency support, direct website owners, and referrals.
       </p>
     </div>
 
@@ -770,8 +769,8 @@ const schemaGraph = {
         Real cleanup case studies
       </h2>
       <p class='mx-auto max-w-2xl text-slate-400 md:text-lg'>
-        Detailed forensic writeups from sites I've actually recovered — files,
-        screenshots, and SQL dumps included.
+        Detailed writeups from real hacked WordPress sites, including symptoms,
+        findings, cleanup steps, and recovery notes.
       </p>
     </div>
 
@@ -874,18 +873,18 @@ const schemaGraph = {
       class='bg-gradient-to-br from-emerald-950/40 to-slate-900/60 mx-auto p-8 md:p-12 border border-emerald-500/20 rounded-3xl max-w-5xl text-center'>
       <AlertTriangle class='mx-auto mb-4 w-10 h-10 text-emerald-400' />
       <h2 class='mb-3 font-bold text-white text-3xl md:text-4xl'>
-        Site hacked right now? Let's fix it today.
+        Need a hacked WordPress site checked today?
       </h2>
       <p class='mx-auto mb-6 max-w-2xl text-slate-300 text-base md:text-lg'>
-        Send me your URL and a description of what you're seeing. I'll respond
-        within 2 hours with a free diagnosis and a fixed price — no hard sell,
-        no surprise fees.
+        Send me your URL and a short description of the issue. I will check the
+        symptoms, tell you what looks suspicious, and suggest the next step for
+        cleanup, blacklist recovery, or reinfection prevention.
       </p>
       <div class='flex flex-wrap justify-center gap-3'>
         <a
-          href='/hire-me/'
+          href='/free-wordpress-scan/'
           class='inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-400 shadow-lg px-7 py-2.5 rounded-full font-bold text-slate-950 text-sm md:text-base transition-colors'>
-          Start cleanup now
+          Request free scan
           <ArrowRight class='w-4 h-4' />
         </a>
         <a
@@ -895,7 +894,7 @@ const schemaGraph = {
         </a>
       </div>
       <p class='mt-5 text-slate-500 text-xs md:text-sm'>
-        4,500+ cleanups · 5.0 average rating · 30-day reinfection guarantee
+        4,500+ cleanups since 2018 · Manual review · Malware removal and hardening
       </p>
     </div>
   </ComponentWrapper>
