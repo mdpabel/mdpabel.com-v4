@@ -26,6 +26,7 @@ import ComponentWrapper from '../components/component-wrapper.astro';
 import PlatformScreenshots from '../components/PlatformScreenshots.astro';
 import Services from '../components/Services.astro';
 import RecentlyUpdatedContent from '../components/RecentlyUpdatedContent.astro';
+import FreeBlacklistScanCTA from '../components/FreeBlacklistScanCTA.astro';
 
 // Data
 import { siteData } from '../data/siteData';
@@ -164,7 +165,7 @@ const featuredCases = [
 const faqs = [
   {
     q: 'How do I know if my WordPress site is hacked?',
-    a: "Common signs include redirects to spam or gambling sites, Japanese or pharma keywords in Google results, fake CAPTCHA or Cloudflare verification pages, Google Safe Browsing warnings, hosting suspension emails, unknown admin users, suspicious PHP files, or malware that returns after a previous cleanup.",
+    a: 'Common signs include redirects to spam or gambling sites, Japanese or pharma keywords in Google results, fake CAPTCHA or Cloudflare verification pages, Google Safe Browsing warnings, hosting suspension emails, unknown admin users, suspicious PHP files, or malware that returns after a previous cleanup.',
   },
   {
     q: 'What does your WordPress malware cleanup include?',
@@ -180,7 +181,7 @@ const faqs = [
   },
   {
     q: 'Why does WordPress malware keep coming back after cleanup?',
-    a: "Malware usually comes back when the original backdoor or access point was not removed. Common causes include hidden admin users, fake plugins, MU-plugin backdoors, self-regenerating cron jobs, vulnerable plugins, stolen credentials, infected uploads, or .htaccess/database injections that were missed.",
+    a: 'Malware usually comes back when the original backdoor or access point was not removed. Common causes include hidden admin users, fake plugins, MU-plugin backdoors, self-regenerating cron jobs, vulnerable plugins, stolen credentials, infected uploads, or .htaccess/database injections that were missed.',
   },
   {
     q: 'Can you help with Google blacklist or browser warnings?',
@@ -409,10 +410,10 @@ const schemaGraph = {
 
         {/* Description */}
         <p class='my-4 text-slate-300 text-base leading-relaxed'>
-          Hi, I'm MD Pabel. Since 2018, I've worked as an independent
-          WordPress security specialist, cleaning hacked sites for business
-          owners, agencies, freelance-platform clients, and direct referrals. If
-          your WordPress site is redirecting to spam, blacklisted by Google, or
+          Hi, I'm MD Pabel. Since 2018, I've worked as an independent WordPress
+          security specialist, cleaning hacked sites for business owners,
+          agencies, freelance-platform clients, and direct referrals. If your
+          WordPress site is redirecting to spam, blacklisted by Google, or
           showing fake verification pages, I investigate the files, database,
           users, plugins, themes, and server rules manually — then close the
           source so the malware does not come back.
@@ -578,7 +579,8 @@ const schemaGraph = {
         backdoors, database injections, blacklist warnings, hosting suspensions,
         and reinfections. The work is manual: I look beyond scanner alerts and
         check where attackers usually hide persistence, including plugins,
-        themes, uploads, admin users, cron jobs, .htaccess, and database options.
+        themes, uploads, admin users, cron jobs, .htaccess, and database
+        options.
       </p>
       <ul class='gap-3 grid md:grid-cols-2 text-slate-300 text-sm md:text-base'>
         <li class='flex items-start gap-2'>
@@ -605,8 +607,8 @@ const schemaGraph = {
         <li class='flex items-start gap-2'>
           <CheckCircle class='flex-shrink-0 mt-0.5 w-4 h-4 text-emerald-400' />
           <span
-            ><strong class='text-white'>Goal:</strong> remove the visible malware and
-            close the reason it keeps coming back.</span
+            ><strong class='text-white'>Goal:</strong> remove the visible malware
+            and close the reason it keeps coming back.</span
           >
         </li>
       </ul>
@@ -660,6 +662,8 @@ const schemaGraph = {
   <ComponentWrapper>
     <Services />
   </ComponentWrapper>
+
+  <FreeBlacklistScanCTA />
 
   {/* ──────────────────────────────────────────────────────────────────── */}
   {/* 5. PROCESS — 4-step methodology (trust + extractable for AI)          */}
@@ -734,7 +738,8 @@ const schemaGraph = {
       </h2>
       <p class='mx-auto max-w-2xl text-slate-400 md:text-lg'>
         The 4,500+ cleanup number comes from years of real client work across
-        freelance platforms, agency support, direct website owners, and referrals.
+        freelance platforms, agency support, direct website owners, and
+        referrals.
       </p>
     </div>
 
@@ -894,7 +899,8 @@ const schemaGraph = {
         </a>
       </div>
       <p class='mt-5 text-slate-500 text-xs md:text-sm'>
-        4,500+ cleanups since 2018 · Manual review · Malware removal and hardening
+        4,500+ cleanups since 2018 · Manual review · Malware removal and
+        hardening
       </p>
     </div>
   </ComponentWrapper>

@@ -1,0 +1,489 @@
+---
+// File: src/pages/free-wordpress-blacklist-scan.astro
+import Layout from '../layouts/Layout.astro';
+import ComponentWrapper from '../components/component-wrapper.astro';
+import {
+  ShieldAlert,
+  Search,
+  Globe,
+  FileWarning,
+  AlertTriangle,
+  ShieldCheck,
+  CheckCircle2,
+  ArrowRight,
+  Lock,
+  Clock,
+} from '@lucide/astro';
+
+// --- SEO CONFIGURATION ---
+const seo = {
+  title: 'Free WordPress Blacklist Scan | Check Google, McAfee, Norton & Avast',
+  description:
+    'Request a free manual WordPress blacklist scan. I check if your site is flagged by Google Safe Browsing, McAfee, Norton, Avast, Quttera, Sucuri, VirusTotal, or showing hacked-site warnings.',
+  image: '/md-pabel-scan-og.png',
+  url: 'https://www.mdpabel.com/free-wordpress-blacklist-scan/',
+  keywords: [
+    'free wordpress blacklist scan',
+    'check if wordpress site is blacklisted',
+    'wordpress google safe browsing warning check',
+    'free website blacklist check wordpress',
+    'check wordpress site for google blacklist',
+    'mcafee blacklist check wordpress',
+    'norton safe web blacklist check',
+    'avast blacklist scan wordpress',
+    'quttera blacklist check',
+    'website deceptive site ahead warning check',
+    'wordpress site blocked by chrome',
+    'hacked wordpress blacklist scan',
+  ].join(', '),
+};
+
+const blacklistChecks = [
+  {
+    Icon: Globe,
+    title: 'Google Safe Browsing check',
+    desc: 'I check for Chrome warnings, “Deceptive site ahead” messages, unsafe-site labels, and signs that Google is blocking visitors.',
+  },
+  {
+    Icon: ShieldAlert,
+    title: 'Security vendor blacklist check',
+    desc: 'I review common vendor warnings from McAfee, Norton Safe Web, Avast, Quttera, Sucuri, VirusTotal, and similar reputation systems.',
+  },
+  {
+    Icon: FileWarning,
+    title: 'Search-result spam check',
+    desc: 'I look for hacked search results, Japanese SEO spam, pharma/casino pages, fake indexed URLs, and suspicious snippets in Google.',
+  },
+  {
+    Icon: AlertTriangle,
+    title: 'Redirect warning check',
+    desc: 'I test for visible redirect symptoms that often cause blacklist flags, including mobile redirects, cloaking, and fake CAPTCHA pages.',
+  },
+  {
+    Icon: Lock,
+    title: 'Public risk review',
+    desc: 'No login is needed for the free scan. I review public-facing signals first and only ask for access if deeper cleanup is required.',
+  },
+  {
+    Icon: Clock,
+    title: 'Manual response',
+    desc: 'You get a human review, not a generic automated score. If I find a warning, I explain what it likely means and the next step.',
+  },
+];
+
+const faqs = [
+  {
+    q: 'What is a free WordPress blacklist scan?',
+    a: 'A free WordPress blacklist scan is a manual review to check whether a WordPress site appears to be flagged by Google Safe Browsing, Chrome, McAfee, Norton Safe Web, Avast, Quttera, Sucuri, VirusTotal, or similar security/reputation systems. I also check for common hacked-site signals such as spam URLs, suspicious redirects, fake CAPTCHA pages, and warning messages visitors may see.',
+  },
+  {
+    q: 'Can you check if my WordPress site is blacklisted by Google?',
+    a: 'Yes. I can check for Google Safe Browsing warnings, Chrome security warnings, search-result spam symptoms, and signs that Google may be showing unsafe-site messages for your domain. If the site is flagged, the next step is to clean the malware first and then request review through the correct channel.',
+  },
+  {
+    q: 'Do you check McAfee, Norton, Avast, Quttera, Sucuri, and VirusTotal?',
+    a: 'Yes. I review the common blacklist and reputation vendors that often affect hacked WordPress sites, including McAfee, Norton Safe Web, Avast, Quttera, Sucuri, VirusTotal, and other visible warning sources. Some vendors update slowly, so the report explains both the warning and the likely recovery path.',
+  },
+  {
+    q: 'Do you need WordPress admin or hosting login for this free scan?',
+    a: 'No. The free blacklist scan starts with public-facing checks only. I do not need your WordPress admin, hosting, cPanel, or FTP login for the first review. If I find evidence of malware and you want a full cleanup, I will explain what access is needed later.',
+  },
+  {
+    q: 'Is this the same as full blacklist removal?',
+    a: 'No. This page is for free diagnosis. Blacklist removal usually requires cleaning the malware, fixing redirects or spam injections, removing hidden backdoors, and then submitting review requests to Google or security vendors. The free scan tells you whether there is a visible warning and what the next step should be.',
+  },
+  {
+    q: 'How long does the blacklist scan take?',
+    a: 'Most free blacklist scan requests are reviewed within a few hours during my working time. If the issue is complex, such as intermittent redirects or cloaked malware, I may need more time to confirm the symptom before giving a useful answer.',
+  },
+];
+
+// --- JSON-LD: WEBPAGE + SERVICE + FAQ ---
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebPage',
+      '@id': `${seo.url}#webpage`,
+      url: seo.url,
+      name: seo.title,
+      description: seo.description,
+      inLanguage: 'en',
+      isPartOf: { '@id': 'https://www.mdpabel.com/#website' },
+      about: { '@id': `${seo.url}#service` },
+    },
+    {
+      '@type': 'Service',
+      '@id': `${seo.url}#service`,
+      name: 'Free WordPress Blacklist Scan',
+      serviceType: 'WordPress blacklist scan and hacked-site warning diagnosis',
+      provider: {
+        '@type': 'Person',
+        name: 'MD Pabel',
+        url: 'https://www.mdpabel.com/about/',
+      },
+      areaServed: { '@type': 'Place', name: 'Worldwide' },
+      description: seo.description,
+      offers: {
+        '@type': 'Offer',
+        price: '0',
+        priceCurrency: 'USD',
+        availability: 'https://schema.org/InStock',
+      },
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': `${seo.url}#faq`,
+      mainEntity: faqs.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: f.a,
+        },
+      })),
+    },
+  ],
+};
+---
+
+<Layout title={seo.title} description={seo.description} image={seo.image}>
+  <script
+    type='application/ld+json'
+    set:html={JSON.stringify(jsonLd)}
+    is:inline
+  />
+
+  <ComponentWrapper>
+    {/* --- SECTION 1: HERO & REQUEST FORM --- */}
+    <section class='py-12 md:py-20'>
+      <div class='items-center gap-12 grid grid-cols-1 lg:grid-cols-2'>
+        {/* Left: Value Proposition */}
+        <div>
+          <div
+            class='inline-flex items-center gap-2 bg-blue-900/30 mb-6 px-3 py-1 border border-blue-800 rounded-full font-mono font-medium text-blue-300 text-xs'>
+            <span class='relative flex w-2 h-2'>
+              <span
+                class='inline-flex absolute bg-blue-400 opacity-75 rounded-full w-full h-full animate-ping'
+              ></span>
+              <span
+                class='inline-flex relative bg-blue-500 rounded-full w-2 h-2'
+              ></span>
+            </span>
+            STATUS: ACCEPTING BLACKLIST CHECKS
+          </div>
+
+          <h1
+            class='mb-6 font-bold text-white text-4xl md:text-5xl leading-tight'>
+            Free WordPress <span
+              class='bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400 text-transparent'
+              >Blacklist Scan</span
+            >
+          </h1>
+
+          <p class='mb-8 text-slate-300 text-lg leading-relaxed'>
+            Is your WordPress site showing a <strong class='text-white'
+              >Google Safe Browsing warning</strong
+            >, blocked by Chrome, flagged by McAfee/Norton/Avast, or appearing
+            in Google with hacked spam pages? Request a free manual blacklist
+            scan. I’ll check the visible warning signals and tell you what to do
+            next.
+          </p>
+
+          <div class='flex flex-wrap gap-4 font-medium text-slate-400 text-sm'>
+            <div class='flex items-center gap-2'>
+              <CheckCircle2 class='w-5 h-5 text-emerald-500' />
+              <span>No login needed first</span>
+            </div>
+            <div class='flex items-center gap-2'>
+              <CheckCircle2 class='w-5 h-5 text-emerald-500' />
+              <span>Manual blacklist review</span>
+            </div>
+            <div class='flex items-center gap-2'>
+              <CheckCircle2 class='w-5 h-5 text-emerald-500' />
+              <span>Free diagnosis</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Right: The Request Interface */}
+        <div class='group relative'>
+          <div
+            class='absolute -inset-1 bg-gradient-to-r from-blue-600 to-cyan-500 opacity-15 group-hover:opacity-30 rounded-2xl transition duration-1000 group-hover:duration-200 blur'>
+          </div>
+
+          <div
+            class='relative bg-slate-900 shadow-2xl p-6 md:p-8 border border-slate-700 rounded-xl'>
+            <div
+              class='flex items-center gap-3 mb-6 pb-4 border-slate-800 border-b'>
+              <ShieldAlert class='w-6 h-6 text-blue-500' />
+              <div>
+                <h3 class='font-bold text-white text-lg'>
+                  Request Blacklist Scan
+                </h3>
+                <p class='text-slate-500 text-xs'>Manual review by MD Pabel</p>
+              </div>
+            </div>
+
+            {/* --- FORM --- */}
+            <form id='scan-form' class='space-y-4'>
+              <div>
+                <label
+                  for='url'
+                  class='block mb-1 font-medium text-slate-300 text-sm'
+                  >Website URL to check</label
+                >
+                <div class='relative'>
+                  <span class='top-3 left-3 absolute text-slate-500'>
+                    <Search class='w-5 h-5' />
+                  </span>
+                  <input
+                    type='url'
+                    id='url'
+                    name='site-url'
+                    placeholder='https://example.com'
+                    class='bg-slate-800 py-3 pr-4 pl-10 border border-slate-700 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 w-full font-mono text-white text-sm transition-all'
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label
+                  for='email'
+                  class='block mb-1 font-medium text-slate-300 text-sm'
+                  >Where should I send the result?</label
+                >
+                <input
+                  type='email'
+                  id='email'
+                  name='your-email'
+                  placeholder='admin@example.com'
+                  class='bg-slate-800 px-4 py-3 border border-slate-700 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 w-full font-mono text-white text-sm transition-all'
+                  required
+                />
+              </div>
+
+              <div
+                id='form-feedback'
+                class='hidden py-2 font-medium text-sm text-center'>
+              </div>
+
+              <button
+                type='submit'
+                id='scan-submit-btn'
+                class='flex justify-center items-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 px-4 py-3 rounded-lg w-full font-bold text-white hover:scale-[1.02] active:scale-[0.98] transition-all disabled:cursor-not-allowed'>
+                Check My Site for Blacklists
+                <ArrowRight class='w-5 h-5' />
+              </button>
+
+              <p class='mt-4 text-slate-500 text-xs text-center'>
+                Free diagnosis only. No admin login required for the first
+                check.
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* --- SECTION 2: QUICK ANSWER --- */}
+    <section class='mx-auto mb-20 max-w-4xl'>
+      <div
+        class='bg-slate-900/70 p-6 md:p-8 border border-slate-700 rounded-2xl'>
+        <div
+          class='inline-flex items-center gap-2 bg-blue-900/30 mb-4 px-3 py-1 border border-blue-800/50 rounded-full font-mono font-medium text-blue-300 text-xs uppercase tracking-widest'>
+          <ShieldCheck class='w-3.5 h-3.5' /> Quick answer
+        </div>
+        <h2 class='mb-3 font-bold text-white text-2xl'>
+          How do I check if my WordPress site is blacklisted?
+        </h2>
+        <p class='text-slate-300 leading-relaxed'>
+          To check if a WordPress site is blacklisted, review Google Safe
+          Browsing, Chrome browser warnings, search-result spam, security vendor
+          reputation lists, and visible hacked-site symptoms such as redirects,
+          fake CAPTCHA pages, or suspicious indexed URLs. A proper blacklist
+          scan should not only say “flagged” or “clean” — it should explain why
+          the warning appeared and whether malware cleanup or a vendor review
+          request is needed.
+        </p>
+      </div>
+    </section>
+
+    {/* --- SECTION 3: WHAT I CHECK --- */}
+    <section class='mb-20 py-12'>
+      <div class='mb-12 text-center'>
+        <h2 class='mb-4 font-bold text-white text-3xl'>
+          What I check in the free blacklist scan
+        </h2>
+        <p class='mx-auto max-w-2xl text-slate-400'>
+          This is a manual public-facing review for hacked WordPress blacklist
+          symptoms. It is not a full cleanup, but it helps confirm the warning
+          source and the right next step.
+        </p>
+      </div>
+
+      <div class='gap-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
+        {
+          blacklistChecks.map(({ Icon, title, desc }) => (
+            <div class='group bg-slate-800/50 p-6 border border-slate-700 hover:border-blue-500/50 rounded-xl transition-colors'>
+              <div class='flex justify-center items-center bg-blue-900/30 mb-4 rounded-lg w-12 h-12 text-blue-400 group-hover:scale-110 transition-transform'>
+                <Icon class='w-6 h-6' />
+              </div>
+              <h3 class='mb-2 font-bold text-white text-xl'>{title}</h3>
+              <p class='text-slate-400 text-sm leading-relaxed'>{desc}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    {/* --- SECTION 4: WHEN THIS PAGE MATCHES YOUR PROBLEM --- */}
+    <section class='mx-auto mb-20 max-w-5xl'>
+      <div
+        class='bg-slate-900/60 p-6 md:p-8 border border-slate-800 rounded-2xl'>
+        <h2 class='mb-4 font-bold text-white text-2xl md:text-3xl'>
+          Request this scan if you searched for one of these problems
+        </h2>
+        <div
+          class='gap-3 grid md:grid-cols-2 text-slate-300 text-sm md:text-base'>
+          <div class='flex items-start gap-2'>
+            <CheckCircle2
+              class='flex-shrink-0 mt-0.5 w-5 h-5 text-emerald-500'
+            />
+            <span>“check if my WordPress site is blacklisted by Google”</span>
+          </div>
+          <div class='flex items-start gap-2'>
+            <CheckCircle2
+              class='flex-shrink-0 mt-0.5 w-5 h-5 text-emerald-500'
+            />
+            <span>“WordPress site showing deceptive site ahead warning”</span>
+          </div>
+          <div class='flex items-start gap-2'>
+            <CheckCircle2
+              class='flex-shrink-0 mt-0.5 w-5 h-5 text-emerald-500'
+            />
+            <span>“McAfee blacklist check for WordPress website”</span>
+          </div>
+          <div class='flex items-start gap-2'>
+            <CheckCircle2
+              class='flex-shrink-0 mt-0.5 w-5 h-5 text-emerald-500'
+            />
+            <span>“Norton Safe Web says my website is unsafe”</span>
+          </div>
+          <div class='flex items-start gap-2'>
+            <CheckCircle2
+              class='flex-shrink-0 mt-0.5 w-5 h-5 text-emerald-500'
+            />
+            <span>“Avast blocked my WordPress site”</span>
+          </div>
+          <div class='flex items-start gap-2'>
+            <CheckCircle2
+              class='flex-shrink-0 mt-0.5 w-5 h-5 text-emerald-500'
+            />
+            <span>“Google shows spam pages for my WordPress site”</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* --- SECTION 5: FAQ --- */}
+    <section class='mx-auto mb-20 max-w-3xl'>
+      <h2 class='mb-8 font-bold text-white text-2xl'>
+        Free WordPress blacklist scan FAQ
+      </h2>
+
+      <div class='space-y-4'>
+        {
+          faqs.map((f) => (
+            <details class='group bg-slate-900 border border-slate-800 open:border-blue-500/50 rounded-lg transition-all'>
+              <summary class='flex justify-between items-center p-4 font-medium text-slate-200 cursor-pointer'>
+                <span>{f.q}</span>
+                <span class='text-slate-500 group-open:rotate-180 transition-transform transform'>
+                  ▼
+                </span>
+              </summary>
+              <div class='px-4 pb-4 text-slate-400 text-sm leading-relaxed'>
+                {f.a}
+              </div>
+            </details>
+          ))
+        }
+      </div>
+    </section>
+  </ComponentWrapper>
+</Layout>
+
+<script>
+  const CONFIG = {
+    WP_URL: 'https://cms.mdpabel.com',
+    FORM_ID: '2704',
+    CF7_VERSION: '6.1.5',
+  };
+
+  function initScanForm() {
+    const form = document.getElementById('scan-form') as HTMLFormElement;
+    const submitBtn = document.getElementById(
+      'scan-submit-btn',
+    ) as HTMLButtonElement;
+    const feedbackDiv = document.getElementById('form-feedback');
+
+    if (!form || !submitBtn || !feedbackDiv) return;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const originalBtnText = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<span>Checking Blacklists...</span>`;
+      feedbackDiv.classList.add('hidden');
+
+      const formData = new FormData(form);
+      const email = formData.get('your-email') as string;
+      const url = formData.get('site-url') as string;
+      const pathname = window.location.pathname;
+
+      const payload = new FormData();
+      payload.append('your-email', email);
+      payload.append('site-url', url);
+      payload.append('from-url', pathname);
+      payload.append('scan-type', 'free-wordpress-blacklist-scan');
+
+      payload.append('_wpcf7', CONFIG.FORM_ID);
+      payload.append('_wpcf7_version', CONFIG.CF7_VERSION);
+      payload.append('_wpcf7_locale', 'en_US');
+      payload.append('_wpcf7_unit_tag', `wpcf7-f${CONFIG.FORM_ID}-p0-o1`);
+
+      const apiEndPoint = `${CONFIG.WP_URL}/wp-json/contact-form-7/v1/contact-forms/${CONFIG.FORM_ID}/feedback`;
+
+      try {
+        const response = await fetch(apiEndPoint, {
+          method: 'POST',
+          body: payload,
+        });
+
+        const result = await response.json();
+
+        if (result.status === 'mail_sent') {
+          feedbackDiv.innerText =
+            "Request received! I'll email your blacklist scan result shortly.";
+          feedbackDiv.className =
+            'block py-3 px-4 rounded-lg bg-green-900/20 text-green-400 text-sm font-medium border border-green-800';
+          submitBtn.innerHTML = 'Request Sent ✓';
+          form.reset();
+        } else {
+          throw new Error(result.message || 'Submission failed.');
+        }
+      } catch (err) {
+        feedbackDiv.innerText = 'Submission failed. Please try again.';
+        feedbackDiv.className =
+          'block py-3 px-4 rounded-lg bg-red-900/20 text-red-400 text-sm font-medium border border-red-800';
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnText;
+      }
+    });
+  }
+
+  initScanForm();
+  document.addEventListener('astro:after-swap', initScanForm);
+</script>

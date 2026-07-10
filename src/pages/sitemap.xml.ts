@@ -16,6 +16,8 @@ export async function GET() {
     { url: 'case-studies', priority: 0.8 },
     { url: 'guides', priority: 0.8 },
     { url: 'hire-me', priority: 0.9 },
+    { url: 'free-wordpress-scan', priority: 0.9 },
+    { url: 'free-wordpress-blacklist-scan', priority: 0.9 },
   ];
 
   // 1. Fetch from Local Cache
