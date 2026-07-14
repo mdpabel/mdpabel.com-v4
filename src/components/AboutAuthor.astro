@@ -3,51 +3,86 @@ import { Image } from 'astro:assets';
 import { siteData } from '../data/siteData';
 import me from '../assets/my-img.png';
 
-// Social Links Data
 const socialLinks = [
-  { name: '3Zero Digital', href: 'https://3zerodigital.com' },
-  { name: 'LinkedIn', href: siteData.profiles.linkedin },
-  { name: 'GitHub', href: siteData.profiles.github },
-  { name: 'LeetCode', href: siteData.profiles.leetcode },
-  // Add others from your specific siteData structure if needed
-  { name: 'X (Twitter)', href: 'https://x.com/mdpabe11' },
-];
+  {
+    name: 'LinkedIn',
+    href: siteData.profiles.linkedin,
+  },
+  {
+    name: 'GitHub',
+    href: siteData.profiles.github,
+  },
+  {
+    name: 'X (Twitter)',
+    href: 'https://x.com/mdpabe11',
+  },
+].filter((link) => Boolean(link.href));
 ---
 
-<div class='mt-12 pt-8 border-slate-800 border-t'>
-  <h3 class='mb-4 font-semibold text-white text-lg'>About the Author</h3>
+<aside
+  class='mt-12 pt-8 border-slate-800 border-t'
+  aria-labelledby='author-heading'>
+  <h3 id='author-heading' class='mb-4 font-semibold text-white text-lg'>
+    About the Author
+  </h3>
 
   <div class='flex sm:flex-row flex-col items-start gap-4'>
-    <Image
-      src={me}
-      alt='MD Pabel'
-      width={100}
-      height={100}
-      format='avif'
-      quality='mid'
-      loading='eager'
-      class='border border-slate-700 rounded-xl'
-    />
+    <a href='/about/' aria-label='Learn more about MD Pabel' class='shrink-0'>
+      <Image
+        src={me}
+        alt='MD Pabel, WordPress malware removal expert'
+        width={100}
+        height={100}
+        format='avif'
+        quality='mid'
+        loading='lazy'
+        class='border border-slate-700 rounded-xl'
+      />
+    </a>
 
     <div>
-      <h4 class='font-semibold text-white text-xl'>MD Pabel</h4>
-      <p class='mt-2 text-slate-300'>
-        MD Pabel is the Founder and CEO of 3Zero Digital, a leading agency
-        specializing in custom web development, WordPress security, and malware
-        removal. With over {siteData.stats.experience} years of experience, he has
-        completed more than
-        {siteData.stats.completedProjects} projects, served over{' '}
-        {siteData.stats.clientsSatisfied} clients, and resolved
-        {siteData.stats.hackedWebsitesFixed} cases of malware and hacked websites.
+      <h4 class='font-semibold text-white text-xl'>
+        <a
+          href='/about/'
+          rel='author'
+          class='hover:text-emerald-400 transition-colors'>
+          MD Pabel
+        </a>
+      </h4>
+
+      <p class='mt-1 font-medium text-emerald-400'>
+        WordPress Malware Removal Expert
       </p>
 
-      <div class='flex flex-wrap gap-4 mt-4'>
+      <p class='mt-2 text-slate-300 leading-relaxed'>
+        MD Pabel is a WordPress malware removal expert with over
+        {` ${siteData.stats.experience} years`} of experience investigating and manually
+        cleaning hacked WordPress websites. He has resolved more than
+        {
+          ` ${siteData.stats.hackedWebsitesFixed} malware and hacked website cases`
+        }, including hidden backdoors, malicious redirects, database injections,
+        SEO spam, fake plugins, blacklist warnings, and persistent reinfections.
+      </p>
+
+      <p class='mt-3 text-slate-300 leading-relaxed'>
+        His work focuses on identifying the original infection source, removing
+        every malicious payload, validating the cleanup, and hardening websites
+        to reduce the risk of another compromise.
+      </p>
+
+      <div class='flex flex-wrap items-center gap-x-4 gap-y-2 mt-4'>
+        <a
+          href='/about/'
+          class='font-medium text-emerald-400 hover:text-emerald-300 transition-colors'>
+          More about MD Pabel
+        </a>
+
         {
           socialLinks.map((link) => (
             <a
               href={link.href}
               target='_blank'
-              rel='noopener noreferrer'
+              rel='me noopener noreferrer'
               class='text-slate-300 hover:text-white transition-colors'>
               {link.name}
             </a>
@@ -56,4 +91,4 @@ const socialLinks = [
       </div>
     </div>
   </div>
-</div>
+</aside>
