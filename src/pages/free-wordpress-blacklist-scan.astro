@@ -1,5 +1,35 @@
 ---
 import ScanPage from '../components/new/ScanPage.astro';
-const faqs=[{q:'Which blacklist vendors do you check?',a:'The review covers visible signals from Google Safe Browsing, Microsoft Defender SmartScreen, McAfee, Norton, Avast/AVG, Trend Micro, Kaspersky, Bitdefender, ESET, Malwarebytes, Sucuri, Quttera, and related reputation services where results are publicly available.'},{q:'Is this the same as blacklist removal?',a:'No. This is diagnosis. Removal normally requires cleaning the underlying compromise before requesting a review from the vendor that owns the warning.'},{q:'Can you guarantee a vendor will remove a warning?',a:'No. Each vendor controls its own classification and review decision. I can correct the site, document the work, and submit through the proper channel, but cannot guarantee their timing or outcome.'}];
+const faqs = [
+  {
+    q: 'Which blacklist vendors do you check?',
+    a: 'The review covers visible signals from Google Safe Browsing, Microsoft Defender SmartScreen, McAfee, Norton, Avast/AVG, Trend Micro, Kaspersky, Bitdefender, ESET, Malwarebytes, Sucuri, Quttera, and related reputation services where results are publicly available.',
+  },
+  {
+    q: 'Is this the same as blacklist removal?',
+    a: 'No. This is diagnosis. Removal normally requires cleaning the underlying compromise before requesting a review from the vendor that owns the warning.',
+  },
+  {
+    q: 'Can you guarantee a vendor will remove a warning?',
+    a: 'No. Each vendor controls its own classification and review decision. I can correct the site, document the work, and submit through the proper channel, but cannot guarantee their timing or outcome.',
+  },
+];
 ---
-<ScanPage title='Free WordPress Blacklist Scan | MD Pabel' description='Request a free manual blacklist check covering Google Safe Browsing, Microsoft SmartScreen, McAfee, Norton, Avast, Trend Micro, Kaspersky, Bitdefender, Sucuri, Quttera, and more.' path='/free-wordpress-blacklist-scan/' eyebrow='Free blacklist scan' intro='I check the warnings visitors can see, identify which reputation system appears to be involved, and explain whether malware cleanup or a vendor review should come next.' formId='1515' checks={['Google Safe Browsing and Chrome warning signals','Microsoft Defender SmartScreen reputation warnings','McAfee WebAdvisor, Norton Safe Web, and Avast/AVG','Trend Micro, Kaspersky, Bitdefender, ESET, and Malwarebytes','Sucuri SiteCheck, Quttera, and visible multi-engine results','Search spam, redirects, cloaking, and fake CAPTCHA symptoms']} faqs={faqs}/>
+
+<ScanPage
+  title='Free WordPress Blacklist Scan | MD Pabel'
+  description='Request a free manual blacklist check covering Google Safe Browsing, Microsoft SmartScreen, McAfee, Norton, Avast, Trend Micro, Kaspersky, Bitdefender, Sucuri, Quttera, and more.'
+  path='/free-wordpress-blacklist-scan/'
+  eyebrow='Free blacklist scan'
+  intro='I check the warnings visitors can see, identify which reputation system appears to be involved, and explain whether malware cleanup or a vendor review should come next.'
+  formId='1515'
+  checks={[
+    'Google Safe Browsing and Chrome warning signals',
+    'Microsoft Defender SmartScreen reputation warnings',
+    'McAfee WebAdvisor, Norton Safe Web, and Avast/AVG',
+    'Trend Micro, Kaspersky, Bitdefender, ESET, and Malwarebytes',
+    'Sucuri SiteCheck, Quttera, and visible multi-engine results',
+    'Search spam, redirects, cloaking, and fake CAPTCHA symptoms',
+  ]}
+  faqs={faqs}
+/>

@@ -1,5 +1,35 @@
 ---
 import ScanPage from '../components/new/ScanPage.astro';
-const faqs=[{q:'Is the WordPress malware scan really free?',a:'Yes. The initial public-facing review is free and does not create an obligation to purchase cleanup.'},{q:'Do you need my WordPress password?',a:'No. The first review uses public signals. If deeper access becomes necessary, I will explain why and arrange a safer handoff.'},{q:'What can a public scan find?',a:'It can reveal visible redirects, browser warnings, spam pages, exposed software clues, suspicious scripts, and reputation problems. It cannot prove every private file is clean.'}];
+const faqs = [
+  {
+    q: 'Is the WordPress malware scan really free?',
+    a: 'Yes. The initial public-facing review is free and does not create an obligation to purchase cleanup.',
+  },
+  {
+    q: 'Do you need my WordPress password?',
+    a: 'No. The first review uses public signals. If deeper access becomes necessary, I will explain why and arrange a safer handoff.',
+  },
+  {
+    q: 'What can a public scan find?',
+    a: 'It can reveal visible redirects, browser warnings, spam pages, exposed software clues, suspicious scripts, and reputation problems. It cannot prove every private file is clean.',
+  },
+];
 ---
-<ScanPage title='Free WordPress Malware Scan | MD Pabel' description='Request a free human-reviewed WordPress malware scan for redirects, spam pages, browser warnings, suspicious scripts, and visible compromise signals.' path='/free-wordpress-scan/' eyebrow='Free malware scan' intro='Not sure whether your site is hacked? I will review the public evidence, explain what I find in plain language, and tell you whether a deeper investigation makes sense.' formId='1514' checks={['Visible malware redirects and fake CAPTCHA behavior','Injected spam pages and Japanese SEO spam signals','Browser warnings and unsafe-site reputation indicators','Suspicious scripts, popups, and altered search snippets','Exposed WordPress, plugin, and theme version clues','A practical next-step recommendation with clear limitations']} faqs={faqs}/>
+
+<ScanPage
+  title='Free WordPress Malware Scan | MD Pabel'
+  description='Request a free human-reviewed WordPress malware scan for redirects, spam pages, browser warnings, suspicious scripts, and visible compromise signals.'
+  path='/free-wordpress-scan/'
+  eyebrow='Free malware scan'
+  intro='Not sure whether your site is hacked? I will review the public evidence, explain what I find in plain language, and tell you whether a deeper investigation makes sense.'
+  formId='1514'
+  checks={[
+    'Visible malware redirects and fake CAPTCHA behavior',
+    'Injected spam pages and Japanese SEO spam signals',
+    'Browser warnings and unsafe-site reputation indicators',
+    'Suspicious scripts, popups, and altered search snippets',
+    'Exposed WordPress, plugin, and theme version clues',
+    'A practical next-step recommendation with clear limitations',
+  ]}
+  faqs={faqs}
+/>
