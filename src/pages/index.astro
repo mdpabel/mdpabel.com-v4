@@ -84,7 +84,7 @@ const insights = [
   {
     category: 'Field guide',
     title: 'Why WordPress malware keeps coming back after cleanup',
-    href: '/blog/wordpress-malware-keeps-coming-back/',
+    href: '/blog/why-wordpress-malware-keeps-coming-back-and-how-to-stop-it-forever/',
   },
   {
     category: 'Malware analysis',
@@ -168,10 +168,7 @@ const homeSchema = {
     <meta name='viewport' content='width=device-width' />
     <meta name='generator' content={Astro.generator} />
     <title>{homeTitle}</title>
-    <meta
-      name='description'
-      content={homeDescription}
-    />
+    <meta name='description' content={homeDescription} />
     <link rel='icon' type='image/png' href='/icon.png' />
     <link rel='canonical' href={new URL('/', Astro.site)} />
     <meta property='og:type' content='website' />
@@ -184,7 +181,11 @@ const homeSchema = {
     <meta name='twitter:title' content={homeTitle} />
     <meta name='twitter:description' content={homeDescription} />
     <meta name='twitter:image' content='https://www.mdpabel.com/md-pabel.png' />
-    <script is:inline type='application/ld+json' set:html={JSON.stringify(homeSchema)} />
+    <script
+      is:inline
+      type='application/ld+json'
+      set:html={JSON.stringify(homeSchema)}
+    />
   </head>
 
   <body>
@@ -245,7 +246,9 @@ const homeSchema = {
                 />
                 <div class='portrait-caption'>
                   <span class='caption-icon'><BadgeCheck size={18} /></span>
-                  <span><strong>MD Pabel</strong>Hands-on help, not a ticket queue</span>
+                  <span
+                    ><strong>MD Pabel</strong>Hands-on help, not a ticket queue</span
+                  >
                 </div>
               </div>
 
@@ -297,13 +300,17 @@ const homeSchema = {
                 services.map((service) => (
                   <a class='service-row' href={service.href}>
                     <span class='service-number'>{service.number}</span>
-                    <span class='service-icon'><service.icon size={24} /></span>
+                    <span class='service-icon'>
+                      <service.icon size={24} />
+                    </span>
                     <span class='service-main'>
                       <span class='service-tag'>{service.tag}</span>
                       <strong>{service.title}</strong>
                       <span>{service.description}</span>
                     </span>
-                    <span class='service-arrow'><ArrowUpRight size={21} /></span>
+                    <span class='service-arrow'>
+                      <ArrowUpRight size={21} />
+                    </span>
                   </a>
                 ))
               }
@@ -318,20 +325,29 @@ const homeSchema = {
                 <p class='kicker kicker-light'>Selected recoveries</p>
                 <h2>Proof is better than promises.</h2>
               </div>
-              <a href='/case-studies/'>View all case studies <ArrowRight size={18} /></a>
+              <a href='/case-studies/'
+                >View all case studies <ArrowRight size={18} /></a
+              >
             </div>
 
             <div class='case-grid stagger-reveal' data-reveal>
               {
                 cases.map((item, index) => (
-                  <a class:list={['case-card', index === 0 && 'case-card-featured']} href={item.href}>
+                  <a
+                    class:list={[
+                      'case-card',
+                      index === 0 && 'case-card-featured',
+                    ]}
+                    href={item.href}>
                     <span class='case-index'>0{index + 1}</span>
                     <div>
                       <strong>{item.metric}</strong>
                       <span>{item.label}</span>
                     </div>
                     <h3>{item.title}</h3>
-                    <span class='case-link'>Read recovery story <ArrowUpRight size={17} /></span>
+                    <span class='case-link'>
+                      Read recovery story <ArrowUpRight size={17} />
+                    </span>
                   </a>
                 ))
               }
@@ -346,27 +362,46 @@ const homeSchema = {
               <h2>From “we’ve been hacked” to a clear way forward.</h2>
               <p>
                 Security work can feel opaque. My process keeps the technical
-                investigation thorough and the client experience refreshingly simple.
+                investigation thorough and the client experience refreshingly
+                simple.
               </p>
-              <a class='text-link' href='/about/'>How I work <ArrowRight size={17} /></a>
+              <a class='text-link' href='/about/'
+                >How I work <ArrowRight size={17} /></a
+              >
             </div>
 
             <ol class='process-steps stagger-reveal' data-reveal>
               <li>
                 <span>01</span>
-                <div><strong>Share the symptoms</strong><p>Send the URL and tell me what you noticed.</p></div>
+                <div>
+                  <strong>Share the symptoms</strong><p>
+                    Send the URL and tell me what you noticed.
+                  </p>
+                </div>
               </li>
               <li>
                 <span>02</span>
-                <div><strong>I investigate</strong><p>Files, database, users, cron jobs, and access points.</p></div>
+                <div>
+                  <strong>I investigate</strong><p>
+                    Files, database, users, cron jobs, and access points.
+                  </p>
+                </div>
               </li>
               <li>
                 <span>03</span>
-                <div><strong>Cleanup & recovery</strong><p>Malware is removed and legitimate content is preserved.</p></div>
+                <div>
+                  <strong>Cleanup & recovery</strong><p>
+                    Malware is removed and legitimate content is preserved.
+                  </p>
+                </div>
               </li>
               <li>
                 <span>04</span>
-                <div><strong>Secure the next chapter</strong><p>I harden the site and explain the important findings.</p></div>
+                <div>
+                  <strong>Secure the next chapter</strong><p>
+                    I harden the site and explain the important findings.
+                  </p>
+                </div>
               </li>
             </ol>
           </div>
@@ -376,7 +411,11 @@ const homeSchema = {
           <div class='shell quote-card' data-reveal>
             <div class='quote-mark'>“</div>
             <div class='quote-stars' aria-label='5 out of 5 stars'>
-              {Array.from({ length: 5 }).map(() => <Star size={16} fill='currentColor' />)}
+              {
+                Array.from({ length: 5 }).map(() => (
+                  <Star size={16} fill='currentColor' />
+                ))
+              }
             </div>
             <blockquote>
               My website was suffering from redirect malware. MD was able to
@@ -384,7 +423,11 @@ const homeSchema = {
             </blockquote>
             <footer>
               <span class='quote-avatar'>KM</span>
-              <p><strong>Kendall Miller</strong><span>Website owner · Google review</span></p>
+              <p>
+                <strong>Kendall Miller</strong><span
+                  >Website owner · Google review</span
+                >
+              </p>
             </footer>
           </div>
         </section>
@@ -396,17 +439,23 @@ const homeSchema = {
                 <p class='kicker'>Security notes</p>
                 <h2>Useful answers, without the fear tactics.</h2>
               </div>
-              <a class='text-link' href='/blog/'>Browse the blog <ArrowRight size={17} /></a>
+              <a class='text-link' href='/blog/'
+                >Browse the blog <ArrowRight size={17} /></a
+              >
             </div>
 
             <div class='insight-grid stagger-reveal' data-reveal>
               {
                 insights.map((item, index) => (
                   <a href={item.href} class='insight-card'>
-                    <span class='insight-number'>{String(index + 1).padStart(2, '0')}</span>
+                    <span class='insight-number'>
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
                     <span class='insight-category'>{item.category}</span>
                     <h3>{item.title}</h3>
-                    <span class='read-link'>Read article <ArrowUpRight size={16} /></span>
+                    <span class='read-link'>
+                      Read article <ArrowUpRight size={16} />
+                    </span>
                   </a>
                 ))
               }
@@ -420,15 +469,22 @@ const homeSchema = {
             <div class='final-orbit orbit-two' aria-hidden='true'></div>
             <div class='final-copy'>
               <p class='kicker kicker-light'>Let’s fix it properly</p>
-              <h2>Your site has a problem.<br />You don’t need more uncertainty.</h2>
+              <h2>
+                Your site has a problem.<br />You don’t need more uncertainty.
+              </h2>
             </div>
             <div class='final-action'>
-              <p>Tell me what you are seeing. I’ll help you understand the next step.</p>
+              <p>
+                Tell me what you are seeing. I’ll help you understand the next
+                step.
+              </p>
               <a class='button button-secondary' href='/hire-me/'>
                 Start a conversation
                 <ArrowUpRight size={18} />
               </a>
-              <span><Clock3 size={15} /> Usually replies within one business day</span>
+              <span
+                ><Clock3 size={15} /> Usually replies within one business day</span
+              >
             </div>
           </div>
         </section>
@@ -483,7 +539,12 @@ const homeSchema = {
     background: #f7f4ed;
     color: #17352c;
     font-family:
-      Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Inter,
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
       sans-serif;
   }
 
@@ -576,7 +637,7 @@ const homeSchema = {
   }
 
   .brand-copy strong {
-    font-family: "Source Serif 4 Variable", Georgia, serif;
+    font-family: 'Source Serif 4 Variable', Georgia, serif;
     font-size: 1.1rem;
     font-weight: 700;
   }
@@ -611,7 +672,7 @@ const homeSchema = {
     height: 2px;
     transform: scaleX(0);
     background: var(--secondary);
-    content: "";
+    content: '';
     transition: transform 180ms ease;
   }
 
@@ -663,7 +724,7 @@ const homeSchema = {
     height: 300px;
     border: 1px solid rgba(31, 107, 85, 0.14);
     border-radius: 50%;
-    content: "";
+    content: '';
   }
 
   .hero-grid {
@@ -722,7 +783,7 @@ const homeSchema = {
     inset: -5px;
     border: 1px solid var(--secondary);
     border-radius: inherit;
-    content: "";
+    content: '';
     opacity: 0.35;
   }
 
@@ -730,7 +791,7 @@ const homeSchema = {
   .section h2,
   .final-section h2 {
     margin: 0;
-    font-family: "Source Serif 4 Variable", Georgia, serif;
+    font-family: 'Source Serif 4 Variable', Georgia, serif;
     font-weight: 620;
     letter-spacing: -0.045em;
   }
@@ -756,7 +817,7 @@ const homeSchema = {
     height: 0.18em;
     transform: rotate(-1deg);
     background: var(--secondary-pale);
-    content: "";
+    content: '';
   }
 
   .hero-intro {
@@ -863,7 +924,7 @@ const homeSchema = {
     transform: rotate(2deg);
     border-radius: 30px;
     background: var(--primary-pale);
-    content: "";
+    content: '';
   }
 
   .portrait-frame {
@@ -1039,7 +1100,7 @@ const homeSchema = {
   }
 
   .experience-stamp > span {
-    font-family: "Source Serif 4 Variable", Georgia, serif;
+    font-family: 'Source Serif 4 Variable', Georgia, serif;
     font-size: 2rem;
     font-weight: 750;
   }
@@ -1143,7 +1204,7 @@ const homeSchema = {
 
   .service-number {
     color: #819089;
-    font-family: "Source Serif 4 Variable", Georgia, serif;
+    font-family: 'Source Serif 4 Variable', Georgia, serif;
     font-size: 0.85rem;
   }
 
@@ -1180,7 +1241,7 @@ const homeSchema = {
   }
 
   .service-main strong {
-    font-family: "Source Serif 4 Variable", Georgia, serif;
+    font-family: 'Source Serif 4 Variable', Georgia, serif;
     font-size: 1.55rem;
     font-weight: 650;
     letter-spacing: -0.025em;
@@ -1222,7 +1283,7 @@ const homeSchema = {
     width: 1px;
     height: 100%;
     background: rgba(255, 255, 255, 0.08);
-    content: "";
+    content: '';
   }
 
   .work-header {
@@ -1292,7 +1353,7 @@ const homeSchema = {
   }
 
   .case-card > div strong {
-    font-family: "Source Serif 4 Variable", Georgia, serif;
+    font-family: 'Source Serif 4 Variable', Georgia, serif;
     font-size: clamp(3rem, 5vw, 5.2rem);
     font-weight: 640;
     letter-spacing: -0.06em;
@@ -1310,7 +1371,7 @@ const homeSchema = {
 
   .case-card h3 {
     margin: 2.5rem 0 0;
-    font-family: "Source Serif 4 Variable", Georgia, serif;
+    font-family: 'Source Serif 4 Variable', Georgia, serif;
     font-size: 1.25rem;
     font-weight: 550;
     line-height: 1.25;
@@ -1372,14 +1433,14 @@ const homeSchema = {
     border-radius: 50%;
     background: var(--secondary-pale);
     color: #a0442d;
-    font-family: "Source Serif 4 Variable", Georgia, serif;
+    font-family: 'Source Serif 4 Variable', Georgia, serif;
     font-size: 0.78rem;
     font-weight: 750;
   }
 
   .process-steps strong {
     display: block;
-    font-family: "Source Serif 4 Variable", Georgia, serif;
+    font-family: 'Source Serif 4 Variable', Georgia, serif;
     font-size: 1.45rem;
     font-weight: 650;
   }
@@ -1413,7 +1474,7 @@ const homeSchema = {
     height: 360px;
     border: 70px solid var(--primary-pale);
     border-radius: 50%;
-    content: "";
+    content: '';
   }
 
   .quote-mark {
@@ -1439,7 +1500,7 @@ const homeSchema = {
     z-index: 2;
     max-width: 900px;
     margin: 1.3rem 0 2rem;
-    font-family: "Source Serif 4 Variable", Georgia, serif;
+    font-family: 'Source Serif 4 Variable', Georgia, serif;
     font-size: clamp(2rem, 4.2vw, 4rem);
     font-weight: 520;
     letter-spacing: -0.04em;
@@ -1521,7 +1582,7 @@ const homeSchema = {
   .insight-number {
     align-self: flex-end;
     color: #a6b0ab;
-    font-family: "Source Serif 4 Variable", Georgia, serif;
+    font-family: 'Source Serif 4 Variable', Georgia, serif;
     font-size: 0.78rem;
   }
 
@@ -1536,7 +1597,7 @@ const homeSchema = {
 
   .insight-card h3 {
     margin: 0.8rem 0 0;
-    font-family: "Source Serif 4 Variable", Georgia, serif;
+    font-family: 'Source Serif 4 Variable', Georgia, serif;
     font-size: 1.55rem;
     font-weight: 620;
     letter-spacing: -0.025em;
@@ -1659,7 +1720,7 @@ const homeSchema = {
 
   .footer-links strong {
     margin-bottom: 0.25rem;
-    font-family: "Source Serif 4 Variable", Georgia, serif;
+    font-family: 'Source Serif 4 Variable', Georgia, serif;
     font-size: 1rem;
   }
 

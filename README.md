@@ -1,46 +1,29 @@
-# Astro Starter Kit: Basics
+# MD Pabel
 
-```sh
-npm create astro@latest -- --template basics
-```
+Astro website for MD Pabel's WordPress security, recovery, maintenance, and
+development services.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Commands
 
-## 🚀 Project Structure
+| Command | Purpose |
+| --- | --- |
+| `npm install` | Install dependencies |
+| `npm run dev` | Start the local development server |
+| `npm run build` | Build the production site into `dist/` |
+| `npm run preview` | Preview the production build |
+| `npm run sync` | Sync remote WordPress content to local content files |
+| `npm run build:prod` | Sync content and build the production site |
 
-Inside of your Astro project, you'll see the following folders and files:
+## Active structure
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+- `src/pages/` contains the live routes.
+- `src/components/new/` contains the current shared UI.
+- `src/layouts/NewLayout.astro` is the current site layout.
+- `src/data/newServices.ts` and `src/data/developmentServices.ts` contain the
+  current service-page data.
+- `src/lib/wordpress.ts` handles WordPress content access.
+- `public/` contains deployment files, verification files, and assets used by
+  the current site.
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Legacy implementation files are retained under `old/` and are excluded from
+the active Astro build.
