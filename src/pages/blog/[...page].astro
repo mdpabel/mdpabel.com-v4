@@ -1,75 +1,14 @@
 ---
-// src/pages/blog/[...page].astro
-import { fields } from '../../../constant';
-import BlogPosts from '../../components/BlogPosts.astro';
-import ComponentWrapper from '../../components/component-wrapper.astro';
-import Layout from '../../layouts/Layout.astro';
+import ArchivePage from '../../components/new/ArchivePage.astro';
 import { wordpress } from '../../lib/wordpress';
 
-// --- 1. Generate Static Paths ---
 export async function getStaticPaths() {
-  const PER_PAGE = 10;
-
-  // ✅ OPTIMIZATION: Fetch ALL posts once (Cached in memory).
-  const allPosts = await wordpress.getAllPosts({
-    postType: 'posts',
-    _fields: fields,
-  });
-
-  const totalPages = Math.ceil(allPosts.length / PER_PAGE);
-
-  return Array.from({ length: totalPages }, (_, i) => {
-    const pageNum = i + 1;
-    const start = i * PER_PAGE;
-    const end = start + PER_PAGE;
-    const pagePosts = allPosts.slice(start, end);
-
-    return {
-      // ✅ CRITICAL: For /blog (root) to work, page 1 MUST be undefined
-      params: { page: pageNum === 1 ? undefined : pageNum.toString() },
-      props: { posts: pagePosts, totalPages, currentPage: pageNum },
-    };
-  });
+  const perPage = 10;
+  const allPosts = await wordpress.getAllPosts({ postType: 'posts' });
+  const totalPages = Math.max(1, Math.ceil(allPosts.length / perPage));
+  return Array.from({ length: totalPages }, (_, index) => ({ params: { page: index === 0 ? undefined : String(index + 1) }, props: { posts: allPosts.slice(index * perPage, (index + 1) * perPage), totalPages, currentPage: index + 1 } }));
 }
-
-// --- 2. Get Props ---
 const { posts, totalPages, currentPage } = Astro.props;
-
-// --- 3. Dynamic SEO Logic ---
-const isFirstPage = currentPage === 1;
-const baseUrl = 'https://www.mdpabel.com/blog';
-
-const seoTitle = isFirstPage
-  ? 'WordPress Blog & Insights: Security, Malware Removal & Error Fixing'
-  : `Blog Insights (Page ${currentPage}) | WordPress Security & Development`;
-
-const seoDesc = isFirstPage
-  ? 'Explore expert guides on WordPress security best practices, malware detection and removal, fixing common errors, and performance optimization.'
-  : `Page ${currentPage} of the WordPress security archive. Browse articles on malware removal, site hardening, and development tutorials.`;
-
-const canonicalURL = isFirstPage ? baseUrl : `${baseUrl}/${currentPage}`;
+const seoTitle = currentPage === 1 ? 'WordPress Security Blog | Malware, Errors & Recovery' : `WordPress Security Blog — Page ${currentPage} | MD Pabel`;
 ---
-
-<Layout
-  title={seoTitle}
-  description={seoDesc}
-  image='/images/blog-opengraph-image.png'
-  canonical={canonicalURL}>
-  <ComponentWrapper class='pt-12'>
-    {
-      /* The BlogPosts component will now render its cards 
-        and pagination using your dark-theme slate palette.
-    */
-    }
-    <BlogPosts
-      posts={posts}
-      totalPages={totalPages}
-      rootSlug='blog'
-      page={currentPage}
-      limit={10}
-      title='Security, Malware Removal & Development Insights'
-      shortDescription='Forensic insights on WordPress security, malware detection, and technical remediation strategies.'
-      mode='all'
-    />
-  </ComponentWrapper>
-</Layout>
+<ArchivePage posts={posts} totalPages={totalPages} currentPage={currentPage} rootSlug='blog' label='Blog' title='Practical WordPress security insights.' description='Field-informed articles about malware behavior, hacked-site recovery, WordPress errors, maintenance, development, and safer website ownership.' seoTitle={seoTitle} />

@@ -1,0 +1,233 @@
+---
+import { Check, Circle } from '@lucide/astro';
+
+interface Props {
+  lessonSlugs: string[];
+  currentSlug?: string;
+}
+
+const { lessonSlugs, currentSlug } = Astro.props;
+---
+
+<section
+  class='course-progress rounded-2xl border border-slate-700 bg-slate-900/70 p-5'
+  data-course-progress
+  data-valid-lessons={JSON.stringify(lessonSlugs)}>
+  <div class='mb-3 flex items-start justify-between gap-4'>
+    <div>
+      <p class='font-sans text-xs font-bold uppercase tracking-[0.18em] text-sky-400'>
+        Your progress
+      </p>
+      <p class='mt-1 text-sm text-slate-300' aria-live='polite'>
+        <span data-course-progress-count>0 of {lessonSlugs.length}</span> lessons
+        complete
+      </p>
+    </div>
+    <span
+      class='font-sans text-lg font-bold text-white'
+      data-course-progress-percent
+      aria-hidden='true'>0%</span
+    >
+  </div>
+
+  <div
+    class='h-2 overflow-hidden rounded-full bg-slate-800'
+    role='progressbar'
+    aria-label='Course completion'
+    aria-valuemin='0'
+    aria-valuemax='100'
+    aria-valuenow='0'
+    data-course-progress-bar>
+    <div
+      class='h-full w-0 rounded-full bg-emerald-400 transition-[width] duration-300 motion-reduce:transition-none'
+      data-course-progress-fill>
+    </div>
+  </div>
+
+  {
+    currentSlug && (
+      <button
+        type='button'
+        class='mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-emerald-400/30 bg-emerald-400/10 px-4 py-3 font-sans text-sm font-semibold text-emerald-200 transition-colors hover:bg-emerald-400/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400'
+        data-course-toggle
+        data-lesson-slug={currentSlug}
+        aria-pressed='false'>
+        <Circle class='h-4 w-4' data-course-toggle-incomplete aria-hidden='true' />
+        <Check
+          class='hidden h-4 w-4'
+          data-course-toggle-complete
+          aria-hidden='true'
+        />
+        <span data-course-toggle-label>Mark lesson complete</span>
+      </button>
+    )
+  }
+
+  <p class='mt-3 text-xs leading-relaxed text-slate-500'>
+    Progress is stored only in this browser. The course remains fully readable
+    without JavaScript.
+  </p>
+</section>
+
+<script>
+  import { COURSE_STORAGE_KEY } from '../../data/course';
+
+  function readCompleted(validSlugs: Set<string>) {
+    try {
+      const raw = window.localStorage.getItem(COURSE_STORAGE_KEY);
+      if (!raw) return new Set<string>();
+
+      const parsed: unknown = JSON.parse(raw);
+      if (!Array.isArray(parsed)) return new Set<string>();
+
+      return new Set(
+        parsed.filter(
+          (item): item is string =>
+            typeof item === 'string' && validSlugs.has(item),
+        ),
+      );
+    } catch {
+      return new Set<string>();
+    }
+  }
+
+  function writeCompleted(completed: Set<string>) {
+    try {
+      window.localStorage.setItem(
+        COURSE_STORAGE_KEY,
+        JSON.stringify(Array.from(completed)),
+      );
+    } catch {
+      // Storage can be blocked or unavailable. The course still works statically.
+    }
+  }
+
+  function updateCourseProgress() {
+    const progressRoot = document.querySelector<HTMLElement>(
+      '[data-course-progress]',
+    );
+    if (!progressRoot) return;
+
+    let lessonSlugs: string[] = [];
+    try {
+      const parsed: unknown = JSON.parse(
+        progressRoot.dataset.validLessons || '[]',
+      );
+      if (Array.isArray(parsed)) {
+        lessonSlugs = parsed.filter(
+          (item): item is string => typeof item === 'string',
+        );
+      }
+    } catch {
+      lessonSlugs = [];
+    }
+
+    const validSlugs = new Set(lessonSlugs);
+    const completed = readCompleted(validSlugs);
+    const count = completed.size;
+    const percent = lessonSlugs.length
+      ? Math.round((count / lessonSlugs.length) * 100)
+      : 0;
+
+    document.querySelectorAll<HTMLElement>('[data-course-progress]').forEach(
+      (root) => {
+        const countNode = root.querySelector('[data-course-progress-count]');
+        const percentNode = root.querySelector(
+          '[data-course-progress-percent]',
+        );
+        const bar = root.querySelector<HTMLElement>(
+          '[data-course-progress-bar]',
+        );
+        const fill = root.querySelector<HTMLElement>(
+          '[data-course-progress-fill]',
+        );
+
+        if (countNode) countNode.textContent = `${count} of ${lessonSlugs.length}`;
+        if (percentNode) percentNode.textContent = `${percent}%`;
+        if (bar) bar.setAttribute('aria-valuenow', String(percent));
+        if (fill) fill.style.width = `${percent}%`;
+      },
+    );
+
+    document.querySelectorAll<HTMLElement>('[data-course-lesson]').forEach(
+      (card) => {
+        const slug = card.dataset.lessonSlug || '';
+        const isComplete = completed.has(slug);
+        card.dataset.complete = String(isComplete);
+        const status = card.querySelector('[data-course-lesson-status]');
+        if (status) {
+          status.textContent = isComplete ? 'Complete' : 'Not complete';
+        }
+      },
+    );
+
+    document.querySelectorAll<HTMLButtonElement>('[data-course-toggle]').forEach(
+      (button) => {
+        const slug = button.dataset.lessonSlug || '';
+        const isComplete = completed.has(slug);
+        button.setAttribute('aria-pressed', String(isComplete));
+        button.querySelector('[data-course-toggle-incomplete]')?.classList.toggle(
+          'hidden',
+          isComplete,
+        );
+        button.querySelector('[data-course-toggle-complete]')?.classList.toggle(
+          'hidden',
+          !isComplete,
+        );
+        const label = button.querySelector('[data-course-toggle-label]');
+        if (label) {
+          label.textContent = isComplete
+            ? 'Lesson complete — undo'
+            : 'Mark lesson complete';
+        }
+      },
+    );
+  }
+
+  function bindCourseProgress() {
+    document.querySelectorAll<HTMLButtonElement>('[data-course-toggle]').forEach(
+      (button) => {
+        if (button.dataset.progressBound === 'true') return;
+        button.dataset.progressBound = 'true';
+
+        button.addEventListener('click', () => {
+          const progressRoot = document.querySelector<HTMLElement>(
+            '[data-course-progress]',
+          );
+          if (!progressRoot) return;
+
+          let lessonSlugs: string[] = [];
+          try {
+            const parsed: unknown = JSON.parse(
+              progressRoot.dataset.validLessons || '[]',
+            );
+            if (Array.isArray(parsed)) {
+              lessonSlugs = parsed.filter(
+                (item): item is string => typeof item === 'string',
+              );
+            }
+          } catch {
+            lessonSlugs = [];
+          }
+
+          const validSlugs = new Set(lessonSlugs);
+          const completed = readCompleted(validSlugs);
+          const slug = button.dataset.lessonSlug || '';
+          if (!validSlugs.has(slug)) return;
+
+          if (completed.has(slug)) completed.delete(slug);
+          else completed.add(slug);
+
+          writeCompleted(completed);
+          updateCourseProgress();
+        });
+      },
+    );
+
+    updateCourseProgress();
+  }
+
+  bindCourseProgress();
+  document.addEventListener('astro:page-load', bindCourseProgress);
+  window.addEventListener('storage', updateCourseProgress);
+</script>

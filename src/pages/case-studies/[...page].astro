@@ -1,73 +1,14 @@
 ---
-// src/pages/case-studies/[...page].astro
-import BlogPosts from '../../components/BlogPosts.astro';
-import ComponentWrapper from '../../components/component-wrapper.astro';
-import Layout from '../../layouts/Layout.astro';
+import ArchivePage from '../../components/new/ArchivePage.astro';
 import { wordpress } from '../../lib/wordpress';
 
-// --- 1. Generate Static Paths ---
 export async function getStaticPaths() {
-  const PER_PAGE = 10;
-
-  // ✅ OPTIMIZATION: Fetch ALL case studies once (Cached).
-  const allCaseStudies = await wordpress.getAllPosts({
-    postType: 'case-study',
-  });
-
-  // Calculate total pages locally
-  const totalPages = Math.ceil(allCaseStudies.length / PER_PAGE);
-
-  // Generate routes for all pages
-  return Array.from({ length: totalPages }, (_, i) => {
-    const pageNum = i + 1;
-
-    // Slice data for this specific page locally
-    const start = i * PER_PAGE;
-    const end = start + PER_PAGE;
-    const pagePosts = allCaseStudies.slice(start, end);
-
-    return {
-      // ✅ CRITICAL: For /case-studies (root) to work, page 1 MUST be undefined
-      params: { page: pageNum === 1 ? undefined : pageNum.toString() },
-      props: { posts: pagePosts, totalPages, currentPage: pageNum },
-    };
-  });
+  const perPage = 10;
+  const allPosts = await wordpress.getAllPosts({ postType: 'case-study' });
+  const totalPages = Math.max(1, Math.ceil(allPosts.length / perPage));
+  return Array.from({ length: totalPages }, (_, index) => ({ params: { page: index === 0 ? undefined : String(index + 1) }, props: { posts: allPosts.slice(index * perPage, (index + 1) * perPage), totalPages, currentPage: index + 1 } }));
 }
-
-// --- 2. Get Props ---
 const { posts, totalPages, currentPage } = Astro.props;
-
-// --- 3. Dynamic SEO Settings ---
-const isFirstPage = currentPage === 1;
-const baseUrl = 'https://www.mdpabel.com/case-studies';
-
-const seoTitle = isFirstPage
-  ? 'Case Studies: WordPress Security & Development Success Stories'
-  : `Case Studies (Page ${currentPage}) | WordPress Success Stories`;
-
-const seoDesc = isFirstPage
-  ? 'Explore real-world case studies showcasing our WordPress security solutions, malware removal projects, and custom development work.'
-  : `Page ${currentPage} of our case studies archive. Read real-world examples of recovered hacked sites and security hardening projects.`;
-
-const canonicalURL = isFirstPage ? baseUrl : `${baseUrl}/${currentPage}`;
+const seoTitle = currentPage === 1 ? 'WordPress Malware Removal Case Studies | MD Pabel' : `WordPress Security Case Studies — Page ${currentPage}`;
 ---
-
-<Layout
-  title={seoTitle}
-  description={seoDesc}
-  image='/images/case-studies-opengraph-image.png'
-  canonical={canonicalURL}>
-  <ComponentWrapper class='pt-12'>
-    <BlogPosts
-      posts={posts}
-      totalPages={totalPages}
-      postType='case-study'
-      rootSlug='case-studies'
-      page={currentPage}
-      limit={10}
-      title='Forensic Case Studies: Malware Removal & Recovery'
-      shortDescription='Detailed breakdowns of real-world hacked site recoveries, vulnerability patching, and security hardening projects performed for global clients.'
-      mode='all'
-    />
-  </ComponentWrapper>
-</Layout>
+<ArchivePage posts={posts} totalPages={totalPages} currentPage={currentPage} rootSlug='case-studies' label='Case studies' title='Real incidents. Visible recovery evidence.' description='First-hand WordPress malware cleanup, SEO spam recovery, blacklist resolution, and technical repair stories from client work.' seoTitle={seoTitle} />

@@ -52,6 +52,21 @@ export const corePages = [
       'Manual hacked WordPress cleanup, malicious redirect removal, Japanese SEO spam cleanup, blacklist recovery, backdoor removal, and post-cleanup hardening.',
   },
   {
+    title: 'WordPress Maintenance Service',
+    url: '/wordpress-maintenance/',
+    description: 'Ongoing WordPress updates, backups, monitoring, security checks, performance care, and dependable maintenance support.',
+  },
+  {
+    title: 'WordPress Error Fixing Service',
+    url: '/wordpress-error-fixing/',
+    description: 'Diagnosis and repair for WordPress HTTP, PHP, database, login, editor, WooCommerce, email, SSL, DNS, and performance errors.',
+  },
+  {
+    title: 'Website Development',
+    url: '/website-development/',
+    description: 'Purpose-built WordPress, Next.js, Astro, and AI-assisted website development focused on speed, maintainability, and search visibility.',
+  },
+  {
     title: 'Google Blacklist Removal Service',
     url: '/google-blacklist-removal-service/',
     description:

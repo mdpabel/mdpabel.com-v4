@@ -1,0 +1,107 @@
+---
+import { ArrowRight, ArrowUpRight, Check, CircleCheck, Search, ShieldCheck } from '@lucide/astro';
+import NewLayout from '../../layouts/NewLayout.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
+import type { ServicePageData } from '../../data/newServices';
+
+interface Props { service: ServicePageData }
+const { service } = Astro.props;
+const absoluteUrl = `https://www.mdpabel.com${service.slug}`;
+const personId = 'https://www.mdpabel.com/about/#person';
+
+const schema = [
+  {
+    '@type': 'WebPage', '@id': `${absoluteUrl}#webpage`, url: absoluteUrl,
+    name: service.seoTitle, description: service.metaDescription,
+    isPartOf: { '@id': 'https://www.mdpabel.com/#website' },
+    about: { '@id': `${absoluteUrl}#service` },
+    breadcrumb: { '@id': `${absoluteUrl}#breadcrumb` },
+  },
+  {
+    '@type': 'Service', '@id': `${absoluteUrl}#service`, name: service.name,
+    serviceType: service.name, url: absoluteUrl, description: service.intro,
+    provider: { '@id': personId }, areaServed: 'Worldwide',
+  },
+  {
+    '@type': 'BreadcrumbList', '@id': `${absoluteUrl}#breadcrumb`,
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.mdpabel.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://www.mdpabel.com/services/' },
+      { '@type': 'ListItem', position: 3, name: service.name, item: absoluteUrl },
+    ],
+  },
+  {
+    '@type': 'FAQPage', '@id': `${absoluteUrl}#faq`,
+    mainEntity: service.faqs.map((faq) => ({ '@type': 'Question', name: faq.question, acceptedAnswer: { '@type': 'Answer', text: faq.answer } })),
+  },
+];
+---
+
+<NewLayout title={service.seoTitle} description={service.metaDescription} path={service.slug} schema={schema}>
+  <section class='relative overflow-hidden border-b border-[#d7ddd7] py-16 md:py-24'>
+    <div class='pointer-events-none absolute right-0 top-0 h-full w-1/2 opacity-40 [background-image:linear-gradient(#1f6b5517_1px,transparent_1px),linear-gradient(90deg,#1f6b5517_1px,transparent_1px)] [background-size:32px_32px] [mask-image:linear-gradient(to_left,black,transparent)]'></div>
+    <div class='new-shell relative'>
+      <Breadcrumbs items={[{ label: 'Services', href: '/services/' }, { label: service.name }]} />
+      <div class='mt-10 grid items-center gap-12 lg:grid-cols-[1.15fr_0.65fr] lg:gap-20'>
+        <div>
+          <p class='mb-4 text-xs font-extrabold uppercase tracking-[0.16em] text-[#1f6b55]'>{service.eyebrow}</p>
+          <h1 class='editorial-heading max-w-4xl text-5xl font-semibold leading-[0.98] md:text-7xl'>{service.headline}</h1>
+          <p class='mt-7 max-w-3xl text-lg leading-8 text-[#52665f]'>{service.intro}</p>
+          <div class='mt-8 flex flex-wrap items-center gap-4'>
+            <a href='/hire-me/' class='inline-flex items-center gap-2 rounded-full bg-[#1f6b55] px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-[#1f6b55]/15 transition hover:-translate-y-1 hover:bg-[#164a3c]'>Discuss your website <ArrowRight class='h-4 w-4' /></a>
+            <a href='#what-is-included' class='inline-flex items-center gap-2 border-b border-[#b6c1bc] pb-1 text-sm font-bold hover:border-[#ed7655]'>See what is included <ArrowUpRight class='h-4 w-4' /></a>
+          </div>
+        </div>
+        <aside class='rotate-1 rounded-[2rem_0.75rem_2rem_0.75rem] border border-[#c9d6d0] bg-[#fffdf8] p-6 shadow-2xl shadow-[#17352c]/10'>
+          <div class='flex items-center justify-between'><span class='flex items-center gap-2 text-sm font-extrabold'><Search class='h-4 w-4 text-[#1f6b55]' /> Specialist review</span><span class='rounded-full bg-[#dcece5] px-2 py-1 text-[10px] font-bold uppercase text-[#1f6b55]'>Direct help</span></div>
+          <div class='my-5 h-1.5 overflow-hidden rounded-full bg-[#e8ece9]'><span class='block h-full w-4/5 rounded-full bg-[#ed7655]'></span></div>
+          <p class='text-sm leading-7 text-[#52665f]'>{service.promise}</p>
+          <div class='mt-5 grid gap-2 border-t border-[#d7ddd7] pt-5 text-xs font-bold text-[#3f5a51]'><span class='flex items-center gap-2'><CircleCheck class='h-4 w-4 text-[#1f6b55]' /> 4,500+ malware cleanups</span><span class='flex items-center gap-2'><CircleCheck class='h-4 w-4 text-[#1f6b55]' /> Experience since 2018</span><span class='flex items-center gap-2'><CircleCheck class='h-4 w-4 text-[#1f6b55]' /> Worldwide support</span></div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class='bg-[#17352c] py-6 text-white'>
+    <div class='new-shell grid gap-4 text-sm font-semibold sm:grid-cols-2 lg:grid-cols-5'>{service.outcomes.map((item) => <span class='flex items-start gap-2'><Check class='mt-0.5 h-4 w-4 shrink-0 text-[#ed7655]' />{item}</span>)}</div>
+  </section>
+
+  <section class='py-20 md:py-28'>
+    <div class='new-shell grid gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:gap-24'>
+      <div><p class='mb-3 text-xs font-extrabold uppercase tracking-[0.15em] text-[#1f6b55]'>Recognize the problem</p><h2 class='editorial-heading text-4xl font-semibold leading-tight md:text-5xl'>{service.symptomsTitle}</h2><p class='mt-5 text-sm leading-7 text-[#52665f]'>One symptom does not always confirm a compromise, but several together deserve a careful investigation.</p></div>
+      <ul class='grid gap-px overflow-hidden rounded-2xl border border-[#d7ddd7] bg-[#d7ddd7] sm:grid-cols-2'>{service.symptoms.map((item) => <li class='flex gap-3 bg-[#fffdf8] p-5 text-sm leading-6'><span class='mt-1 h-2 w-2 shrink-0 rounded-full bg-[#ed7655]'></span>{item}</li>)}</ul>
+    </div>
+  </section>
+
+  <section id='what-is-included' class='bg-[#fffdf8] py-20 md:py-28'>
+    <div class='new-shell'>
+      <div class='max-w-3xl'><p class='mb-3 text-xs font-extrabold uppercase tracking-[0.15em] text-[#1f6b55]'>Scope of work</p><h2 class='editorial-heading text-4xl font-semibold md:text-6xl'>{service.includesTitle}</h2><p class='mt-5 leading-8 text-[#52665f]'>{service.includesIntro}</p></div>
+      <div class='mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3'>{service.includes.map((item, index) => <article class='group rounded-2xl border border-[#d7ddd7] bg-[#f7f4ed] p-6 transition hover:-translate-y-1 hover:shadow-xl hover:shadow-[#17352c]/5'><span class='editorial-heading text-sm text-[#ed7655]'>0{index + 1}</span><h3 class='editorial-heading mt-8 text-2xl font-semibold'>{item.title}</h3><p class='mt-3 text-sm leading-7 text-[#52665f]'>{item.description}</p></article>)}</div>
+    </div>
+  </section>
+
+  <section class='py-20 md:py-28'>
+    <div class='new-shell grid gap-14 lg:grid-cols-[0.75fr_1.25fr] lg:gap-24'>
+      <div><p class='mb-3 text-xs font-extrabold uppercase tracking-[0.15em] text-[#1f6b55]'>How it works</p><h2 class='editorial-heading text-4xl font-semibold md:text-5xl'>A clear path from problem to recovery.</h2></div>
+      <ol class='border-t border-[#d7ddd7]'>{service.process.map((step, index) => <li class='grid grid-cols-[48px_1fr] gap-4 border-b border-[#d7ddd7] py-6'><span class='editorial-heading text-sm text-[#ed7655]'>0{index + 1}</span><div><h3 class='editorial-heading text-2xl font-semibold'>{step.title}</h3><p class='mt-2 text-sm leading-7 text-[#52665f]'>{step.description}</p></div></li>)}</ol>
+    </div>
+  </section>
+
+  <section class='bg-[#17352c] py-20 text-white md:py-28'>
+    <div class='new-shell grid items-center gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24'>
+      <div><ShieldCheck class='h-10 w-10 text-[#ed7655]' /><h2 class='editorial-heading mt-6 text-4xl font-semibold md:text-5xl'>First-hand experience, visible evidence.</h2><p class='mt-5 leading-8 text-[#c9d9d2]'>MD Pabel has worked on more than 4,500 hacked websites since 2018. Case studies and technical malware logs document the kinds of incidents behind that experience.</p><a href='/about/' class='mt-6 inline-flex items-center gap-2 border-b border-white/30 pb-1 text-sm font-bold'>About MD Pabel <ArrowRight class='h-4 w-4' /></a></div>
+      <div class='grid gap-4 sm:grid-cols-2'><a href='/case-studies/' class='rounded-2xl border border-white/15 bg-white/5 p-6 transition hover:bg-white/10'><strong class='editorial-heading text-5xl'>4,500+</strong><span class='mt-2 block text-sm text-[#c9d9d2]'>real cleanup cases</span><span class='mt-8 flex items-center gap-2 text-xs font-bold'>Browse case studies <ArrowUpRight class='h-4 w-4' /></span></a><a href='/malware-log/' class='rounded-2xl border border-white/15 bg-white/5 p-6 transition hover:bg-white/10'><strong class='editorial-heading text-5xl'>2018</strong><span class='mt-2 block text-sm text-[#c9d9d2]'>working in WordPress security since</span><span class='mt-8 flex items-center gap-2 text-xs font-bold'>Read field notes <ArrowUpRight class='h-4 w-4' /></span></a></div>
+    </div>
+  </section>
+
+  <section class='py-20 md:py-28'>
+    <div class='new-shell grid gap-14 lg:grid-cols-[0.7fr_1.3fr] lg:gap-24'>
+      <div><p class='mb-3 text-xs font-extrabold uppercase tracking-[0.15em] text-[#1f6b55]'>Common questions</p><h2 class='editorial-heading text-4xl font-semibold md:text-5xl'>Before we start.</h2></div>
+      <div class='divide-y divide-[#d7ddd7] border-y border-[#d7ddd7]'>{service.faqs.map((faq) => <details class='group py-5'><summary class='flex cursor-pointer list-none items-center justify-between gap-5 font-bold'><span>{faq.question}</span><span class='text-xl text-[#ed7655] transition-transform group-open:rotate-45'>+</span></summary><p class='max-w-3xl pt-4 text-sm leading-7 text-[#52665f]'>{faq.answer}</p></details>)}</div>
+    </div>
+  </section>
+
+  <section class='pb-20 md:pb-28'>
+    <div class='new-shell'><div class='rounded-3xl bg-[#1f6b55] p-8 text-white md:p-12'><div class='grid items-end gap-8 lg:grid-cols-[1fr_auto]'><div><p class='text-xs font-bold uppercase tracking-[0.15em] text-[#b8d9cc]'>Related expertise</p><h2 class='editorial-heading mt-3 text-4xl font-semibold'>The next useful page depends on the problem.</h2></div><a href='/hire-me/' class='inline-flex w-fit items-center gap-2 rounded-full bg-[#ed7655] px-6 py-3 font-bold'>Tell me what happened <ArrowUpRight class='h-4 w-4' /></a></div><div class='mt-9 grid gap-3 md:grid-cols-3'>{service.related.map((item) => <a href={item.href} class='rounded-2xl border border-white/15 bg-white/5 p-5 hover:bg-white/10'><strong class='editorial-heading text-xl'>{item.label}</strong><span class='mt-2 block text-sm leading-6 text-[#d5e7df]'>{item.description}</span></a>)}</div></div></div>
+  </section>
+</NewLayout>

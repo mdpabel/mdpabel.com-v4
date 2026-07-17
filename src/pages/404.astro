@@ -1,19 +1,4 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import NewLayout from '../layouts/NewLayout.astro';
 ---
-
-<Layout title='404 - Page Not Found'>
-  <div
-    class='flex flex-col justify-center items-center px-4 min-h-[60vh] text-center'>
-    <h1 class='font-black text-sky-500 text-9xl'>404</h1>
-    <p class='mt-4 font-bold text-white text-2xl'>Oops! Page not found.</p>
-    <p class='mt-2 mb-8 text-slate-400'>
-      The page you are looking for doesn't exist or has been moved.
-    </p>
-    <a
-      href='/'
-      class='bg-sky-600 hover:bg-sky-700 px-8 py-3 rounded-full font-bold text-white hover:scale-105 transition-all'>
-      Back to Home
-    </a>
-  </div>
-</Layout>
+<NewLayout title='Page Not Found | MD Pabel' description='The requested page could not be found.' path='/404/' noindex={true}><section class='grid min-h-[65vh] place-items-center px-5 py-20 text-center'><div><p class='text-xs font-extrabold uppercase tracking-[.2em] text-[#b74e32]'>Error 404</p><h1 class='editorial-heading mt-4 font-semibold'>This page has moved or never existed.</h1><p class='mx-auto mt-5 max-w-xl leading-7 text-[#52665f]'>Try the services page, browse the security guides, or tell me what WordPress problem brought you here.</p><div class='mt-8 flex flex-wrap justify-center gap-3'><a href='/services/' class='rounded-full bg-[#17352c] px-6 py-3 text-sm font-bold text-white'>Explore services</a><a href='/hire-me/' class='rounded-full border border-[#17352c] px-6 py-3 text-sm font-bold'>Contact MD Pabel</a></div></div></section></NewLayout>

@@ -1,0 +1,388 @@
+---
+import {
+  ArrowRight,
+  ArrowUpRight,
+  CircleAlert,
+  Database,
+  Gauge,
+  KeyRound,
+  MailWarning,
+  RefreshCw,
+  ServerCrash,
+  ShoppingCart,
+  UploadCloud,
+} from '@lucide/astro';
+import NewLayout from '../layouts/NewLayout.astro';
+import Breadcrumbs from '../components/new/Breadcrumbs.astro';
+
+const categories = [
+  {
+    title: 'Server and HTTP errors',
+    icon: ServerCrash,
+    errors: [
+      '500 Internal Server Error',
+      '502 Bad Gateway',
+      '503 Service Unavailable',
+      '504 Gateway Timeout',
+      '403 Forbidden',
+      '404 errors and broken permalinks',
+      '429 Too Many Requests',
+      'ERR_CONNECTION_TIMED_OUT',
+    ],
+  },
+  {
+    title: 'PHP and fatal errors',
+    icon: CircleAlert,
+    errors: [
+      'There has been a critical error',
+      'White screen of death',
+      'Allowed memory size exhausted',
+      'Maximum execution time exceeded',
+      'Call to undefined function',
+      'Class not found',
+      'Parse error or syntax error',
+      'Headers already sent',
+    ],
+  },
+  {
+    title: 'Database errors',
+    icon: Database,
+    errors: [
+      'Error establishing a database connection',
+      'Database connection refused',
+      'Unknown database',
+      'Table marked as crashed',
+      'Database repair loop',
+      'MySQL server has gone away',
+      'Too many database connections',
+      'Missing or corrupted tables',
+    ],
+  },
+  {
+    title: 'Login and wp-admin errors',
+    icon: KeyRound,
+    errors: [
+      'WordPress login redirect loop',
+      'Cookies are blocked or not supported',
+      'Invalid password reset key',
+      'Locked out of wp-admin',
+      'Too many login attempts',
+      'User permissions changed',
+      'Blank dashboard',
+      'Admin CSS or JavaScript not loading',
+    ],
+  },
+  {
+    title: 'Plugin, theme, and update errors',
+    icon: RefreshCw,
+    errors: [
+      'Briefly unavailable for scheduled maintenance',
+      'Update failed or installation failed',
+      'Destination folder already exists',
+      'Stylesheet is missing',
+      'Plugin could not be activated',
+      'Incompatible PHP version',
+      'Theme customization error',
+      'WordPress stuck in maintenance mode',
+    ],
+  },
+  {
+    title: 'Editor, REST API, and media errors',
+    icon: UploadCloud,
+    errors: [
+      'Publishing failed or updating failed',
+      'The response is not a valid JSON response',
+      'REST API encountered an error',
+      'Image upload HTTP error',
+      'Missing a temporary folder',
+      'Upload exceeds maximum file size',
+      'Failed to write file to disk',
+      'Featured image or media library not loading',
+    ],
+  },
+  {
+    title: 'Email, cron, SSL, and connection errors',
+    icon: MailWarning,
+    errors: [
+      'WordPress not sending email',
+      'cURL error 28 timeout',
+      'Scheduled event has failed',
+      'Missed schedule posts',
+      'SSL mixed content warning',
+      'ERR_TOO_MANY_REDIRECTS',
+      'DNS_PROBE_FINISHED_NXDOMAIN',
+      'Loopback request failed',
+    ],
+  },
+  {
+    title: 'WooCommerce errors',
+    icon: ShoppingCart,
+    errors: [
+      'Checkout not working',
+      'Cart is empty unexpectedly',
+      'Payment gateway callback failure',
+      'WooCommerce emails not sending',
+      'Orders stuck on pending payment',
+      'Product images not loading',
+      'Coupon or tax calculation errors',
+      'Store API and authentication errors',
+    ],
+  },
+  {
+    title: 'Performance and resource errors',
+    icon: Gauge,
+    errors: [
+      'Slow WordPress admin',
+      'High CPU or memory usage',
+      'Resource limit reached',
+      'PHP workers exhausted',
+      'Autoloaded options bloat',
+      'Object cache connection error',
+      'Cache showing stale content',
+      'Site Health performance warnings',
+    ],
+  },
+];
+
+const faqs = [
+  {
+    q: 'What access do you need to fix a WordPress error?',
+    a: 'The minimum depends on the failure. WordPress admin may be enough for a simple plugin issue, while fatal, database, server, or login failures usually require hosting, file manager, SFTP, database, or error-log access.',
+  },
+  {
+    q: 'Can an error be fixed without losing content?',
+    a: 'Usually, yes. The first step is to preserve or confirm a backup, isolate the cause, and change only the affected code, configuration, database record, or component.',
+  },
+  {
+    q: 'Why did the error appear after an update?',
+    a: 'Updates can expose incompatible PHP versions, outdated custom code, plugin conflicts, database migration failures, exhausted resources, or cached files from an older version.',
+  },
+  {
+    q: 'Do you fix errors on WooCommerce and custom WordPress sites?',
+    a: 'Yes. Custom themes, plugins, WooCommerce, membership sites, and page builders require a more careful diagnosis so a quick fix does not remove important functionality.',
+  },
+];
+
+const title =
+  'WordPress Error Fixing Service | Critical, 500, Database & Login Errors';
+const description =
+  'Expert WordPress error fixing for critical errors, HTTP 500, database connection failures, login loops, failed updates, REST API, media, email, and WooCommerce issues.';
+const url = 'https://www.mdpabel.com/wordpress-error-fixing/';
+const schema = [
+  {
+    '@type': 'WebPage',
+    '@id': `${url}#webpage`,
+    url,
+    name: title,
+    description,
+    about: { '@id': `${url}#service` },
+  },
+  {
+    '@type': 'Service',
+    '@id': `${url}#service`,
+    name: 'WordPress Error Fixing Service',
+    serviceType: 'WordPress troubleshooting and error repair',
+    provider: { '@id': 'https://www.mdpabel.com/about/#person' },
+    areaServed: 'Worldwide',
+  },
+  {
+    '@type': 'BreadcrumbList',
+    '@id': `${url}#breadcrumb`,
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://www.mdpabel.com/',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Services',
+        item: 'https://www.mdpabel.com/services/',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: 'WordPress Error Fixing',
+        item: url,
+      },
+    ],
+  },
+  {
+    '@type': 'FAQPage',
+    '@id': `${url}#faq`,
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.q,
+      acceptedAnswer: { '@type': 'Answer', text: faq.a },
+    })),
+  },
+];
+---
+
+<NewLayout
+  title={title}
+  description={description}
+  path='/wordpress-error-fixing/'
+  schema={schema}>
+  <section class='py-16 md:py-24 border-[#d7ddd7] border-b'>
+    <div class='new-shell'>
+      <Breadcrumbs
+        items={[
+          { label: 'Services', href: '/services/' },
+          { label: 'WordPress Error Fixing' },
+        ]}
+      /><div class='items-end gap-10 grid lg:grid-cols-[1.2fr_0.6fr] mt-10'>
+        <div>
+          <p
+            class='mb-4 font-extrabold text-[#1f6b55] text-xs uppercase tracking-[0.16em]'>
+            Diagnosis before guesswork
+          </p><h1
+            class='font-semibold text-5xl md:text-7xl leading-[0.96] editorial-heading'>
+            WordPress error fixing for the failures that stop work.
+          </h1><p class='mt-7 max-w-3xl text-[#52665f] text-lg leading-8'>
+            I diagnose and repair WordPress errors across PHP, databases,
+            servers, plugins, themes, login, REST API, WooCommerce, email, cron,
+            and hosting configuration.
+          </p><a
+            href='/hire-me/'
+            class='inline-flex items-center gap-2 bg-[#1f6b55] mt-8 px-6 py-3.5 rounded-full font-bold text-white text-sm'
+            >Tell me the exact error <ArrowRight class='w-4 h-4' /></a>
+        </div><aside class='bg-[#fee5dc] p-7 rounded-3xl'>
+          <strong class='text-[#b74e32] text-5xl editorial-heading'>70+</strong
+          ><span class='block mt-2 font-bold text-[#8e4634] text-sm'
+            >common WordPress failure patterns organized below</span
+          ><p class='mt-5 text-[#79584f] text-xs leading-6'>
+            This index describes symptoms I can investigate. The same message
+            can have several causes, so the repair begins with logs and
+            evidence.
+          </p>
+        </aside>
+      </div>
+    </div>
+  </section>
+  <section class='py-20 md:py-28'>
+    <div class='new-shell'>
+      <div class='max-w-3xl'>
+        <p
+          class='mb-3 font-extrabold text-[#1f6b55] text-xs uppercase tracking-[0.15em]'>
+          WordPress error index
+        </p><h2 class='font-semibold text-4xl md:text-6xl editorial-heading'>
+          Find the message or symptom you are seeing.
+        </h2>
+      </div><div class='gap-4 grid md:grid-cols-2 lg:grid-cols-3 mt-12'>
+        {
+          categories.map((category) => (
+            <article class='bg-[#fffdf8] p-6 border border-[#d7ddd7] rounded-2xl'>
+              <>
+                <category.icon class='w-7 h-7 text-[#ed7655]' />
+                <h3 class='mt-6 font-semibold text-2xl editorial-heading'>
+                  {category.title}
+                </h3>
+                <ul class='gap-2.5 grid mt-5'>
+                  {category.errors.map((error) => (
+                    <li class='flex gap-2 text-[#52665f] text-sm leading-6'>
+                      <span class='bg-[#1f6b55] mt-2 rounded-full w-1.5 h-1.5 shrink-0' />
+                      {error}
+                    </li>
+                  ))}
+                </ul>
+              </>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+  <section class='bg-[#17352c] py-20 text-white'>
+    <div class='gap-12 grid lg:grid-cols-2 new-shell'>
+      <div>
+        <p class='font-bold text-[#a9d6c4] text-xs uppercase tracking-[0.15em]'>
+          A safe repair process
+        </p><h2
+          class='mt-3 font-semibold text-4xl md:text-5xl editorial-heading'>
+          The error message is a clue, not always the cause.
+        </h2><p class='mt-5 text-[#c9d9d2] leading-8'>
+          I reproduce the failure, inspect logs and recent changes, isolate the
+          responsible layer, preserve a recovery path, and verify the affected
+          user flow after the repair.
+        </p>
+      </div><div class='gap-3 grid sm:grid-cols-2'>
+        {
+          [
+            'Confirm and reproduce',
+            'Check logs and recent changes',
+            'Create or verify a backup',
+            'Repair the actual cause',
+            'Retest admin and frontend',
+            'Document the important finding',
+          ].map((item, index) => (
+            <div class='bg-white/5 p-4 border border-white/15 rounded-xl font-semibold text-sm'>
+              <span class='mr-2 text-[#ed7655]'>0{index + 1}</span>
+              {item}
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+  <section class='py-20 md:py-28'>
+    <div class='gap-14 lg:gap-24 grid lg:grid-cols-[0.7fr_1.3fr] new-shell'>
+      <div>
+        <h2 class='font-semibold text-4xl md:text-5xl editorial-heading'>
+          Focused repair guides.
+        </h2><p class='mt-5 text-[#52665f] text-sm leading-7'>
+          High-intent error types keep their established URLs and receive
+          deeper, issue-specific coverage.
+        </p>
+      </div><div class='gap-4 grid sm:grid-cols-2'>
+        <a
+          href='/wordpress-critical-error-fix-service/'
+          class='group bg-[#fffdf8] p-6 border border-[#d7ddd7] rounded-2xl'
+          ><span
+            class='font-bold text-[#ed7655] text-xs uppercase tracking-wider'
+            >Critical error</span
+          ><h3 class='mt-3 font-semibold text-2xl editorial-heading'>
+            “There has been a critical error” repair
+          </h3><span class='flex items-center gap-2 mt-6 font-bold text-xs'
+            >View focused service <ArrowUpRight class='w-4 h-4' /></span
+          ></a
+        ><a
+          href='/wordpress-500-internal-server-error-fix/'
+          class='group bg-[#fffdf8] p-6 border border-[#d7ddd7] rounded-2xl'
+          ><span
+            class='font-bold text-[#ed7655] text-xs uppercase tracking-wider'
+            >HTTP 500</span
+          ><h3 class='mt-3 font-semibold text-2xl editorial-heading'>
+            Internal Server Error diagnosis and repair
+          </h3><span class='flex items-center gap-2 mt-6 font-bold text-xs'
+            >View focused service <ArrowUpRight class='w-4 h-4' /></span
+          ></a>
+      </div>
+    </div>
+  </section>
+  <section class='pb-24'>
+    <div class='gap-14 lg:gap-24 grid lg:grid-cols-[0.7fr_1.3fr] new-shell'>
+      <div>
+        <h2 class='font-semibold text-4xl editorial-heading'>
+          Questions before repair.
+        </h2>
+      </div><div class='border-[#d7ddd7] border-y divide-y divide-[#d7ddd7]'>
+        {
+          faqs.map((faq) => (
+            <details class='group py-5'>
+              <>
+                <summary class='flex justify-between gap-4 font-bold cursor-pointer list-none'>
+                  {faq.q}
+                  <span class='text-[#ed7655] group-open:rotate-45'>+</span>
+                </summary>
+                <p class='pt-4 text-[#52665f] text-sm leading-7'>{faq.a}</p>
+              </>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</NewLayout>

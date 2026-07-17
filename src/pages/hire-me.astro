@@ -1,471 +1,281 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import ComponentWrapper from '../components/component-wrapper.astro';
 import {
-  ShieldCheck,
-  Zap,
-  Lock,
-  Globe,
-  CheckCircle2,
-  ChevronDown,
-  AlertCircle,
+  ArrowUpRight,
+  Check,
+  Clock3,
+  Mail,
+  MessageCircle,
 } from '@lucide/astro';
+import NewLayout from '../layouts/NewLayout.astro';
+import Breadcrumbs from '../components/new/Breadcrumbs.astro';
 
-// SEO Constants
-const seoTitle =
-  'Hire Me: Expert WordPress Security & Development Services by MD Pabel';
-const seoDesc =
-  'Hire MD Pabel for professional WordPress security, malware removal, and custom development services.';
-const seoImage = '/md-pabel.png';
-
-// Configuration
 const wpApiUrl = import.meta.env.PUBLIC_WORDPRESS_API_URL;
 const formId = '1513';
-
-const phone = '8801323390163';
-const message = encodeURIComponent(
-  'Hi, I need help with my WordPress website. Website URL: Issue: Budget:',
-);
-const whatsappUrl = `https://wa.me/${phone}?text=${message}`;
-
-const services = [
-  { value: 'malware-removal', label: 'Malware Removal', price: '$89' },
+const whatsappUrl = `https://wa.me/8801323390163?text=${encodeURIComponent('Hi, I need help with my website. URL: Issue or goal: Budget:')}`;
+const title = 'Hire MD Pabel | WordPress Security & Website Development';
+const description =
+  'Contact MD Pabel for WordPress malware removal, maintenance, error fixing, blacklist recovery, or WordPress, Next.js, and Astro development.';
+const url = 'https://www.mdpabel.com/hire-me/';
+const schema = [
   {
-    value: 'website-development',
-    label: 'Website Development',
-    price: '$450 - $2900',
-  },
-  { value: 'fix-errors', label: 'Fix Website Errors', price: '$50 - $95' },
-  {
-    value: 'nextjs-fullstack',
-    label: 'Next.js Full-Stack Development',
-    price: '$1500+',
+    '@type': 'ContactPage',
+    '@id': `${url}#webpage`,
+    url,
+    name: title,
+    description,
+    mainEntity: { '@id': 'https://www.mdpabel.com/about/#person' },
   },
   {
-    value: 'headless-wp',
-    label: 'Headless WordPress with Next.js',
-    price: '$1000+',
+    '@type': 'BreadcrumbList',
+    '@id': `${url}#breadcrumb`,
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://www.mdpabel.com/',
+      },
+      { '@type': 'ListItem', position: 2, name: 'Hire MD Pabel', item: url },
+    ],
   },
-  { value: 'other', label: 'Other/Custom', price: 'Custom Quote' },
 ];
 
-/* --- DARK-ONLY STYLES --- */
-const labelClasses = 'text-sm font-medium leading-none text-slate-100';
-const inputClasses =
-  'flex h-10 w-full rounded-md border bg-transparent px-3 py-2 text-sm shadow-sm transition-colors placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/20 disabled:cursor-not-allowed disabled:opacity-50 border-slate-600 hover:border-slate-500 focus-visible:border-sky-500 text-white';
-const textareaClasses =
-  'flex min-h-[120px] w-full rounded-md border bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-slate-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/20 disabled:cursor-not-allowed disabled:opacity-50 border-slate-600 hover:border-slate-500 focus-visible:border-sky-500 text-white';
-const buttonClasses =
-  'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ring-offset-slate-950 focus-visible:ring-slate-300 bg-slate-50 text-slate-900 hover:bg-slate-50/90 h-10 px-4 py-2 w-full mt-2';
-const errorClasses =
-  'text-[0.8rem] font-medium text-red-500 mt-1.5 flex items-center gap-1';
+const inputClass =
+  'w-full rounded-xl border border-[#cbd4cf] bg-[#fffdf8] px-4 py-3 text-sm outline-none transition focus:border-[#1f6b55] focus:ring-4 focus:ring-[#1f6b55]/10';
 ---
 
-<Layout title={seoTitle} description={seoDesc} image={seoImage}>
-  <ComponentWrapper class='py-12'>
-    <div class='items-start gap-8 grid grid-cols-1 lg:grid-cols-2'>
-      {/* LEFT COLUMN: Info */}
-      <div class='space-y-8'>
-        <div>
-          <h1 class='mb-2 font-bold text-white text-3xl md:text-4xl'>
-            Hire a WordPress Security Expert
-          </h1>
-          <p class='mt-6 text-slate-400 text-lg leading-relaxed'>
-            Stop losing traffic and revenue to malware. I provide manual
-            cleanup, blacklist removal, and professional security hardening for
-            WordPress & Next.js sites.
-          </p>
-        </div>
-
-        <div class='space-y-4'>
-          <div class='flex items-center gap-3 font-medium text-slate-300'>
-            <ShieldCheck class='w-5 h-5 text-green-500' /> Guaranteed Malware Removal
-          </div>
-          <div class='flex items-center gap-3 font-medium text-slate-300'>
-            <Zap class='w-5 h-5 text-yellow-500' /> Fast 24-Hour Turnaround
-          </div>
-          <div class='flex items-center gap-3 font-medium text-slate-300'>
-            <Lock class='w-5 h-5 text-blue-500' /> Vulnerability Patching Included
-          </div>
-          <div class='flex items-center gap-3 font-medium text-slate-300'>
-            <Globe class='w-5 h-5 text-sky-500' /> Google Blacklist Removal
-          </div>
-        </div>
-
-        <div class='bg-slate-900 p-6 border border-slate-800 rounded-2xl'>
-          <p class='text-slate-400 text-sm italic'>
-            "After my site was hacked with SEO spam, I tried 3 plugins and
-            nothing worked. The manual cleanup here saved my business."
-          </p>
-          <p class='mt-3 font-bold text-slate-200 text-sm'>
-            — E-commerce Store Owner
-          </p>
-        </div>
-      </div>
-
-      {/* RIGHT COLUMN: Form */}
-      <div
-        class='relative bg-slate-900/50 shadow-xl p-8 border border-slate-700 rounded-xl'>
-        <h2 class='mb-6 font-bold text-white text-2xl'>Start Your Project</h2>
-
-        {/* Success Overlay */}
-        <div
-          id='success-message'
-          class='hidden z-10 absolute inset-0 flex-col justify-center items-center bg-slate-900 p-8 rounded-xl text-center animate-in fade-in zoom-in-95'>
-          <div
-            class='flex justify-center items-center bg-green-900/30 mb-4 rounded-full w-16 h-16 text-green-400'>
-            <CheckCircle2 class='w-8 h-8' />
-          </div>
-          <h3 class='mb-2 font-bold text-white text-2xl'>Inquiry Sent!</h3>
-          <p class='text-slate-400'>
-            I will review your request and reply within 12-24 hours.
-          </p>
-          <button
-            id='reset-form-btn'
-            class='mt-6 font-medium text-slate-500 hover:text-slate-300 text-sm underline'>
-            Send another message
-          </button>
-        </div>
-
-        <form
-          id='hire-me-form'
-          class='space-y-6'
-          novalidate
-          data-wp-url={wpApiUrl}
-          data-form-id={formId}>
-          {/* Row 1: Name & Email */}
-          <div class='gap-4 grid grid-cols-1 sm:grid-cols-2'>
-            <div class='space-y-2'>
-              <label for='your-name' class={labelClasses}>Name</label>
-              <input
-                type='text'
-                id='your-name'
-                name='your-name'
-                class={inputClasses}
-                placeholder='Your Name'
-                autocomplete='off'
-              />
-              <p class={`${errorClasses} hidden`} id='err-name'>
-                <AlertCircle class='w-3 h-3' /> Name must be at least 2 characters
-              </p>
-            </div>
-            <div class='space-y-2'>
-              <label for='your-email' class={labelClasses}>Email</label>
-              <input
-                type='email'
-                id='your-email'
-                name='your-email'
-                class={inputClasses}
-                placeholder='your@email.com'
-              />
-              <p class={`${errorClasses} hidden`} id='err-email'>
-                <AlertCircle class='w-3 h-3' /> Please enter a valid email address
-              </p>
-            </div>
-          </div>
-
-          {/* Service Selection */}
-          <div class='space-y-2'>
-            <label for='selected-service' class={labelClasses}
-              >Service Needed</label
-            >
-            <div class='relative'>
-              <select
-                id='selected-service'
-                name='selected-service'
-                class={`${inputClasses} appearance-none pr-10`}>
-                <option value='' disabled selected>Select a service</option>
-                {
-                  services.map((s) => (
-                    <option
-                      value={s.value}
-                      data-price={s.price}
-                      class='bg-slate-950 text-slate-200'>
-                      {s.label}
-                    </option>
-                  ))
-                }
-              </select>
-              <ChevronDown
-                class='top-1/2 right-3 absolute w-4 h-4 text-slate-400 -translate-y-1/2 pointer-events-none'
-              />
-            </div>
-            <p class={`${errorClasses} hidden`} id='err-service'>
-              <AlertCircle class='w-3 h-3' /> Please select a service
-            </p>
-          </div>
-
-          {/* Dynamic Price Box */}
-          <div
-            id='price-box'
-            class='hidden bg-slate-800 p-3 border border-slate-700 rounded-md animate-in fade-in'>
-            <p class='text-slate-200 text-sm'>
-              Estimated Starting Price: <strong id='price-display'></strong>
-            </p>
-          </div>
-
-          {/* Budget */}
-          <div class='space-y-2'>
-            <label for='budget' class={labelClasses}>Estimated Budget ($)</label
-            >
-            <input
-              type='number'
-              id='budget'
-              name='budget'
-              min='1'
-              class={inputClasses}
-              placeholder='e.g. 100'
-            />
-            <p class={`${errorClasses} hidden`} id='err-budget'>
-              <AlertCircle class='w-3 h-3' /> Please enter a budget greater than 0
-            </p>
-          </div>
-
-          {/* Description */}
-          <div class='space-y-2'>
-            <label for='description' class={labelClasses}>Project Details</label
-            >
-            <textarea
-              id='description'
-              name='description'
-              rows='3'
-              placeholder='Describe the issue or project goals...'
-              class={textareaClasses}></textarea>
-            <p class={`${errorClasses} hidden`} id='err-description'>
-              <AlertCircle class='w-3 h-3' /> Please provide more detail (min 10 chars)
-            </p>
-          </div>
-
-          <button id='submit-btn' type='submit' class={buttonClasses}>
-            Get a Free Quote
-          </button>
-
-          <div
-            class='bg-green-500/5 p-4 border border-green-500/20 rounded-lg text-center'>
-            <p class='text-slate-300 text-sm'>Prefer text instead of email?</p>
+<NewLayout
+  title={title}
+  description={description}
+  path='/hire-me/'
+  schema={schema}>
+  <section class='py-16 md:py-24'>
+    <div class='new-shell'>
+      <Breadcrumbs items={[{ label: 'Hire Me' }]} /><div
+        class='items-start gap-12 lg:gap-24 grid lg:grid-cols-[0.8fr_1.2fr] mt-10'>
+        <div class='lg:top-8 lg:sticky'>
+          <p
+            class='mb-4 font-extrabold text-[#1f6b55] text-xs uppercase tracking-[0.16em]'>
+            Start with the real situation
+          </p><h1
+            class='font-semibold text-5xl md:text-7xl leading-[0.96] editorial-heading'>
+            Tell me what happened—or what you want to build.
+          </h1><p class='mt-7 text-[#52665f] text-lg leading-8'>
+            Share the website URL, the symptom or goal, and any useful deadline.
+            I’ll review the context and reply with the most practical next step.
+          </p><div class='gap-3 grid mt-9 font-semibold text-sm'>
+            {
+              [
+                'Direct communication with MD Pabel',
+                'No obligation from the initial inquiry',
+                'Confidential access handling',
+                'Worldwide remote support',
+              ].map((item) => (
+                <span class='flex gap-3'>
+                  <span class='place-items-center grid bg-[#dcece5] rounded-full w-6 h-6'>
+                    <Check class='w-3.5 h-3.5 text-[#1f6b55]' />
+                  </span>
+                  {item}
+                </span>
+              ))
+            }
+          </div><div class='gap-3 grid sm:grid-cols-2 lg:grid-cols-1 mt-10'>
             <a
               href={whatsappUrl}
               target='_blank'
               rel='noopener noreferrer'
-              class='inline-flex justify-center items-center bg-green-500/10 hover:bg-green-500/15 mt-3 px-4 py-2.5 border border-green-500/30 rounded-md font-medium text-green-400 hover:text-green-300 transition-colors'>
-              Chat on WhatsApp
-            </a>
-            <p class='mt-2 text-slate-500 text-xs'>
-              Send your website URL, issue, and budget.
-            </p>
+              class='flex items-center gap-3 bg-[#fffdf8] p-4 border border-[#d7ddd7] rounded-2xl'
+              ><MessageCircle class='w-5 h-5 text-[#1f6b55]' /><span
+                class='text-[#52665f] text-xs'
+                ><strong class='block text-[#17352c] text-sm'>WhatsApp</strong
+                >Send a short problem summary</span
+              ><ArrowUpRight class='ml-auto w-4 h-4' /></a
+            ><a
+              href='mailto:support@mdpabel.com'
+              class='flex items-center gap-3 bg-[#fffdf8] p-4 border border-[#d7ddd7] rounded-2xl'
+              ><Mail class='w-5 h-5 text-[#1f6b55]' /><span
+                class='text-[#52665f] text-xs'
+                ><strong class='block text-[#17352c] text-sm'>Email</strong
+                >support@mdpabel.com</span
+              ><ArrowUpRight class='ml-auto w-4 h-4' /></a>
           </div>
-
+        </div>
+        <div
+          class='relative bg-[#fffdf8] shadow-[#17352c]/8 shadow-2xl p-6 md:p-9 border border-[#d7ddd7] rounded-3xl'>
           <div
-            id='general-error'
-            class='hidden bg-red-900/20 p-3 border border-red-800 rounded-md text-red-400 text-sm'>
-            Something went wrong. Please check your connection or try again.
-          </div>
-        </form>
+            id='success-message'
+            class='hidden z-10 absolute inset-0 flex-col justify-center items-center bg-[#fffdf8] p-8 rounded-3xl text-center'>
+            <span
+              class='place-items-center grid bg-[#dcece5] rounded-full w-16 h-16 text-[#1f6b55]'
+              ><Check class='w-7 h-7' /></span
+            ><h2 class='mt-5 font-semibold text-3xl editorial-heading'>
+              Your inquiry was sent.
+            </h2><p class='mt-3 text-[#52665f] text-sm'>
+              I’ll review the details and reply as soon as possible.
+            </p><button
+              id='reset-form-btn'
+              class='mt-6 font-bold text-[#1f6b55] text-sm'
+              >Send another message</button>
+          </div><div class='mb-7'>
+            <h2 class='font-semibold text-3xl editorial-heading'>
+              Project or support inquiry
+            </h2><p class='flex items-center gap-2 mt-2 text-[#65766f] text-xs'>
+              <Clock3 class='w-4 h-4' />Usually replies within one business day
+            </p>
+          </div><form
+            id='hire-me-form'
+            class='gap-5 grid'
+            novalidate
+            data-wp-url={wpApiUrl}
+            data-form-id={formId}>
+            <div class='gap-5 grid sm:grid-cols-2'>
+              <label class='gap-2 grid font-bold text-xs'
+                >Your name<input
+                  id='your-name'
+                  name='your-name'
+                  class={inputClass}
+                  placeholder='Name'
+                  autocomplete='name'
+                  required
+                /></label
+              ><label class='gap-2 grid font-bold text-xs'
+                >Email address<input
+                  id='your-email'
+                  name='your-email'
+                  type='email'
+                  class={inputClass}
+                  placeholder='you@company.com'
+                  autocomplete='email'
+                  required
+                /></label>
+            </div><label class='gap-2 grid font-bold text-xs'
+              >What do you need help with?<select
+                id='selected-service'
+                name='selected-service'
+                class={inputClass}
+                required
+                ><option value=''>Select a service</option><option
+                  value='malware-removal'>WordPress malware removal</option
+                ><option value='wordpress-maintenance'
+                  >WordPress maintenance</option
+                ><option value='wordpress-error-fixing'
+                  >WordPress error fixing</option
+                ><option value='blacklist-removal'>Blacklist removal</option
+                ><option value='website-development'>Website development</option
+                ><option value='other'>Something else</option></select
+              ></label
+            ><label class='gap-2 grid font-bold text-xs'
+              >Website URL<input
+                id='website-url'
+                name='website-url'
+                type='url'
+                class={inputClass}
+                placeholder='https://example.com'
+              /></label
+            ><label class='gap-2 grid font-bold text-xs'
+              >Budget or expected range<input
+                id='budget'
+                name='budget'
+                class={inputClass}
+                placeholder='Optional, but helpful'
+              /></label
+            ><label class='gap-2 grid font-bold text-xs'
+              >What happened or what should be built?<textarea
+                id='description'
+                name='description'
+                class={`${inputClass} min-h-36 resize-y`}
+                placeholder='Include the symptoms, goal, deadline, and anything already tried.'
+                required></textarea></label
+            ><p
+              id='general-error'
+              class='hidden bg-[#fee5dc] p-3 rounded-xl text-[#9f432c] text-sm'>
+              Please check the required fields or use WhatsApp if the form does
+              not send.
+            </p><button
+              id='submit-btn'
+              type='submit'
+              class='inline-flex justify-center items-center gap-2 bg-[#1f6b55] hover:bg-[#164a3c] px-6 py-3.5 rounded-full font-bold text-white text-sm transition'
+              >Send inquiry <ArrowUpRight class='w-4 h-4' /></button
+            ><p class='text-[#788780] text-[11px] text-center leading-5'>
+              Do not send passwords in this form. Secure access can be arranged
+              after the scope is confirmed.
+            </p>
+          </form>
+        </div>
       </div>
     </div>
-  </ComponentWrapper>
-</Layout>
+  </section>
+</NewLayout>
 
 <script>
-  declare global {
-    interface Window {
-      dataLayer: any[];
-    }
-  }
+  const form = document.getElementById(
+    'hire-me-form',
+  ) as HTMLFormElement | null;
+  const submitButton = document.getElementById(
+    'submit-btn',
+  ) as HTMLButtonElement | null;
+  const successMessage = document.getElementById('success-message');
+  const errorMessage = document.getElementById('general-error');
+  const resetButton = document.getElementById('reset-form-btn');
 
-  const form = document.getElementById('hire-me-form') as HTMLFormElement;
-  const serviceSelect = document.getElementById(
-    'selected-service',
-  ) as HTMLSelectElement;
-  const priceBox = document.getElementById('price-box') as HTMLDivElement;
-  const priceDisplay = document.getElementById('price-display') as HTMLElement;
-  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
-  const successMsg = document.getElementById(
-    'success-message',
-  ) as HTMLDivElement;
-  const errorMsg = document.getElementById('general-error') as HTMLDivElement;
-  const resetBtn = document.getElementById(
-    'reset-form-btn',
-  ) as HTMLButtonElement;
-
-  // --- Live Validation ---
-  const formElements = form?.querySelectorAll('input, select, textarea');
-
-  formElements?.forEach((element) => {
-    element.addEventListener('input', (e) => {
-      const target = e.target as
-        | HTMLInputElement
-        | HTMLSelectElement
-        | HTMLTextAreaElement;
-      const id = target.id;
-      const value = target.value;
-
-      const baseId = id.replace('your-', '').replace('selected-', '');
-      const errId = `err-${baseId}`;
-      const errElement = document.getElementById(errId);
-
-      // 1. Check validity based on the specific field
-      let isInvalid = false;
-      if (id === 'your-name') isInvalid = value.trim().length < 2;
-      if (id === 'your-email') isInvalid = !/^\S+@\S+\.\S+$/.test(value);
-      if (id === 'selected-service') isInvalid = !value;
-
-      // Changed budget validation to reject empty, 0, or negative numbers
-      if (id === 'budget') isInvalid = !value || Number(value) < 1;
-
-      if (id === 'description') isInvalid = value.trim().length < 10;
-
-      // 2. Toggle error visibility dynamically
-      if (isInvalid) {
-        target.classList.add(
-          'border-red-500',
-          'focus-visible:ring-red-500',
-          'focus-visible:border-red-500',
-        );
-        errElement?.classList.remove('hidden');
-      } else {
-        target.classList.remove(
-          'border-red-500',
-          'focus-visible:ring-red-500',
-          'focus-visible:border-red-500',
-        );
-        errElement?.classList.add('hidden');
-      }
-    });
-  });
-
-  // Handle Price Display
-  serviceSelect?.addEventListener('change', function () {
-    const selectedOption = this.options[this.selectedIndex];
-    const price = selectedOption.getAttribute('data-price');
-    if (price && priceBox && priceDisplay) {
-      priceDisplay.textContent = price;
-      priceBox.classList.remove('hidden');
-    } else if (priceBox) {
-      priceBox.classList.add('hidden');
-    }
-  });
-
-  // Handle Direct WP Submission
-  form?.addEventListener('submit', async (e: SubmitEvent) => {
-    e.preventDefault();
-
-    // Clear Previous Errors globally on new submit
-    document
-      .querySelectorAll('[id^="err-"]')
-      .forEach((el) => el.classList.add('hidden'));
-    document.querySelectorAll('input, select, textarea').forEach((el) => {
-      el.classList.remove(
-        'border-red-500',
-        'focus-visible:ring-red-500',
-        'focus-visible:border-red-500',
-      );
-    });
-    errorMsg?.classList.add('hidden');
-
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    errorMessage?.classList.add('hidden');
     const formData = new FormData(form);
-    const data = Object.fromEntries(formData) as Record<string, string>;
+    const name = String(formData.get('your-name') || '').trim();
+    const email = String(formData.get('your-email') || '').trim();
+    const service = String(formData.get('selected-service') || '');
+    const details = String(formData.get('description') || '').trim();
 
-    const wpUrl = form.dataset.wpUrl;
+    if (
+      name.length < 2 ||
+      !/^\S+@\S+\.\S+$/.test(email) ||
+      !service ||
+      details.length < 10
+    ) {
+      errorMessage?.classList.remove('hidden');
+      return;
+    }
+
+    const apiUrl = form.dataset.wpUrl;
     const formId = form.dataset.formId;
+    if (!apiUrl || !formId) {
+      errorMessage?.classList.remove('hidden');
+      return;
+    }
 
-    if (!wpUrl || !formId) return;
-
-    let isValid = true;
-
-    const validateField = (id: string, condition: boolean) => {
-      if (condition) {
-        document
-          .getElementById(id)
-          ?.classList.add(
-            'border-red-500',
-            'focus-visible:ring-red-500',
-            'focus-visible:border-red-500',
-          );
-
-        const baseId = id.replace('your-', '').replace('selected-', '');
-        const errId = `err-${baseId}`;
-
-        document.getElementById(errId)?.classList.remove('hidden');
-        isValid = false;
-      }
-    };
-
-    validateField(
-      'your-name',
-      !data['your-name'] || data['your-name'].trim().length < 2,
-    );
-    validateField(
-      'your-email',
-      !data['your-email'] || !/^\S+@\S+\.\S+$/.test(data['your-email']),
-    );
-    validateField('selected-service', !data['selected-service']);
-
-    // Changed budget submit validation to catch 0 or negative numbers
-    validateField('budget', !data['budget'] || Number(data['budget']) < 1);
-
-    validateField(
-      'description',
-      !data['description'] || data['description'].trim().length < 10,
-    );
-
-    if (!isValid) return;
-
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Sending...';
-
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = 'Sending…';
+    }
     formData.append('_wpcf7', formId);
     formData.append('_wpcf7_version', '6.1.2');
     formData.append('_wpcf7_locale', 'en_US');
     formData.append('_wpcf7_unit_tag', `wpcf7-f${formId}-p0-o1`);
 
     try {
-      const endpoint = `${wpUrl}/wp-json/contact-form-7/v1/contact-forms/${formId}/feedback`;
-      const res = await fetch(endpoint, { method: 'POST', body: formData });
-      const result = await res.json();
-
-      if (result.status === 'mail_sent') {
-        successMsg?.classList.remove('hidden');
-        successMsg?.classList.add('flex');
-        form.classList.add('opacity-0', 'pointer-events-none');
-
-        if (window.dataLayer) {
-          window.dataLayer.push({
-            event: 'hire_me_form_submitted',
-            service_requested: data['selected-service'],
-            budget_estimate: data['budget'],
-          });
-        }
-      } else {
-        errorMsg?.classList.remove('hidden');
-        if (errorMsg)
-          errorMsg.textContent = result.message || 'Submission failed.';
-      }
-    } catch (err) {
-      errorMsg?.classList.remove('hidden');
+      const response = await fetch(
+        `${apiUrl}/wp-json/contact-form-7/v1/contact-forms/${formId}/feedback`,
+        { method: 'POST', body: formData },
+      );
+      const result = await response.json();
+      if (result.status !== 'mail_sent')
+        throw new Error(result.message || 'Submission failed');
+      successMessage?.classList.remove('hidden');
+      successMessage?.classList.add('flex');
+    } catch {
+      errorMessage?.classList.remove('hidden');
     } finally {
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Get a Free Quote';
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Send inquiry';
+      }
     }
   });
 
-  resetBtn?.addEventListener('click', () => {
-    successMsg?.classList.add('hidden');
-    successMsg?.classList.remove('flex');
-    form.classList.remove('opacity-0', 'pointer-events-none');
-    form.reset();
-    priceBox?.classList.add('hidden');
-
-    // Extra cleanup just in case reset leaves red borders
-    document.querySelectorAll('input, select, textarea').forEach((el) => {
-      el.classList.remove(
-        'border-red-500',
-        'focus-visible:ring-red-500',
-        'focus-visible:border-red-500',
-      );
-    });
-    document
-      .querySelectorAll('[id^="err-"]')
-      .forEach((el) => el.classList.add('hidden'));
+  resetButton?.addEventListener('click', () => {
+    successMessage?.classList.add('hidden');
+    successMessage?.classList.remove('flex');
+    form?.reset();
   });
 </script>

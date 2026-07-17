@@ -1,0 +1,136 @@
+---
+import {
+  ArrowRight,
+  ArrowUpRight,
+  BookOpen,
+  Braces,
+  BriefcaseBusiness,
+  ChevronDown,
+  Compass,
+  FileTerminal,
+  HeartPulse,
+  Menu,
+  ScanLine,
+  ShieldAlert,
+  ShieldCheck,
+  Wrench,
+  X,
+} from '@lucide/astro';
+
+const pathname = Astro.url.pathname;
+
+const services = [
+  { label: 'Malware removal', description: 'Manual cleanup, investigation, and hardening', href: '/wordpress-malware-removal/', icon: ShieldAlert },
+  { label: 'WordPress maintenance', description: 'Updates, backups, security, and ongoing care', href: '/wordpress-maintenance/', icon: HeartPulse },
+  { label: 'Error fixing', description: 'Critical errors, failed updates, and broken sites', href: '/wordpress-error-fixing/', icon: Wrench },
+  { label: 'Website development', description: 'WordPress, Astro, Next.js, and AI-assisted builds', href: '/website-development/', icon: Braces },
+  { label: 'Blacklist removal', description: 'Browser and antivirus reputation recovery', href: '/blacklist-removal/', icon: ShieldCheck },
+];
+
+const resources = [
+  { label: 'Case studies', description: 'Real cleanup work, evidence, and outcomes', href: '/case-studies/', icon: BriefcaseBusiness },
+  { label: 'Blog', description: 'WordPress security notes and useful answers', href: '/blog/', icon: BookOpen },
+  { label: 'Guides', description: 'Practical, step-by-step security guidance', href: '/guides/', icon: Compass },
+  { label: 'Malware logs', description: 'First-hand malware and forensic observations', href: '/malware-log/', icon: FileTerminal },
+];
+
+const isCurrent = (href: string) => href === '/' ? pathname === href : pathname.startsWith(href);
+---
+
+<header class='sticky top-0 z-50 border-b border-[#d7ddd7] bg-[#f7f4ed]/95 backdrop-blur-xl'>
+  <div class='new-shell flex min-h-[78px] items-center justify-between gap-6'>
+    <div class='flex min-w-0 items-center gap-8 xl:gap-12'>
+      <a href='/' class='inline-flex shrink-0 items-center gap-3' aria-label='MD Pabel homepage'>
+        <span class='grid h-11 w-11 place-items-center rounded-[50%_50%_50%_14%] bg-[#17352c] text-xs font-extrabold tracking-wider text-white'>MP</span>
+        <span class='flex flex-col leading-none'>
+          <strong class='editorial-heading text-lg'>MD Pabel</strong>
+          <small class='mt-1 text-[10px] font-bold uppercase tracking-[0.14em] text-[#52665f]'>WordPress security</small>
+        </span>
+      </a>
+
+      <nav class='hidden items-center gap-1 lg:flex' aria-label='Primary navigation'>
+        <a href='/about/' class='nav-link' aria-current={isCurrent('/about/') ? 'page' : undefined}>About</a>
+
+        <div class='group relative'>
+          <a href='/services/' class='nav-link flex items-center gap-1.5' aria-current={isCurrent('/services/') ? 'page' : undefined}>
+            Services <ChevronDown class='h-4 w-4 transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180' />
+          </a>
+          <div class='mega-wrap invisible absolute left-0 top-full w-[470px] translate-y-2 pt-2 opacity-0 transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100'>
+            <div class='rounded-2xl border border-[#d7ddd7] bg-[#fffdf8] p-2 shadow-xl shadow-[#17352c]/12'>
+              <div class='grid grid-cols-2 gap-1'>
+                {services.map((item) => (
+                  <a href={item.href} class='group/item flex items-center gap-2.5 rounded-xl p-2.5 text-[13px] font-extrabold text-[#17352c] transition-colors hover:bg-[#dcece5] focus:bg-[#dcece5] focus:outline-none'>
+                    <span class='grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#eef4ef] text-[#1f6b55]'><item.icon class='h-4 w-4' /></span>
+                    {item.label}
+                  </a>
+                ))}
+                <a href='/services/' class='col-span-2 flex items-center justify-between border-t border-[#d7ddd7] px-3 pb-1 pt-2.5 text-xs font-extrabold text-[#52665f] hover:text-[#1f6b55]'>View all services <ArrowRight class='h-4 w-4' /></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class='group relative'>
+          <a href='/guides/' class='nav-link flex items-center gap-1.5' aria-current={resources.some((item) => isCurrent(item.href)) ? 'page' : undefined}>
+            Resources <ChevronDown class='h-4 w-4 transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180' />
+          </a>
+          <div class='mega-wrap invisible absolute left-0 top-full w-[430px] translate-y-2 pt-2 opacity-0 transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100'>
+            <div class='rounded-2xl border border-[#d7ddd7] bg-[#fffdf8] p-2 shadow-xl shadow-[#17352c]/12'>
+              <div class='grid grid-cols-2 gap-1'>
+                {resources.map((item) => (
+                  <a href={item.href} class='group/item flex items-center gap-2.5 rounded-xl p-2.5 text-[13px] font-extrabold text-[#17352c] transition-colors hover:bg-[#dcece5] focus:bg-[#dcece5] focus:outline-none'>
+                    <span class='grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#eef4ef] text-[#1f6b55]'><item.icon class='h-4 w-4' /></span>
+                    {item.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <div class='hidden items-center gap-4 lg:flex'>
+      <a href='/free-wordpress-scan/' class='free-scan-link inline-flex items-center gap-2 text-sm font-bold text-[#52665f] transition-colors'>
+        <ScanLine class='h-4 w-4' /> Free scan
+      </a>
+      <a href='/hire-me/' class='header-cta inline-flex items-center gap-2 rounded-full border border-[#17352c] px-5 py-2.5 text-sm font-extrabold transition-all hover:-translate-y-0.5'>Hire me <ArrowUpRight class='h-4 w-4' /></a>
+    </div>
+
+    <details class='mobile-menu group relative lg:hidden'>
+      <summary class='grid h-11 w-11 cursor-pointer list-none place-items-center rounded-full border border-[#d7ddd7]' aria-label='Toggle navigation'>
+        <Menu class='menu-open h-5 w-5' /><X class='menu-close h-5 w-5' />
+      </summary>
+      <nav class='absolute right-0 top-[calc(100%+12px)] max-h-[calc(100vh-100px)] w-[min(360px,calc(100vw-28px))] overflow-y-auto rounded-2xl border border-[#d7ddd7] bg-[#fffdf8] p-2 shadow-2xl shadow-[#17352c]/15' aria-label='Mobile navigation'>
+        <a href='/about/' class='mobile-top-link'>About</a>
+        <details class='mobile-group'><summary>Services <ChevronDown class='h-4 w-4' /></summary><div>{services.map((item) => <a href={item.href}>{item.label}</a>)}</div></details>
+        <details class='mobile-group'><summary>Resources <ChevronDown class='h-4 w-4' /></summary><div>{resources.map((item) => <a href={item.href}>{item.label}</a>)}</div></details>
+        <a href='/free-wordpress-scan/' class='mt-2 flex items-center justify-between rounded-xl border border-[#d7ddd7] px-4 py-3 text-sm font-extrabold text-[#17352c]'>Free WordPress scan <ScanLine class='h-4 w-4' /></a>
+        <a href='/hire-me/' class='mt-2 flex items-center justify-between rounded-xl bg-[#1f6b55] px-4 py-3 text-sm font-extrabold text-white'>Hire me <ArrowUpRight class='h-4 w-4' /></a>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<style>
+  :global(.new-shell) { width: min(1180px, calc(100% - 40px)); margin-inline: auto; }
+  .editorial-heading { font-family: "Source Serif 4 Variable", Georgia, serif; letter-spacing: -.04em; }
+  .nav-link { position: relative; display: inline-flex; align-items: center; padding: 1.85rem 0.85rem; color: #3c554c; font-size: .92rem; font-weight: 750; letter-spacing: -.01em; }
+  .nav-link::after { position: absolute; right: .85rem; bottom: 1.25rem; left: .85rem; height: 2px; transform: scaleX(0); transform-origin: right; background: #ed7655; content: ''; transition: transform 180ms ease; }
+  .nav-link:hover, .nav-link[aria-current='page'] { color: #17352c; }
+  .nav-link:hover::after, .nav-link:focus-visible::after, .nav-link[aria-current='page']::after { transform: scaleX(1); transform-origin: left; }
+  .free-scan-link:hover, .free-scan-link:focus-visible { color: #1f6b55; }
+  .header-cta:hover, .header-cta:focus-visible { background: #17352c; color: #fff; }
+  .mobile-menu summary::-webkit-details-marker, .mobile-group summary::-webkit-details-marker { display: none; }
+  .mobile-menu .menu-close { display: none; }
+  .mobile-menu[open] > summary .menu-open { display: none; }
+  .mobile-menu[open] > summary .menu-close { display: block; }
+  .mobile-top-link, .mobile-group > summary { display: flex; align-items: center; justify-content: space-between; border-radius: .75rem; padding: .8rem .9rem; color: #17352c; font-size: .95rem; font-weight: 800; }
+  .mobile-top-link:hover, .mobile-group > summary:hover { background: #eef4ef; }
+  .mobile-group[open] > summary svg { transform: rotate(180deg); }
+  .mobile-group > div { display: grid; margin: 0 .5rem .4rem; border-left: 1px solid #d7ddd7; padding-left: .75rem; }
+  .mobile-group > div a { border-radius: .65rem; padding: .62rem .75rem; color: #52665f; font-size: .82rem; font-weight: 650; }
+  .mobile-group > div a:hover { background: #dcece5; color: #17352c; }
+  @media (max-width: 1180px) { .mega-wrap { left: -120px; } }
+  @media (max-width: 640px) { :global(.new-shell) { width: min(100% - 28px, 1180px); } }
+</style>

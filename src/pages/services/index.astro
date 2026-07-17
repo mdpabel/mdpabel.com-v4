@@ -1,0 +1,34 @@
+---
+import { ArrowUpRight, Braces, HeartPulse, ShieldAlert, ShieldCheck, Wrench } from '@lucide/astro';
+import NewLayout from '../../layouts/NewLayout.astro';
+import Breadcrumbs from '../../components/new/Breadcrumbs.astro';
+
+const services = [
+  { title: 'WordPress malware removal', description: 'Manual investigation and cleanup for hacked sites, backdoors, redirects, SEO spam, and reinfections.', href: '/wordpress-malware-removal/', icon: ShieldAlert, tag: 'Emergency recovery' },
+  { title: 'WordPress maintenance', description: 'Updates, backups, security checks, uptime, performance care, and direct technical support.', href: '/wordpress-maintenance/', icon: HeartPulse, tag: 'Ongoing care' },
+  { title: 'Website development', description: 'WordPress, Next.js, Astro, and AI-assisted website development built for maintainability and growth.', href: '/website-development/', icon: Braces, tag: 'Build and improve' },
+  { title: 'WordPress error fixing', description: 'Diagnosis and repair for critical errors, HTTP failures, database issues, login problems, and broken updates.', href: '/wordpress-error-fixing/', icon: Wrench, tag: 'Technical repair' },
+  { title: 'Blacklist removal', description: 'Malware cleanup, reputation diagnosis, and review support for browser and antivirus warnings.', href: '/blacklist-removal/', icon: ShieldCheck, tag: 'Reputation recovery' },
+];
+
+const title = 'WordPress Security, Maintenance & Development Services | MD Pabel';
+const description = 'Explore WordPress malware removal, maintenance, error fixing, blacklist recovery, and modern website development services from MD Pabel.';
+const url = 'https://www.mdpabel.com/services/';
+const schema = [
+  { '@type': 'CollectionPage', '@id': `${url}#webpage`, url, name: title, description, mainEntity: { '@id': `${url}#services` } },
+  { '@type': 'ItemList', '@id': `${url}#services`, name: 'MD Pabel services', itemListElement: services.map((service, index) => ({ '@type': 'ListItem', position: index + 1, name: service.title, url: `https://www.mdpabel.com${service.href}` })) },
+  { '@type': 'BreadcrumbList', '@id': `${url}#breadcrumb`, itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.mdpabel.com/' }, { '@type': 'ListItem', position: 2, name: 'Services', item: url }] },
+];
+---
+
+<NewLayout title={title} description={description} path='/services/' schema={schema}>
+  <section class='relative overflow-hidden border-b border-[#d7ddd7] py-16 md:py-24'>
+    <div class='new-shell'><Breadcrumbs items={[{ label: 'Services' }]} /><p class='mb-4 mt-10 text-xs font-extrabold uppercase tracking-[0.16em] text-[#1f6b55]'>Choose the help you actually need</p><h1 class='editorial-heading max-w-5xl text-5xl font-semibold leading-[0.96] md:text-7xl'>Security, care, and development—with one accountable specialist.</h1><p class='mt-7 max-w-3xl text-lg leading-8 text-[#52665f]'>Start with the symptom or goal. Each service has a clear scope, related evidence, and a direct path to discuss your website without navigating a generic agency sales process.</p></div>
+  </section>
+  <section class='py-20 md:py-28'>
+    <div class='new-shell'>
+      <div class='grid gap-4 lg:grid-cols-2'>{services.map((service, index) => <a href={service.href} class:list={['group relative flex flex-col overflow-hidden rounded-3xl border border-[#d7ddd7] bg-[#fffdf8] p-7 transition hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#17352c]/10', index === 0 && 'lg:bg-[#17352c] lg:text-white', index === services.length - 1 && 'lg:col-span-2']}><div class:list={['mb-7 grid h-14 w-14 place-items-center rounded-[50%_50%_50%_14%] bg-[#dcece5] text-[#1f6b55]', index === 0 && 'lg:bg-white/10 lg:text-[#ed7655]']}><service.icon class='h-6 w-6' /></div><span class='text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#ed7655]'>{service.tag}</span><h2 class='editorial-heading mt-3 text-3xl font-semibold md:text-4xl'>{service.title}</h2><p class:list={['mt-4 max-w-2xl text-sm leading-7 text-[#52665f]', index === 0 && 'lg:text-[#cbded6]']}>{service.description}</p><span class='mt-8 inline-flex items-center gap-2 text-xs font-bold'>Explore service <ArrowUpRight class='h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1' /></span></a>)}</div>
+    </div>
+  </section>
+  <section class='pb-24'><div class='new-shell rounded-3xl bg-[#1f6b55] p-8 text-white md:p-12'><div class='grid items-center gap-8 md:grid-cols-[1fr_auto]'><div><p class='text-xs font-bold uppercase tracking-[0.14em] text-[#b9d8cc]'>Not sure where it fits?</p><h2 class='editorial-heading mt-3 text-4xl font-semibold'>Describe the problem in your own words.</h2></div><a href='/hire-me/' class='inline-flex w-fit items-center gap-2 rounded-full bg-[#ed7655] px-6 py-3 font-bold'>Discuss your website <ArrowUpRight class='h-4 w-4' /></a></div></div></section>
+</NewLayout>

@@ -1,66 +1,11 @@
 ---
-// src/pages/blog/[slug].astro
-import Layout from '../../layouts/Layout.astro';
-import ComponentWrapper from '../../components/component-wrapper.astro';
-import SinglePost from '../../components/SinglePost.astro';
+import ArticlePage from '../../components/new/ArticlePage.astro';
 import { wordpress } from '../../lib/wordpress';
-import Banner from '../../components/Banner.astro';
-import RelatedPosts from '../../components/RelatedPosts.astro';
-import BlogServiceCTA from '../../components/BlogServiceCTA.astro';
 
-// 1. Generate Paths
 export async function getStaticPaths() {
-  const allPosts = await wordpress.getAllPosts();
-
-  return allPosts.map((post) => {
-    // Filter related posts in memory (0ms latency)
-    const relatedPosts = allPosts
-      .filter(
-        (p) =>
-          p.id !== post.id &&
-          p.categories.some((cat) =>
-            post.categories.find((c) => c.id === cat.id),
-          ),
-      )
-      .sort(() => 0.5 - Math.random())
-      .slice(0, 3);
-
-    return {
-      params: { slug: post.slug },
-      props: { post, relatedPosts },
-    };
-  });
+  const posts = await wordpress.getAllPosts({ postType: 'posts' });
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post, relatedPosts: posts.filter((item) => item.id !== post.id && item.categories.some((category) => post.categories.some((current) => current.id === category.id))).slice(0, 3) } }));
 }
-
 const { post, relatedPosts } = Astro.props;
-
-// 2. SEO Plugin Logic
-const seoPlugin = import.meta.env.SEO_PLUGIN || 'yoast';
-let headTags = post.yoastHead || '';
-
-// If Rank Math is configured, fetch its metadata using the post's WordPress URL
-if (seoPlugin === 'rankmath') {
-  const rankMathHead = await wordpress.getRankMathHead(post.link);
-  if (rankMathHead) {
-    headTags = rankMathHead;
-  } else {
-    console.warn(
-      `⚠️ Rank Math data not found for ${post.slug}, falling back to default/Yoast.`,
-    );
-  }
-}
 ---
-
-{/* ✅ Passes dynamically chosen SEO tags based on your .env configuration */}
-<Layout yoastHead={headTags}>
-  <!-- <Banner /> -->
-
-  <ComponentWrapper class='pb-20 max-w-4xl'>
-    {/* SinglePost handles the forensic dark-prose rendering */}
-    <SinglePost post={post} parentSlug='blog' />
-
-    <BlogServiceCTA />
-
-    <RelatedPosts currentPostId={post.id} posts={relatedPosts} />
-  </ComponentWrapper>
-</Layout>
+<ArticlePage post={post} relatedPosts={relatedPosts} rootSlug='blog' label='Blog' kind='blog' />

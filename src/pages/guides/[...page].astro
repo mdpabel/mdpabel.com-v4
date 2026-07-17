@@ -1,71 +1,14 @@
 ---
-// src/pages/guides/[...page].astro
-import BlogPosts from '../../components/BlogPosts.astro';
-import ComponentWrapper from '../../components/component-wrapper.astro';
-import Layout from '../../layouts/Layout.astro';
+import ArchivePage from '../../components/new/ArchivePage.astro';
 import { wordpress } from '../../lib/wordpress';
 
 export async function getStaticPaths() {
-  const PER_PAGE = 10;
-
-  // 1. Fetch all items (using cached getAllPosts)
-  const allGuides = await wordpress.getAllPosts({
-    postType: 'guide',
-  });
-
-  // 2. Calculate total pages
-  const totalPages = Math.ceil(allGuides.length / PER_PAGE);
-
-  // 3. Generate routes manually
-  return Array.from({ length: totalPages }, (_, i) => {
-    const pageNum = i + 1;
-    const start = i * PER_PAGE;
-    const end = start + PER_PAGE;
-    const pagePosts = allGuides.slice(start, end);
-
-    return {
-      // ✅ CRITICAL: For /guides (root) to work, page 1 MUST be undefined
-      params: { page: pageNum === 1 ? undefined : pageNum.toString() },
-      props: { posts: pagePosts, totalPages, currentPage: pageNum },
-    };
-  });
+  const perPage = 10;
+  const allPosts = await wordpress.getAllPosts({ postType: 'guide' });
+  const totalPages = Math.max(1, Math.ceil(allPosts.length / perPage));
+  return Array.from({ length: totalPages }, (_, index) => ({ params: { page: index === 0 ? undefined : String(index + 1) }, props: { posts: allPosts.slice(index * perPage, (index + 1) * perPage), totalPages, currentPage: index + 1 } }));
 }
-
-// ✅ Use props instead of params for the current page to ensure stability
 const { posts, totalPages, currentPage } = Astro.props;
-
-// --- Dynamic SEO Settings ---
-const isFirstPage = currentPage === 1;
-const baseUrl = 'https://www.mdpabel.com/guides';
-
-const seoTitle = isFirstPage
-  ? 'WordPress Guides & Tutorials: Security, Malware Removal & Optimization'
-  : `Guides & Tutorials (Page ${currentPage}) | WordPress Security`;
-
-const seoDesc = isFirstPage
-  ? 'Explore step-by-step WordPress guides on security best practices, malware detection and removal, and performance optimization.'
-  : `Page ${currentPage} of our WordPress tutorials archive. Learn manual malware removal and site hardening.`;
-
-const canonicalURL = isFirstPage ? baseUrl : `${baseUrl}/${currentPage}`;
+const seoTitle = currentPage === 1 ? 'WordPress Security Guides & Tutorials | MD Pabel' : `WordPress Security Guides — Page ${currentPage}`;
 ---
-
-<Layout
-  title={seoTitle}
-  description={seoDesc}
-  image='/images/blog-opengraph-image.png'
-  canonical={canonicalURL}>
-  <ComponentWrapper class='pt-12'>
-    {/* The BlogPosts component now inherits the dark theme context */}
-    <BlogPosts
-      posts={posts}
-      totalPages={totalPages}
-      postType='guide'
-      rootSlug='guides'
-      page={currentPage}
-      limit={10}
-      title='Security, Malware Removal & Optimization Tutorials'
-      shortDescription='Detailed, step-by-step technical tutorials to help you master WordPress security hardening and malware remediation.'
-      mode='all'
-    />
-  </ComponentWrapper>
-</Layout>
+<ArchivePage posts={posts} totalPages={totalPages} currentPage={currentPage} rootSlug='guides' label='Guides' title='Step-by-step WordPress security guides.' description='Detailed tutorials for diagnosing WordPress problems, understanding malware, strengthening security, and making safer technical decisions.' seoTitle={seoTitle} />

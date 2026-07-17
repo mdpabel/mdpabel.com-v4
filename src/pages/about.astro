@@ -1,989 +1,294 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import ComponentWrapper from '../components/component-wrapper.astro';
+import { Image } from 'astro:assets';
 import {
-  ShieldCheck,
-  CheckCircle,
-  GraduationCap,
-  Globe,
-  Code2,
-  Trophy,
-  BookOpen,
-  UserCheck,
-  Star,
-  Calendar,
-  Zap,
   ArrowRight,
-  Github,
-  Linkedin,
-  Award,
-  ChevronDown,
-  Quote,
-  PenTool,
-  Compass,
-  FileText,
-  MessageSquare,
+  ArrowUpRight,
+  BadgeCheck,
+  Braces,
+  Check,
+  Search,
+  ShieldCheck,
 } from '@lucide/astro';
+import NewLayout from '../layouts/NewLayout.astro';
+import Breadcrumbs from '../components/new/Breadcrumbs.astro';
+import portrait from '../assets/my-img.png';
 
-// --- SEO META ---
-const seoTitle = 'About MD Pabel | WordPress Malware Removal Specialist';
-const seoDesc =
-  'MD Pabel is an independent WordPress malware removal specialist from Bangladesh with 4,500+ hacked site cleanups since 2018. Learn his background, cleanup process, case studies, and verified public profiles.';
-const canonicalUrl = 'https://www.mdpabel.com/about/';
-const ogImage = '/images/md-pabel-og.jpg';
-
-// --- BUTTONS ---
-const primaryButtonClass =
-  'inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 disabled:pointer-events-none disabled:opacity-50 h-11 px-8 bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-900/20 tracking-tight';
-
-const secondaryButtonClass =
-  'inline-flex items-center justify-center rounded-md border border-slate-700 bg-slate-900/60 hover:bg-slate-800 text-slate-200 transition-colors h-11 px-8 text-sm font-medium';
-
-// --- VERIFIED PUBLIC PROFILES (real, owned, verifiable) ---
-const sameAsProfiles = [
-  'https://www.linkedin.com/in/mdpabe1/',
-  'https://github.com/mdpabel',
-  'https://leetcode.com/u/mdpabel/',
-  'https://www.researchgate.net/publication/395318263_Real-time_Full-Stack_University_Bus_Tracking_System_Based_on_IoT',
-  'https://web.facebook.com/mdpabelwpsecurity',
-  'https://www.instagram.com/md_pabell/',
+const title = 'About MD Pabel | WordPress Security Specialist Since 2018';
+const description =
+  'Meet MD Pabel, an independent WordPress security specialist with 4,500+ hacked-site cleanups, development experience, and first-hand malware research since 2018.';
+const url = 'https://www.mdpabel.com/about/';
+const personId = `${url}#person`;
+const schema = [
+  {
+    '@type': 'ProfilePage',
+    '@id': `${url}#profilepage`,
+    url,
+    name: title,
+    description,
+    mainEntity: { '@id': personId },
+    dateModified: '2026-07-17',
+  },
+  {
+    '@type': 'Person',
+    '@id': personId,
+    name: 'MD Pabel',
+    url,
+    image: 'https://www.mdpabel.com/md-pabel.png',
+    jobTitle: 'WordPress Security Specialist and Web Developer',
+    description:
+      'Independent WordPress security specialist with first-hand experience across more than 4,500 hacked website cleanups since 2018.',
+    email: 'support@mdpabel.com',
+    sameAs: [
+      'https://www.linkedin.com/in/mdpabe1/',
+      'https://github.com/mdpabel',
+      'https://find-and-update.company-information.service.gov.uk/company/15939565/officers',
+    ],
+    knowsAbout: [
+      'WordPress malware removal',
+      'Hacked website recovery',
+      'WordPress security',
+      'Blacklist removal',
+      'WordPress development',
+      'Next.js development',
+      'Astro development',
+      'Web application security',
+    ],
+  },
+  {
+    '@type': 'BreadcrumbList',
+    '@id': `${url}#breadcrumb`,
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://www.mdpabel.com/',
+      },
+      { '@type': 'ListItem', position: 2, name: 'About MD Pabel', item: url },
+    ],
+  },
 ];
 
-// --- CAREER TIMELINE ---
-const timeline = [
-  {
-    year: 'Jul 2018',
-    title: 'First WordPress malware cleanup',
-    body: 'Took on my first hacked-site cleanup through freelance client work while still an ICT student at Comilla University. No security plugin subscription, no senior engineer to ask — just opened the files in a code editor and started reading. That cleanup defined the next eight years of my work.',
-  },
-  {
-    year: '2022',
-    title: 'Graduated from Comilla University',
-    body: 'Completed an Information & Communication Technology (ICT) degree from Comilla University, Bangladesh. Final-year research project: a real-time, full-stack IoT-based university bus tracking system, later published on ResearchGate. By this point, freelance malware cleanup had already become the primary work, with the academic foundation supporting it.',
-  },
-  {
-    year: 'Nov 2023',
-    title: 'Expanded to Upwork',
-    body: 'After five years of hacked-site work and thousands of cleanups, joined Upwork to reach a different client base. Started with one-off cleanup jobs and quickly grew to long-term security retainers.',
-  },
-  {
-    year: '2024',
-    title: 'Built verified Upwork client history',
-    body: 'Earned strong client trust on Upwork through consistent technical work, completed cleanup jobs, and long-term security support. Marketplace profiles helped many clients verify my work before contacting me directly.',
-  },
-  {
-    year: '2026',
-    title: '4,500+ client cleanups',
-    body: 'Crossed the 4,500-cleanup milestone through years of freelance marketplace work, agency referrals, and direct client projects. Selected high-value cases are documented as forensic case studies or blog posts on mdpabel.com so future clients can review the work and other site owners can understand similar attacks.',
-  },
-];
-
-// --- NON-NEGOTIABLES ---
 const principles = [
-  {
-    title: 'I never use nulled plugins or themes',
-    body: "Free pirated plugins are how 30% of hacked sites I see got infected in the first place. I won't recommend them, install them, or work on a site that's running them without first removing them.",
-  },
-  {
-    title: 'Important cleanup patterns get documented',
-    body: 'When a cleanup reveals a useful malware pattern, I turn it into a public blog post or case study. Client-identifying details are anonymized, but the malware behavior, file paths, and forensic process are documented so other site owners can learn from it.',
-  },
-  {
-    title: 'No black-box proprietary scripts',
-    body: "I don't run mystery scanners on client sites. Every command, every script, and every change is something I can explain line by line. If you ask what I did, you'll get a real answer with file paths and reasoning.",
-  },
-  {
-    title: 'Backup restoration is a last resort',
-    body: "Most 'restored from backup' fixes I see were restored from an already-infected backup. I clean live, document the entry point, and only restore from backup when it's verified clean and necessary.",
-  },
-  {
-    title: 'I work alone — and that is a feature',
-    body: "Every cleanup, every email, every Search Console submission is done by me personally. There's no support tier 1 to escalate from, no junior engineer touching production. That's slower than an agency, but accountability is unambiguous.",
-  },
-  {
-    title: 'Honest scoping over upselling',
-    body: "If your problem is a 5-minute fix, I'll tell you it's a 5-minute fix. I'd rather quote a fair price for actual work than win short-term margin and lose the next ten referrals.",
-  },
-];
-
-// --- FAQ DATA (mirrored in schema) ---
-const faqs = [
-  {
-    q: 'Who is MD Pabel?',
-    a: 'MD Pabel is a WordPress malware removal expert based in Dhaka, Bangladesh. He has been manually cleaning hacked WordPress sites since July 2018 and is the sole person behind mdpabel.com — not an agency or white-label reseller. He graduated in Information & Communication Technology (ICT) from Comilla University and specializes in Japanese SEO spam, fake CAPTCHA malware, .htaccess redirects, database injections, hidden backdoors, and blacklist recovery.',
-  },
-  {
-    q: 'How can I verify MD Pabel is a real person?',
-    a: 'Cross-reference the verifiable public profiles linked on this page: LinkedIn (linkedin.com/in/mdpabe1), GitHub (github.com/mdpabel), LeetCode (leetcode.com/u/mdpabel — 550+ problems solved), the ResearchGate publication on a university IoT project, and the Facebook business page mdpabelwpsecurity. These profiles help verify identity and technical background.',
-  },
-  {
-    q: 'I worked with MD Pabel on a freelancer marketplace years ago. Is this the same person?',
-    a: 'Yes. mdpabel.com is the direct way to continue working with him outside of marketplace platforms. Past clients can verify identity by matching the public profiles, writing style, technical depth in case studies, and any specific cleanup details they remember from previous work.',
-  },
-  {
-    q: 'Where is MD Pabel based?',
-    a: 'Dhaka, Bangladesh. Time zone is Bangladesh Standard Time (UTC+6). Most clients are in the US, UK, Europe, and Australia, so emergency cleanups are typically picked up within 1–2 hours of contact regardless of which time zone the client is in.',
-  },
-  {
-    q: 'Is MD Pabel an agency, a team, or one person?',
-    a: 'One person. There are no junior engineers, no support tiers, no white-label subcontracting. Every cleanup, every Google Search Console submission, every blog post, and every email reply is done by MD Pabel personally. This is slower than an agency in raw throughput but means responsibility is unambiguous on every job.',
-  },
-  {
-    q: 'Why does MD Pabel publish so many forensic case studies and write-ups?',
-    a: "Two reasons. First, transparency — anyone considering hiring him can read documented cleanups before contacting, instead of relying on marketing pages. Second, education — most WordPress site owners discover their site is hacked at the worst possible moment and need to understand what's happening fast. Public forensic write-ups help them either fix it themselves or hire someone competent.",
-  },
-  {
-    q: 'What is MD Pabel’s educational background?',
-    a: 'Bachelor’s degree in Information & Communication Technology (ICT) from Comilla University, Bangladesh. Final-year research focused on a real-time, full-stack IoT-based university bus tracking system, published on ResearchGate. Outside formal education, has solved 550+ LeetCode problems for ongoing algorithmic and systems practice.',
-  },
-  {
-    q: 'Does MD Pabel only work on WordPress?',
-    a: 'WordPress malware removal is the primary specialty and the focus of mdpabel.com. The supporting technical foundation — PHP, JavaScript, TypeScript, Node.js, MySQL, server logs, and hosting platforms — exists specifically to make the malware work deeper. WordPress is roughly 95% of the work; the remaining 5% is typically forensic JavaScript analysis, server-level cleanup on non-WordPress hosts, and occasional full-stack development consulting.',
-  },
-  {
-    q: 'How does MD Pabel describe his approach to malware removal?',
-    a: "Read the code, don't trust the scanner. Find the entry point, not just the symptom. Patch the vulnerability that allowed the attack, not just the visible payload. Document everything so the same attack pattern is easier to recognize next time. Treat each site as the client's livelihood, not a ticket number.",
-  },
-];
-
-// --- STRUCTURED DATA (ProfilePage + Person + FAQPage) ---
-const structuredData = JSON.stringify({
-  '@context': 'https://schema.org',
-  '@graph': [
-    {
-      '@type': 'ProfilePage',
-      '@id': `${canonicalUrl}#profilepage`,
-      url: canonicalUrl,
-      name: 'About MD Pabel — WordPress Malware Removal Expert',
-      description: seoDesc,
-      inLanguage: 'en',
-      dateCreated: '2024-01-15T00:00:00+06:00',
-      dateModified: new Date().toISOString(),
-      mainEntity: { '@id': `${canonicalUrl}#person` },
-      isPartOf: { '@id': 'https://www.mdpabel.com/#website' },
-    },
-    {
-      '@type': 'Person',
-      '@id': `${canonicalUrl}#person`,
-      name: 'MD Pabel',
-      alternateName: ['Md Pabel', 'Pabel', 'M D Pabel'],
-      url: canonicalUrl,
-      mainEntityOfPage: canonicalUrl,
-      image: 'https://www.mdpabel.com' + ogImage,
-      jobTitle: 'WordPress Malware Removal Expert',
-      description:
-        'WordPress malware removal expert from Dhaka, Bangladesh. ICT graduate of Comilla University. 4,500+ hacked WordPress sites manually cleaned since July 2018. Sole operator behind mdpabel.com.',
-      alumniOf: {
-        '@type': 'CollegeOrUniversity',
-        name: 'Comilla University',
-        sameAs: 'https://cou.ac.bd/',
-      },
-      knowsAbout: [
-        'WordPress malware removal',
-        'WordPress security',
-        'Hacked WordPress site cleanup',
-        'Japanese keyword hack removal',
-        'Japanese SEO spam removal',
-        'Pharma hack removal',
-        'Google blacklist removal',
-        'McAfee blacklist removal',
-        'Norton blacklist removal',
-        'Google Safe Browsing recovery',
-        'Fake CAPTCHA malware',
-        'hSEO malware',
-        'ClearFake malware',
-        '.htaccess malware',
-        'WordPress redirect malware',
-        'WordPress database malware',
-        'WordPress backdoor removal',
-        'Hidden admin user detection',
-        'Cron job malware removal',
-        'Cloaking malware removal',
-        'WooCommerce credit card skimmer removal',
-        'JavaScript redirect malware',
-        'Obfuscated PHP malware analysis',
-        'WordPress critical error fix',
-        'WordPress white screen of death',
-        'WordPress security hardening',
-        'Manual malware forensics',
-        'Server log analysis',
-        'PHP',
-        'JavaScript',
-        'TypeScript',
-        'Node.js',
-        'MySQL',
-        'cPanel',
-        'Cloudflare',
-        'SiteGround',
-      ],
-      knowsLanguage: ['en', 'bn'],
-      worksFor: {
-        '@type': 'Organization',
-        name: 'MD Pabel — WordPress Malware Removal & Security',
-        url: 'https://www.mdpabel.com/',
-      },
-      hasOccupation: {
-        '@type': 'Occupation',
-        name: 'WordPress Malware Removal Expert',
-        occupationLocation: { '@type': 'Country', name: 'Bangladesh' },
-        skills:
-          'Manual malware cleanup, forensic log analysis, PHP code review, JavaScript de-obfuscation, blacklist removal, WordPress hardening, database malware analysis, hidden backdoor detection',
-      },
-      sameAs: sameAsProfiles,
-    },
-    {
-      '@type': 'FAQPage',
-      '@id': `${canonicalUrl}#faq`,
-      mainEntity: faqs.map((f) => ({
-        '@type': 'Question',
-        name: f.q,
-        acceptedAnswer: { '@type': 'Answer', text: f.a },
-      })),
-    },
+  [
+    'Evidence before assumptions',
+    'I reproduce symptoms, inspect the affected layers, and use logs and file history where available before deciding what needs to change.',
   ],
-});
+  [
+    'Manual review where tools stop',
+    'Scanners help surface signals, but unfamiliar backdoors, conditional redirects, database payloads, and business-specific code need human judgment.',
+  ],
+  [
+    'Preserve what belongs',
+    'Security cleanup should not destroy orders, products, content, custom functionality, or the evidence needed to understand an incident.',
+  ],
+  [
+    'Explain the useful truth',
+    'Clients receive the important finding and next step in plain language—not a theatrical list of every file touched.',
+  ],
+];
 ---
 
-<Layout
-  title={seoTitle}
-  description={seoDesc}
-  image={ogImage}
-  canonical={canonicalUrl}>
-  {
-    /*
-    NOTE: This passes image and canonical to Layout.astro. If your Layout does not
-    use the canonical prop yet, add canonical support there.
-  */
-  }
-  <script type='application/ld+json' set:html={structuredData} />
-
-  <ComponentWrapper class='relative py-16 md:py-24'>
-    {/* --- Decorative Background --- */}
-    <div
-      class='top-0 left-0 -z-10 absolute w-full h-full overflow-hidden pointer-events-none'>
-      <div
-        class='-top-[10%] right-0 absolute bg-emerald-500/10 blur-3xl rounded-full w-[650px] h-[650px]'>
-      </div>
-      <div
-        class='top-[18%] left-[8%] absolute bg-sky-500/5 blur-3xl rounded-full w-[380px] h-[380px]'>
-      </div>
-      <div
-        class='bottom-0 left-0 absolute bg-emerald-500/5 blur-3xl rounded-full w-[500px] h-[500px]'>
+<NewLayout
+  title={title}
+  description={description}
+  path='/about/'
+  image='/md-pabel.png'
+  schema={schema}>
+  <section class='py-16 md:py-24 border-[#d7ddd7] border-b'>
+    <div class='new-shell'>
+      <Breadcrumbs items={[{ label: 'About' }]} /><div
+        class='items-center gap-14 lg:gap-24 grid lg:grid-cols-[1fr_0.75fr] mt-10'>
+        <div>
+          <p
+            class='mb-4 font-extrabold text-[#1f6b55] text-xs uppercase tracking-[0.16em]'>
+            The person behind the work
+          </p><h1
+            class='font-semibold text-5xl md:text-7xl leading-[0.96] editorial-heading'>
+            Security work is easier when you know who is accountable.
+          </h1><p class='mt-7 max-w-3xl text-[#52665f] text-lg leading-8'>
+            I’m MD Pabel, an independent WordPress security specialist and web
+            developer. Since 2018, I have helped website owners and agencies
+            investigate, clean, recover, and improve thousands of WordPress
+            websites.
+          </p><div class='flex flex-wrap gap-4 mt-8'>
+            <a
+              href='/hire-me/'
+              class='inline-flex items-center gap-2 bg-[#1f6b55] px-6 py-3.5 rounded-full font-bold text-white text-sm'
+              >Work with me <ArrowRight class='w-4 h-4' /></a
+            ><a
+              href='/case-studies/'
+              class='inline-flex items-center gap-2 pb-1 border-[#aebbb5] border-b font-bold text-sm'
+              >See recovery evidence <ArrowUpRight class='w-4 h-4' /></a
+            >
+          </div>
+        </div><div class='relative mx-auto w-full max-w-md'>
+          <div
+            class='-top-5 -right-5 absolute bg-[#dcece5] rounded-[44%_10%_44%_10%] w-full h-full rotate-3'>
+          </div><div
+            class='relative bg-[#dcece5] shadow-[#17352c]/15 shadow-2xl border-[#fffdf8] border-[8px] rounded-[44%_10%_44%_10%] overflow-hidden'>
+            <Image
+              src={portrait}
+              alt='MD Pabel, WordPress security specialist'
+              width={520}
+              height={640}
+              format='avif'
+              quality='high'
+              class='w-full h-full object-cover'
+            /><div
+              class='right-4 bottom-4 left-4 absolute flex items-center gap-3 bg-[#fffdf8]/90 backdrop-blur p-3 border border-white/60 rounded-xl'>
+              <span
+                class='place-items-center grid bg-[#1f6b55] rounded-full w-10 h-10 text-white'
+                ><BadgeCheck class='w-5 h-5' /></span
+              ><span class='text-[#52665f] text-xs'
+                ><strong class='block text-[#17352c] text-sm'
+                  >Independent specialist</strong
+                >Direct communication from start to finish</span
+              >
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-
-    {/* --- HERO --- */}
-    <section class='z-10 relative mx-auto mb-16 max-w-5xl text-center'>
-      <div
-        class='inline-flex items-center gap-2 bg-emerald-900/20 mb-8 px-4 py-1.5 border border-emerald-800/50 rounded-full'>
-        <UserCheck class='w-4 h-4 text-emerald-400' />
-        <span class='font-semibold text-emerald-200 text-sm'>
-          Independent WordPress Security Specialist · Dhaka, Bangladesh
-        </span>
-      </div>
-
-      <h1
-        class='mx-auto mb-6 max-w-4xl font-bold text-white text-3xl md:text-5xl leading-[1.05] tracking-tight'>
-        About MD Pabel
-        <span
-          class='block bg-clip-text bg-gradient-to-r from-emerald-400 to-sky-400 mt-2 text-transparent text-2xl md:text-3xl'>
-          WordPress Malware Removal Expert
-        </span>
-      </h1>
-
-      <p class='mx-auto mb-8 max-w-3xl text-slate-300 text-lg leading-relaxed'>
-        Hi, I'm MD Pabel — the person behind every cleanup, every case study,
-        and every email reply on this site. Since July 2018, I've manually
-        cleaned <strong class='text-white'>4,500+ hacked WordPress sites</strong
+  </section>
+  <section class='bg-[#17352c] py-8 text-white'>
+    <div class='gap-6 grid sm:grid-cols-2 lg:grid-cols-4 text-center new-shell'>
+      <div>
+        <strong class='text-4xl editorial-heading'>4,500+</strong><span
+          class='block mt-1 text-[#bdd4ca] text-xs'>hacked-site cleanups</span
         >
-        for freelance marketplace clients, agencies, referrals, and direct website
-        owners. mdpabel.com is run entirely by me from
-        <strong class='text-white'>Dhaka, Bangladesh</strong> — no agency, no team,
-        no white-label reselling.
-      </p>
-
-      <div
-        class='flex sm:flex-row flex-col justify-center items-center gap-4 mb-10'>
-        <a href='/hire-me/' class={primaryButtonClass}>
-          Hire Me Directly <ArrowRight class='ml-2 w-4 h-4' />
-        </a>
-        <a href='/wordpress-malware-removal/' class={secondaryButtonClass}>
-          See Malware Removal Service
-        </a>
+      </div><div>
+        <strong class='text-4xl editorial-heading'>2018</strong><span
+          class='block mt-1 text-[#bdd4ca] text-xs'
+          >working in web security since</span
+        >
+      </div><div>
+        <strong class='text-4xl editorial-heading'>2,300+</strong><span
+          class='block mt-1 text-[#bdd4ca] text-xs'>clients served</span
+        >
+      </div><div>
+        <strong class='text-4xl editorial-heading'>Worldwide</strong><span
+          class='block mt-1 text-[#bdd4ca] text-xs'>remote client support</span
+        >
       </div>
-    </section>
-
-    {/* --- QUICK ANSWER (AI / AEO BLOCK) --- */}
-    <section
-      class='z-10 relative mx-auto mb-20 max-w-4xl'
-      aria-labelledby='quick-answer'>
-      <div
-        class='bg-slate-900/70 p-6 md:p-8 border border-emerald-900/30 rounded-2xl'>
-        <div
-          class='inline-flex items-center gap-2 bg-emerald-900/30 mb-4 px-3 py-1 border border-emerald-800/40 rounded-full font-semibold text-emerald-300 text-xs uppercase tracking-wider'>
-          <Zap class='w-3.5 h-3.5' /> Quick Answer
-        </div>
-        <h2 id='quick-answer' class='mb-3 font-bold text-white text-2xl'>
-          Who is MD Pabel?
+    </div>
+  </section>
+  <section class='py-20 md:py-28'>
+    <div class='gap-14 lg:gap-24 grid lg:grid-cols-[0.75fr_1.25fr] new-shell'>
+      <div>
+        <p
+          class='mb-3 font-extrabold text-[#1f6b55] text-xs uppercase tracking-[0.15em]'>
+          First-hand experience
+        </p><h2 class='font-semibold text-4xl md:text-5xl editorial-heading'>
+          What the numbers actually represent.
         </h2>
-        <p class='mb-4 text-slate-300 leading-relaxed'>
-          <strong class='text-white'>MD Pabel</strong> is a WordPress malware removal
-          expert based in
-          <strong class='text-white'> Dhaka, Bangladesh</strong>. He is an
-          <strong class='text-white'>
-            Information &amp; Communication Technology (ICT) graduate of Comilla
-            University</strong
-          > and the sole person behind <a
-            href='/'
-            class='text-emerald-400 hover:underline'>mdpabel.com</a
-          > — not an agency or reseller. Active in WordPress security since July 2018,
-          he specializes in manual cleanup of Japanese SEO spam, fake CAPTCHA malware,
-          .htaccess redirects, database injections, hidden backdoors, and blacklist
-          recovery.
-        </p>
-        <ul class='gap-x-6 gap-y-2 grid sm:grid-cols-2 text-slate-300 text-sm'>
-          <li class='flex items-start gap-2'>
-            <CheckCircle
-              class='flex-shrink-0 mt-0.5 w-4 h-4 text-emerald-400'
-            />
-            4,500+ hacked WordPress sites manually cleaned
-          </li>
-          <li class='flex items-start gap-2'>
-            <CheckCircle
-              class='flex-shrink-0 mt-0.5 w-4 h-4 text-emerald-400'
-            />
-            WordPress security specialist since 2018
-          </li>
-          <li class='flex items-start gap-2'>
-            <CheckCircle
-              class='flex-shrink-0 mt-0.5 w-4 h-4 text-emerald-400'
-            />
-            ICT graduate · Comilla University, Bangladesh
-          </li>
-          <li class='flex items-start gap-2'>
-            <CheckCircle
-              class='flex-shrink-0 mt-0.5 w-4 h-4 text-emerald-400'
-            />
-            Sole operator · no agency, no team, no resellers
-          </li>
-          <li class='flex items-start gap-2'>
-            <CheckCircle
-              class='flex-shrink-0 mt-0.5 w-4 h-4 text-emerald-400'
-            />
-            Client work from freelance platforms, agencies, referrals, and direct
-            site owners
-          </li>
-          <li class='flex items-start gap-2'>
-            <CheckCircle
-              class='flex-shrink-0 mt-0.5 w-4 h-4 text-emerald-400'
-            />
-            550+ LeetCode problems solved · published IoT project
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    {/* --- PERSONAL CREDENTIALS --- */}
-    <section class='mx-auto mb-20 max-w-6xl'>
-      <div class='mb-10 text-center'>
-        <h2 class='mb-3 font-bold text-white text-3xl md:text-4xl'>
-          Verifiable credentials at a glance
-        </h2>
-        <p class='mx-auto max-w-3xl text-slate-400'>
-          Some credentials are publicly verifiable through the profiles linked
-          further down this page. Cleanup volume comes from years of client work
-          across freelance platforms, agency referrals, and direct projects.
+      </div><div class='space-y-6 text-[#52665f] text-base leading-8'>
+        <p>
+          The 4,500+ figure represents practical cleanup work across freelance
+          platforms, agency partnerships, direct website owners, referrals,
+          eCommerce stores, content sites, and emergency hosting-recovery jobs.
+          It is not a scanner count or a number of automated checks.
+        </p><p>
+          Those incidents have included hidden PHP backdoors, redirect malware,
+          fake CAPTCHA pages, Japanese keyword hacks, database injections, fake
+          plugins, malicious scheduled tasks, hosting suspensions, browser
+          warnings, and reinfections that survived earlier cleanups.
+        </p><p>
+          I also build and maintain websites. That development background
+          matters during security work because not every unfamiliar file is
+          malicious, and a cleanup must preserve the custom behavior a business
+          depends on.
         </p>
       </div>
-
-      <div class='gap-6 grid sm:grid-cols-2 lg:grid-cols-3'>
-        <div class='bg-slate-900/60 p-7 border border-slate-800 rounded-3xl'>
-          <ShieldCheck class='mb-3 w-6 h-6 text-emerald-400' />
-          <h3 class='mb-1 font-bold text-white text-3xl'>4,500+</h3>
-          <p class='text-slate-400'>Hacked WordPress sites cleaned</p>
-        </div>
-
-        <div class='bg-slate-900/60 p-7 border border-slate-800 rounded-3xl'>
-          <Calendar class='mb-3 w-6 h-6 text-emerald-400' />
-          <h3 class='mb-1 font-bold text-white text-3xl'>2018</h3>
-          <p class='text-slate-400'>
-            Year I started · 8 years of full-time security work
-          </p>
-        </div>
-
-        <div class='bg-slate-900/60 p-7 border border-slate-800 rounded-3xl'>
-          <Globe class='mb-3 w-6 h-6 text-emerald-400' />
-          <h3 class='mb-1 font-bold text-white text-3xl'>Worldwide</h3>
-          <p class='text-slate-400'>
-            Remote cleanup help for international WordPress site owners
-          </p>
-        </div>
-
-        <div class='bg-slate-900/60 p-7 border border-slate-800 rounded-3xl'>
-          <Trophy class='mb-3 w-6 h-6 text-emerald-400' />
-          <h3 class='mb-1 font-bold text-white text-3xl'>Freelance + direct</h3>
-          <p class='text-slate-400'>
-            Client work through marketplaces, agencies, referrals, and
-            mdpabel.com
-          </p>
-        </div>
-
-        <div class='bg-slate-900/60 p-7 border border-slate-800 rounded-3xl'>
-          <GraduationCap class='mb-3 w-6 h-6 text-emerald-400' />
-          <h3 class='mb-1 font-bold text-white text-3xl'>ICT</h3>
-          <p class='text-slate-400'>
-            Graduate · Comilla University, Bangladesh
-          </p>
-        </div>
-
-        <div class='bg-slate-900/60 p-7 border border-slate-800 rounded-3xl'>
-          <Code2 class='mb-3 w-6 h-6 text-emerald-400' />
-          <h3 class='mb-1 font-bold text-white text-3xl'>550+</h3>
-          <p class='text-slate-400'>LeetCode problems solved</p>
-        </div>
-      </div>
-    </section>
-
-    {/* --- MY STORY --- */}
-    <section class='mx-auto mb-20 max-w-4xl'>
-      <div
-        class='bg-slate-900/50 p-8 md:p-10 border border-slate-800 rounded-3xl'>
-        <div
-          class='inline-flex items-center gap-2 mb-4 font-semibold text-emerald-400'>
-          <BookOpen class='w-5 h-5' /> The story
-        </div>
-        <h2 class='mb-6 font-bold text-white text-3xl'>
-          From one hacked site in 2018 to 4,500+ cleanups
+    </div>
+  </section>
+  <section class='bg-[#fffdf8] py-20 md:py-28'>
+    <div class='new-shell'>
+      <div class='max-w-3xl'>
+        <p
+          class='mb-3 font-extrabold text-[#1f6b55] text-xs uppercase tracking-[0.15em]'>
+          Working principles
+        </p><h2 class='font-semibold text-4xl md:text-6xl editorial-heading'>
+          How I approach technical work.
         </h2>
-
-        <div class='space-y-5 text-slate-300 leading-relaxed'>
-          <p>
-            I started freelancing in <strong class='text-white'
-              >July 2018</strong
-            >, while still studying ICT at Comilla University. My first paid
-            jobs were small — fixing broken plugin conflicts, helping people
-            install themes, troubleshooting forms. Then a client came with a
-            fully hacked WordPress site. Mobile redirects, Google blacklist,
-            hosting suspension warning, the whole stack. I had no playbook, no
-            Sucuri subscription, and no senior engineer to ask. I opened the
-            files in a code editor and started reading.
-          </p>
-
-          <p>
-            That single cleanup taught me something that has shaped every job
-            since: <strong class='text-white'
-              >automated scanners report what they recognize, but real malware
-              hides specifically in the gaps they can't see.</strong
-            > Once you can read PHP and follow what it does at runtime, the "mystery"
-            of a hacked WordPress site disappears. It becomes pattern recognition.
-          </p>
-
-          <p>
-            By 2021 I was specializing almost entirely in compromised sites.
-            Each cleanup made the next one faster. By early 2026, the count
-            crossed 4,500 client cleanups — including selected public cases like
-            one site with
-            <a
-              href='/case-studies/how-we-cleaned-a-hacked-wordpress-site-from-3-45m-matbet-seo-spam-and-how-you-can-prevent-it/'
-              class='text-emerald-400 hover:underline'
-              >3.45 million spam URLs in Google</a
-            >, another with
-            <a
-              href='/blog/recovering-from-seo-spam-how-we-cleared-242000-japanese-spam-pages-from-a-hacked-wordpress-site-in-2025/'
-              class='text-emerald-400 hover:underline'
-              >242,000 Japanese spam pages indexed</a
-            >, and a <a
-              href='/case-studies/wordpress-homepage-defaced-gambling-site-case-study/'
-              class='text-emerald-400 hover:underline'
-              >homepage defacement involving tens of thousands of infected files</a
-            >. I document selected cases publicly so other people facing similar
-            attacks have a real reference, not only a marketing brochure.
-          </p>
-
-          <p>
-            mdpabel.com exists for a specific reason. After years of working
-            through marketplace platforms, the friction of those platforms — the
-            communication delays, the inability to send long forensic reports,
-            the inability for past clients to find me again easily — became the
-            biggest blocker to doing the work well. This site fixes that. It's
-            the direct, no-middleman way to find me, verify the work, and
-            continue working together.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    {/* --- CAREER TIMELINE --- */}
-    <section class='mx-auto mb-20 max-w-4xl'>
-      <div class='mb-10 text-center'>
-        <h2 class='mb-3 font-bold text-white text-3xl md:text-4xl'>
-          Career timeline
-        </h2>
-        <p class='mx-auto max-w-3xl text-slate-400'>
-          The milestones that shaped this work, in order.
-        </p>
-      </div>
-
-      <ol class='relative space-y-10 ml-4 border-slate-800 border-l-2'>
+      </div><div
+        class='gap-px grid md:grid-cols-2 bg-[#d7ddd7] mt-12 border border-[#d7ddd7] rounded-2xl overflow-hidden'>
         {
-          timeline.map((item) => (
-            <li class='relative pl-8'>
-              <span class='-left-[11px] absolute flex justify-center items-center bg-slate-950 border-2 border-emerald-500 rounded-full w-5 h-5'>
-                <span class='bg-emerald-400 rounded-full w-2 h-2' />
-              </span>
-              <div class='bg-slate-900/60 p-6 border border-slate-800 rounded-2xl'>
-                <div class='inline-flex items-center gap-2 mb-2 font-mono font-semibold text-emerald-400 text-xs uppercase tracking-wider'>
-                  <Calendar class='w-3.5 h-3.5' /> {item.year}
-                </div>
-                <h3 class='mb-2 font-bold text-white text-xl'>{item.title}</h3>
-                <p class='text-slate-300 text-sm leading-relaxed'>
-                  {item.body}
-                </p>
-              </div>
-            </li>
-          ))
-        }
-      </ol>
-    </section>
-
-    {/* --- HOW I THINK ABOUT THIS WORK --- */}
-    <section class='mx-auto mb-20 max-w-5xl'>
-      <div
-        class='bg-emerald-900/10 p-8 md:p-10 border border-emerald-900/30 rounded-3xl'>
-        <div
-          class='inline-flex items-center gap-2 mb-4 font-semibold text-emerald-400'>
-          <Compass class='w-5 h-5' /> How I think about this work
-        </div>
-        <h2 class='mb-6 font-bold text-white text-3xl'>
-          Read the code. Find the entry point. Patch the cause.
-        </h2>
-
-        <div class='gap-6 grid md:grid-cols-2 text-slate-300 leading-relaxed'>
-          <p>
-            Many rushed WordPress malware cleanups rely too heavily on a scanner
-            result and delete only the files that are already flagged. That may
-            work for simple infections, but when a site has obfuscated PHP, fake
-            plugins disguised as core, hidden admin users, or cron-job
-            persistence, the real entry point can remain and the site may get
-            re-infected within days.
-          </p>
-
-          <p>
-            My approach is the opposite. I read the code first, treat scanner
-            output as one input among many (alongside server access logs,
-            modified-file timestamps, Search Console signals, and database
-            anomalies), and trace the infection back to the entry point. Only
-            then do I clean — and the cleanup includes patching whatever allowed
-            the attack so the same thing can't happen again next week.
-          </p>
-
-          <p>
-            That's slower than a one-click cleanup tool. It's also why
-            re-infection is rare for sites I've worked on, and why most of my
-            clients come from referrals rather than ad spend.
-          </p>
-
-          <p>
-            The supporting technical foundation — PHP, JavaScript, server
-            internals, MySQL, hosting platforms — exists specifically to make
-            this work possible. You can't read malware you can't read code in
-            general; you can't trace a server-level redirect without
-            understanding access logs; you can't clean a database injection
-            without knowing what the original query was supposed to look like.
-            Everything connects.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    {/* --- WHY I WRITE --- */}
-    <section class='mx-auto mb-20 max-w-5xl'>
-      <div class='mb-10 text-center'>
-        <div
-          class='inline-flex items-center gap-2 bg-sky-900/20 mb-4 px-4 py-1.5 border border-sky-800/40 rounded-full font-semibold text-sky-200 text-xs uppercase tracking-wider'>
-          <PenTool class='w-3.5 h-3.5' /> Content philosophy
-        </div>
-        <h2 class='mb-3 font-bold text-white text-3xl md:text-4xl'>
-          Why I publish forensic write-ups for free
-        </h2>
-        <p class='mx-auto max-w-3xl text-slate-400'>
-          Selected cleanups become public case studies and blog posts when they
-          reveal a useful malware pattern. Here's the reason.
-        </p>
-      </div>
-
-      <div class='gap-6 grid md:grid-cols-2'>
-        <div class='bg-slate-900/60 p-7 border border-slate-800 rounded-3xl'>
-          <FileText class='mb-3 w-6 h-6 text-emerald-400' />
-          <h3 class='mb-2 font-bold text-white text-xl'>
-            Trust before purchase
-          </h3>
-          <p class='text-slate-300 text-sm leading-relaxed'>
-            Most people who land on a WordPress malware removal service are in
-            the worst possible state — site down, money lost, panic-Googling
-            from a phone. They have no time to vet a stranger. Public forensic
-            write-ups let them verify the work
-            <em>before</em> sending the first email.
-          </p>
-        </div>
-
-        <div class='bg-slate-900/60 p-7 border border-slate-800 rounded-3xl'>
-          <BookOpen class='mb-3 w-6 h-6 text-emerald-400' />
-          <h3 class='mb-2 font-bold text-white text-xl'>
-            Field references for site owners
-          </h3>
-          <p class='text-slate-300 text-sm leading-relaxed'>
-            Every cleanup I document is something I wish I'd had as a reference
-            back in 2018. If a site owner reads my
-            <a
-              href='/blog/japanese-keyword-hack-the-complete-guide-to-detection-removal-prevention-in-2025/'
-              class='text-emerald-400 hover:underline'
-              >Japanese keyword hack guide</a
-            > and fixes their own site without hiring me, that's still a win.
-          </p>
-        </div>
-
-        <div class='bg-slate-900/60 p-7 border border-slate-800 rounded-3xl'>
-          <ShieldCheck class='mb-3 w-6 h-6 text-emerald-400' />
-          <h3 class='mb-2 font-bold text-white text-xl'>
-            Pattern recognition for me
-          </h3>
-          <p class='text-slate-300 text-sm leading-relaxed'>
-            Writing forces clarity. Documenting a malware family — its file
-            paths, obfuscation patterns, persistence tricks — means the next
-            site infected with the same family takes hours instead of days.
-            Public posts also draw emails from other security researchers who
-            extend my notes.
-          </p>
-        </div>
-
-        <div class='bg-slate-900/60 p-7 border border-slate-800 rounded-3xl'>
-          <Quote class='mb-3 w-6 h-6 text-emerald-400' />
-          <h3 class='mb-2 font-bold text-white text-xl'>
-            Anti-marketing, basically
-          </h3>
-          <p class='text-slate-300 text-sm leading-relaxed'>
-            I'd rather a potential client read three real case studies and
-            decide on their own than read a sales page making promises I can't
-            substantiate. <a
-              href='/case-studies/'
-              class='text-emerald-400 hover:underline'
-              >Browse the case study archive →</a
-            >
-          </p>
-        </div>
-      </div>
-    </section>
-
-    {/* --- NON-NEGOTIABLES --- */}
-    <section class='mx-auto mb-20 max-w-6xl'>
-      <div class='mb-10 text-center'>
-        <h2 class='mb-3 font-bold text-white text-3xl md:text-4xl'>
-          My non-negotiables
-        </h2>
-        <p class='mx-auto max-w-3xl text-slate-400'>
-          Working principles that don't bend, regardless of project size,
-          deadline, or budget.
-        </p>
-      </div>
-
-      <div class='gap-5 grid md:grid-cols-2 lg:grid-cols-3'>
-        {
-          principles.map((p) => (
-            <div class='bg-slate-900/60 p-6 border border-slate-800 rounded-2xl'>
-              <ShieldCheck class='mb-3 w-5 h-5 text-emerald-400' />
-              <h3 class='mb-2 font-semibold text-white'>{p.title}</h3>
-              <p class='text-slate-400 text-sm leading-relaxed'>{p.body}</p>
-            </div>
+          principles.map(([heading, copy], index) => (
+            <article class='bg-[#f7f4ed] p-7'>
+              <>
+                <span class='text-[#ed7655] text-sm editorial-heading'>
+                  0{index + 1}
+                </span>
+                <h3 class='mt-8 font-semibold text-2xl editorial-heading'>
+                  {heading}
+                </h3>
+                <p class='mt-3 text-[#52665f] text-sm leading-7'>{copy}</p>
+              </>
+            </article>
           ))
         }
       </div>
-    </section>
-
-    {/* --- EDUCATION + RESEARCH --- */}
-    <section class='mx-auto mb-20 max-w-6xl'>
-      <div class='gap-8 grid lg:grid-cols-2'>
-        <div
-          class='bg-slate-900/60 p-8 md:p-10 border border-slate-800 rounded-3xl'>
-          <div
-            class='inline-flex items-center gap-2 mb-4 font-semibold text-emerald-400'>
-            <GraduationCap class='w-5 h-5' /> Education
-          </div>
-          <h2 class='mb-3 font-bold text-white text-2xl md:text-3xl'>
-            Comilla University, Bangladesh
-          </h2>
-          <p class='mb-3 text-slate-300 leading-relaxed'>
-            Bachelor's degree in <strong class='text-white'
-              >Information &amp; Communication Technology (ICT)</strong
-            > from
-            <a
-              href='https://cou.ac.bd/'
-              target='_blank'
-              rel='noopener'
-              class='text-emerald-400 hover:underline'>Comilla University</a
-            >, a public university in Bangladesh. The academic foundation for my
-            work in software systems, debugging, and security-oriented problem
-            solving.
-          </p>
-          <p class='text-slate-400 text-sm leading-relaxed'>
-            Outside formal education: 550+ LeetCode problems solved across data
-            structures, algorithms, and systems design — kept active as ongoing
-            practice rather than interview prep.
-          </p>
-        </div>
-
-        <div
-          class='bg-slate-900/60 p-8 md:p-10 border border-slate-800 rounded-3xl'>
-          <div
-            class='inline-flex items-center gap-2 mb-4 font-semibold text-emerald-400'>
-            <Award class='w-5 h-5' /> Published research
-          </div>
-          <h2 class='mb-3 font-bold text-white text-2xl md:text-3xl'>
-            IoT Bus Tracking System
-          </h2>
-          <p class='mb-3 text-slate-300 leading-relaxed'>
-            Final-year research project: a <strong class='text-white'
-              >real-time, full-stack IoT-based university bus tracking system</strong
-            > that solved the practical problem of students at Comilla University
-            never knowing when their bus would arrive. End-to-end build covering hardware,
-            firmware, server, and frontend.
-          </p>
-          <a
-            href='https://www.researchgate.net/publication/395318263_Real-time_Full-Stack_University_Bus_Tracking_System_Based_on_IoT'
-            target='_blank'
-            rel='noopener'
-            class='inline-flex items-center gap-2 text-emerald-400 text-sm hover:underline'>
-            <BookOpen class='w-4 h-4' /> Read on ResearchGate →
-          </a>
-        </div>
-      </div>
-    </section>
-
-    {/* --- VERIFY ME --- */}
-    <section class='mx-auto mb-20 max-w-4xl'>
-      <div class='mb-10 text-center'>
-        <div
-          class='inline-flex items-center gap-2 bg-emerald-900/20 mb-4 px-4 py-1.5 border border-emerald-800/40 rounded-full font-semibold text-emerald-200 text-xs uppercase tracking-wider'>
-          <UserCheck class='w-3.5 h-3.5' /> Identity verification
-        </div>
-        <h2 class='mb-3 font-bold text-white text-3xl md:text-4xl'>
-          Verify me yourself
-        </h2>
-        <p class='mx-auto max-w-3xl text-slate-400'>
-          "MD Pabel" is a common name in Bangladesh. The links below are the
-          <strong class='text-slate-200'>
-            only profiles I personally own</strong
-          > and update. If a profile claims to be me but isn't listed here, it isn't
-          me.
+    </div>
+  </section>
+  <section class='py-20 md:py-28'>
+    <div class='gap-14 lg:gap-24 grid lg:grid-cols-[0.8fr_1.2fr] new-shell'>
+      <div>
+        <h2 class='font-semibold text-4xl md:text-5xl editorial-heading'>
+          Areas of practice.
+        </h2><p class='mt-5 text-[#52665f] text-sm leading-7'>
+          The site is focused intentionally: WordPress security, reliable
+          website ownership, and modern web development.
         </p>
-      </div>
-
-      <div class='gap-3 grid md:grid-cols-2'>
-        <a
-          href='https://www.linkedin.com/in/mdpabe1/'
-          target='_blank'
-          rel='noopener me'
-          class='flex items-center gap-3 bg-slate-900/60 hover:bg-slate-900 p-5 border border-slate-800 hover:border-emerald-800/50 rounded-2xl transition-colors'>
-          <Linkedin class='w-5 h-5 text-emerald-400' />
-          <div class='flex-1'>
-            <div class='font-semibold text-white'>LinkedIn</div>
-            <div class='text-slate-500 text-sm'>linkedin.com/in/mdpabe1</div>
-          </div>
-          <ArrowRight class='w-4 h-4 text-slate-500' />
-        </a>
-
-        <a
-          href='https://github.com/mdpabel'
-          target='_blank'
-          rel='noopener me'
-          class='flex items-center gap-3 bg-slate-900/60 hover:bg-slate-900 p-5 border border-slate-800 hover:border-emerald-800/50 rounded-2xl transition-colors'>
-          <Github class='w-5 h-5 text-emerald-400' />
-          <div class='flex-1'>
-            <div class='font-semibold text-white'>GitHub</div>
-            <div class='text-slate-500 text-sm'>github.com/mdpabel</div>
-          </div>
-          <ArrowRight class='w-4 h-4 text-slate-500' />
-        </a>
-
-        <a
-          href='https://leetcode.com/u/mdpabel/'
-          target='_blank'
-          rel='noopener me'
-          class='flex items-center gap-3 bg-slate-900/60 hover:bg-slate-900 p-5 border border-slate-800 hover:border-emerald-800/50 rounded-2xl transition-colors'>
-          <Code2 class='w-5 h-5 text-emerald-400' />
-          <div class='flex-1'>
-            <div class='font-semibold text-white'>
-              LeetCode <span class='text-slate-500 text-xs'>· 550+ solved</span>
-            </div>
-            <div class='text-slate-500 text-sm'>leetcode.com/u/mdpabel</div>
-          </div>
-          <ArrowRight class='w-4 h-4 text-slate-500' />
-        </a>
-
-        <a
-          href='https://www.researchgate.net/publication/395318263_Real-time_Full-Stack_University_Bus_Tracking_System_Based_on_IoT'
-          target='_blank'
-          rel='noopener me'
-          class='flex items-center gap-3 bg-slate-900/60 hover:bg-slate-900 p-5 border border-slate-800 hover:border-emerald-800/50 rounded-2xl transition-colors'>
-          <BookOpen class='w-5 h-5 text-emerald-400' />
-          <div class='flex-1'>
-            <div class='font-semibold text-white'>ResearchGate</div>
-            <div class='text-slate-500 text-sm'>
-              IoT Bus Tracking publication
-            </div>
-          </div>
-          <ArrowRight class='w-4 h-4 text-slate-500' />
-        </a>
-
-        <a
-          href='https://web.facebook.com/mdpabelwpsecurity'
-          target='_blank'
-          rel='noopener me'
-          class='flex items-center gap-3 bg-slate-900/60 hover:bg-slate-900 p-5 border border-slate-800 hover:border-emerald-800/50 rounded-2xl transition-colors'>
-          <MessageSquare class='w-5 h-5 text-emerald-400' />
-          <div class='flex-1'>
-            <div class='font-semibold text-white'>Facebook Business Page</div>
-            <div class='text-slate-500 text-sm'>fb.com/mdpabelwpsecurity</div>
-          </div>
-          <ArrowRight class='w-4 h-4 text-slate-500' />
-        </a>
-
-        <a
-          href='https://www.instagram.com/md_pabell/'
-          target='_blank'
-          rel='noopener me'
-          class='flex items-center gap-3 bg-slate-900/60 hover:bg-slate-900 p-5 border border-slate-800 hover:border-emerald-800/50 rounded-2xl transition-colors'>
-          <Star class='w-5 h-5 text-emerald-400' />
-          <div class='flex-1'>
-            <div class='font-semibold text-white'>Instagram</div>
-            <div class='text-slate-500 text-sm'>instagram.com/md_pabell</div>
-          </div>
-          <ArrowRight class='w-4 h-4 text-slate-500' />
-        </a>
-      </div>
-
-      <div
-        class='bg-emerald-900/10 mt-6 p-5 border border-emerald-900/30 rounded-2xl text-slate-300 text-sm leading-relaxed'>
-        <strong class='text-white'>Past clients:</strong> if you worked with me on
-        a freelance marketplace any time between 2018 and now and want to continue
-        working directly, mdpabel.com is the right place. The public profiles, writing
-        style, technical depth, and case studies on this site should help you verify
-        identity.
-      </div>
-    </section>
-
-    {/* --- TECH STACK --- */}
-    <section class='mx-auto mb-20 max-w-6xl'>
-      <div class='mb-10 text-center'>
-        <h2 class='mb-3 font-bold text-white text-3xl md:text-4xl'>
-          The technical depth behind every cleanup
-        </h2>
-        <p class='mx-auto max-w-3xl text-slate-400'>
-          Malware removal is the specialty. The stack below is what makes the
-          cleanup actually work — reading obfuscated PHP, de-obfuscating
-          malicious JavaScript, querying infected databases, and tracing attacks
-          through server logs all require this foundation.
-        </p>
-      </div>
-
-      <div class='gap-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4'>
-        {
-          [
-            'WordPress core internals',
-            'PHP',
-            'JavaScript',
-            'TypeScript',
-            'Node.js',
-            'MySQL / SQL',
-            'cPanel / Plesk',
-            'Cloudflare',
-            'SiteGround',
-            'Bluehost',
-            'Linux server logs',
-            '.htaccess / Nginx',
-            'React',
-            'Next.js',
-            'Astro',
-            'Python',
-          ].map((skill) => (
-            <div class='bg-slate-900/60 px-5 py-4 border border-slate-800 rounded-2xl text-slate-300 text-sm text-center'>
-              {skill}
-            </div>
-          ))
-        }
-      </div>
-    </section>
-
-    {/* --- FAQ (AEO / GEO) --- */}
-    <section class='mx-auto mb-20 max-w-4xl'>
-      <div class='mb-10 text-center'>
-        <h2 class='mb-3 font-bold text-white text-3xl md:text-4xl'>
-          Frequently asked questions about MD Pabel
-        </h2>
-        <p class='mx-auto max-w-3xl text-slate-400'>
-          About the person — not the service. For service-related questions
-          (pricing, turnaround, guarantees), see the
-          <a
-            href='/wordpress-malware-removal/'
-            class='text-emerald-400 hover:underline'
-            >malware removal service page</a
-          >.
-        </p>
-      </div>
-
-      <div class='space-y-3'>
-        {
-          faqs.map((f) => (
-            <details class='group bg-slate-900/60 border border-slate-800 rounded-2xl overflow-hidden'>
-              <summary class='flex justify-between items-center gap-4 p-5 md:p-6 font-semibold text-white cursor-pointer list-none'>
-                <span class='flex-1'>{f.q}</span>
-                <ChevronDown class='flex-shrink-0 w-5 h-5 text-emerald-400 group-open:rotate-180 transition-transform' />
-              </summary>
-              <div class='px-5 md:px-6 pb-5 md:pb-6 text-slate-300 leading-relaxed'>
-                {f.a}
-              </div>
-            </details>
-          ))
-        }
-      </div>
-    </section>
-
-    {/* --- FINAL CTA --- */}
-    <section
-      class='bg-emerald-900/10 mt-12 py-16 md:py-20 border border-emerald-900/30 rounded-3xl text-center'>
-      <div
-        class='inline-flex items-center gap-2 mb-4 font-semibold text-emerald-400'>
-        <ShieldCheck class='w-5 h-5' /> Work directly with one specialist
-      </div>
-
-      <h2 class='mb-5 px-6 font-bold text-white text-3xl md:text-4xl'>
-        Site hacked, blacklisted, or broken?
-      </h2>
-
-      <p class='mx-auto mb-8 px-6 max-w-2xl text-slate-300'>
-        Send me your URL and a short description of what you're seeing. I'll
-        respond personally within 1–2 hours with a free diagnosis and a fixed
-        price — no bait-and-switch, no surprise fees.
-      </p>
-
-      <div
-        class='flex md:flex-row flex-col justify-center items-center gap-4 px-6'>
-        <a
-          href='/hire-me/'
-          class={`px-12 py-4 rounded-full text-lg ${primaryButtonClass}`}>
-          Start cleanup now <ArrowRight class='ml-2 w-5 h-5' />
-        </a>
+      </div><div class='gap-4 grid sm:grid-cols-3'>
         <a
           href='/wordpress-malware-removal/'
-          class='px-12 py-4 border border-slate-700 rounded-full text-slate-200 hover:text-white text-lg transition-colors'>
-          See pricing
-        </a>
+          class='bg-[#fffdf8] p-6 border border-[#d7ddd7] rounded-2xl'
+          ><ShieldCheck class='w-6 h-6 text-[#1f6b55]' /><h3
+            class='mt-7 font-semibold text-2xl editorial-heading'>
+            Security
+          </h3><p class='mt-3 text-[#52665f] text-xs leading-6'>
+            Malware cleanup, incident recovery, hardening, and blacklist
+            support.
+          </p></a
+        ><a
+          href='/wordpress-maintenance/'
+          class='bg-[#fffdf8] p-6 border border-[#d7ddd7] rounded-2xl'
+          ><Search class='w-6 h-6 text-[#1f6b55]' /><h3
+            class='mt-7 font-semibold text-2xl editorial-heading'>
+            Maintenance
+          </h3><p class='mt-3 text-[#52665f] text-xs leading-6'>
+            Updates, backups, monitoring, performance, and technical support.
+          </p></a
+        ><a
+          href='/website-development/'
+          class='bg-[#fffdf8] p-6 border border-[#d7ddd7] rounded-2xl'
+          ><Braces class='w-6 h-6 text-[#1f6b55]' /><h3
+            class='mt-7 font-semibold text-2xl editorial-heading'>
+            Development
+          </h3><p class='mt-3 text-[#52665f] text-xs leading-6'>
+            WordPress, Next.js, Astro, integrations, and AI-assisted products.
+          </p></a
+        >
       </div>
-
-      <p class='mt-8 text-slate-500 text-sm'>
-        Manual cleanup only · 30-day reinfection guarantee · One person, direct
-        contact
-      </p>
-    </section>
-  </ComponentWrapper>
-</Layout>
+    </div>
+  </section>
+  <section class='pb-24'>
+    <div class='bg-[#1f6b55] p-8 md:p-12 rounded-3xl text-white new-shell'>
+      <div class='items-center gap-8 grid md:grid-cols-[1fr_auto]'>
+        <div>
+          <p
+            class='font-bold text-[#b9d8cc] text-xs uppercase tracking-[0.14em]'>
+            Need direct help?
+          </p><h2 class='mt-3 font-semibold text-4xl editorial-heading'>
+            Tell me what is happening with your website.
+          </h2>
+        </div><a
+          href='/hire-me/'
+          class='inline-flex items-center gap-2 bg-[#ed7655] px-6 py-3 rounded-full w-fit font-bold'
+          >Start a conversation <ArrowUpRight class='w-4 h-4' /></a
+        >
+      </div>
+    </div>
+  </section>
+</NewLayout>
