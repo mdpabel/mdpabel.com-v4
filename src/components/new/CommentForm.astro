@@ -1,0 +1,349 @@
+---
+interface Props {
+  postId: number;
+}
+
+const { postId } = Astro.props;
+const apiBase = import.meta.env.PUBLIC_WORDPRESS_API_URL?.replace(/\/$/, '') || '';
+const commentsEndpoint = apiBase ? `${apiBase}/wp-json/wp/v2/comments` : '';
+---
+
+<section
+  class="mt-14 border-t border-[#d7ddd7] pt-10"
+  aria-labelledby={`comments-title-${postId}`}
+  data-comments-section
+>
+  <div class="flex flex-wrap items-end justify-between gap-3">
+    <div>
+      <p class="text-xs font-extrabold uppercase tracking-[0.15em] text-[#1f6b55]">
+        Community
+      </p>
+      <h2
+        id={`comments-title-${postId}`}
+        class="editorial-heading mt-3 text-3xl font-semibold text-[#17352c]"
+      >
+        Comments
+      </h2>
+    </div>
+    <p
+      class="text-sm font-semibold text-[#65766f]"
+      data-comments-summary
+      role="status"
+      aria-live="polite"
+    >
+      Loading comments...
+    </p>
+  </div>
+  <div class="mt-7 hidden space-y-5" data-comments-list></div>
+
+  <div class="mt-10 border-t border-[#d7ddd7] pt-10">
+  <p class="text-xs font-extrabold uppercase tracking-[0.15em] text-[#1f6b55]">
+    Join the discussion
+  </p>
+  <h2
+    id={`comment-form-title-${postId}`}
+    class="editorial-heading mt-3 text-3xl font-semibold text-[#17352c]"
+  >
+    Leave a comment
+  </h2>
+  <p class="mt-3 max-w-2xl text-sm leading-6 text-[#52665f]">
+    Your email address will not be published. Comments may be held for review before they appear.
+  </p>
+
+  <form
+    class="comment-form relative mt-7 space-y-5"
+    data-comment-form
+    data-endpoint={commentsEndpoint}
+    data-post-id={postId}
+  >
+    <div class="grid gap-5 sm:grid-cols-2">
+      <label class="block text-sm font-bold text-[#17352c]">
+        Name <span aria-hidden="true" class="text-[#c65336]">*</span>
+        <input
+          class="mt-2 w-full rounded-xl border border-[#c8d1cb] bg-[#fffdf8] px-4 py-3 text-base font-normal text-[#17352c] outline-none transition focus:border-[#1f6b55] focus:ring-2 focus:ring-[#1f6b55]/20"
+          type="text"
+          name="author_name"
+          autocomplete="name"
+          maxlength="245"
+          required
+        />
+      </label>
+      <label class="block text-sm font-bold text-[#17352c]">
+        Email <span aria-hidden="true" class="text-[#c65336]">*</span>
+        <input
+          class="mt-2 w-full rounded-xl border border-[#c8d1cb] bg-[#fffdf8] px-4 py-3 text-base font-normal text-[#17352c] outline-none transition focus:border-[#1f6b55] focus:ring-2 focus:ring-[#1f6b55]/20"
+          type="email"
+          name="author_email"
+          autocomplete="email"
+          maxlength="100"
+          required
+        />
+      </label>
+    </div>
+
+    <label class="block text-sm font-bold text-[#17352c]">
+      Comment <span aria-hidden="true" class="text-[#c65336]">*</span>
+      <textarea
+        class="mt-2 min-h-40 w-full resize-y rounded-xl border border-[#c8d1cb] bg-[#fffdf8] px-4 py-3 text-base font-normal leading-7 text-[#17352c] outline-none transition focus:border-[#1f6b55] focus:ring-2 focus:ring-[#1f6b55]/20"
+        name="content"
+        minlength="2"
+        maxlength="5000"
+        required
+      ></textarea>
+    </label>
+
+    <div class="absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
+      <label>
+        Leave this field empty
+        <input type="text" name="rnasqf1352" tabindex="-1" autocomplete="off" />
+      </label>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-4">
+      <button
+        type="submit"
+        class="inline-flex min-w-36 items-center justify-center rounded-full bg-[#1f6b55] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#164a3c] disabled:cursor-wait disabled:opacity-65"
+      >
+        Post comment
+      </button>
+      <p class="comment-form-status hidden text-sm font-semibold" role="status" aria-live="polite"></p>
+    </div>
+  </form>
+  </div>
+</section>
+
+<script>
+  interface CommentApiItem {
+    id: number;
+    parent: number;
+    author_name: string;
+    date: string;
+    status?: string;
+    content?: { rendered?: string };
+  }
+
+  function commentText(rendered = '') {
+    const document = new DOMParser().parseFromString(rendered, 'text/html');
+    document.querySelectorAll('br').forEach((element) => element.replaceWith('\n'));
+    document.querySelectorAll('p, div, li, blockquote').forEach((element) => element.append('\n'));
+    return (document.body.textContent || '').replace(/\n{3,}/g, '\n\n').trim();
+  }
+
+  function initializeCommentForms() {
+    document.querySelectorAll<HTMLFormElement>('[data-comment-form]').forEach((form) => {
+      if (form.dataset.initialized === 'true') return;
+      form.dataset.initialized = 'true';
+
+      const section = form.closest<HTMLElement>('[data-comments-section]');
+      const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      const status = form.querySelector<HTMLElement>('.comment-form-status');
+      const comment = form.elements.namedItem('content') as HTMLTextAreaElement | null;
+      const commentsSummary = section?.querySelector<HTMLElement>('[data-comments-summary]');
+      const commentsList = section?.querySelector<HTMLElement>('[data-comments-list]');
+
+      const endpoint = form.dataset.endpoint;
+      const postId = form.dataset.postId;
+
+      const createCommentElement = (
+        item: CommentApiItem,
+        commentsByParent: Map<number, CommentApiItem[]>,
+        ancestors = new Set<number>(),
+      ) => {
+        const article = document.createElement('article');
+        article.className = 'rounded-2xl border border-[#d7ddd7] bg-[#fffdf8] p-5';
+
+        const header = document.createElement('div');
+        header.className = 'flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1';
+
+        const author = document.createElement('h3');
+        author.className = 'text-sm font-extrabold text-[#17352c]';
+        author.textContent = item.author_name || 'Anonymous';
+        header.append(author);
+
+        const date = new Date(item.date);
+        if (!Number.isNaN(date.getTime())) {
+          const time = document.createElement('time');
+          time.className = 'text-xs font-medium text-[#788780]';
+          time.dateTime = item.date;
+          time.textContent = date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          });
+          header.append(time);
+        }
+
+        const body = document.createElement('p');
+        body.className = 'mt-3 whitespace-pre-line text-sm leading-7 text-[#52665f]';
+        body.textContent = commentText(item.content?.rendered);
+        article.append(header, body);
+
+        const nextAncestors = new Set(ancestors);
+        nextAncestors.add(item.id);
+        const replies = (commentsByParent.get(item.id) || []).filter(
+          (reply) => !nextAncestors.has(reply.id),
+        );
+
+        if (replies.length) {
+          const replyGroup = document.createElement('div');
+          replyGroup.className =
+            'mt-4 space-y-4 border-l-2 border-[#d7ddd7] pl-4 sm:ml-4 sm:pl-5';
+          replies.forEach((reply) =>
+            replyGroup.append(createCommentElement(reply, commentsByParent, nextAncestors)),
+          );
+          article.append(replyGroup);
+        }
+
+        return article;
+      };
+
+      const renderComments = (comments: CommentApiItem[]) => {
+        if (!commentsSummary || !commentsList) return;
+        commentsList.replaceChildren();
+
+        const count = comments.length;
+        commentsSummary.textContent = `${count} ${count === 1 ? 'comment' : 'comments'}`;
+
+        if (!count) {
+          const empty = document.createElement('p');
+          empty.className = 'rounded-2xl bg-[#eef4f0] p-5 text-sm text-[#52665f]';
+          empty.textContent = 'No comments yet. Be the first to join the discussion.';
+          commentsList.append(empty);
+          commentsList.classList.remove('hidden');
+          return;
+        }
+
+        const commentIds = new Set(comments.map((item) => item.id));
+        const commentsByParent = new Map<number, CommentApiItem[]>();
+        comments.forEach((item) => {
+          const parent = item.parent && commentIds.has(item.parent) ? item.parent : 0;
+          const siblings = commentsByParent.get(parent) || [];
+          siblings.push(item);
+          commentsByParent.set(parent, siblings);
+        });
+
+        (commentsByParent.get(0) || []).forEach((item) =>
+          commentsList.append(createCommentElement(item, commentsByParent)),
+        );
+        commentsList.classList.remove('hidden');
+      };
+
+      const loadComments = async () => {
+        if (!endpoint || !postId || !commentsSummary || !commentsList) {
+          if (commentsSummary) commentsSummary.textContent = 'Comments unavailable';
+          return;
+        }
+
+        commentsSummary.textContent = 'Loading comments...';
+        const parameters = new URLSearchParams({
+          post: postId,
+          per_page: '100',
+          orderby: 'date',
+          order: 'asc',
+          _fields: 'id,parent,author_name,date,status,content',
+        });
+
+        try {
+          const firstResponse = await fetch(`${endpoint}?${parameters}`, {
+            headers: { Accept: 'application/json' },
+            credentials: 'omit',
+          });
+          if (!firstResponse.ok) throw new Error('Comments could not be loaded.');
+
+          const firstPage = (await firstResponse.json()) as CommentApiItem[];
+          const totalPages = Number(firstResponse.headers.get('X-WP-TotalPages')) || 1;
+          const remainingRequests = Array.from({ length: totalPages - 1 }, (_, index) => {
+            const pageParameters = new URLSearchParams(parameters);
+            pageParameters.set('page', String(index + 2));
+            return fetch(`${endpoint}?${pageParameters}`, {
+              headers: { Accept: 'application/json' },
+              credentials: 'omit',
+            }).then(async (response) => {
+              if (!response.ok) throw new Error('Comments could not be loaded.');
+              return (await response.json()) as CommentApiItem[];
+            });
+          });
+
+          const remainingPages = await Promise.all(remainingRequests);
+          renderComments(firstPage.concat(...remainingPages));
+        } catch {
+          commentsList.classList.add('hidden');
+          commentsSummary.textContent = 'Comments could not be loaded right now.';
+        }
+      };
+
+      const showStatus = (message: string, success: boolean) => {
+        if (!status) return;
+        status.textContent = message;
+        status.classList.remove('hidden', 'text-[#1f6b55]', 'text-[#b0442d]');
+        status.classList.add(success ? 'text-[#1f6b55]' : 'text-[#b0442d]');
+      };
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        if (!form.reportValidity() || !button) return;
+
+        const data = new FormData(form);
+        if (String(data.get('rnasqf1352') || '').trim()) {
+          showStatus('Thanks. Your comment has been submitted for review.', true);
+          form.reset();
+          return;
+        }
+
+        if (!endpoint || !postId) {
+          showStatus('Commenting is temporarily unavailable. Please try again later.', false);
+          return;
+        }
+
+        const originalLabel = button.textContent;
+        button.disabled = true;
+        button.textContent = 'Submitting...';
+        status?.classList.add('hidden');
+
+        const body = new URLSearchParams({
+          post: postId,
+          author_name: String(data.get('author_name') || '').trim(),
+          author_email: String(data.get('author_email') || '').trim(),
+          content: String(data.get('content') || '').trim(),
+        });
+
+        try {
+          const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: { Accept: 'application/json' },
+            body,
+            credentials: 'omit',
+          });
+          const result = await response.json().catch(() => null);
+
+          if (!response.ok) {
+            const message =
+              typeof result?.message === 'string'
+                ? result.message.replace(/<[^>]*>/g, '')
+                : 'Your comment could not be submitted. Please try again.';
+            throw new Error(message);
+          }
+
+          showStatus('Thanks. Your comment has been submitted and may be held for review.', true);
+          if (comment) comment.value = '';
+          if (result?.status === 'approved' || result?.status === 'approve') await loadComments();
+        } catch (error) {
+          showStatus(
+            error instanceof Error
+              ? error.message
+              : 'Your comment could not be submitted. Please try again.',
+            false,
+          );
+        } finally {
+          button.disabled = false;
+          button.textContent = originalLabel;
+        }
+      });
+
+      void loadComments();
+    });
+  }
+
+  initializeCommentForms();
+  document.addEventListener('astro:page-load', initializeCommentForms);
+</script>
