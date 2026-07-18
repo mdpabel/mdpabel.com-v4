@@ -11,6 +11,33 @@ clear authorship, and practical guidance—not generic security claims.
 Each indexable page owns one primary intent. Closely related secondary terms are
 covered on that page instead of creating thin keyword variations.
 
+### Search-language guidance
+
+Google Search Console and Bing Webmaster Tools query data should guide the words
+used in titles, headings, introductions, symptom lists, FAQs, and internal-link
+labels. Use the natural wording of relevant searches where it accurately
+describes the page; do not copy unrelated, malformed, navigational, or apparent
+query-spam terms into the site.
+
+Current page-level language priorities from the supplied exports:
+
+- Home and malware service: WordPress malware removal, hacked website cleanup,
+  clean a hacked WordPress site, malicious redirects, backdoors, and SEO spam.
+- Japanese spam service and supporting articles: Japanese keyword hack,
+  Japanese SEO spam, casino spam, pharma spam, and removing spam URLs from
+  Google after the site is clean.
+- Blacklist hub and vendor pages: website blacklist removal, Google blacklist
+  removal, Avast URL blacklist removal, McAfee blacklist removal, and Norton
+  blacklist removal.
+- Maintenance service: WordPress maintenance service, WordPress website
+  maintenance packages, updates, backups, security checks, and support.
+- Existing informational guides should own specific queries about Wordfence
+  application passwords, Wordfence 2FA, All-in-One WP Migration, UpdraftPlus,
+  Cloudflare Turnstile, default WordPress .htaccess, and headless WordPress.
+
+Search terms are assigned by intent, not repeated site-wide. Query data is an
+editorial input rather than a mandate to create a page for every phrase.
+
 ### Commercial pages
 
 - `/services/` — service directory and decision page

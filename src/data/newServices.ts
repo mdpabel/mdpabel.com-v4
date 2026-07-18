@@ -27,7 +27,7 @@ export const malwareRemovalService: ServicePageData = {
   eyebrow: 'Manual hacked-site recovery',
   headline: 'WordPress malware removal that finds more than the obvious infection.',
   intro:
-    'I manually investigate hacked WordPress websites, remove malicious code and persistence mechanisms, preserve legitimate content, and harden the site against the same compromise happening again.',
+    'I clean hacked WordPress websites, remove malicious code, spam redirects, backdoors, and persistence mechanisms, preserve legitimate content, and harden the site against the same compromise happening again.',
   promise:
     'The goal is not a green scanner result. It is a clean, working website with the likely access point understood and the hidden reinfection paths checked.',
   symptomsTitle: 'Signs your WordPress website may be infected',
@@ -61,6 +61,7 @@ export const malwareRemovalService: ServicePageData = {
   outcomes: ['Malicious files and injected code removed', 'Hidden persistence paths checked', 'Website and admin access verified', 'Practical hardening completed', 'Clear cleanup summary provided'],
   faqs: [
     { question: 'How long does WordPress malware removal take?', answer: 'Many standard incidents can be handled the same day. Large SEO-spam infections, damaged databases, multiple websites, hosting suspensions, or persistent reinfections can take longer because each affected layer must be verified.' },
+    { question: 'How do you clean a hacked WordPress site?', answer: 'A complete hacked website cleanup checks WordPress files, the database, users, scheduled tasks, plugins, themes, server rules, and access logs where available. Malicious code and hidden persistence are removed, the original symptoms are retested, and the likely route of compromise is addressed before the site is considered clean.' },
     { question: 'Will I lose my website content?', answer: 'The cleanup is designed to preserve legitimate pages, products, orders, users, and media. A backup is created or confirmed before material changes whenever the hosting environment allows it.' },
     { question: 'Why did the malware return after a previous cleanup?', answer: 'Reinfection usually means a backdoor, scheduled task, vulnerable component, compromised credential, hidden administrator, database injection, or another infected website in the same account was missed.' },
     { question: 'Do you rely only on a malware scanner?', answer: 'No. Scanners are useful signals, but they routinely miss database payloads, unfamiliar persistence, conditional redirects, modified server rules, and code designed to resemble legitimate WordPress files.' },
@@ -116,6 +117,7 @@ export const maintenanceService: ServicePageData = {
   outcomes: ['Updates managed consistently', 'Recovery path kept available', 'Security symptoms reviewed', 'Important website functions checked', 'A specialist available when needed'],
   faqs: [
     { question: 'How often should a WordPress website be maintained?', answer: 'Business websites should be checked at least monthly, while high-traffic, WooCommerce, membership, or frequently changing sites often need weekly monitoring and a faster update response.' },
+    { question: 'Do you offer WordPress website maintenance packages?', answer: 'Yes. The maintenance scope can cover updates, backups, security checks, uptime, performance, and technical support. The appropriate schedule and checks depend on how often the site changes, its business-critical features, and the risk of downtime.' },
     { question: 'Does maintenance include malware removal?', answer: 'Routine security checks are included, but a site that is already compromised needs a separate incident cleanup before it can enter normal maintenance.' },
     { question: 'Can you maintain a custom theme or custom plugins?', answer: 'Yes, after a baseline review. Custom code is documented and treated more carefully than standard components because updates and compatibility may need development work.' },
     { question: 'Do you provide hosting?', answer: 'I can work with your existing host and recommend changes when the environment is part of the problem. Hosting itself is not bundled unless explicitly agreed.' },
