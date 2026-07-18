@@ -9,7 +9,11 @@ export default defineConfig({
   integrations: [critters()],
 
   image: {
-    domains: ['cms.mdpabel.com', 'leetcard.jacoblin.cool'],
+    domains: [
+      'media.mdpabel.com',
+      'cms.mdpabel.com',
+      'leetcard.jacoblin.cool',
+    ],
   },
   vite: {
     plugins: [tailwindcss()],

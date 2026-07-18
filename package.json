@@ -9,15 +9,16 @@
     "astro": "astro",
     "gen": "node scripts/process-threats.mjs",
     "sync": "npx tsx scripts/sync-content.ts",
-    "build:prod": "npm run sync && astro build",
+    "build:prod": "npm run sync && npm run build:astro",
     "fetch:posts": "node scripts/fetch-one-by-one.js --type=posts",
     "fetch:cases": "node scripts/fetch-one-by-one.js --type=case-study",
     "fetch:guides": "node scripts/fetch-one-by-one.js --type=guide",
     "fetch:logs": "node scripts/fetch-one-by-one.js --type=malware-log",
     "fetch:all": "npm run fetch:posts && npm run fetch:cases && npm run fetch:guides && npm run fetch:logs",
     "fetch:all:force": "node scripts/fetch-one-by-one.js --type=posts --force=true && node scripts/fetch-one-by-one.js --type=case-study --force=true && node scripts/fetch-one-by-one.js --type=guide --force=true && node scripts/fetch-one-by-one.js --type=malware-log --force=true",
-    "build:fetchAll": "npm run fetch:all && astro build",
-    "build": "astro build"
+    "build:fetchAll": "npm run fetch:all && npm run build:astro",
+    "build:astro": "node --require ./scripts/limit-astro-image-concurrency.cjs ./node_modules/astro/astro.js build",
+    "build": "npm run build:astro"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.15",

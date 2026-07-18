@@ -69,6 +69,23 @@ const schemaGraph = schemaItems.length
       <slot />
     </main>
     <NewFooter />
+    <script>
+      document.addEventListener(
+        'error',
+        (event) => {
+          const image = event.target;
+          if (!(image instanceof HTMLImageElement)) return;
+
+          const fallbackSource = image.dataset.fallbackSrc;
+          if (!fallbackSource || image.src === fallbackSource) return;
+
+          image.removeAttribute('srcset');
+          image.removeAttribute('data-fallback-src');
+          image.src = fallbackSource;
+        },
+        true,
+      );
+    </script>
   </body>
 </html>
 

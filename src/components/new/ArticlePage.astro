@@ -6,6 +6,7 @@ import Breadcrumbs from './Breadcrumbs.astro';
 import CommentForm from './CommentForm.astro';
 import FreeScanPopup from './FreeScanPopup.astro';
 import type { WordPressPost } from '../../lib/wordpress';
+import { getWordPressMediaUrl, isR2MediaUrl, resolveMediaSrcset, resolveMediaUrl } from '../../lib/media';
 
 interface Props {
   post: WordPressPost;
@@ -33,7 +34,28 @@ function processHtml(value = '') {
       $(element).attr('href', `${path}/${query ? `?${query}` : ''}${hash ? `#${hash}` : ''}`);
     }
   });
-  $('img').attr('loading', 'lazy');
+  $('[src], [data-src]').each((_, element) => {
+    for (const attribute of ['src', 'data-src']) {
+      const source = $(element).attr(attribute);
+      if (!source) continue;
+      const preferredSource = resolveMediaUrl(source);
+      $(element).attr(attribute, preferredSource);
+      if (isR2MediaUrl(preferredSource)) {
+        $(element).attr('data-fallback-src', preferredSource !== source ? source : getWordPressMediaUrl(preferredSource));
+      }
+    }
+  });
+  $('[srcset], [data-srcset]').each((_, element) => {
+    for (const attribute of ['srcset', 'data-srcset']) {
+      const srcset = $(element).attr(attribute);
+      if (srcset) $(element).attr(attribute, resolveMediaSrcset(srcset));
+    }
+  });
+  $('a[href]').each((_, element) => {
+    const href = $(element).attr('href');
+    if (href) $(element).attr('href', resolveMediaUrl(href));
+  });
+  $('img').attr('loading', 'lazy').attr('decoding', 'async');
   return $.html();
 }
 
@@ -42,7 +64,8 @@ const seoTitle = post.yoastSEO?.title || `${plainText(post.title)} | MD Pabel`;
 const description = post.yoastSEO?.description || plainText(post.excerpt).slice(0, 158) || `Read ${plainText(post.title)} by MD Pabel.`;
 const path = `/${rootSlug}/${post.slug}/`;
 const url = `https://www.mdpabel.com${path}`;
-const image = post.featuredImage?.url || post.yoastSEO?.og_image?.[0]?.url || '/images/blog-opengraph-image.png';
+const featuredImage = post.featuredImage ? resolveMediaUrl(post.featuredImage.url) : undefined;
+const image = resolveMediaUrl(featuredImage || post.yoastSEO?.og_image?.[0]?.url || '/images/blog-opengraph-image.png');
 const wordCount = plainText(post.content).split(/\s+/).filter(Boolean).length;
 const readingMinutes = Math.max(1, Math.ceil(wordCount / 220));
 const articleType = kind === 'blog' ? 'BlogPosting' : 'Article';
@@ -63,7 +86,7 @@ const malwareFields = rootSlug === 'malware-log' && post.acf ? [
 
 <NewLayout title={seoTitle} description={description} path={path} image={image} type='article' schema={schema}>
   <section class='border-b border-[#d7ddd7] py-12 md:py-16'><div class='new-shell max-w-6xl'><Breadcrumbs items={[{ label, href: `/${rootSlug}/` }, { label: plainText(post.title) }]} /><div class='mt-8 max-w-5xl'><p class='text-xs font-extrabold uppercase tracking-[0.15em] text-[#1f6b55]'>{label}</p><h1 class='editorial-heading mt-4 text-4xl font-semibold leading-[1.02] md:text-6xl'><span set:html={post.title} /></h1><div class='mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold text-[#65766f]'><a href='/about/' rel='author' class='flex items-center gap-2 text-[#17352c]'><BadgeCheck class='h-4 w-4 text-[#1f6b55]' />MD Pabel</a><time datetime={post.date} class='flex items-center gap-2'><CalendarDays class='h-4 w-4' />{new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time><span class='flex items-center gap-2'><Clock3 class='h-4 w-4' />{readingMinutes} min read</span></div></div></div></section>
-  {post.featuredImage && <div class='new-shell max-w-6xl pt-8'><img src={post.featuredImage.url} alt={post.featuredImage.alt || plainText(post.title)} width={post.featuredImage.width || 1200} height={post.featuredImage.height || 630} class='max-h-[620px] w-full rounded-2xl border border-[#d7ddd7] object-cover' loading='eager' /></div>}
+  {post.featuredImage && featuredImage && <div class='new-shell max-w-6xl pt-8'><img src={featuredImage} alt={post.featuredImage.alt || plainText(post.title)} width={post.featuredImage.width || 1200} height={post.featuredImage.height || 630} class='max-h-[620px] w-full rounded-2xl border border-[#d7ddd7] object-cover' loading='eager' fetchpriority='high' decoding='async' data-fallback-src={isR2MediaUrl(featuredImage) ? getWordPressMediaUrl(featuredImage) : undefined} /></div>}
   <div class='new-shell grid max-w-6xl items-start gap-10 py-12 lg:grid-cols-[minmax(0,1fr)_300px] lg:py-16'>
     <article class='min-w-0'>
       {content && <div class='article-prose' set:html={content} />}
