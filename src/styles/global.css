@@ -219,3 +219,11 @@ div[style*='background-color: #f3f4f6'] {
   margin-top: 20px;
   color: #000;
 }
+
+ul {
+  list-style: disc;
+}
+
+li::marker {
+  color: #17352c;
+}
