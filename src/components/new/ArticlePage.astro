@@ -21,6 +21,35 @@ function plainText(value = '') {
   return load(value, null, false).text().replace(/\s+/g, ' ').trim();
 }
 
+function extractFaqs(value = '') {
+  const $ = load(value, null, false);
+  const faqHeading = $('h2').filter((_, element) => /^frequently asked questions$/i.test($(element).text().trim())).first();
+  if (!faqHeading.length) return [];
+
+  const faqs: { question: string; answer: string }[] = [];
+  let currentQuestion = '';
+  let answerParts: string[] = [];
+
+  const saveCurrentFaq = () => {
+    const answer = plainText(answerParts.join(' '));
+    if (currentQuestion && answer) faqs.push({ question: currentQuestion, answer });
+  };
+
+  for (const element of faqHeading.nextAll().toArray()) {
+    const tagName = element.tagName?.toLowerCase();
+    if (tagName === 'h2') break;
+    if (tagName === 'h3') {
+      saveCurrentFaq();
+      currentQuestion = plainText($(element).html() || $(element).text());
+      answerParts = [];
+      continue;
+    }
+    if (currentQuestion) answerParts.push($(element).text());
+  }
+  saveCurrentFaq();
+  return faqs;
+}
+
 function processHtml(value = '') {
   const $ = load(value, null, false);
   $('a').each((_, element) => {
@@ -69,10 +98,12 @@ const image = resolveMediaUrl(featuredImage || post.yoastSEO?.og_image?.[0]?.url
 const wordCount = plainText(post.content).split(/\s+/).filter(Boolean).length;
 const readingMinutes = Math.max(1, Math.ceil(wordCount / 220));
 const articleType = kind === 'blog' ? 'BlogPosting' : 'Article';
+const faqs = extractFaqs(post.content);
 const schema = [
   { '@type': articleType, '@id': `${url}#article`, headline: plainText(post.title), description, image, datePublished: post.date, dateModified: post.modified || post.date, mainEntityOfPage: { '@id': `${url}#webpage` }, author: { '@id': 'https://www.mdpabel.com/about/#person' }, publisher: { '@id': 'https://www.mdpabel.com/about/#person' }, articleSection: label, wordCount },
   { '@type': 'WebPage', '@id': `${url}#webpage`, url, name: seoTitle, description, isPartOf: { '@id': 'https://www.mdpabel.com/#website' }, breadcrumb: { '@id': `${url}#breadcrumb` }, primaryImageOfPage: image, datePublished: post.date, dateModified: post.modified || post.date },
   { '@type': 'BreadcrumbList', '@id': `${url}#breadcrumb`, itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.mdpabel.com/' }, { '@type': 'ListItem', position: 2, name: label, item: `https://www.mdpabel.com/${rootSlug}/` }, { '@type': 'ListItem', position: 3, name: plainText(post.title), item: url }] },
+  ...(faqs.length > 0 ? [{ '@type': 'FAQPage', '@id': `${url}#faq`, mainEntity: faqs.map((faq) => ({ '@type': 'Question', name: faq.question, acceptedAnswer: { '@type': 'Answer', text: faq.answer } })) }] : []),
 ];
 
 const malwareFields = rootSlug === 'malware-log' && post.acf ? [
