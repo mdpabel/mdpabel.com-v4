@@ -23,7 +23,7 @@ severityRationale: "The screenshot directly shows both redirect methods in post_
 evidenceSource: "Anonymized investigation with three database screenshots and a supplied redirect excerpt; one directly relevant privacy-safe image is published"
 schemaType: "TechArticle"
 screenshots:
-  - src: "/wordpress-threats/meta-redirect-location-based-redirect-malware_evidence-2.png"
+  - src: "/wordpress-researches/meta-redirect-location-based-redirect-malware_evidence-2.png"
     alt: "WordPress post_content field containing meta-refresh and window.location redirect code"
     caption: "The expanded post_content field shows two immediate redirects to ushort[.]company. The adjacent records and table prefix do not establish the injection source."
     supports: "Both redirect mechanisms were stored in a WordPress content record"
@@ -102,7 +102,7 @@ Anonymized investigation with three database screenshots and a supplied redirect
 
 Both redirect mechanisms were stored in a WordPress content record.
 
-![WordPress post_content field containing meta-refresh and window.location redirect code](/wordpress-threats/meta-redirect-location-based-redirect-malware_evidence-2.png "The expanded post_content field shows two immediate redirects to ushort[.]company. The adjacent records and table prefix do not establish the injection source.")
+![WordPress post_content field containing meta-refresh and window.location redirect code](/wordpress-researches/meta-redirect-location-based-redirect-malware_evidence-2.png "The expanded post_content field shows two immediate redirects to ushort[.]company. The adjacent records and table prefix do not establish the injection source.")
 
 ## Confirmed findings
 

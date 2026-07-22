@@ -22,7 +22,7 @@ severityRationale: "The screenshot directly shows the restrictive rule. Claims t
 evidenceSource: "Anonymized investigation with one code screenshot and a supplied .htaccess excerpt"
 schemaType: "TechArticle"
 screenshots:
-  - src: "/wordpress-threats/htaccess-php-lockout_evidence-1.png"
+  - src: "/wordpress-researches/htaccess-php-lockout_evidence-1.png"
     alt: "Editor showing mixed-case PHP FilesMatch denial and an index.php allow rule"
     caption: "The rule denies many PHP capitalization variants and then allows index.php. The image confirms this file's contents, not recursive placement or the cause of a particular error page."
     supports: "The observed .htaccess contained a broad PHP deny rule and index.php exception"
@@ -102,7 +102,7 @@ Anonymized investigation with one code screenshot and a supplied .htaccess excer
 
 The observed .htaccess contained a broad PHP deny rule and index.php exception.
 
-![Editor showing mixed-case PHP FilesMatch denial and an index.php allow rule](/wordpress-threats/htaccess-php-lockout_evidence-1.png "The rule denies many PHP capitalization variants and then allows index.php. The image confirms this file's contents, not recursive placement or the cause of a particular error page.")
+![Editor showing mixed-case PHP FilesMatch denial and an index.php allow rule](/wordpress-researches/htaccess-php-lockout_evidence-1.png "The rule denies many PHP capitalization variants and then allows index.php. The image confirms this file's contents, not recursive placement or the cause of a particular error page.")
 
 ## Confirmed findings
 

@@ -26,7 +26,7 @@ severityRationale: "The supplied code registers redirect, address-collection, sc
 evidenceSource: "Anonymized WordPress client investigation with one retained file-manager screenshot and two supplied truncated PHP samples"
 schemaType: "TechArticle"
 screenshots:
-  - src: "/wordpress-threats/woocommerce_input-hidden-plugin_evidence-1.png"
+  - src: "/wordpress-researches/woocommerce_input-hidden-plugin_evidence-1.png"
     alt: "Hosting file manager showing the woocommerce_inputs directory under WordPress plugins"
     caption: "The file manager confirms a woocommerce_inputs folder under wp-content/plugins. The account identifier is permanently redacted; file contents are not visible."
     supports: "The woocommerce_inputs directory existed in the observed WordPress plugin path"
@@ -113,7 +113,7 @@ The broad [fake and malicious plugin guide](/blog/comprehensive-list-of-known-fa
 
 The screenshot confirms the folder `wp-content/plugins/woocommerce_inputs/`. The red block in the breadcrumb is an irreversible redaction already present in the public derivative. Neighboring directories are context only and are not classified by this evidence.
 
-![Hosting file manager showing the woocommerce_inputs directory under WordPress plugins](/wordpress-threats/woocommerce_input-hidden-plugin_evidence-1.png "The file manager confirms a woocommerce_inputs folder under wp-content/plugins. The account identifier is permanently redacted; file contents are not visible.")
+![Hosting file manager showing the woocommerce_inputs directory under WordPress plugins](/wordpress-researches/woocommerce_input-hidden-plugin_evidence-1.png "The file manager confirms a woocommerce_inputs folder under wp-content/plugins. The account identifier is permanently redacted; file contents are not visible.")
 
 ## Confirmed findings
 

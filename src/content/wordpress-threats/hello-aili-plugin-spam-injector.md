@@ -25,14 +25,14 @@ severityRationale: "The supplied code evaluates PHP received from remote hosts i
 evidenceSource: "Anonymized WordPress client investigation with two retained screenshots and a complete supplied loader sample"
 schemaType: "TechArticle"
 screenshots:
-  - src: "/wordpress-threats/fake-hellos-seo-spam-injector_evidence-1.png"
+  - src: "/wordpress-researches/fake-hellos-seo-spam-injector_evidence-1.png"
     alt: "Hosting file manager showing hellos.php inside the WordPress plugins hellos directory"
     caption: "The file manager confirms wp-content/plugins/hellos/hellos.php and displays a size of 1.18 KiB. No client identifier is visible in the crop."
     supports: "The hellos directory and hellos.php file were observed under WordPress plugins"
     width: 1328
     height: 730
     privacyReviewed: true
-  - src: "/wordpress-threats/fake-hellos-seo-spam-injector_evidence-2.png"
+  - src: "/wordpress-researches/fake-hellos-seo-spam-injector_evidence-2.png"
     alt: "Code view showing the Hello Aili plugin header and beginning of the open_hello function"
     caption: "The code view shows Hello Aili reusing Hello Dolly metadata, registering open_hello, and beginning an HTTP-request argument array."
     supports: "The observed file used a deceptive plugin header and registered the open_hello loader"
@@ -115,11 +115,11 @@ The mismatch is an artifact-level identification clue. This page does not sugges
 
 The file manager shows one 1.18 KiB PHP file named `hellos.php` inside the `hellos` plugin directory.
 
-![Hosting file manager showing hellos.php inside the WordPress plugins hellos directory](/wordpress-threats/fake-hellos-seo-spam-injector_evidence-1.png "The file manager confirms wp-content/plugins/hellos/hellos.php and displays a size of 1.18 KiB. No client identifier is visible in the crop.")
+![Hosting file manager showing hellos.php inside the WordPress plugins hellos directory](/wordpress-researches/fake-hellos-seo-spam-injector_evidence-1.png "The file manager confirms wp-content/plugins/hellos/hellos.php and displays a size of 1.18 KiB. No client identifier is visible in the crop.")
 
 The code screenshot shows the deceptive identity and the beginning of the loader. It captures the `admin_init` registration, the direct frontend call, and the start of `open_hello()`.
 
-![Code view showing the Hello Aili plugin header and beginning of the open_hello function](/wordpress-threats/fake-hellos-seo-spam-injector_evidence-2.png "The code view shows Hello Aili reusing Hello Dolly metadata, registering open_hello, and beginning an HTTP-request argument array.")
+![Code view showing the Hello Aili plugin header and beginning of the open_hello function](/wordpress-researches/fake-hellos-seo-spam-injector_evidence-2.png "The code view shows Hello Aili reusing Hello Dolly metadata, registering open_hello, and beginning an HTTP-request argument array.")
 
 ## Confirmed findings
 

@@ -24,7 +24,7 @@ severityRationale: "The supplied loader source directly retrieves and evaluates 
 evidenceSource: "Anonymized investigation with three screenshots and retained source for two small remote loader files"
 schemaType: "TechArticle"
 screenshots:
-  - src: "/wordpress-threats/WordPressCore_evidence-2.png"
+  - src: "/wordpress-researches/WordPressCore_evidence-2.png"
     alt: "Code editor showing hibgqdnj.php retrieving a remote URL with cURL and evaluating the response"
     caption: "The six-line file retrieves a defanged endpoint and evaluates the returned body. The screenshot confirms code structure, not a successful response during the investigation."
     supports: "hibgqdnj.php implemented a remote-content evaluation path"
@@ -107,7 +107,7 @@ Anonymized investigation with three screenshots and retained source for two smal
 
 hibgqdnj.php implemented a remote-content evaluation path.
 
-![Code editor showing hibgqdnj.php retrieving a remote URL with cURL and evaluating the response](/wordpress-threats/WordPressCore_evidence-2.png "The six-line file retrieves a defanged endpoint and evaluates the returned body. The screenshot confirms code structure, not a successful response during the investigation.")
+![Code editor showing hibgqdnj.php retrieving a remote URL with cURL and evaluating the response](/wordpress-researches/WordPressCore_evidence-2.png "The six-line file retrieves a defanged endpoint and evaluates the returned body. The screenshot confirms code structure, not a successful response during the investigation.")
 
 ## Confirmed findings
 

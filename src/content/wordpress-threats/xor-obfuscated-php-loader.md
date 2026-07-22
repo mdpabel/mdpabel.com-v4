@@ -25,7 +25,7 @@ severityRationale: "The supplied code transforms request data, writes the result
 evidenceSource: "Anonymized WordPress client investigation with a retained wp-config.php screenshot and supplied PHP source"
 schemaType: "TechArticle"
 screenshots:
-  - src: "/wordpress-threats/wp-config-xor-backdoor-mrk-parameter_evidence-1.png"
+  - src: "/wordpress-researches/wp-config-xor-backdoor-mrk-parameter_evidence-1.png"
     alt: "wp-config.php editor showing a compact request-gated XOR loader before normal WordPress configuration"
     caption: "The injected first line reads a request value, transforms it, and tries writable temporary directories before normal wp-config.php content begins."
     supports: "A request-gated temporary-file loader was inserted at the top of wp-config.php"
@@ -105,7 +105,7 @@ The broad [obfuscated PHP malware guide](/blog/wordpress-obfuscated-php-malware-
 
 The screenshot confirms the location and overall structure: request-key check, `hex2bin()`, an XOR loop, an array of candidate temporary directories, a write to `.desc`, `include`, and cleanup with `unlink()`.
 
-![wp-config.php editor showing a compact request-gated XOR loader before normal WordPress configuration](/wordpress-threats/wp-config-xor-backdoor-mrk-parameter_evidence-1.png "The injected first line reads a request value, transforms it, and tries writable temporary directories before normal wp-config.php content begins.")
+![wp-config.php editor showing a compact request-gated XOR loader before normal WordPress configuration](/wordpress-researches/wp-config-xor-backdoor-mrk-parameter_evidence-1.png "The injected first line reads a request value, transforms it, and tries writable temporary directories before normal wp-config.php content begins.")
 
 ## Confirmed findings
 

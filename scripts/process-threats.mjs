@@ -10,7 +10,7 @@ const DUMP_DIR = '_malware_dump';
 const TRASH_DIR = '_trash';
 const REVIEW_DIR = '_review';
 const CONTENT_DIR = 'src/content/wordpress-threats';
-const PUBLIC_BASE_DIR = 'public/images/wordpress-threats';
+const PUBLIC_BASE_DIR = 'public/wordpress-researches';
 
 const MODELS = {
   ANALYST: process.env.OPENAI_MODEL_ANALYST || 'gpt-5.4',
@@ -478,7 +478,7 @@ function copyEvidenceImage(filePath, caseId, index) {
   const fileName = `${caseId}_evidence-${index}${ext}`;
   const dest = path.join(PUBLIC_BASE_DIR, fileName);
   fs.copyFileSync(filePath, dest);
-  return `/images/wordpress-threats/${fileName}`;
+  return `/wordpress-researches/${fileName}`;
 }
 
 function uniqueStrings(items) {

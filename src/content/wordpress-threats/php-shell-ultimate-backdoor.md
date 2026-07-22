@@ -23,14 +23,14 @@ severityRationale: "The source identity and dangerous function set are visible. 
 evidenceSource: "Anonymized investigation with five screenshots and retained truncated ai.php source; privacy-sensitive and redundant images are excluded"
 schemaType: "TechArticle"
 screenshots:
-  - src: "/wordpress-threats/php-shell-ultimate-bypass-installer_evidence-3.png"
+  - src: "/wordpress-researches/php-shell-ultimate-bypass-installer_evidence-3.png"
     alt: "PHP editor showing the PHP Shell Ultimate header and bypass-named functions"
     caption: "The source identifies itself as PHP SHELL ULTIMATE and lists LD_PRELOAD, PHP-FPM, and ImageMagick labels. The labels do not demonstrate a successful bypass."
     supports: "The observed file contained PHP Shell Ultimate identity and bypass-named functions"
     width: 1251
     height: 752
     privacyReviewed: true
-  - src: "/wordpress-threats/php-shell-ultimate-bypass-installer_evidence-4.png"
+  - src: "/wordpress-researches/php-shell-ultimate-bypass-installer_evidence-4.png"
     alt: "File manager showing ai.php and asem.php in a writable plugin-related folder"
     caption: "The directory contains ai.php, asem.php, index.php, and .htaccess. Presence confirms the artifacts, while contents and execution require separate verification."
     supports: "ai.php and related PHP files existed in the observed directory"
@@ -118,11 +118,11 @@ Anonymized investigation with five screenshots and retained truncated ai.php sou
 
 The observed file contained PHP Shell Ultimate identity and bypass-named functions.
 
-![PHP editor showing the PHP Shell Ultimate header and bypass-named functions](/wordpress-threats/php-shell-ultimate-bypass-installer_evidence-3.png "The source identifies itself as PHP SHELL ULTIMATE and lists LD_PRELOAD, PHP-FPM, and ImageMagick labels. The labels do not demonstrate a successful bypass.")
+![PHP editor showing the PHP Shell Ultimate header and bypass-named functions](/wordpress-researches/php-shell-ultimate-bypass-installer_evidence-3.png "The source identifies itself as PHP SHELL ULTIMATE and lists LD_PRELOAD, PHP-FPM, and ImageMagick labels. The labels do not demonstrate a successful bypass.")
 
 ai.php and related PHP files existed in the observed directory.
 
-![File manager showing ai.php and asem.php in a writable plugin-related folder](/wordpress-threats/php-shell-ultimate-bypass-installer_evidence-4.png "The directory contains ai.php, asem.php, index.php, and .htaccess. Presence confirms the artifacts, while contents and execution require separate verification.")
+![File manager showing ai.php and asem.php in a writable plugin-related folder](/wordpress-researches/php-shell-ultimate-bypass-installer_evidence-4.png "The directory contains ai.php, asem.php, index.php, and .htaccess. Presence confirms the artifacts, while contents and execution require separate verification.")
 
 ## Confirmed findings
 

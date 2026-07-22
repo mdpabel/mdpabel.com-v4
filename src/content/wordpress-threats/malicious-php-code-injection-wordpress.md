@@ -27,35 +27,35 @@ severityRationale: "The supplied PHP reconstructs and evaluates encoded content,
 evidenceSource: "Anonymized WordPress client investigation with six retained screenshots, of which five support this page, and a supplied encoded PHP sample"
 schemaType: "TechArticle"
 screenshots:
-  - src: "/wordpress-threats/wk_evidence-1.png"
+  - src: "/wordpress-researches/wk_evidence-1.png"
     alt: "File manager showing a wk directory directly under wp-content"
     caption: "A wk directory is visible directly under wp-content. The screenshot establishes the path only; it does not display the directory contents."
     supports: "A wk directory existed at the top level of wp-content"
     width: 972
     height: 657
     privacyReviewed: true
-  - src: "/wordpress-threats/wk_evidence-2.png"
+  - src: "/wordpress-researches/wk_evidence-2.png"
     alt: "File manager showing a wk directory inside wp-content mu-plugins"
     caption: "The mu-plugins view contains a wk directory and two sibling PHP files. The sibling files were not analyzed for this entry."
     supports: "A second wk directory existed under the WordPress mu-plugins path"
     width: 863
     height: 476
     privacyReviewed: true
-  - src: "/wordpress-threats/wk_evidence-4.png"
+  - src: "/wordpress-researches/wk_evidence-4.png"
     alt: "File manager showing a wk directory among installed WordPress themes"
     caption: "A directory named wk appears under wp-content/themes. The image does not show whether WordPress recognized it as an active theme."
     supports: "A wk directory existed in the themes path"
     width: 1204
     height: 599
     privacyReviewed: true
-  - src: "/wordpress-threats/wk_evidence-5.png"
+  - src: "/wordpress-researches/wk_evidence-5.png"
     alt: "File manager showing a wk directory inside WordPress uploads"
     caption: "A wk directory appears under wp-content/uploads alongside year and plugin-created folders. Its contents are not visible."
     supports: "A wk directory existed in the uploads path"
     width: 1094
     height: 607
     privacyReviewed: true
-  - src: "/wordpress-threats/wk_evidence-3.png"
+  - src: "/wordpress-researches/wk_evidence-3.png"
     alt: "Code editor showing a PHP class with pipe-separated hex fragments and an evaluation call"
     caption: "The retained code view shows class nigwqgqwtqwtqwt, a long hexadecimal fragment list, indirect decoder construction, and evaluation. The encoded payload is not published."
     supports: "The supplied PHP sample reconstructs and evaluates an encoded payload"
@@ -140,17 +140,17 @@ The broad [obfuscated PHP malware guide](/blog/wordpress-obfuscated-php-malware-
 
 The first screenshot shows `wk` directly under `wp-content`. A directory name this short is not definitive evidence, so the finding is meaningful primarily when correlated with the other paths and code sample.
 
-![File manager showing a wk directory directly under wp-content](/wordpress-threats/wk_evidence-1.png "A wk directory is visible directly under wp-content. The screenshot establishes the path only; it does not display the directory contents.")
+![File manager showing a wk directory directly under wp-content](/wordpress-researches/wk_evidence-1.png "A wk directory is visible directly under wp-content. The screenshot establishes the path only; it does not display the directory contents.")
 
 The same name also appears under `mu-plugins`. Two sibling PHP filenames are visible, but their contents are not supplied here and they are not classified by this page.
 
-![File manager showing a wk directory inside wp-content mu-plugins](/wordpress-threats/wk_evidence-2.png "The mu-plugins view contains a wk directory and two sibling PHP files. The sibling files were not analyzed for this entry.")
+![File manager showing a wk directory inside wp-content mu-plugins](/wordpress-researches/wk_evidence-2.png "The mu-plugins view contains a wk directory and two sibling PHP files. The sibling files were not analyzed for this entry.")
 
 Separate views record `wk` under both themes and uploads.
 
-![File manager showing a wk directory among installed WordPress themes](/wordpress-threats/wk_evidence-4.png "A directory named wk appears under wp-content/themes. The image does not show whether WordPress recognized it as an active theme.")
+![File manager showing a wk directory among installed WordPress themes](/wordpress-researches/wk_evidence-4.png "A directory named wk appears under wp-content/themes. The image does not show whether WordPress recognized it as an active theme.")
 
-![File manager showing a wk directory inside WordPress uploads](/wordpress-threats/wk_evidence-5.png "A wk directory appears under wp-content/uploads alongside year and plugin-created folders. Its contents are not visible.")
+![File manager showing a wk directory inside WordPress uploads](/wordpress-researches/wk_evidence-5.png "A wk directory appears under wp-content/uploads alongside year and plugin-created folders. Its contents are not visible.")
 
 ## Confirmed findings
 
@@ -164,7 +164,7 @@ Separate views record `wk` under both themes and uploads.
 
 The code divides a long encoded program into many hexadecimal pieces separated by `|`. This makes common readable strings less obvious in the original file. A second layer dynamically reconstructs decoder-related function names and then evaluates the resulting content.
 
-![Code editor showing a PHP class with pipe-separated hex fragments and an evaluation call](/wordpress-threats/wk_evidence-3.png "The retained code view shows class nigwqgqwtqwtqwt, a long hexadecimal fragment list, indirect decoder construction, and evaluation. The encoded payload is not published.")
+![Code editor showing a PHP class with pipe-separated hex fragments and an evaluation call](/wordpress-researches/wk_evidence-3.png "The retained code view shows class nigwqgqwtqwtqwt, a long hexadecimal fragment list, indirect decoder construction, and evaluation. The encoded payload is not published.")
 
 ```text
 Redacted defensive excerpt

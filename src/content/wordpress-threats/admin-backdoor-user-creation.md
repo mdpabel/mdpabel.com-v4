@@ -25,7 +25,7 @@ severityRationale: "The supplied code contains administrator creation logic and 
 evidenceSource: "Anonymized investigation with retained PHP code and four screenshots; one privacy-safe code screenshot is published"
 schemaType: "TechArticle"
 screenshots:
-  - src: "/wordpress-threats/hidden-wordpress-admin-users-functions.php-malware_evidence-1.png"
+  - src: "/wordpress-researches/hidden-wordpress-admin-users-functions.php-malware_evidence-1.png"
     alt: "PHP editor showing functions.php hooks that alter WordPress user queries and user counts"
     caption: "The visible functions.php block registers pre_user_query and views_users handlers and reads the _pre_user_id option. It confirms concealment logic, not how the code was introduced."
     supports: "functions.php contained user-query and count-manipulation hooks"
@@ -108,7 +108,7 @@ Anonymized investigation with retained PHP code and four screenshots; one privac
 
 functions.php contained user-query and count-manipulation hooks.
 
-![PHP editor showing functions.php hooks that alter WordPress user queries and user counts](/wordpress-threats/hidden-wordpress-admin-users-functions.php-malware_evidence-1.png "The visible functions.php block registers pre_user_query and views_users handlers and reads the _pre_user_id option. It confirms concealment logic, not how the code was introduced.")
+![PHP editor showing functions.php hooks that alter WordPress user queries and user counts](/wordpress-researches/hidden-wordpress-admin-users-functions.php-malware_evidence-1.png "The visible functions.php block registers pre_user_query and views_users handlers and reads the _pre_user_id option. It confirms concealment logic, not how the code was introduced.")
 
 ## Confirmed findings
 

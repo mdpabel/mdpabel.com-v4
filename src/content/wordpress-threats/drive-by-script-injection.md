@@ -22,7 +22,7 @@ severityRationale: "The retained notice and page-source evidence show the inject
 evidenceSource: "Anonymized drive-by investigation with a third-party incident notice, rendered source evidence, and a supplied script tag"
 schemaType: "TechArticle"
 screenshots:
-  - src: "/wordpress-threats/switch-domain-suspension-drive-by-malware_evidence-3.png"
+  - src: "/wordpress-researches/switch-domain-suspension-drive-by-malware_evidence-3.png"
     alt: "Incident notice identifying the hexagoncontrail-js external script element"
     caption: "The notice records the hexagoncontrail-js element and its external source. The affected client URL is irreversibly obscured; the image does not show the remote script's contents."
     supports: "The external script tag was identified during the incident"
@@ -101,7 +101,7 @@ Anonymized drive-by investigation with a third-party incident notice, rendered s
 
 The external script tag was identified during the incident.
 
-![Incident notice identifying the hexagoncontrail-js external script element](/wordpress-threats/switch-domain-suspension-drive-by-malware_evidence-3.png "The notice records the hexagoncontrail-js element and its external source. The affected client URL is irreversibly obscured; the image does not show the remote script's contents.")
+![Incident notice identifying the hexagoncontrail-js external script element](/wordpress-researches/switch-domain-suspension-drive-by-malware_evidence-3.png "The notice records the hexagoncontrail-js element and its external source. The affected client URL is irreversibly obscured; the image does not show the remote script's contents.")
 
 ## Confirmed findings
 

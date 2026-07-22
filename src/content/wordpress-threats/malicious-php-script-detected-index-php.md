@@ -23,14 +23,14 @@ severityRationale: "The directory and supplied code are anomalous and contain ob
 evidenceSource: "Anonymized investigation with two filesystem screenshots and a retained truncated index.php sample"
 schemaType: "TechArticle"
 screenshots:
-  - src: "/wordpress-threats/random-number-folder-name-inside-public_html-contains-malware_evidence-2.png"
+  - src: "/wordpress-researches/random-number-folder-name-inside-public_html-contains-malware_evidence-2.png"
     alt: "File manager showing short directories 5d8c5 and 61c429 beside unexpected PHP files"
     caption: "The file manager shows two short directory names and several unexpected PHP artifacts under an older web tree. Names alone are contextual and require code review."
     supports: "The investigation contained short anomalous directories and unexpected PHP files"
     width: 1695
     height: 725
     privacyReviewed: true
-  - src: "/wordpress-threats/random-number-folder-name-inside-public_html-contains-malware_evidence-1.png"
+  - src: "/wordpress-researches/random-number-folder-name-inside-public_html-contains-malware_evidence-1.png"
     alt: "File manager showing index.php inside the short 5d8c5 directory"
     caption: "The directory view confirms a 1 KB index.php inside 5d8c5. The screenshot does not demonstrate execution or the file's complete contents."
     supports: "index.php existed inside the 5d8c5 directory"
@@ -110,11 +110,11 @@ Anonymized investigation with two filesystem screenshots and a retained truncate
 
 The investigation contained short anomalous directories and unexpected PHP files.
 
-![File manager showing short directories 5d8c5 and 61c429 beside unexpected PHP files](/wordpress-threats/random-number-folder-name-inside-public_html-contains-malware_evidence-2.png "The file manager shows two short directory names and several unexpected PHP artifacts under an older web tree. Names alone are contextual and require code review.")
+![File manager showing short directories 5d8c5 and 61c429 beside unexpected PHP files](/wordpress-researches/random-number-folder-name-inside-public_html-contains-malware_evidence-2.png "The file manager shows two short directory names and several unexpected PHP artifacts under an older web tree. Names alone are contextual and require code review.")
 
 index.php existed inside the 5d8c5 directory.
 
-![File manager showing index.php inside the short 5d8c5 directory](/wordpress-threats/random-number-folder-name-inside-public_html-contains-malware_evidence-1.png "The directory view confirms a 1 KB index.php inside 5d8c5. The screenshot does not demonstrate execution or the file's complete contents.")
+![File manager showing index.php inside the short 5d8c5 directory](/wordpress-researches/random-number-folder-name-inside-public_html-contains-malware_evidence-1.png "The directory view confirms a 1 KB index.php inside 5d8c5. The screenshot does not demonstrate execution or the file's complete contents.")
 
 ## Confirmed findings
 

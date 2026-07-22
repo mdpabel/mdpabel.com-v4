@@ -27,7 +27,7 @@ severityRationale: "The supplied code and screenshot show plugin creation, an em
 evidenceSource: "Anonymized investigation with two code screenshots and a retained representative functions.php sample"
 schemaType: "TechArticle"
 screenshots:
-  - src: "/wordpress-threats/functions.php-malware_evidence-2.png"
+  - src: "/wordpress-researches/functions.php-malware_evidence-2.png"
     alt: "PHP editor showing the plugin_deployer block and wp-perf-analytics slug in functions.php"
     caption: "The visible block identifies wp-perf-analytics, a .plugin_deployer flag, self-cleaning logic, and an encoded payload. Only the structural evidence is reproduced publicly."
     supports: "functions.php contained a self-cleaning wp-perf-analytics deployer"
@@ -111,7 +111,7 @@ Anonymized investigation with two code screenshots and a retained representative
 
 functions.php contained a self-cleaning wp-perf-analytics deployer.
 
-![PHP editor showing the plugin_deployer block and wp-perf-analytics slug in functions.php](/wordpress-threats/functions.php-malware_evidence-2.png "The visible block identifies wp-perf-analytics, a .plugin_deployer flag, self-cleaning logic, and an encoded payload. Only the structural evidence is reproduced publicly.")
+![PHP editor showing the plugin_deployer block and wp-perf-analytics slug in functions.php](/wordpress-researches/functions.php-malware_evidence-2.png "The visible block identifies wp-perf-analytics, a .plugin_deployer flag, self-cleaning logic, and an encoded payload. Only the structural evidence is reproduced publicly.")
 
 ## Confirmed findings
 

@@ -24,7 +24,7 @@ severityRationale: "The supplied source directly shows concealment and outbound 
 evidenceSource: "Anonymized investigation with a plugin-directory screenshot and retained source for advanced-linkflow-control.php"
 schemaType: "TechArticle"
 screenshots:
-  - src: "/wordpress-threats/advanced-linkflow-control_evidence-1.png"
+  - src: "/wordpress-researches/advanced-linkflow-control_evidence-1.png"
     alt: "File manager showing the advanced-linkflow-control plugin directory and PHP file"
     caption: "The file manager confirms the advanced-linkflow-control directory and its 13.92 KB PHP file. Directory presence alone does not prove execution; the supplied code establishes the behavior."
     supports: "The named fake-plugin artifact existed in wp-content/plugins"
@@ -106,7 +106,7 @@ Anonymized investigation with a plugin-directory screenshot and retained source 
 
 The named fake-plugin artifact existed in wp-content/plugins.
 
-![File manager showing the advanced-linkflow-control plugin directory and PHP file](/wordpress-threats/advanced-linkflow-control_evidence-1.png "The file manager confirms the advanced-linkflow-control directory and its 13.92 KB PHP file. Directory presence alone does not prove execution; the supplied code establishes the behavior.")
+![File manager showing the advanced-linkflow-control plugin directory and PHP file](/wordpress-researches/advanced-linkflow-control_evidence-1.png "The file manager confirms the advanced-linkflow-control directory and its 13.92 KB PHP file. Directory presence alone does not prove execution; the supplied code establishes the behavior.")
 
 ## Confirmed findings
 

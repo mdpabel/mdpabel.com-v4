@@ -22,21 +22,21 @@ severityRationale: "The supplied footer code can place remotely controlled marku
 evidenceSource: "Anonymized WordPress client investigation with retained screenshots and a supplied footer.php sample"
 schemaType: "TechArticle"
 screenshots:
-  - src: "/wordpress-threats/seo-spam-footer-injection_evidence-1.png"
+  - src: "/wordpress-researches/seo-spam-footer-injection_evidence-1.png"
     alt: "Browser displaying hidden-link HTML returned by the observed remote endpoint"
     caption: "The observed endpoint returned a hidden div containing numerous outbound anchor elements. The screenshot records the response, not how the server was compromised."
     supports: "Remote response contained hidden-link markup"
     width: 1919
     height: 1011
     privacyReviewed: true
-  - src: "/wordpress-threats/seo-spam-footer-injection_evidence-3.png"
+  - src: "/wordpress-researches/seo-spam-footer-injection_evidence-3.png"
     alt: "Theme footer.php editor showing a hard-coded URL and PHP retrieval fallbacks"
     caption: "The theme footer contains the hard-coded endpoint, stream and cURL retrieval branches, and an output call."
     supports: "footer.php fetched and printed remote content"
     width: 914
     height: 560
     privacyReviewed: true
-  - src: "/wordpress-threats/seo-spam-footer-injection_evidence-4.png"
+  - src: "/wordpress-researches/seo-spam-footer-injection_evidence-4.png"
     alt: "Security scan result showing a spam-link sample associated with the investigated site"
     caption: "A scanner reported a known-spam link on the investigated site. This is secondary corroboration; the footer code and endpoint response are the primary evidence."
     supports: "Incident symptoms were consistent with the returned link markup"
@@ -111,7 +111,7 @@ The broader article on [hidden links malware and remote-fetch footer injection](
 
 The retained endpoint response begins with a hidden container and continues with numerous outbound anchors. Several visible anchors use gambling or promotional terms. This supports an analyst assessment that the remote content was intended for link injection, although the screenshot alone does not establish how search engines or visitors received it on every request.
 
-![Browser displaying hidden-link HTML returned by the observed remote endpoint](/wordpress-threats/seo-spam-footer-injection_evidence-1.png "The observed endpoint returned a hidden div containing numerous outbound anchor elements. The image records the response, not how the WordPress server was compromised.")
+![Browser displaying hidden-link HTML returned by the observed remote endpoint](/wordpress-researches/seo-spam-footer-injection_evidence-1.png "The observed endpoint returned a hidden div containing numerous outbound anchor elements. The image records the response, not how the WordPress server was compromised.")
 
 ## Confirmed findings
 
@@ -125,7 +125,7 @@ The retained endpoint response begins with a hidden container and continues with
 
 The loader is small and uses ordinary PHP networking functions. That makes individual function names weak indicators on their own. The more useful signature is the combination of one hard-coded endpoint, multiple retrieval fallbacks, and immediate output of the returned value from a theme footer.
 
-![Theme footer.php editor showing a hard-coded URL and PHP retrieval fallbacks](/wordpress-threats/seo-spam-footer-injection_evidence-3.png "The theme footer contains the hard-coded endpoint, stream and cURL retrieval branches, and an output call.")
+![Theme footer.php editor showing a hard-coded URL and PHP retrieval fallbacks](/wordpress-researches/seo-spam-footer-injection_evidence-3.png "The theme footer contains the hard-coded endpoint, stream and cURL retrieval branches, and an output call.")
 
 ### Retrieval and output flow
 
@@ -157,7 +157,7 @@ The combination of the hidden remote response and the footer output path is cons
 
 The scanner screenshot records a spam-link finding associated with the investigated site. Client-identifying values in the retained derivative are irreversibly redacted. The scanner label is not used to infer the PHP behavior; it only corroborates that spam-link output was observed during the incident.
 
-![Security scan result showing a spam-link sample associated with the investigated site](/wordpress-threats/seo-spam-footer-injection_evidence-4.png "A scanner reported a known-spam link on the investigated site. This is secondary corroboration; the footer code and endpoint response are the primary evidence.")
+![Security scan result showing a spam-link sample associated with the investigated site](/wordpress-researches/seo-spam-footer-injection_evidence-4.png "A scanner reported a known-spam link on the investigated site. This is secondary corroboration; the footer code and endpoint response are the primary evidence.")
 
 ## Indicators of compromise
 

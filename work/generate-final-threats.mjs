@@ -4,7 +4,7 @@ import sharp from "sharp";
 
 const root = process.cwd();
 const contentDir = path.join(root, "src", "content", "wordpress-threats");
-const imageDir = path.join(root, "public", "wordpress-threats");
+const imageDir = path.join(root, "public", "wordpress-researches");
 
 const guide = (title, href) => ({ title, href });
 const malwareGuide = guide(
@@ -2610,7 +2610,7 @@ function screenshotFrontmatter(images) {
   return images
     .map(
       (image) =>
-        `  - src: ${yamlQuote(`/wordpress-threats/${image.file}`)}\n` +
+        `  - src: ${yamlQuote(`/wordpress-researches/${image.file}`)}\n` +
         `    alt: ${yamlQuote(image.alt)}\n` +
         `    caption: ${yamlQuote(image.caption)}\n` +
         `    supports: ${yamlQuote(image.supports)}\n` +
@@ -2650,7 +2650,7 @@ function bodyImages(images) {
   return images
     .map(
       (image) =>
-        `${image.supports}.\n\n![${image.alt}](/wordpress-threats/${image.file} ${yamlQuote(image.caption)})`,
+        `${image.supports}.\n\n![${image.alt}](/wordpress-researches/${image.file} ${yamlQuote(image.caption)})`,
     )
     .join("\n\n");
 }

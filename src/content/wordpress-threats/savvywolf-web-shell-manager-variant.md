@@ -25,7 +25,7 @@ severityRationale: "The retained interface exposes the WordPress content directo
 evidenceSource: "Anonymized WordPress client investigation with a privacy-redacted interface screenshot and supplied PHP source"
 schemaType: "TechArticle"
 screenshots:
-  - src: "/wordpress-threats/savvywolf-php-web-shell_evidence-1.png"
+  - src: "/wordpress-researches/savvywolf-php-web-shell_evidence-1.png"
     alt: "SavvyWolf MANAGER interface listing folders and files under a WordPress wp-content directory"
     caption: "The retained interface identifies itself as SavvyWolf MANAGER and lists the investigated wp-content directory. The client-specific home path is irreversibly redacted."
     supports: "A SavvyWolf-branded PHP manager interface was present in the WordPress filesystem"
@@ -106,7 +106,7 @@ A broader [hidden backdoor investigation in wp-content](/blog/i-found-a-hidden-b
 
 The screenshot displays the heading `SavvyWolf - MANAGER`, an anonymized directory ending in `/wp-content`, common WordPress content folders, and files including `edit-wolf.php`. This is direct visual evidence of the branded interface and its filesystem context. It does not show a file being edited, uploaded, deleted, or executed.
 
-![SavvyWolf MANAGER interface listing folders and files under a WordPress wp-content directory](/wordpress-threats/savvywolf-php-web-shell_evidence-1.png "The retained interface identifies itself as SavvyWolf MANAGER and lists the investigated wp-content directory. The client-specific home path is irreversibly redacted.")
+![SavvyWolf MANAGER interface listing folders and files under a WordPress wp-content directory](/wordpress-researches/savvywolf-php-web-shell_evidence-1.png "The retained interface identifies itself as SavvyWolf MANAGER and lists the investigated wp-content directory. The client-specific home path is irreversibly redacted.")
 
 ## Confirmed findings
 

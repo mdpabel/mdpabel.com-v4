@@ -23,7 +23,7 @@ severityRationale: "The database screenshot directly shows the anchor and hiding
 evidenceSource: "Anonymized investigation with one database screenshot and supplied HTML/JavaScript sample"
 schemaType: "TechArticle"
 screenshots:
-  - src: "/wordpress-threats/db-spam-malware_evidence-safe.png"
+  - src: "/wordpress-researches/db-spam-malware_evidence-safe.png"
     alt: "Cropped post_content field showing the M6bMm64 anchor and off-screen CSS injection"
     caption: "The privacy-safe crop shows the external anchor, M6bMm64 element ID, and top:-152413851px rule without the client database identifier."
     supports: "The hidden-link injection was stored in post_content"
@@ -107,7 +107,7 @@ Anonymized investigation with one database screenshot and supplied HTML/JavaScri
 
 The hidden-link injection was stored in post_content.
 
-![Cropped post_content field showing the M6bMm64 anchor and off-screen CSS injection](/wordpress-threats/db-spam-malware_evidence-safe.png "The privacy-safe crop shows the external anchor, M6bMm64 element ID, and top:-152413851px rule without the client database identifier.")
+![Cropped post_content field showing the M6bMm64 anchor and off-screen CSS injection](/wordpress-researches/db-spam-malware_evidence-safe.png "The privacy-safe crop shows the external anchor, M6bMm64 element ID, and top:-152413851px rule without the client database identifier.")
 
 ## Confirmed findings
 

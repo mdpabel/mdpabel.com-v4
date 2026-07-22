@@ -24,7 +24,7 @@ severityRationale: "The supplied PHP shows deliberate manipulation of plugin and
 evidenceSource: "Anonymized WordPress client investigation with one retained file-manager screenshot and a supplied truncated PHP sample"
 schemaType: "TechArticle"
 screenshots:
-  - src: "/wordpress-threats/wp-security-helper-fake-hidden-plugin_evidence-1.png"
+  - src: "/wordpress-researches/wp-security-helper-fake-hidden-plugin_evidence-1.png"
     alt: "Hosting file manager showing the wp-security-helper directory among WordPress plugin folders"
     caption: "The file manager confirms a wp-security-helper directory under wp-content/plugins. It does not show whether the plugin appeared in the WordPress dashboard."
     supports: "The wp-security-helper plugin directory existed in the observed plugin path"
@@ -105,7 +105,7 @@ This page narrows its scope to those administrative-view changes. Broader advice
 
 The retained file-manager view shows a directory named `wp-security-helper`. Other installed plugin names are visible only as path context and are not implicated by this finding.
 
-![Hosting file manager showing the wp-security-helper directory among WordPress plugin folders](/wordpress-threats/wp-security-helper-fake-hidden-plugin_evidence-1.png "The file manager confirms a wp-security-helper directory under wp-content/plugins. It does not show whether the plugin appeared in the WordPress dashboard.")
+![Hosting file manager showing the wp-security-helper directory among WordPress plugin folders](/wordpress-researches/wp-security-helper-fake-hidden-plugin_evidence-1.png "The file manager confirms a wp-security-helper directory under wp-content/plugins. It does not show whether the plugin appeared in the WordPress dashboard.")
 
 ## Confirmed findings
 

@@ -2,7 +2,7 @@ import path from "node:path";
 import sharp from "sharp";
 
 const root = process.cwd();
-const dir = path.join(root, "public", "wordpress-threats");
+const dir = path.join(root, "public", "wordpress-researches");
 const originals = path.join(
   root,
   ".private-evidence",

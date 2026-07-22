@@ -25,7 +25,7 @@ severityRationale: "The supplied code attempts to record WordPress login values 
 evidenceSource: "Anonymized WordPress client investigation with a retained functions.php screenshot and supplied code"
 schemaType: "TechArticle"
 screenshots:
-  - src: "/wordpress-threats/function.php-malware_evidence-1.png"
+  - src: "/wordpress-researches/function.php-malware_evidence-1.png"
     alt: "Theme functions.php editor showing an authenticate hook and local file write beneath a session analytics comment"
     caption: "The highlighted theme code registers an authenticate callback and calls file_put_contents with an encoded destination. The theme name is irreversibly redacted."
     supports: "A credential-logging hook was present in a loaded theme functions.php file"
@@ -102,7 +102,7 @@ The [file-disguise guide](/blog/file-types-that-hide-malware-on-wordpress/) expl
 
 The retained editor view shows the callback, its priority, the error/value checks, an error-suppressed `file_put_contents()` call, and a Base64-encoded path. A folder name in the theme tree was already redacted before publication.
 
-![Theme functions.php editor showing an authenticate hook and local file write beneath a session analytics comment](/wordpress-threats/function.php-malware_evidence-1.png "The highlighted theme code registers an authenticate callback and calls file_put_contents with an encoded destination. The theme name is irreversibly redacted.")
+![Theme functions.php editor showing an authenticate hook and local file write beneath a session analytics comment](/wordpress-researches/function.php-malware_evidence-1.png "The highlighted theme code registers an authenticate callback and calls file_put_contents with an encoded destination. The theme name is irreversibly redacted.")
 
 ## Confirmed findings
 

@@ -23,7 +23,7 @@ severityRationale: "The database screenshot and code directly show a packed scri
 evidenceSource: "Anonymized investigation with two database screenshots and a supplied packed JavaScript sample; one directly relevant image is published"
 schemaType: "TechArticle"
 screenshots:
-  - src: "/wordpress-threats/db-malware_evidence-1.png"
+  - src: "/wordpress-researches/db-malware_evidence-1.png"
     alt: "Database post_content cell containing the wpinfo-pst1 packed JavaScript block"
     caption: "The post_content field visibly contains wpinfo-pst1 and a packed eval wrapper. The image confirms storage in a post record, not the remote script's resulting behavior."
     supports: "The wpinfo-pst1 script was stored in post_content"
@@ -105,7 +105,7 @@ Anonymized investigation with two database screenshots and a supplied packed Jav
 
 The wpinfo-pst1 script was stored in post_content.
 
-![Database post_content cell containing the wpinfo-pst1 packed JavaScript block](/wordpress-threats/db-malware_evidence-1.png "The post_content field visibly contains wpinfo-pst1 and a packed eval wrapper. The image confirms storage in a post record, not the remote script's resulting behavior.")
+![Database post_content cell containing the wpinfo-pst1 packed JavaScript block](/wordpress-researches/db-malware_evidence-1.png "The post_content field visibly contains wpinfo-pst1 and a packed eval wrapper. The image confirms storage in a post record, not the remote script's resulting behavior.")
 
 ## Confirmed findings
 

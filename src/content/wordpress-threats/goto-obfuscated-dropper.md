@@ -23,7 +23,7 @@ severityRationale: "The supplied code directly shows obfuscated string construct
 evidenceSource: "Anonymized investigation with one editor screenshot and a retained, truncated index.php sample"
 schemaType: "TechArticle"
 screenshots:
-  - src: "/wordpress-threats/fake-jpeg-goto-remote-dropper_evidence-1.png"
+  - src: "/wordpress-researches/fake-jpeg-goto-remote-dropper_evidence-1.png"
     alt: "Editor showing a one-line index.php file beginning with goto labels and escaped strings"
     caption: "The screenshot confirms a compact one-line PHP artifact with goto labels and escaped string fragments. It does not display the full control flow or prove a successful network request."
     supports: "index.php contained goto-based obfuscated PHP"
@@ -104,7 +104,7 @@ Anonymized investigation with one editor screenshot and a retained, truncated in
 
 index.php contained goto-based obfuscated PHP.
 
-![Editor showing a one-line index.php file beginning with goto labels and escaped strings](/wordpress-threats/fake-jpeg-goto-remote-dropper_evidence-1.png "The screenshot confirms a compact one-line PHP artifact with goto labels and escaped string fragments. It does not display the full control flow or prove a successful network request.")
+![Editor showing a one-line index.php file beginning with goto labels and escaped strings](/wordpress-researches/fake-jpeg-goto-remote-dropper_evidence-1.png "The screenshot confirms a compact one-line PHP artifact with goto labels and escaped string fragments. It does not display the full control flow or prove a successful network request.")
 
 ## Confirmed findings
 

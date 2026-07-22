@@ -23,7 +23,7 @@ severityRationale: "The supplied code dynamically composes and invokes PHP calla
 evidenceSource: "Anonymized WordPress client investigation with one retained code screenshot and a supplied PHP snippet"
 schemaType: "TechArticle"
 screenshots:
-  - src: "/wordpress-threats/php-header-execution-backdoor-x-dns-prefetch_evidence-1.png"
+  - src: "/wordpress-researches/php-header-execution-backdoor-x-dns-prefetch_evidence-1.png"
     alt: "WordPress file editor showing a one-line request-header loader at the top of buddyboss_legacy.php"
     caption: "A one-line loader appears before the legitimate plugin-file code and reads three named HTTP headers. The image confirms the local injection, not a triggering request."
     supports: "A header-gated loader was inserted into buddyboss_legacy.php"
@@ -98,7 +98,7 @@ For broad methods to review unreadable or dynamically invoked PHP, see [how to r
 
 The suspicious line appears immediately after the opening PHP tag and before the file's normal documentation block. It is visually separate from the surrounding implementation and uses a compact variable name, `getallheaders()`, a conditional header check, nested calls, and a final invocation of the returned value.
 
-![WordPress file editor showing a one-line request-header loader at the top of buddyboss_legacy.php](/wordpress-threats/php-header-execution-backdoor-x-dns-prefetch_evidence-1.png "A one-line loader appears before the legitimate plugin-file code and reads three named HTTP headers. The image confirms the local injection, not a triggering request.")
+![WordPress file editor showing a one-line request-header loader at the top of buddyboss_legacy.php](/wordpress-researches/php-header-execution-backdoor-x-dns-prefetch_evidence-1.png "A one-line loader appears before the legitimate plugin-file code and reads three named HTTP headers. The image confirms the local injection, not a triggering request.")
 
 ## Confirmed findings
 

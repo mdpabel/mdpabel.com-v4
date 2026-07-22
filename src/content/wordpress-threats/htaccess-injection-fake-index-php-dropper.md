@@ -23,14 +23,14 @@ severityRationale: "The screenshot and supplied configuration show a deny-by-ext
 evidenceSource: "Anonymized investigation with four screenshots and supplied .htaccess plus separate obfuscated index.php samples"
 schemaType: "TechArticle"
 screenshots:
-  - src: "/wordpress-threats/index-php-obfuscated-dropper-htaccess-dos_evidence-1.png"
+  - src: "/wordpress-researches/index-php-obfuscated-dropper-htaccess-dos_evidence-1.png"
     alt: "Editor showing FilesMatch rules that deny PHP broadly and allow named PHP files"
     caption: "The configuration denies broad PHP access, then allows a distinctive filename list including about.php and lock360.php. This directly supports selective access-control tampering."
     supports: "The .htaccess artifact contained a selective PHP allowlist"
     width: 1748
     height: 766
     privacyReviewed: true
-  - src: "/wordpress-threats/index-php-obfuscated-dropper-htaccess-dos_evidence-4.png"
+  - src: "/wordpress-researches/index-php-obfuscated-dropper-htaccess-dos_evidence-4.png"
     alt: "Directory listing showing about.php as the only visible PHP file"
     caption: "The directory view confirms an about.php artifact matching the allowlist. It does not show that the file executed or establish its contents."
     supports: "An allowlisted filename was present in the observed directory"
@@ -113,11 +113,11 @@ Anonymized investigation with four screenshots and supplied .htaccess plus separ
 
 The .htaccess artifact contained a selective PHP allowlist.
 
-![Editor showing FilesMatch rules that deny PHP broadly and allow named PHP files](/wordpress-threats/index-php-obfuscated-dropper-htaccess-dos_evidence-1.png "The configuration denies broad PHP access, then allows a distinctive filename list including about.php and lock360.php. This directly supports selective access-control tampering.")
+![Editor showing FilesMatch rules that deny PHP broadly and allow named PHP files](/wordpress-researches/index-php-obfuscated-dropper-htaccess-dos_evidence-1.png "The configuration denies broad PHP access, then allows a distinctive filename list including about.php and lock360.php. This directly supports selective access-control tampering.")
 
 An allowlisted filename was present in the observed directory.
 
-![Directory listing showing about.php as the only visible PHP file](/wordpress-threats/index-php-obfuscated-dropper-htaccess-dos_evidence-4.png "The directory view confirms an about.php artifact matching the allowlist. It does not show that the file executed or establish its contents.")
+![Directory listing showing about.php as the only visible PHP file](/wordpress-researches/index-php-obfuscated-dropper-htaccess-dos_evidence-4.png "The directory view confirms an about.php artifact matching the allowlist. It does not show that the file executed or establish its contents.")
 
 ## Confirmed findings
 

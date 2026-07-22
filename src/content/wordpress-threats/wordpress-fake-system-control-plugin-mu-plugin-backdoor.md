@@ -26,21 +26,21 @@ severityRationale: "The loader source and filesystem screenshots directly show t
 evidenceSource: "Anonymized multi-artifact investigation with nine screenshots and retained sc-loader.php, system-control.php, MU-plugin, and theme samples"
 schemaType: "TechArticle"
 screenshots:
-  - src: "/wordpress-threats/malware-inside-mu-plugins-themes-plugins_evidence-1.png"
+  - src: "/wordpress-researches/malware-inside-mu-plugins-themes-plugins_evidence-1.png"
     alt: "File manager showing system-control inside wp-content slash .sc-backup"
     caption: "The hidden .sc-backup directory contains system-control, matching the restoration path in sc-loader.php."
     supports: "A hidden system-control backup existed at the loader's source path"
     width: 872
     height: 431
     privacyReviewed: true
-  - src: "/wordpress-threats/malware-inside-mu-plugins-themes-plugins_evidence-7.png"
+  - src: "/wordpress-researches/malware-inside-mu-plugins-themes-plugins_evidence-7.png"
     alt: "MU-plugin directory showing sc-loader.php and other suspicious PHP files"
     caption: "The MU-plugin directory contains sc-loader.php, site-compat-layer.php, test-mu-plugin.php, and WordPressSecureMode.php. The listing confirms co-location, while each behavior requires its own code evidence."
     supports: "sc-loader.php and additional access artifacts existed under mu-plugins"
     width: 968
     height: 577
     privacyReviewed: true
-  - src: "/wordpress-threats/malware-inside-mu-plugins-themes-plugins_evidence-9.png"
+  - src: "/wordpress-researches/malware-inside-mu-plugins-themes-plugins_evidence-9.png"
     alt: "WordPress plugins directory showing the system-control folder"
     caption: "The normal plugin directory contains system-control, the destination that sc-loader.php restores and reactivates."
     supports: "The system-control destination plugin directory existed"
@@ -125,15 +125,15 @@ Anonymized multi-artifact investigation with nine screenshots and retained sc-lo
 
 A hidden system-control backup existed at the loader's source path.
 
-![File manager showing system-control inside wp-content slash .sc-backup](/wordpress-threats/malware-inside-mu-plugins-themes-plugins_evidence-1.png "The hidden .sc-backup directory contains system-control, matching the restoration path in sc-loader.php.")
+![File manager showing system-control inside wp-content slash .sc-backup](/wordpress-researches/malware-inside-mu-plugins-themes-plugins_evidence-1.png "The hidden .sc-backup directory contains system-control, matching the restoration path in sc-loader.php.")
 
 sc-loader.php and additional access artifacts existed under mu-plugins.
 
-![MU-plugin directory showing sc-loader.php and other suspicious PHP files](/wordpress-threats/malware-inside-mu-plugins-themes-plugins_evidence-7.png "The MU-plugin directory contains sc-loader.php, site-compat-layer.php, test-mu-plugin.php, and WordPressSecureMode.php. The listing confirms co-location, while each behavior requires its own code evidence.")
+![MU-plugin directory showing sc-loader.php and other suspicious PHP files](/wordpress-researches/malware-inside-mu-plugins-themes-plugins_evidence-7.png "The MU-plugin directory contains sc-loader.php, site-compat-layer.php, test-mu-plugin.php, and WordPressSecureMode.php. The listing confirms co-location, while each behavior requires its own code evidence.")
 
 The system-control destination plugin directory existed.
 
-![WordPress plugins directory showing the system-control folder](/wordpress-threats/malware-inside-mu-plugins-themes-plugins_evidence-9.png "The normal plugin directory contains system-control, the destination that sc-loader.php restores and reactivates.")
+![WordPress plugins directory showing the system-control folder](/wordpress-researches/malware-inside-mu-plugins-themes-plugins_evidence-9.png "The normal plugin directory contains system-control, the destination that sc-loader.php restores and reactivates.")
 
 ## Confirmed findings
 

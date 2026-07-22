@@ -54,7 +54,7 @@ const internalLink = z
 
 const researchScreenshot = z
   .object({
-    src: z.string().regex(/^\/wordpress-threats\/.+\.(?:png|jpe?g|webp)$/i),
+    src: z.string().regex(/^\/wordpress-researches\/.+\.(?:png|jpe?g|webp)$/i),
     alt: z.string().min(12),
     caption: z.string().min(20),
     supports: z.string().min(12),

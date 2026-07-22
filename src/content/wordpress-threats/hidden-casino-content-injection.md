@@ -24,14 +24,14 @@ severityRationale: "The code directly supports post concealment. Casino content 
 evidenceSource: "Anonymized investigation with an MU-plugin directory screenshot, a visible casino post screenshot, and retained hide-hidden-posts.php code"
 schemaType: "TechArticle"
 screenshots:
-  - src: "/wordpress-threats/hidden-posts_evidence-2.png"
+  - src: "/wordpress-researches/hidden-posts_evidence-2.png"
     alt: "WordPress file manager showing hide-hidden-posts.php inside the mu-plugins directory"
     caption: "The file manager confirms hide-hidden-posts.php beside db.php and mu-helper.php in mu-plugins. It does not identify which component created any spam post."
     supports: "hide-hidden-posts.php existed in the MU-plugin directory"
     width: 1366
     height: 687
     privacyReviewed: true
-  - src: "/wordpress-threats/hidden-posts_evidence-1.png"
+  - src: "/wordpress-researches/hidden-posts_evidence-1.png"
     alt: "Rendered WordPress post displaying Italian casino-related text"
     caption: "A casino-related post was visible during the same anonymized investigation. The screenshot confirms the content symptom, not that hide-hidden-posts.php created it."
     supports: "Casino-related content was visible during the investigation"
@@ -115,11 +115,11 @@ Anonymized investigation with an MU-plugin directory screenshot, a visible casin
 
 hide-hidden-posts.php existed in the MU-plugin directory.
 
-![WordPress file manager showing hide-hidden-posts.php inside the mu-plugins directory](/wordpress-threats/hidden-posts_evidence-2.png "The file manager confirms hide-hidden-posts.php beside db.php and mu-helper.php in mu-plugins. It does not identify which component created any spam post.")
+![WordPress file manager showing hide-hidden-posts.php inside the mu-plugins directory](/wordpress-researches/hidden-posts_evidence-2.png "The file manager confirms hide-hidden-posts.php beside db.php and mu-helper.php in mu-plugins. It does not identify which component created any spam post.")
 
 Casino-related content was visible during the investigation.
 
-![Rendered WordPress post displaying Italian casino-related text](/wordpress-threats/hidden-posts_evidence-1.png "A casino-related post was visible during the same anonymized investigation. The screenshot confirms the content symptom, not that hide-hidden-posts.php created it.")
+![Rendered WordPress post displaying Italian casino-related text](/wordpress-researches/hidden-posts_evidence-1.png "A casino-related post was visible during the same anonymized investigation. The screenshot confirms the content symptom, not that hide-hidden-posts.php created it.")
 
 ## Confirmed findings
 

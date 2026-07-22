@@ -22,7 +22,7 @@ severityRationale: "The supplied source contains a direct decode-and-evaluate wr
 evidenceSource: "Anonymized investigation with one filesystem screenshot and retained PHP wrapper source"
 schemaType: "TechArticle"
 screenshots:
-  - src: "/wordpress-threats/wp-security-hidden-plugin_evidence-1.png"
+  - src: "/wordpress-researches/wp-security-hidden-plugin_evidence-1.png"
     alt: "Filesystem listing showing an uppercase WP-Security directory among WordPress plugins"
     caption: "The screenshot confirms the WP-Security directory in the plugin path. The directory name alone is contextual; the supplied eval wrapper establishes the malicious behavior."
     supports: "The WP-Security directory existed among installed plugins"
@@ -101,7 +101,7 @@ Anonymized investigation with one filesystem screenshot and retained PHP wrapper
 
 The WP-Security directory existed among installed plugins.
 
-![Filesystem listing showing an uppercase WP-Security directory among WordPress plugins](/wordpress-threats/wp-security-hidden-plugin_evidence-1.png "The screenshot confirms the WP-Security directory in the plugin path. The directory name alone is contextual; the supplied eval wrapper establishes the malicious behavior.")
+![Filesystem listing showing an uppercase WP-Security directory among WordPress plugins](/wordpress-researches/wp-security-hidden-plugin_evidence-1.png "The screenshot confirms the WP-Security directory in the plugin path. The directory name alone is contextual; the supplied eval wrapper establishes the malicious behavior.")
 
 ## Confirmed findings
 

@@ -24,7 +24,7 @@ severityRationale: "The screenshot and code show redirect-oriented click handlin
 evidenceSource: "Anonymized investigation with one code-editor screenshot and a retained obfuscated JavaScript sample"
 schemaType: "TechArticle"
 screenshots:
-  - src: "/wordpress-threats/malware-in-themes-index.php_evidence-1.png"
+  - src: "/wordpress-researches/malware-in-themes-index.php_evidence-1.png"
     alt: "Code editor showing obfuscated JavaScript appended to an index.php file"
     caption: "The visible script contains _0x3023 decoding logic, hex-escaped c-i.icu strings, local-storage terms, click handling, and window opening identifiers."
     supports: "Obfuscated redirect-oriented JavaScript was appended to index.php"
@@ -106,7 +106,7 @@ Anonymized investigation with one code-editor screenshot and a retained obfuscat
 
 Obfuscated redirect-oriented JavaScript was appended to index.php.
 
-![Code editor showing obfuscated JavaScript appended to an index.php file](/wordpress-threats/malware-in-themes-index.php_evidence-1.png "The visible script contains _0x3023 decoding logic, hex-escaped c-i.icu strings, local-storage terms, click handling, and window opening identifiers.")
+![Code editor showing obfuscated JavaScript appended to an index.php file](/wordpress-researches/malware-in-themes-index.php_evidence-1.png "The visible script contains _0x3023 decoding logic, hex-escaped c-i.icu strings, local-storage terms, click handling, and window opening identifiers.")
 
 ## Confirmed findings
 

@@ -24,7 +24,7 @@ severityRationale: "The database screenshot and supplied snippet directly show r
 evidenceSource: "Anonymized investigation with one privacy-reviewed database screenshot and a supplied JavaScript excerpt"
 schemaType: "TechArticle"
 screenshots:
-  - src: "/wordpress-threats/seo-spam-database-injection_evidence-1.png"
+  - src: "/wordpress-researches/seo-spam-database-injection_evidence-1.png"
     alt: "Database post_content field showing fetch calls embedded in Divi content"
     caption: "The expanded post_content cell shows Divi markers and fetch calls to external domains followed by innerHTML assignment. Adjacent rows are not used to infer behavior."
     supports: "Remote fetch injection was stored in a WordPress post-content record"
@@ -109,7 +109,7 @@ Anonymized investigation with one privacy-reviewed database screenshot and a sup
 
 Remote fetch injection was stored in a WordPress post-content record.
 
-![Database post_content field showing fetch calls embedded in Divi content](/wordpress-threats/seo-spam-database-injection_evidence-1.png "The expanded post_content cell shows Divi markers and fetch calls to external domains followed by innerHTML assignment. Adjacent rows are not used to infer behavior.")
+![Database post_content field showing fetch calls embedded in Divi content](/wordpress-researches/seo-spam-database-injection_evidence-1.png "The expanded post_content cell shows Divi markers and fetch calls to external domains followed by innerHTML assignment. Adjacent rows are not used to infer behavior.")
 
 ## Confirmed findings
 

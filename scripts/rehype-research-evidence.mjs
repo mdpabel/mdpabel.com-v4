@@ -26,7 +26,7 @@ function visitChildren(node) {
 
       if (
         typeof src === "string" &&
-        src.startsWith("/wordpress-threats/") &&
+        src.startsWith("/wordpress-researches/") &&
         typeof caption === "string"
       ) {
         const publicPath = path.join(

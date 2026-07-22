@@ -26,21 +26,21 @@ severityRationale: "The visible wp-user-query.php code directly conceals a store
 evidenceSource: "Anonymized investigation with four screenshots and representative wp-user-query.php plus loader-optimization.php excerpts"
 schemaType: "TechArticle"
 screenshots:
-  - src: "/wordpress-threats/mu-plugins-malware_evidence-1.png"
+  - src: "/wordpress-researches/mu-plugins-malware_evidence-1.png"
     alt: "WordPress file editor showing wp-user-query.php excluding _pre_user_id from user queries"
     caption: "The visible MU-plugin reads _pre_user_id and applies user-query exclusions. This is direct evidence of concealment logic."
     supports: "wp-user-query.php concealed the stored user ID"
     width: 1681
     height: 716
     privacyReviewed: true
-  - src: "/wordpress-threats/mu-plugins-malware_evidence-2.png"
+  - src: "/wordpress-researches/mu-plugins-malware_evidence-2.png"
     alt: "WordPress file manager showing three suspicious files in mu-plugins"
     caption: "The directory lists health-check.php, loader-optimization.php, and wp-user-query.php together under mu-plugins. Co-location does not by itself prove every file's behavior."
     supports: "Multiple suspicious MU-plugin artifacts were present"
     width: 1557
     height: 738
     privacyReviewed: true
-  - src: "/wordpress-threats/mu-plugins-malware_evidence-4.png"
+  - src: "/wordpress-researches/mu-plugins-malware_evidence-4.png"
     alt: "WordPress Users screen showing inconsistent All and 2FA Inactive counts"
     caption: "The visible counts are inconsistent. This is contextual corroboration only; the code provides the direct evidence of account filtering."
     supports: "The administrator interface displayed a count mismatch consistent with filtering"
@@ -125,15 +125,15 @@ Anonymized investigation with four screenshots and representative wp-user-query.
 
 wp-user-query.php concealed the stored user ID.
 
-![WordPress file editor showing wp-user-query.php excluding _pre_user_id from user queries](/wordpress-threats/mu-plugins-malware_evidence-1.png "The visible MU-plugin reads _pre_user_id and applies user-query exclusions. This is direct evidence of concealment logic.")
+![WordPress file editor showing wp-user-query.php excluding _pre_user_id from user queries](/wordpress-researches/mu-plugins-malware_evidence-1.png "The visible MU-plugin reads _pre_user_id and applies user-query exclusions. This is direct evidence of concealment logic.")
 
 Multiple suspicious MU-plugin artifacts were present.
 
-![WordPress file manager showing three suspicious files in mu-plugins](/wordpress-threats/mu-plugins-malware_evidence-2.png "The directory lists health-check.php, loader-optimization.php, and wp-user-query.php together under mu-plugins. Co-location does not by itself prove every file's behavior.")
+![WordPress file manager showing three suspicious files in mu-plugins](/wordpress-researches/mu-plugins-malware_evidence-2.png "The directory lists health-check.php, loader-optimization.php, and wp-user-query.php together under mu-plugins. Co-location does not by itself prove every file's behavior.")
 
 The administrator interface displayed a count mismatch consistent with filtering.
 
-![WordPress Users screen showing inconsistent All and 2FA Inactive counts](/wordpress-threats/mu-plugins-malware_evidence-4.png "The visible counts are inconsistent. This is contextual corroboration only; the code provides the direct evidence of account filtering.")
+![WordPress Users screen showing inconsistent All and 2FA Inactive counts](/wordpress-researches/mu-plugins-malware_evidence-4.png "The visible counts are inconsistent. This is contextual corroboration only; the code provides the direct evidence of account filtering.")
 
 ## Confirmed findings
 
