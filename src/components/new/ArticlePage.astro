@@ -113,6 +113,72 @@ const malwareFields = rootSlug === 'malware-log' && post.acf ? [
   ['Cleanup steps', post.acf.cleanup_steps],
   ['Final result', post.acf.result],
 ].filter(([, value]) => plainText(value)) : [];
+
+interface ResearchLink {
+  href: string;
+  title: string;
+  description: string;
+}
+
+const researchLinksByPage: Record<string, ResearchLink[]> = {
+  'blog/comprehensive-list-of-known-fake-and-malicious-wordpress-plugins': [
+    { href: '/malware-research/wp-security-helper-plugin-concealment/', title: 'WP Security Helper plugin concealment', description: 'Code-level evidence of plugin and user-list manipulation.' },
+    { href: '/malware-research/woocommerce-inputs-hidden-plugin/', title: 'woocommerce_inputs hidden plugin', description: 'Observed redirect, scheduling, address-collection, and concealment hooks.' },
+    { href: '/malware-research/hello-aili-remote-php-loader/', title: 'Hello Aili remote PHP loader', description: 'A deceptive plugin identity paired with remote-response evaluation.' },
+    { href: '/malware-research/advanced-linkflow-control-hidden-plugin/', title: 'Advanced LinkFlow Control', description: 'Self-concealment and visitor-context remote-request evidence from the fake plugin source.' },
+    { href: '/malware-research/wp-security-fake-plugin-eval-loader/', title: 'WP-Security eval loader', description: 'A security-themed identity paired with a decode-and-evaluate wrapper.' },
+    { href: '/malware-research/wp-compatibility-patch-hidden-admin/', title: 'WP Compatibility Patch hidden admin', description: 'Exact create, store, and user-query concealment logic from the supplied plugin.' },
+  ],
+  'blog/wordpress-obfuscated-php-malware-detection': [
+    { href: '/malware-research/menu-queue-bit-compact-extension-vox/', title: 'Compact Extension Vox MU-plugin artifact', description: 'A large escaped string table in an automatically loaded MU-plugin file.' },
+    { href: '/malware-research/wk-directory-hex-loader/', title: 'wk directory hex-fragment loader', description: 'Recurring directories and a PHP sample that reconstructs code from hex fragments.' },
+    { href: '/malware-research/goto-obfuscated-index-php-loader/', title: 'goto-obfuscated index.php loader', description: 'Escaped strings, scrambled labels, and multiple remote-retrieval fallbacks.' },
+    { href: '/malware-research/esc-html-array-php-eval-loader/', title: 'esc_html array-assembly loader', description: 'Indexed character arrays constructing callables before an eval boundary.' },
+    { href: '/malware-research/tokensdeguards-index-php-loader/', title: 'TokensDeGuards index.php loader', description: 'Keyed message verification followed by payload inflation and evaluation.' },
+  ],
+  'blog/fix-wordpress-redirects-to-spam-site-on-mobile-only-solved': [
+    { href: '/malware-research/woocommerce-inputs-hidden-plugin/', title: 'woocommerce_inputs hidden plugin evidence', description: 'Artifact-specific redirect and concealment hooks from an anonymized investigation.' },
+  ],
+  'blog/why-wordpress-malware-keeps-coming-back-and-how-to-stop-it-forever': [
+    { href: '/malware-research/menu-queue-bit-compact-extension-vox/', title: 'menu-queue-bit.php in the MU-plugin path', description: 'Evidence from an auto-loaded WordPress location without assuming a recreation mechanism.' },
+    { href: '/malware-research/system-control-hidden-backup-restoration/', title: 'system-control hidden-backup restoration', description: 'A loader restoring and reactivating a fake plugin from wp-content/.sc-backup.' },
+    { href: '/malware-research/media-patcher-lab-mu-plugin/', title: 'media-patcher-lab.php MU plugin', description: 'Persistent fake-plugin evidence associated with plugin-management code.' },
+  ],
+  'blog/simplecopseholding-com-wordpress-malware-removal': [
+    { href: '/malware-research/hexagoncontrail-external-script-injection/', title: 'hexagoncontrail-js script evidence', description: 'The exact script ID, external source, and evidence limits from the drive-by incident.' },
+  ],
+  'blog/wordpress-database-malware-complete-guide': [
+    { href: '/malware-research/database-fetch-spam-injection/', title: 'Database-stored fetch injection', description: 'Three remote fetch chains stored inside a WordPress content record.' },
+    { href: '/malware-research/wpinfo-pst1-database-redirect/', title: 'wpinfo-pst1 packed redirect', description: 'A distinctive packed script retained directly in post_content.' },
+    { href: '/malware-research/ushort-company-post-content-redirect/', title: 'ushort.company dual redirect', description: 'Meta-refresh and JavaScript redirect methods stored in one record.' },
+    { href: '/malware-research/m6bmm64-hidden-anchor-injection/', title: 'M6bMm64 hidden anchor', description: 'An external anchor concealed with JavaScript-generated off-screen CSS.' },
+  ],
+  'blog/how-to-find-and-remove-hidden-admin-users-in-wordpress-malware-analysis': [
+    { href: '/malware-research/functions-php-hidden-admin-query-backdoor/', title: 'functions.php hidden-admin hooks', description: 'Query, count, profile, and deletion concealment tied to one stored ID.' },
+    { href: '/malware-research/wp-user-query-hidden-admin-filter/', title: 'wp-user-query.php MU-plugin filter', description: 'The _pre_user_id option moving through three administrator user-view hooks.' },
+    { href: '/malware-research/wp-compatibility-patch-hidden-admin/', title: 'WP Compatibility Patch hidden admin', description: 'A fake plugin coupling administrator creation with query concealment.' },
+  ],
+  'blog/wordpress-cron-job-malware': [
+    { href: '/malware-research/cpanel-php-cron-eval-wrapper/', title: 'Hourly cPanel PHP eval wrapper', description: 'The scheduler pattern and safe structural evidence from an encoded cron command.' },
+  ],
+  'blog/the-ultimate-guide-to-removing-htaccess-malware-from-wordpress': [
+    { href: '/malware-research/htaccess-php-allowlist-injection/', title: 'Selective PHP allowlist rules', description: 'Broad denial followed by exceptions for a distinctive PHP filename list.' },
+    { href: '/malware-research/mixed-case-php-htaccess-deny-rule/', title: 'Mixed-case PHP deny rule', description: 'A FilesMatch pattern covering PHP capitalization variants with an index.php exception.' },
+  ],
+  'case-studies/how-i-found-and-fixed-a-wordpress-mobile-redirect-hack-using-access-logs': [
+    { href: '/malware-research/woocommerce-inputs-hidden-plugin/', title: 'woocommerce_inputs hidden plugin', description: 'Code-level redirect-hook evidence to complement the complete recovery narrative.' },
+  ],
+  'case-studies/regenerating-wordpress-malware-system-control-case-study': [
+    { href: '/malware-research/menu-queue-bit-compact-extension-vox/', title: 'Compact Extension Vox MU-plugin artifact', description: 'A separate automatically loaded MU-plugin observation with explicit evidence limits.' },
+    { href: '/malware-research/system-control-hidden-backup-restoration/', title: 'system-control restoration evidence', description: 'The hidden backup source, MU-plugin loader, and restored plugin destination documented together.' },
+  ],
+  'case-studies/bitdefender-blocked-wordpress-no-users-found-mu-plugin-malware': [
+    { href: '/malware-research/wp-security-helper-plugin-concealment/', title: 'WP Security Helper concealment hooks', description: 'Specific user-query, count, and plugin-list manipulation found in supplied PHP.' },
+    { href: '/malware-research/wp-user-query-hidden-admin-filter/', title: 'wp-user-query.php hidden-user filter', description: 'Direct _pre_user_id filtering plus a contextual administrator-count mismatch.' },
+    { href: '/malware-research/statemesh-mu-plugin-self-copy/', title: 'StateMesh MU-plugin self-copy', description: 'A separate self-copying and self-concealing MU-plugin artifact.' },
+  ],
+};
+const researchLinks = researchLinksByPage[`${rootSlug}/${post.slug}`] || [];
 ---
 
 <NewLayout title={seoTitle} description={description} path={path} image={image} type='article' schema={schema}>
@@ -122,6 +188,7 @@ const malwareFields = rootSlug === 'malware-log' && post.acf ? [
     <article class='min-w-0'>
       {content && <div class='article-prose' set:html={content} />}
       {malwareFields.length > 0 && <div class='mt-12 space-y-10'>{malwareFields.map(([heading, value]) => <section class='border-t border-[#d7ddd7] pt-8'><h2 class='editorial-heading text-3xl font-semibold'>{heading}</h2><div class='article-prose mt-5' set:html={processHtml(value)} /></section>)}</div>}
+      {researchLinks.length > 0 && <section class='mt-12 border-t border-[#d7ddd7] pt-8'><p class='text-xs font-extrabold uppercase tracking-[0.15em] text-[#1f6b55]'>Evidence-led companion pages</p><h2 class='editorial-heading mt-3 text-3xl font-semibold'>Related malware research</h2><div class='mt-5 grid gap-4 sm:grid-cols-2'>{researchLinks.map((link) => <a href={link.href} class='group rounded-2xl border border-[#d7ddd7] bg-[#fffdf8] p-5 no-underline'><span class='flex items-center justify-between gap-3 font-bold text-[#17352c]'>{link.title}<ArrowRight class='h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1' /></span><span class='mt-2 block text-sm leading-6 text-[#65766f]'>{link.description}</span></a>)}</div></section>}
       <section class='mt-14 rounded-3xl bg-[#dcece5] p-7'><p class='text-xs font-extrabold uppercase tracking-[0.15em] text-[#1f6b55]'>About the author</p><h2 class='editorial-heading mt-3 text-3xl font-semibold'>MD Pabel</h2><p class='mt-3 text-sm leading-7 text-[#52665f]'>Independent WordPress security specialist with first-hand experience across more than 4,500 hacked-site cleanups since 2018.</p><a href='/about/' class='mt-5 inline-flex items-center gap-2 text-xs font-bold'>Experience and methodology <ArrowRight class='h-4 w-4' /></a></section>
       <CommentForm postId={post.id} />
     </article>

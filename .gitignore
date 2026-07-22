@@ -29,6 +29,7 @@ _trash
 _content
 _malware_dump
 _review
+.private-evidence/
 
 old/
 

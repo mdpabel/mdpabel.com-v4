@@ -1,0 +1,19 @@
+{
+  "publishReady": false,
+  "issues": [
+    "The title is a bit list-like and long for a public page; it reads more like a summary than a pattern name.",
+    "The proof statement claims the conclusions are grounded in cleanup work by a named individual; that is stronger sourcing language than needed and could be removed or softened to avoid implying independent verification.",
+    "The page says \"The initial intrusion vector is not proven by this sample alone\" in the body, but the rootCause field is only labeled low; that is fine, but the page should avoid any stronger causal framing elsewhere and keep the entry vector explicitly unknown.",
+    "The phrase \"screenshotSection\" and some screenshot findings read like internal authoring labels rather than publication copy.",
+    "A few lines are slightly repetitive, especially around the fake plugin persistence and password rotation.",
+    "The claim that the malware \"captures successful usernames and passwords\" is supported by the code, but the page should keep the phrasing tied to observed behavior rather than implying confirmed exfiltration off-site."
+  ],
+  "fixes": [
+    "Shorten the title to something like: \"WordPress functions.php credential theft and fake plugin deployer\".",
+    "Remove or rewrite the proof statement to simple evidence language, e.g. \"This assessment is based on representative malware samples and screenshots from a real cleanup case.\"",
+    "Keep the root-cause wording explicitly unknown and avoid suggesting the site-wide compromise path is known.",
+    "Replace internal section-label phrasing like \"screenshotSection\" with plain prose in the published page.",
+    "Trim one or two repeated persistence sentences in the intro/whatThisPatternIs/whyItKeepsComingBack sections.",
+    "Where possible, say \"logs successful credentials locally\" or \"writes credentials to a disguised file\" instead of stating exfiltration unless there is direct evidence of transfer."
+  ]
+}

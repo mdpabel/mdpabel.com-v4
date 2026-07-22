@@ -1,0 +1,389 @@
+---
+import {
+  ArrowRight,
+  BadgeCheck,
+  CalendarDays,
+  CircleAlert,
+  Eye,
+  FlaskConical,
+  CircleHelp,
+  Search,
+  ShieldAlert,
+} from "@lucide/astro";
+import { render, type CollectionEntry } from "astro:content";
+import Breadcrumbs from "../new/Breadcrumbs.astro";
+import NewLayout from "../../layouts/NewLayout.astro";
+import { getResearchSlug } from "../../lib/research";
+
+interface Props {
+  entry: CollectionEntry<"wordpress-threats">;
+  relatedEntries?: CollectionEntry<"wordpress-threats">[];
+}
+
+const { entry, relatedEntries = [] } = Astro.props;
+const { Content } = await render(entry);
+const data = entry.data;
+const slug = getResearchSlug(entry);
+const path = `/malware-research/${slug}/`;
+const url = `https://www.mdpabel.com${path}`;
+const imageUrls = data.screenshots.map((screenshot) => `https://www.mdpabel.com${screenshot.src}`);
+const schema = [
+  {
+    "@type": data.schemaType,
+    "@id": `${url}#article`,
+    headline: data.h1,
+    name: data.title,
+    description: data.siteOwner.searchDescription,
+    url,
+    image: imageUrls,
+    dateModified: data.lastReviewed || data.reportDate,
+    articleSection: data.threatCategory,
+    mainEntityOfPage: { "@id": `${url}#webpage` },
+    author: { "@id": "https://www.mdpabel.com/about/#person" },
+    publisher: { "@id": "https://www.mdpabel.com/about/#person" },
+  },
+  {
+    "@type": "WebPage",
+    "@id": `${url}#webpage`,
+    url,
+    name: data.title,
+    description: data.siteOwner.searchDescription,
+    dateModified: data.lastReviewed || data.reportDate,
+    isPartOf: { "@id": "https://www.mdpabel.com/#website" },
+    breadcrumb: { "@id": `${url}#breadcrumb` },
+  },
+  {
+    "@type": "BreadcrumbList",
+    "@id": `${url}#breadcrumb`,
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://www.mdpabel.com/" },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Malware Research",
+        item: "https://www.mdpabel.com/malware-research/",
+      },
+      { "@type": "ListItem", position: 3, name: data.h1, item: url },
+    ],
+  },
+];
+
+const formattedReportDate = new Date(`${data.reportDate}T00:00:00Z`).toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  timeZone: "UTC",
+});
+const formattedReviewDate = data.lastReviewed
+  ? new Date(`${data.lastReviewed}T00:00:00Z`).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      timeZone: "UTC",
+    })
+  : null;
+---
+
+<NewLayout
+  title={data.title}
+  description={data.siteOwner.searchDescription}
+  path={path}
+  image={data.screenshots[0]?.src}
+  type="article"
+  schema={schema}
+  noindex={!data.index}
+>
+  <section class="border-b border-[#d7ddd7] py-12 md:py-16">
+    <div class="new-shell max-w-6xl">
+      <Breadcrumbs items={[{ label: "Malware research", href: "/malware-research/" }, { label: data.h1 }]} />
+      <div class="mt-8 max-w-5xl">
+        <p class="flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.15em] text-[#b74e32]">
+          <FlaskConical class="h-4 w-4" /> WordPress Malware Research Entry
+        </p>
+        <h1 class="editorial-heading mt-4 font-semibold">{data.h1}</h1>
+        <p class="mt-6 max-w-4xl text-lg leading-8 text-[#52665f]">{data.siteOwner.searchDescription}</p>
+        <div class="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-xs font-semibold text-[#65766f]">
+          <time datetime={data.reportDate} class="flex items-center gap-2">
+            <CalendarDays class="h-4 w-4" /> Report date: {formattedReportDate}
+          </time>
+          {formattedReviewDate && (
+            <span class="flex items-center gap-2">
+              <BadgeCheck class="h-4 w-4" /> Reviewed: {formattedReviewDate}
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="new-shell grid max-w-6xl items-start gap-10 py-12 lg:grid-cols-[minmax(0,1fr)_300px] lg:py-16">
+    <article class="min-w-0">
+      <section class="grid gap-3 rounded-2xl border border-[#cbd6cf] bg-[#fffdf8] p-5 sm:grid-cols-3" aria-label="Research classification">
+        <div>
+          <span class="block text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#788780]">Artifact class</span>
+          <strong class="mt-2 block text-sm">{data.threatCategory}</strong>
+        </div>
+        <div>
+          <span class="block text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#788780]">Evidence confidence</span>
+          <strong class="mt-2 block text-sm">{data.confidence}</strong>
+        </div>
+        <div>
+          <span class="block text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#788780]">Risk assessment</span>
+          <strong class="mt-2 block text-sm">{data.severity}</strong>
+        </div>
+      </section>
+
+      <section
+        id="site-owner-signals"
+        data-symptom-groups={data.siteOwner.symptomGroups.join(" ")}
+        class="mt-8 overflow-hidden rounded-3xl border border-[#b7cbc1] bg-[#eef6f1]"
+        aria-labelledby="site-owner-signals-title"
+      >
+        <div class="p-6 sm:p-8">
+          <p class="flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.15em] text-[#1f6b55]">
+            <Search class="h-4 w-4" /> Start with the problem you are seeing
+          </p>
+          <h2 id="site-owner-signals-title" class="editorial-heading mt-3 text-2xl font-semibold text-[#17352c] sm:text-3xl">
+            Could this match the problem on your WordPress site?
+          </h2>
+          <p class="mt-4 max-w-3xl text-base leading-7 text-[#3f554d]">{data.siteOwner.summary}</p>
+
+          <div class="mt-6 grid gap-4 sm:grid-cols-2">
+            {data.siteOwner.observed.length > 0 && (
+              <div class="site-owner-observed rounded-2xl border border-[#c4d8ce] bg-white/80 p-5">
+                <h3 class="flex items-center gap-2 text-sm font-extrabold text-[#17352c]">
+                  <Eye class="h-4 w-4 text-[#1f6b55]" /> Observed in this investigation
+                </h3>
+                <ul class="mt-3 list-disc space-y-2 pl-5 text-sm leading-6 text-[#52665f]">
+                  {data.siteOwner.observed.map((signal) => <li>{signal}</li>)}
+                </ul>
+              </div>
+            )}
+
+            {data.siteOwner.possible.length > 0 && (
+              <div class="site-owner-possible rounded-2xl border border-[#e2c9b5] bg-[#fffaf3] p-5">
+                <h3 class="flex items-center gap-2 text-sm font-extrabold text-[#17352c]">
+                  <CircleAlert class="h-4 w-4 text-[#b74e32]" /> Possible warning signs
+                </h3>
+                <ul class="mt-3 list-disc space-y-2 pl-5 text-sm leading-6 text-[#52665f]">
+                  {data.siteOwner.possible.map((signal) => <li>{signal}</li>)}
+                </ul>
+                <p class="mt-3 text-xs font-semibold leading-5 text-[#8a5a43]">These signs are investigation leads, not proof of this artifact by themselves.</p>
+              </div>
+            )}
+          </div>
+
+          <div class="mt-5 rounded-2xl border border-[#c4d8ce] bg-white/70 p-5">
+            <h3 class="flex items-center gap-2 text-sm font-extrabold text-[#17352c]">
+              <CircleHelp class="h-4 w-4 text-[#1f6b55]" /> Questions this research can help answer
+            </h3>
+            <ul class="mt-3 grid list-disc gap-2 pl-5 text-sm font-semibold leading-6 text-[#36584d] sm:grid-cols-2">
+              {data.siteOwner.questions.map((question) => <li class="site-owner-question pr-3">{question}</li>)}
+            </ul>
+            <p class="mt-4 border-t border-[#d3e1da] pt-4 text-xs leading-5 text-[#65766f]">
+              <strong>Evidence boundary:</strong> {data.siteOwner.evidenceNote}
+            </p>
+          </div>
+        </div>
+
+        <div class="site-owner-cta grid gap-5 bg-[#17352c] p-6 text-white sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center sm:p-8">
+          <div>
+            <h3 class="editorial-heading text-2xl font-semibold">Seeing one of these signs on your site?</h3>
+            <p class="mt-2 max-w-2xl text-sm leading-6 text-[#c7d9d2]">
+              I can investigate the files, database records, users, and server evidence, explain what is confirmed, and help plan a safe cleanup.
+            </p>
+          </div>
+          <div class="flex flex-col gap-3 sm:items-end">
+            <a href="/hire-me/" class="inline-flex items-center justify-center gap-2 rounded-full bg-[#ed7655] px-5 py-3 text-sm font-extrabold text-[#17352c] transition hover:bg-[#f18a6d]">
+              Ask me to investigate your site <ArrowRight class="h-4 w-4" />
+            </a>
+            <a href="/wordpress-malware-removal/" class="text-center text-xs font-bold text-[#d7e7e1] underline decoration-[#ed7655] underline-offset-4">
+              See how my malware cleanup works
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <p class="mt-8 rounded-2xl border-l-4 border-[#7da897] bg-[#f7faf8] px-5 py-4 text-sm leading-6 text-[#52665f]">
+        <strong class="text-[#17352c]">Research focus:</strong> {data.description}
+      </p>
+
+      <div class="research-prose mt-10">
+        <Content />
+      </div>
+    </article>
+
+    <aside class="space-y-5 lg:sticky lg:top-24">
+      <section class="rounded-2xl border border-[#d7ddd7] bg-[#fffdf8] p-5">
+        <p class="flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#b74e32]">
+          <ShieldAlert class="h-4 w-4" /> Evidence boundary
+        </p>
+        <p class="mt-3 text-xs leading-6 text-[#52665f]">{data.severityRationale}</p>
+      </section>
+
+      {relatedEntries.length > 0 && (
+        <section class="rounded-2xl border border-[#d7ddd7] bg-[#fffdf8] p-5">
+          <h2 class="editorial-heading text-xl font-semibold">Related research</h2>
+          <div class="mt-3 divide-y divide-[#d7ddd7]">
+            {relatedEntries.map((related) => (
+              <a href={`/malware-research/${getResearchSlug(related)}/`} class="block py-3 text-sm font-bold leading-5">
+                {related.data.h1}
+                <span class="mt-1 block text-[10px] font-normal uppercase tracking-wide text-[#788780]">
+                  {related.data.threatCategory}
+                </span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {data.relatedGuides.length > 0 && (
+        <section class="rounded-2xl border border-[#d7ddd7] bg-[#fffdf8] p-5">
+          <h2 class="editorial-heading text-xl font-semibold">Related guides</h2>
+          <div class="mt-3 divide-y divide-[#d7ddd7]">
+            {data.relatedGuides.map((guide) => (
+              <a href={guide.href} class="block py-3 text-sm font-bold leading-5">{guide.title}</a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {data.relatedCaseStudies.length > 0 && (
+        <section class="rounded-2xl border border-[#d7ddd7] bg-[#fffdf8] p-5">
+          <h2 class="editorial-heading text-xl font-semibold">Related case study</h2>
+          <div class="mt-3 divide-y divide-[#d7ddd7]">
+            {data.relatedCaseStudies.map((caseStudy) => (
+              <a href={caseStudy.href} class="block py-3 text-sm font-bold leading-5">{caseStudy.title}</a>
+            ))}
+          </div>
+        </section>
+      )}
+    </aside>
+  </div>
+</NewLayout>
+
+<style is:global>
+  .research-prose {
+    color: #3f554d;
+    font-size: 1.04rem;
+    line-height: 1.85;
+  }
+
+  .research-prose > :first-child {
+    margin-top: 0;
+  }
+
+  .research-prose h2,
+  .research-prose h3 {
+    color: #17352c;
+    font-family: "Source Serif 4 Variable", Georgia, serif;
+    font-weight: 650;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+  }
+
+  .research-prose h2 {
+    margin: 2.2em 0 0.7em;
+    font-size: 2rem;
+  }
+
+  .research-prose h3 {
+    margin: 1.8em 0 0.65em;
+    font-size: 1.5rem;
+  }
+
+  .research-prose p,
+  .research-prose ul,
+  .research-prose ol,
+  .research-prose pre {
+    margin-block: 1.15em;
+  }
+
+  .research-prose ul,
+  .research-prose ol {
+    padding-left: 1.3rem;
+  }
+
+  .research-prose ul {
+    list-style: disc;
+  }
+
+  .research-prose ol {
+    list-style: decimal;
+  }
+
+  .research-prose li {
+    margin-block: 0.45rem;
+    padding-left: 0.25rem;
+  }
+
+  .research-prose a {
+    color: #1f6b55;
+    font-weight: 650;
+    text-decoration: underline;
+    text-decoration-color: #ed7655;
+    text-underline-offset: 0.2em;
+  }
+
+  .research-prose strong {
+    color: #17352c;
+  }
+
+  .research-prose pre {
+    overflow-x: auto;
+    border-radius: 0.8rem;
+    background: #17352c;
+    padding: 1rem;
+    color: #eff8f4;
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  .research-prose :not(pre) > code {
+    border-radius: 0.3rem;
+    background: #dcece5;
+    padding: 0.15rem 0.35rem;
+    color: #164a3c;
+    font-size: 0.88em;
+  }
+
+  .research-prose .research-evidence-figure {
+    margin-block: 2rem;
+  }
+
+  .research-prose .research-evidence-figure > a {
+    display: block;
+    overflow: hidden;
+    border: 1px solid #cbd6cf;
+    border-radius: 1rem;
+    background: #fffdf8;
+  }
+
+  .research-prose .research-evidence-figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .research-prose .research-evidence-figure figcaption {
+    margin-top: 0.75rem;
+    padding-inline: 0.25rem;
+    color: #60736b;
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 640px) {
+    .research-prose {
+      font-size: 1rem;
+    }
+
+    .research-prose h2 {
+      font-size: 1.65rem;
+    }
+
+    .research-prose h3 {
+      font-size: 1.3rem;
+    }
+  }
+</style>

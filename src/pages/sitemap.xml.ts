@@ -1,6 +1,80 @@
 import { getCollection } from 'astro:content';
 import { wordpress } from '../lib/wordpress';
-const SITE='https://www.mdpabel.com';
-const staticPaths=['/','/about/','/hire-me/','/services/','/wordpress-malware-removal/','/wordpress-maintenance/','/wordpress-error-fixing/','/blacklist-removal/','/website-development/','/website-development/wordpress-development/','/website-development/nextjs-development/','/website-development/astro-development/','/website-development/ai-vibe-coding/','/wordpress-critical-error-fix-service/','/wordpress-500-internal-server-error-fix/','/fake-captcha-malware-removal/','/remove-japanese-seo-spam/','/google-blacklist-removal-service/','/mcafee-blacklist-removal/','/avast-blacklist-removal/','/free-wordpress-scan/','/free-wordpress-blacklist-scan/','/fake-wordpress-plugins/','/author/mdpabel/','/blog/','/case-studies/','/guides/','/malware-log/'];
-const esc=(s:string)=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-export async function GET(){const types=[['posts','blog'],['case-study','case-studies'],['guide','guides'],['malware-log','malware-log'],['fake_plugin','fake-wordpress-plugins']] as const;const sets=await Promise.all(types.map(([postType])=>wordpress.getAllPosts({postType}).catch(()=>[])));const dynamic=sets.flatMap((items,i)=>items.map(p=>({path:`/${types[i][1]}/${p.slug}/`,modified:p.modified||p.date})));const now=new Date().toISOString().slice(0,10);const urls=[...staticPaths.map(path=>({path,modified:now})),...dynamic];const xml=`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls.map(u=>`<url><loc>${esc(SITE+u.path)}</loc><lastmod>${new Date(u.modified||now).toISOString().slice(0,10)}</lastmod></url>`).join('')}</urlset>`;return new Response(xml,{headers:{'Content-Type':'application/xml; charset=utf-8','Cache-Control':'public, max-age=3600'}});}
+import { getResearchSlug } from '../lib/research';
+const SITE = 'https://www.mdpabel.com';
+const staticPaths = [
+  '/',
+  '/about/',
+  '/hire-me/',
+  '/services/',
+  '/wordpress-malware-removal/',
+  '/wordpress-maintenance/',
+  '/wordpress-error-fixing/',
+  '/blacklist-removal/',
+  '/website-development/',
+  '/website-development/wordpress-development/',
+  '/website-development/nextjs-development/',
+  '/website-development/astro-development/',
+  '/website-development/ai-vibe-coding/',
+  '/wordpress-critical-error-fix-service/',
+  '/wordpress-500-internal-server-error-fix/',
+  '/fake-captcha-malware-removal/',
+  '/remove-japanese-seo-spam/',
+  '/google-blacklist-removal-service/',
+  '/mcafee-blacklist-removal/',
+  '/avast-blacklist-removal/',
+  '/free-wordpress-scan/',
+  '/free-wordpress-blacklist-scan/',
+  '/fake-wordpress-plugins/',
+  '/malware-research/',
+  '/author/mdpabel/',
+  '/blog/',
+  '/case-studies/',
+  '/guides/',
+  '/malware-log/',
+];
+const esc = (s: string) =>
+  s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+export async function GET() {
+  const types = [
+    ['posts', 'blog'],
+    ['case-study', 'case-studies'],
+    ['guide', 'guides'],
+    ['malware-log', 'malware-log'],
+    ['fake_plugin', 'fake-wordpress-plugins'],
+  ] as const;
+  const [sets, research] = await Promise.all([
+    Promise.all(
+      types.map(([postType]) =>
+        wordpress.getAllPosts({ postType }).catch(() => []),
+      ),
+    ),
+    getCollection(
+      'wordpress-threats',
+      ({ data }) => data.status === 'published' && data.index,
+    ),
+  ]);
+  const dynamic = sets.flatMap((items, i) =>
+    items.map((p) => ({
+      path: `/${types[i][1]}/${p.slug}/`,
+      modified: p.modified || p.date,
+    })),
+  );
+  const researchUrls = research.map((entry) => ({
+    path: `/malware-research/${getResearchSlug(entry)}/`,
+    modified: entry.data.lastReviewed || entry.data.reportDate,
+  }));
+  const now = new Date().toISOString().slice(0, 10);
+  const urls = [
+    ...staticPaths.map((path) => ({ path, modified: now })),
+    ...dynamic,
+    ...researchUrls,
+  ];
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls.map((u) => `<url><loc>${esc(SITE + u.path)}</loc><lastmod>${new Date(u.modified || now).toISOString().slice(0, 10)}</lastmod></url>`).join('')}</urlset>`;
+  return new Response(xml, {
+    headers: {
+      'Content-Type': 'application/xml; charset=utf-8',
+      'Cache-Control': 'public, max-age=3600',
+    },
+  });
+}

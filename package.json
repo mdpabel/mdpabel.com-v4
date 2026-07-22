@@ -8,6 +8,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "gen": "node scripts/process-threats.mjs",
+    "validate:research": "node scripts/validate-malware-research.mjs",
+    "validate:research:rendered": "node scripts/validate-rendered-malware-research.mjs",
     "sync": "npx tsx scripts/sync-content.ts",
     "build:prod": "npm run sync && npm run build:astro",
     "fetch:posts": "node scripts/fetch-one-by-one.js --type=posts",
