@@ -1,5 +1,6 @@
 ---
 import ScanPage from '../components/new/ScanPage.astro';
+// The shared scan form records `from-url`, which distinguishes blacklist requests.
 const faqs = [
   {
     q: 'Which blacklist vendors do you check?',
@@ -22,7 +23,7 @@ const faqs = [
   path='/free-wordpress-blacklist-scan/'
   eyebrow='Free blacklist scan'
   intro='I check the warnings visitors can see, identify which reputation system appears to be involved, and explain whether malware cleanup or a vendor review should come next.'
-  formId='1515'
+  formId='1514'
   checks={[
     'Google Safe Browsing and Chrome warning signals',
     'Microsoft Defender SmartScreen reputation warnings',

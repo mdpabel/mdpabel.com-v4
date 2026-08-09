@@ -1,4 +1,9 @@
 ---
+import {
+  WP_ARMOUR_FIELD_NAME,
+  WP_ARMOUR_FIELD_VALUE,
+} from '../../lib/contactForms';
+
 interface Props {
   postId: number;
 }
@@ -55,6 +60,8 @@ const commentsEndpoint = apiBase ? `${apiBase}/wp-json/wp/v2/comments` : '';
     data-comment-form
     data-endpoint={commentsEndpoint}
     data-post-id={postId}
+    data-wp-armour-field={WP_ARMOUR_FIELD_NAME}
+    data-wp-armour-value={WP_ARMOUR_FIELD_VALUE}
   >
     <div class="grid gap-5 sm:grid-cols-2">
       <label class="block text-sm font-bold text-[#17352c]">
@@ -95,9 +102,10 @@ const commentsEndpoint = apiBase ? `${apiBase}/wp-json/wp/v2/comments` : '';
     <div class="absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
       <label>
         Leave this field empty
-        <input type="text" name="rnasqf1352" tabindex="-1" autocomplete="off" />
+        <input type="text" name="alt_s" tabindex="-1" autocomplete="off" />
       </label>
     </div>
+    <input type="hidden" name={WP_ARMOUR_FIELD_NAME} value={WP_ARMOUR_FIELD_VALUE} />
 
     <div class="flex flex-wrap items-center gap-4">
       <button
@@ -143,6 +151,8 @@ const commentsEndpoint = apiBase ? `${apiBase}/wp-json/wp/v2/comments` : '';
 
       const endpoint = form.dataset.endpoint;
       const postId = form.dataset.postId;
+      const wpArmourField = form.dataset.wpArmourField;
+      const wpArmourValue = form.dataset.wpArmourValue;
 
       const createCommentElement = (
         item: CommentApiItem,
@@ -284,7 +294,7 @@ const commentsEndpoint = apiBase ? `${apiBase}/wp-json/wp/v2/comments` : '';
         if (!form.reportValidity() || !button) return;
 
         const data = new FormData(form);
-        if (String(data.get('rnasqf1352') || '').trim()) {
+        if (String(data.get('alt_s') || '').trim()) {
           showStatus('Thanks. Your comment has been submitted for review.', true);
           form.reset();
           return;
@@ -305,7 +315,10 @@ const commentsEndpoint = apiBase ? `${apiBase}/wp-json/wp/v2/comments` : '';
           author_name: String(data.get('author_name') || '').trim(),
           author_email: String(data.get('author_email') || '').trim(),
           content: String(data.get('content') || '').trim(),
+          alt_s: '',
         });
+        if (wpArmourField && wpArmourValue)
+          body.set(wpArmourField, wpArmourValue);
 
         try {
           const response = await fetch(endpoint, {

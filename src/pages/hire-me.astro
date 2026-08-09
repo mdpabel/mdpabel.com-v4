@@ -8,6 +8,11 @@ import {
 } from '@lucide/astro';
 import NewLayout from '../layouts/NewLayout.astro';
 import Breadcrumbs from '../components/new/Breadcrumbs.astro';
+import {
+  CONTACT_FORM_7_VERSION,
+  WP_ARMOUR_FIELD_NAME,
+  WP_ARMOUR_FIELD_VALUE,
+} from '../lib/contactForms';
 
 const wpApiUrl = import.meta.env.PUBLIC_WORDPRESS_API_URL;
 const formId = '1513';
@@ -127,9 +132,9 @@ const inputClass =
           </div><form
             id='hire-me-form'
             class='gap-5 grid'
-            novalidate
             data-wp-url={wpApiUrl}
-            data-form-id={formId}>
+            data-form-id={formId}
+            data-cf7-version={CONTACT_FORM_7_VERSION}>
             <div class='gap-5 grid sm:grid-cols-2'>
               <label class='gap-2 grid font-bold text-xs'
                 >Your name<input
@@ -138,6 +143,7 @@ const inputClass =
                   class={inputClass}
                   placeholder='Name'
                   autocomplete='name'
+                  minlength='2'
                   required
                 /></label
               ><label class='gap-2 grid font-bold text-xs'
@@ -188,12 +194,32 @@ const inputClass =
                 name='description'
                 class={`${inputClass} min-h-36 resize-y`}
                 placeholder='Include the symptoms, goal, deadline, and anything already tried.'
+                minlength='10'
                 required></textarea></label
+            ><div class='hidden' aria-hidden='true'>
+              <label
+                >Leave this field blank<input
+                  name='alt_s'
+                  tabindex='-1'
+                  autocomplete='off'
+                /></label
+              >
+            </div><input
+              type='hidden'
+              name={WP_ARMOUR_FIELD_NAME}
+              value={WP_ARMOUR_FIELD_VALUE}
+            /
             ><p
               id='general-error'
+              role='alert'
+              aria-live='polite'
               class='hidden bg-[#fee5dc] p-3 rounded-xl text-[#9f432c] text-sm'>
-              Please check the required fields or use WhatsApp if the form does
-              not send.
+              <span id='general-error-text'
+                >The inquiry could not be sent.</span
+              >
+              <a class='font-bold underline' href='mailto:support@mdpabel.com'
+                >Email support@mdpabel.com</a
+              > instead.
             </p><button
               id='submit-btn'
               type='submit'
@@ -219,7 +245,13 @@ const inputClass =
   ) as HTMLButtonElement | null;
   const successMessage = document.getElementById('success-message');
   const errorMessage = document.getElementById('general-error');
+  const errorText = document.getElementById('general-error-text');
   const resetButton = document.getElementById('reset-form-btn');
+
+  const showError = (message: string) => {
+    if (errorText) errorText.textContent = message;
+    errorMessage?.classList.remove('hidden');
+  };
 
   form?.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -236,14 +268,15 @@ const inputClass =
       !service ||
       details.length < 10
     ) {
-      errorMessage?.classList.remove('hidden');
+      showError('Please complete the required fields correctly.');
       return;
     }
 
     const apiUrl = form.dataset.wpUrl;
     const formId = form.dataset.formId;
-    if (!apiUrl || !formId) {
-      errorMessage?.classList.remove('hidden');
+    const contactFormVersion = form.dataset.cf7Version;
+    if (!apiUrl || !formId || !contactFormVersion) {
+      showError('The inquiry service is not configured right now.');
       return;
     }
 
@@ -252,22 +285,28 @@ const inputClass =
       submitButton.textContent = 'Sending…';
     }
     formData.append('_wpcf7', formId);
-    formData.append('_wpcf7_version', '6.1.2');
+    formData.append('_wpcf7_version', contactFormVersion);
     formData.append('_wpcf7_locale', 'en_US');
     formData.append('_wpcf7_unit_tag', `wpcf7-f${formId}-p0-o1`);
+    formData.append('from-url', window.location.pathname);
 
     try {
       const response = await fetch(
         `${apiUrl}/wp-json/contact-form-7/v1/contact-forms/${formId}/feedback`,
         { method: 'POST', body: formData },
       );
+      if (!response.ok) throw new Error('The inquiry service is unavailable.');
       const result = await response.json();
       if (result.status !== 'mail_sent')
         throw new Error(result.message || 'Submission failed');
       successMessage?.classList.remove('hidden');
       successMessage?.classList.add('flex');
-    } catch {
-      errorMessage?.classList.remove('hidden');
+    } catch (error) {
+      showError(
+        error instanceof Error && error.message !== 'Submission failed'
+          ? error.message
+          : 'The inquiry could not be sent.',
+      );
     } finally {
       if (submitButton) {
         submitButton.disabled = false;
