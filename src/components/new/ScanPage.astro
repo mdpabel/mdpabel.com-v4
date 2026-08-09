@@ -22,6 +22,9 @@ interface Props {
 const { title, description, path, eyebrow, intro, formId, checks, faqs } =
   Astro.props;
 const contactFormVersion = CONTACT_FORM_7_VERSION;
+const linkedinUrl = 'https://www.linkedin.com/in/mdpabe1/';
+const tawkUrl =
+  'https://tawk.to/chat/68b076a8beccc01925d92112/1j3okv147';
 const url = `https://www.mdpabel.com${path}`;
 const schema = [
   { '@type': 'WebPage', name: title, description, url },
@@ -133,6 +136,25 @@ const schema = [
               aria-live='polite'
               class='hidden rounded-xl p-3 text-sm'>
             </div>
+            <p
+              id='form-alternatives'
+              class='hidden text-center text-xs leading-5 text-[#52665f]'>
+              Prefer another way? <a
+                href={tawkUrl}
+                target='_blank'
+                rel='noopener noreferrer'
+                data-open-tawk
+                class='font-bold text-[#1f6b55] underline'>Open live chat</a
+              >, <a
+                href={linkedinUrl}
+                target='_blank'
+                rel='noopener noreferrer me'
+                class='font-bold text-[#1f6b55] underline'>message on LinkedIn</a
+              >, or <a
+                href='mailto:support@mdpabel.com'
+                class='font-bold text-[#1f6b55] underline'>send an email</a
+              >.
+            </p>
             <button
               id='scan-submit-btn'
               type='submit'
@@ -187,6 +209,7 @@ const schema = [
   const form = document.getElementById('scan-form');
   const button = document.getElementById('scan-submit-btn');
   const feedback = document.getElementById('form-feedback');
+  const alternatives = document.getElementById('form-alternatives');
 
   form?.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -199,6 +222,7 @@ const schema = [
 
     button.disabled = true;
     button.textContent = 'Sending request…';
+    alternatives?.classList.add('hidden');
     const data = new FormData(form);
     data.append('from-url', location.pathname);
     data.append('_wpcf7', formId);
@@ -220,6 +244,7 @@ const schema = [
         'block rounded-xl bg-[#dcece5] p-3 text-sm text-[#17352c]';
       feedback.textContent =
         'Request received. I will review it and reply by email.';
+      alternatives?.classList.add('hidden');
       form.reset();
       button.textContent = 'Request sent ✓';
     } catch (error) {
@@ -229,7 +254,8 @@ const schema = [
         error instanceof Error
           ? error.message
           : 'The request could not be sent.';
-      feedback.textContent = `${message} Please email support@mdpabel.com.`;
+      feedback.textContent = message;
+      alternatives?.classList.remove('hidden');
       button.disabled = false;
       button.textContent = 'Request review';
     }

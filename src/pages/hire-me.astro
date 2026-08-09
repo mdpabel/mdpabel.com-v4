@@ -3,8 +3,10 @@ import {
   ArrowUpRight,
   Check,
   Clock3,
+  Linkedin,
   Mail,
   MessageCircle,
+  MessagesSquare,
 } from '@lucide/astro';
 import NewLayout from '../layouts/NewLayout.astro';
 import Breadcrumbs from '../components/new/Breadcrumbs.astro';
@@ -17,6 +19,9 @@ import {
 const wpApiUrl = import.meta.env.PUBLIC_WORDPRESS_API_URL;
 const formId = '1513';
 const whatsappUrl = `https://wa.me/8801323390163?text=${encodeURIComponent('Hi, I need help with my website. URL: Issue or goal: Budget:')}`;
+const linkedinUrl = 'https://www.linkedin.com/in/mdpabe1/';
+const tawkUrl =
+  'https://tawk.to/chat/68b076a8beccc01925d92112/1j3okv147';
 const title = 'Hire MD Pabel | WordPress Security & Website Development';
 const description =
   'Contact MD Pabel for WordPress malware removal, maintenance, error fixing, blacklist recovery, or WordPress, Next.js, and Astro development.';
@@ -86,6 +91,38 @@ const inputClass =
             }
           </div><div class='gap-3 grid sm:grid-cols-2 lg:grid-cols-1 mt-10'>
             <a
+              href={tawkUrl}
+              target='_blank'
+              rel='noopener noreferrer'
+              data-open-tawk
+              class='flex items-center gap-3 bg-[#fffdf8] p-4 border border-[#d7ddd7] rounded-2xl'
+              ><MessagesSquare class='w-5 h-5 text-[#1f6b55]' /><span
+                class='text-[#52665f] text-xs'
+                ><strong class='block text-[#17352c] text-sm'>Live chat</strong
+                >Chat here with Tawk</span
+              ><ArrowUpRight class='ml-auto w-4 h-4' /></a
+            >
+            <a
+              href='mailto:support@mdpabel.com'
+              class='flex items-center gap-3 bg-[#fffdf8] p-4 border border-[#d7ddd7] rounded-2xl'
+              ><Mail class='w-5 h-5 text-[#1f6b55]' /><span
+                class='text-[#52665f] text-xs'
+                ><strong class='block text-[#17352c] text-sm'>Email</strong
+                >support@mdpabel.com</span
+              ><ArrowUpRight class='ml-auto w-4 h-4' /></a
+            >
+            <a
+              href={linkedinUrl}
+              target='_blank'
+              rel='noopener noreferrer me'
+              class='flex items-center gap-3 bg-[#fffdf8] p-4 border border-[#d7ddd7] rounded-2xl'
+              ><Linkedin class='w-5 h-5 text-[#1f6b55]' /><span
+                class='text-[#52665f] text-xs'
+                ><strong class='block text-[#17352c] text-sm'>LinkedIn</strong
+                >Send a direct message</span
+              ><ArrowUpRight class='ml-auto w-4 h-4' /></a
+            >
+            <a
               href={whatsappUrl}
               target='_blank'
               rel='noopener noreferrer'
@@ -94,14 +131,6 @@ const inputClass =
                 class='text-[#52665f] text-xs'
                 ><strong class='block text-[#17352c] text-sm'>WhatsApp</strong
                 >Send a short problem summary</span
-              ><ArrowUpRight class='ml-auto w-4 h-4' /></a
-            ><a
-              href='mailto:support@mdpabel.com'
-              class='flex items-center gap-3 bg-[#fffdf8] p-4 border border-[#d7ddd7] rounded-2xl'
-              ><Mail class='w-5 h-5 text-[#1f6b55]' /><span
-                class='text-[#52665f] text-xs'
-                ><strong class='block text-[#17352c] text-sm'>Email</strong
-                >support@mdpabel.com</span
               ><ArrowUpRight class='ml-auto w-4 h-4' /></a
             >
           </div>
@@ -209,18 +238,29 @@ const inputClass =
               name={WP_ARMOUR_FIELD_NAME}
               value={WP_ARMOUR_FIELD_VALUE}
             /
-            ><p
+            ><div
               id='general-error'
               role='alert'
               aria-live='polite'
               class='hidden bg-[#fee5dc] p-3 rounded-xl text-[#9f432c] text-sm'>
-              <span id='general-error-text'
-                >The inquiry could not be sent.</span
-              >
-              <a class='font-bold underline' href='mailto:support@mdpabel.com'
-                >Email support@mdpabel.com</a
-              > instead.
-            </p><button
+              <span id='general-error-text'>The inquiry could not be sent.</span>
+              <div class='flex flex-wrap gap-x-3 gap-y-1 mt-2 font-bold'>
+                <a
+                  href={tawkUrl}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  data-open-tawk
+                  class='underline'>Open live chat</a
+                >
+                <a
+                  href={linkedinUrl}
+                  target='_blank'
+                  rel='noopener noreferrer me'
+                  class='underline'>Message on LinkedIn</a
+                >
+                <a class='underline' href='mailto:support@mdpabel.com'>Send an email</a>
+              </div>
+            </div><button
               id='submit-btn'
               type='submit'
               class='inline-flex justify-center items-center gap-2 bg-[#1f6b55] hover:bg-[#164a3c] px-6 py-3.5 rounded-full font-bold text-white text-sm transition'
