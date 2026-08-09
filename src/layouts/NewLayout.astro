@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import NewHeader from '../components/new/NewHeader.astro';
 import NewFooter from '../components/new/NewFooter.astro';
+import TawkChat from '../components/new/TawkChat.astro';
 
 interface Props {
   title: string;
@@ -86,32 +87,7 @@ const schemaGraph = schemaItems.length
         true,
       );
     </script>
-    <!-- Tawk.to is available site-wide; links marked data-open-tawk open the widget in place. -->
-    <script is:inline>
-      var Tawk_API = Tawk_API || {};
-      var Tawk_LoadStart = new Date();
-
-      document.addEventListener('click', function (event) {
-        var target = event.target;
-        if (!(target instanceof Element)) return;
-        var trigger = target.closest('[data-open-tawk]');
-        if (!trigger || typeof Tawk_API.maximize !== 'function') return;
-
-        event.preventDefault();
-        Tawk_API.maximize();
-      });
-
-      (function () {
-        var script = document.createElement('script');
-        var firstScript = document.getElementsByTagName('script')[0];
-        script.async = true;
-        script.src =
-          'https://embed.tawk.to/68b076a8beccc01925d92112/1j3okv147';
-        script.charset = 'UTF-8';
-        script.setAttribute('crossorigin', '*');
-        firstScript.parentNode.insertBefore(script, firstScript);
-      })();
-    </script>
+    <TawkChat />
   </body>
 </html>
 
