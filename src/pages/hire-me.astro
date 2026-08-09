@@ -20,6 +20,7 @@ const wpApiUrl = import.meta.env.PUBLIC_WORDPRESS_API_URL;
 const formId = '1513';
 const whatsappUrl = `https://wa.me/8801323390163?text=${encodeURIComponent('Hi, I need help with my website. URL: Issue or goal: Budget:')}`;
 const linkedinUrl = 'https://www.linkedin.com/in/mdpabe1/';
+const jillLinkedinUrl = 'https://www.linkedin.com/in/saysjill/';
 const tawkUrl =
   'https://tawk.to/chat/68b076a8beccc01925d92112/1j3okv147';
 const title = 'Hire MD Pabel | WordPress Security & Website Development';
@@ -272,6 +273,51 @@ const inputClass =
           </form>
         </div>
       </div>
+      <aside
+        class='mt-14 overflow-hidden rounded-3xl border border-[#d7ddd7] bg-[#17352c] p-7 text-white shadow-xl shadow-[#17352c]/10 md:p-10'
+        aria-labelledby='jill-recommendation-title'>
+        <div class='grid gap-7 md:grid-cols-[auto_1fr] md:items-start'>
+          <div
+            class='grid h-14 w-14 place-items-center rounded-full bg-[#ed7655] font-bold text-[#17352c]'>
+            JS
+          </div>
+          <div>
+            <div class='flex flex-wrap items-center justify-between gap-3'>
+              <p
+                id='jill-recommendation-title'
+                class='text-xs font-extrabold uppercase tracking-[0.16em] text-[#a9d6c4]'>
+                Client recommendation
+              </p>
+              <span class='text-xs font-semibold text-[#bdd4ca]'
+                >LinkedIn · August 2026</span
+              >
+            </div>
+            <blockquote class='mt-5 text-lg leading-8 text-[#fffdf8] md:text-xl'>
+              “I received an alert about malicious code on one of my websites
+              and am so happy that I found MD Pabel during a search for someone
+              to help me remove the malware. MD Pabel responded quickly to my
+              inquiry and got to work resolving the issue. While helping me, he
+              provided clear instructions and screenshots that made it easy for
+              me to provide the access needed in order to fix the issue. I
+              highly recommend MD Pabel for help with resolving malware issues
+              on your website. From start to finish, this was an excellent
+              customer support experience. A+++”
+            </blockquote>
+            <footer class='mt-6'>
+              <a
+                href={jillLinkedinUrl}
+                target='_blank'
+                rel='noopener noreferrer'
+                class='inline-flex items-center gap-2 font-bold text-white underline decoration-[#ed7655] decoration-2 underline-offset-4'>
+                Jill Sawyer <Linkedin class='h-4 w-4' />
+              </a>
+              <p class='mt-1 text-sm text-[#bdd4ca]'>
+                Technical Communications Specialist · Change Management · United States client
+              </p>
+            </footer>
+          </div>
+        </div>
+      </aside>
     </div>
   </section>
 </NewLayout>
