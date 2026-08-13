@@ -8,6 +8,7 @@ const staticPaths = [
   '/hire-me/',
   '/services/',
   '/wordpress-malware-removal/',
+  '/wordpress-malware-removal-book/',
   '/wordpress-maintenance/',
   '/wordpress-error-fixing/',
   '/blacklist-removal/',
