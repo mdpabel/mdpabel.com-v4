@@ -5,6 +5,7 @@ import NewLayout from '../../layouts/NewLayout.astro';
 import Breadcrumbs from './Breadcrumbs.astro';
 import CommentForm from './CommentForm.astro';
 import FreeScanPopup from './FreeScanPopup.astro';
+import BookSidebarCard from './BookSidebarCard.astro';
 import type { WordPressPost } from '../../lib/wordpress';
 import { getWordPressMediaUrl, isR2MediaUrl, resolveMediaSrcset, resolveMediaUrl } from '../../lib/media';
 
@@ -193,6 +194,7 @@ const researchLinks = researchLinksByPage[`${rootSlug}/${post.slug}`] || [];
       <CommentForm postId={post.id} />
     </article>
     <aside class='space-y-5 lg:sticky lg:top-6'>
+      <BookSidebarCard />
       <section class='rounded-2xl border border-[#d7ddd7] bg-[#fffdf8] p-5'><p class='text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#ed7655]'>Need expert help?</p><h2 class='editorial-heading mt-3 text-2xl font-semibold'>A website problem is easier with a clear next step.</h2><p class='mt-3 text-xs leading-6 text-[#52665f]'>Share the URL and what you are seeing. I’ll help identify the relevant service.</p><a href='/hire-me/' class='mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#1f6b55] px-4 py-2.5 text-xs font-bold text-white'>Discuss your website <ArrowUpRight class='h-4 w-4' /></a></section>
       <section class='rounded-2xl border border-[#d7ddd7] bg-[#fffdf8] p-5'><h2 class='editorial-heading text-xl font-semibold'>Relevant services</h2><div class='mt-3 divide-y divide-[#d7ddd7]'><a href='/wordpress-malware-removal/' class='block py-3 text-sm font-bold'>WordPress malware removal<span class='mt-1 block text-[11px] font-normal leading-5 text-[#65766f]'>Manual hacked-site investigation and cleanup.</span></a><a href='/blacklist-removal/' class='block py-3 text-sm font-bold'>Blacklist recovery<span class='mt-1 block text-[11px] font-normal leading-5 text-[#65766f]'>Browser and antivirus warning support.</span></a></div></section>
       {relatedPosts.length > 0 && <section class='rounded-2xl border border-[#d7ddd7] bg-[#fffdf8] p-5'><h2 class='editorial-heading text-xl font-semibold'>Related {label.toLowerCase()}</h2><div class='mt-3 divide-y divide-[#d7ddd7]'>{relatedPosts.map((related) => <a href={`/${rootSlug}/${related.slug}/`} class='block py-3 text-sm font-bold leading-5'><span set:html={related.title} /><time class='mt-1 block text-[10px] font-normal text-[#788780]'>{new Date(related.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</time></a>)}</div></section>}

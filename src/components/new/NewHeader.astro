@@ -59,6 +59,7 @@ const resources = [
     description: 'Free Chapter 1 preview and book updates',
     href: '/wordpress-malware-removal-book/',
     icon: BookOpen,
+    featured: true,
   },
   {
     label: 'Malware research',
@@ -182,11 +183,20 @@ const isCurrent = (href: string) =>
                   resources.map((item) => (
                     <a
                       href={item.href}
-                      class='group/item flex items-center gap-2.5 hover:bg-[#dcece5] focus:bg-[#dcece5] p-2.5 rounded-xl focus:outline-none font-extrabold text-[#17352c] text-[13px] transition-colors'>
-                      <span class='place-items-center grid bg-[#eef4ef] rounded-lg w-8 h-8 text-[#1f6b55] shrink-0'>
+                      class:list={[
+                        'group/item flex items-center gap-2.5 hover:bg-[#dcece5] focus:bg-[#dcece5] p-2.5 rounded-xl focus:outline-none font-extrabold text-[#17352c] text-[13px] transition-colors',
+                        item.featured && 'col-span-2 border border-[#bcd1c7] bg-[#eef4ef]',
+                      ]}>
+                      <span class:list={[
+                        'place-items-center grid rounded-lg w-8 h-8 shrink-0',
+                        item.featured ? 'bg-[#ed7655] text-[#17352c]' : 'bg-[#eef4ef] text-[#1f6b55]',
+                      ]}>
                         <item.icon class='w-4 h-4' />
                       </span>
-                      {item.label}
+                      <span>
+                        <span class='block'>{item.label}</span>
+                        {item.featured && <span class='mt-0.5 block text-[10px] font-semibold text-[#65766f]'>{item.description}</span>}
+                      </span>
                     </a>
                   ))
                 }

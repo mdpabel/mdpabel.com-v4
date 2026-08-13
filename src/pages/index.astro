@@ -4,6 +4,7 @@ import {
   ArrowRight,
   ArrowUpRight,
   BadgeCheck,
+  BookOpen,
   Check,
   ChevronRight,
   CircleCheck,
@@ -353,6 +354,38 @@ const homeSchema = {
                   </a>
                 ))
               }
+            </div>
+          </div>
+        </section>
+
+        <section class='section book-section' aria-labelledby='book-heading'>
+          <div class='shell'>
+            <div class='book-feature' data-reveal>
+              <img
+                class='book-feature-image'
+                src='/images/book/wordpress-malware-removal-book-social.png'
+                alt='WordPress Malware Recovery book with investigation notes'
+                width='1734'
+                height='907'
+                loading='lazy'
+                decoding='async'
+              />
+              <div class='book-feature-wash' aria-hidden='true'></div>
+              <div class='book-feature-copy'>
+                <p class='kicker'>The book · Free Chapter 1</p>
+                <h2 id='book-heading'>A WordPress malware removal book built from real cases.</h2>
+                <p>
+                  Follow the evidence across files, databases, hidden users,
+                  redirects, SEO spam, and WooCommerce checkout—without relying
+                  on generic hacked-site checklists.
+                </p>
+                <div class='book-topics' aria-label='Book topics'>
+                  <span>12 chapters</span><span>Real investigations</span><span>Evidence-led recovery</span>
+                </div>
+                <a class='button button-primary' href='/wordpress-malware-removal-book/'>
+                  Read Chapter 1 free <BookOpen size={18} />
+                </a>
+              </div>
             </div>
           </div>
         </section>
@@ -1402,6 +1435,82 @@ const homeSchema = {
     background: var(--surface);
   }
 
+  .book-section {
+    background: var(--paper);
+  }
+
+  .book-feature {
+    position: relative;
+    min-height: 500px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 1.5rem;
+    background: var(--surface);
+    box-shadow: 0 24px 70px rgba(23, 53, 44, 0.1);
+  }
+
+  .book-feature-image,
+  .book-feature-wash {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .book-feature-image {
+    object-fit: cover;
+    object-position: 61% center;
+  }
+
+  .book-feature-wash {
+    background: linear-gradient(90deg, #fffdf8 0%, rgba(255, 253, 248, 0.97) 43%, rgba(255, 253, 248, 0.62) 61%, transparent 82%);
+  }
+
+  .book-feature-copy {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    min-height: 500px;
+    max-width: 670px;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(2rem, 6vw, 5rem);
+  }
+
+  .book-feature-copy h2 {
+    max-width: 650px;
+  }
+
+  .book-feature-copy > p:not(.kicker) {
+    max-width: 570px;
+    margin: 1.5rem 0 0;
+    color: var(--ink-soft);
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+
+  .book-topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .book-topics span {
+    border: 1px solid #c9d6d0;
+    border-radius: 999px;
+    background: rgba(255, 253, 248, 0.8);
+    padding: 0.45rem 0.7rem;
+    color: #3c554c;
+    font-size: 0.66rem;
+    font-weight: 800;
+  }
+
+  .book-feature-copy .button {
+    width: fit-content;
+    margin-top: 1.8rem;
+  }
+
   .process-layout {
     display: grid;
     grid-template-columns: 0.85fr 1.15fr;
@@ -2069,6 +2178,24 @@ const homeSchema = {
 
     .section {
       padding: 78px 0;
+    }
+
+    .book-feature,
+    .book-feature-copy {
+      min-height: 510px;
+    }
+
+    .book-feature-image {
+      opacity: 0.22;
+      object-position: 70% center;
+    }
+
+    .book-feature-wash {
+      background: linear-gradient(90deg, rgba(255, 253, 248, 0.98), rgba(255, 253, 248, 0.82));
+    }
+
+    .book-feature-copy {
+      padding: 2rem;
     }
 
     .section h2,
