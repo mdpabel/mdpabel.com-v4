@@ -18,6 +18,7 @@ import {
 } from '@lucide/astro';
 import '../styles/global.css';
 import portrait from '../assets/my-img.png';
+import bookCover from '../assets/wordpress-malware-removal-book-social.png';
 import NewHeader from '../components/new/NewHeader.astro';
 import NewFooter from '../components/new/NewFooter.astro';
 import TawkChat from '../components/new/TawkChat.astro';
@@ -363,7 +364,7 @@ const homeSchema = {
             <div class='book-card' data-reveal>
               <div class='book-visual'>
                 <Image
-                  src='/images/book/wordpress-malware-removal-book-social.png'
+                  src={bookCover}
                   alt='WordPress Malware Recovery book with investigation notes'
                   width='1734'
                   height='906'
