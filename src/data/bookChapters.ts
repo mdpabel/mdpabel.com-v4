@@ -201,7 +201,7 @@ export const bookChapters: BookChapter[] = [
   },
   {
     number: 13,
-    title: "Hosting and Domain Suspension Removal",
+    title: "Recover a Suspended Hosting Account or Domain",
     slug: "hosting-domain-suspension-removal",
     shortDescription: "Show how to clean malware from a suspended account, request a hosting rescan, and handle domain suspension and drive-by warnings.",
     topics: [
@@ -216,7 +216,7 @@ export const bookChapters: BookChapter[] = [
   },
   {
     number: 14,
-    title: "Blacklist Removal",
+    title: "Remove Website Blacklists and Security Warnings",
     slug: "blacklist-removal",
     shortDescription: "Remove Google Safe Browsing and 100+ vendor blacklist warnings, and answer why reconsideration requests are rejected.",
     topics: [
