@@ -1,0 +1,298 @@
+---
+import {
+  ArrowRight,
+  BookOpen,
+  Check,
+  ExternalLink,
+  Microscope,
+  ShieldCheck,
+} from '@lucide/astro';
+
+import NewLayout from '../layouts/NewLayout.astro';
+
+const url = 'https://www.mdpabel.com/books/';
+const title = 'WordPress Malware Removal Books by MD Pabel';
+const description =
+  'Explore MD Pabel’s evidence-led WordPress malware removal books: a complete 17-chapter recovery guide and a focused guide to persistent infections and reinfection.';
+
+const books = [
+  {
+    badge: 'Complete field guide',
+    title: 'WordPress Malware Removal',
+    subtitle: 'for Developers & Site Owners',
+    description:
+      'An end-to-end investigation and recovery method covering diagnosis, files, databases, hosting, redirects, SEO spam, hidden users, payment skimmers, suspensions, blacklists, reinfection, and monitoring.',
+    cover: '/book-cover.png',
+    alt: 'WordPress Malware Removal for Developers and Site Owners book cover',
+    details: '/wordpress-malware-removal-book/',
+    leanpub:
+      'https://leanpub.com/wordpressmalwareremovalfordeveloperssiteowners',
+    metrics: ['278 pages', '17 chapters', '81 screenshots and figures'],
+    bestFor:
+      'Developers, site owners, agencies, and responders who want the complete WordPress malware-removal workflow.',
+  },
+  {
+    badge: 'Focused advanced guide',
+    title: 'Advanced WordPress Malware Removal',
+    subtitle: 'Persistent Infections, Reinfection, and Recovery',
+    description:
+      'A focused forensic case study of SC 4.0.3 self-healing malware, including persistence mapping, safe static decoding, database investigation, coordinated cleanup, and recurrence testing.',
+    cover: '/images/book/advanced-wordpress-malware-removal-cover.png',
+    alt: 'Advanced WordPress Malware Removal book cover',
+    details: '/advanced-wordpress-malware-removal/',
+    leanpub: 'https://leanpub.com/advanced-wordpress-malware-removal',
+    metrics: ['31 pages', '11 incident screenshots', '1 complete case'],
+    bestFor:
+      'Developers, freelancers, and security professionals handling persistent or repeatedly returning WordPress malware.',
+  },
+];
+
+const schema = [
+  {
+    '@type': 'CollectionPage',
+    '@id': `${url}#webpage`,
+    url,
+    name: title,
+    description,
+    mainEntity: { '@id': `${url}#books` },
+    breadcrumb: { '@id': `${url}#breadcrumb` },
+  },
+  {
+    '@type': 'ItemList',
+    '@id': `${url}#books`,
+    name: 'WordPress malware removal books by MD Pabel',
+    numberOfItems: 2,
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        item: {
+          '@type': 'Book',
+          name: 'WordPress Malware Removal for Developers & Site Owners',
+          url: 'https://www.mdpabel.com/wordpress-malware-removal-book/',
+          sameAs:
+            'https://leanpub.com/wordpressmalwareremovalfordeveloperssiteowners',
+          author: {
+            '@type': 'Person',
+            '@id': 'https://www.mdpabel.com/about/#person',
+            name: 'MD Pabel',
+          },
+          numberOfPages: 278,
+          bookFormat: 'https://schema.org/EBook',
+          inLanguage: 'en',
+        },
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        item: {
+          '@type': 'Book',
+          name: 'Advanced WordPress Malware Removal',
+          alternateName: 'Persistent Infections, Reinfection, and Recovery',
+          url: 'https://www.mdpabel.com/advanced-wordpress-malware-removal/',
+          sameAs: 'https://leanpub.com/advanced-wordpress-malware-removal',
+          author: {
+            '@type': 'Person',
+            '@id': 'https://www.mdpabel.com/about/#person',
+            name: 'MD Pabel',
+          },
+          numberOfPages: 31,
+          bookFormat: 'https://schema.org/EBook',
+          inLanguage: 'en',
+        },
+      },
+    ],
+  },
+  {
+    '@type': 'BreadcrumbList',
+    '@id': `${url}#breadcrumb`,
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://www.mdpabel.com/',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Books',
+        item: url,
+      },
+    ],
+  },
+];
+---
+
+<NewLayout {title} {description} path={url} image='/images/book/advanced-wordpress-malware-removal-cover.png' {schema}>
+  <section class='books-hero relative overflow-hidden border-b border-[#d7ddd7] py-16 md:py-24'>
+    <div class='books-grid pointer-events-none absolute inset-0'></div>
+    <div class='new-shell relative text-center'>
+      <div class='mx-auto inline-flex items-center gap-2 rounded-full border border-[#1f6b55]/15 bg-white/75 px-3.5 py-2 text-[11px] font-extrabold uppercase tracking-[0.14em] text-[#1f6b55] shadow-sm backdrop-blur'>
+        <BookOpen class='h-3.5 w-3.5' />
+        Evidence-led WordPress security books
+      </div>
+      <h1 class='editorial-heading mx-auto mt-6 max-w-4xl font-semibold'>
+        WordPress malware removal books by MD Pabel
+      </h1>
+      <p class='mx-auto mt-6 max-w-3xl text-lg leading-8 text-[#52665f] md:text-xl'>
+        Choose the complete recovery system or go deep on one persistent,
+        self-healing infection. Both books turn first-hand evidence into methods
+        you can use during real WordPress incidents.
+      </p>
+    </div>
+  </section>
+
+  <section class='py-16 md:py-24'>
+    <div class='new-shell grid gap-7 lg:grid-cols-2'>
+      {
+        books.map((book) => (
+          <article class='book-card overflow-hidden rounded-[2rem] border border-[#d7ddd7] bg-[#fffdf8] shadow-sm'>
+            <div class='grid h-full gap-7 p-6 sm:grid-cols-[0.72fr_1.28fr] sm:p-8'>
+              <a href={book.details} class='group mx-auto block w-full max-w-[250px] self-start'>
+                <img
+                  src={book.cover}
+                  alt={book.alt}
+                  loading='lazy'
+                  class='h-auto w-full rounded-sm shadow-xl shadow-[#17352c]/20 transition duration-300 group-hover:-translate-y-1'
+                />
+              </a>
+              <div class='flex flex-col'>
+                <p class='text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#b84e31]'>{book.badge}</p>
+                <h2 class='editorial-heading mt-3 text-3xl font-semibold leading-[1.04]'>{book.title}</h2>
+                <p class='mt-2 text-sm font-bold leading-6 text-[#1f6b55]'>{book.subtitle}</p>
+                <p class='mt-5 text-sm leading-7 text-[#52665f]'>{book.description}</p>
+
+                <div class='mt-5 grid gap-2 text-xs font-bold text-[#29483e]'>
+                  {book.metrics.map((metric) => (
+                    <span class='flex items-center gap-2'><Check class='h-3.5 w-3.5 text-[#1f6b55]' />{metric}</span>
+                  ))}
+                </div>
+
+                <div class='mt-auto pt-6'>
+                  <p class='rounded-xl bg-[#eef4ef] p-4 text-xs leading-6 text-[#52665f]'>
+                    <strong class='text-[#17352c]'>Best for:</strong> {book.bestFor}
+                  </p>
+                  <div class='mt-5 flex flex-wrap gap-3'>
+                    <a
+                      href={book.details}
+                      class='group inline-flex items-center gap-2 rounded-full bg-[#1f6b55] px-5 py-3 text-xs font-extrabold text-white transition hover:-translate-y-0.5 hover:bg-[#164a3c]'>
+                      Explore the book
+                      <ArrowRight class='h-4 w-4 transition group-hover:translate-x-0.5' />
+                    </a>
+                    <a
+                      href={book.leanpub}
+                      target='_blank'
+                      rel='noopener'
+                      class='inline-flex items-center gap-2 rounded-full border border-[#17352c] px-5 py-3 text-xs font-extrabold text-[#17352c] transition hover:bg-[#17352c] hover:text-white'>
+                      Leanpub <ExternalLink class='h-3.5 w-3.5' />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class='bg-[#e8f2ee] py-16 md:py-24'>
+    <div class='new-shell'>
+      <div class='mx-auto max-w-3xl text-center'>
+        <p class='text-xs font-extrabold uppercase tracking-[0.16em] text-[#1f6b55]'>
+          Which book should you choose?
+        </p>
+        <h2 class='editorial-heading mt-4 text-3xl font-semibold md:text-5xl'>
+          Start with the scope of the problem you need to solve.
+        </h2>
+      </div>
+
+      <div class='mx-auto mt-12 grid max-w-5xl gap-5 md:grid-cols-2'>
+        <article class='rounded-2xl bg-[#fffdf8] p-7 shadow-sm'>
+          <span class='grid h-11 w-11 place-items-center rounded-xl bg-[#17352c] text-[#8ed0b5]'><BookOpen class='h-5 w-5' /></span>
+          <h3 class='editorial-heading mt-5 text-2xl font-semibold'>Choose the complete book when...</h3>
+          <ul class='mt-5 grid gap-3 text-sm leading-7 text-[#52665f]'>
+            <li class='flex gap-3'><Check class='mt-1 h-4 w-4 shrink-0 text-[#1f6b55]' />you want an end-to-end WordPress malware-removal reference;</li>
+            <li class='flex gap-3'><Check class='mt-1 h-4 w-4 shrink-0 text-[#1f6b55]' />you handle redirects, SEO spam, fake users, skimmers, suspensions, or blacklists;</li>
+            <li class='flex gap-3'><Check class='mt-1 h-4 w-4 shrink-0 text-[#1f6b55]' />you need preparation, cleanup, recovery, and monitoring in one sequence.</li>
+          </ul>
+        </article>
+
+        <article class='rounded-2xl bg-[#fffdf8] p-7 shadow-sm'>
+          <span class='grid h-11 w-11 place-items-center rounded-xl bg-[#17352c] text-[#ed7655]'><ShieldCheck class='h-5 w-5' /></span>
+          <h3 class='editorial-heading mt-5 text-2xl font-semibold'>Choose the advanced guide when...</h3>
+          <ul class='mt-5 grid gap-3 text-sm leading-7 text-[#52665f]'>
+            <li class='flex gap-3'><Check class='mt-1 h-4 w-4 shrink-0 text-[#1f6b55]' />malware returns after files are deleted or WordPress is reinstalled;</li>
+            <li class='flex gap-3'><Check class='mt-1 h-4 w-4 shrink-0 text-[#1f6b55]' />you need practical decoding and database-investigation examples;</li>
+            <li class='flex gap-3'><Check class='mt-1 h-4 w-4 shrink-0 text-[#1f6b55]' />you want one complex incident followed from evidence to verification.</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class='py-16 md:py-24'>
+    <div class='new-shell'>
+      <div class='research-panel relative overflow-hidden rounded-[2rem] bg-[#17352c] p-8 text-white md:p-12'>
+        <div class='relative grid items-center gap-8 lg:grid-cols-[1.2fr_0.8fr]'>
+          <div>
+            <Microscope class='h-8 w-8 text-[#ed7655]' />
+            <h2 class='editorial-heading mt-5 max-w-3xl text-4xl font-semibold md:text-5xl'>
+              The books connect to public evidence.
+            </h2>
+            <p class='mt-5 max-w-2xl leading-8 text-[#c9d9d2]'>
+              Browse the malware-research library for artifact-level reports,
+              privacy-reviewed screenshots, stable indicators, limitations, and
+              remediation context behind the broader field work.
+            </p>
+          </div>
+          <div class='lg:justify-self-end'>
+            <a
+              href='/malware-research/'
+              class='group inline-flex items-center gap-2 rounded-full bg-[#ed7655] px-6 py-3.5 text-sm font-extrabold text-white transition hover:-translate-y-0.5 hover:bg-[#d96142]'>
+              Browse malware research
+              <ArrowRight class='h-4 w-4 transition group-hover:translate-x-1' />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</NewLayout>
+
+<style>
+  .books-hero {
+    background:
+      radial-gradient(circle at 24% 20%, rgba(237, 118, 85, 0.09), transparent 28%),
+      radial-gradient(circle at 78% 44%, rgba(31, 107, 85, 0.13), transparent 32%),
+      linear-gradient(135deg, #f7f4ed, #fffdf8 55%, #eaf2ed);
+  }
+
+  .books-grid {
+    opacity: 0.46;
+    background-image:
+      linear-gradient(rgba(31, 107, 85, 0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(31, 107, 85, 0.055) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: linear-gradient(to bottom, black, transparent 95%);
+  }
+
+  .book-card { min-height: 640px; }
+
+  .research-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.2;
+    background-image:
+      linear-gradient(rgba(142, 208, 181, 0.17) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(142, 208, 181, 0.17) 1px, transparent 1px);
+    background-size: 34px 34px;
+    mask-image: linear-gradient(90deg, transparent, black);
+  }
+
+  @media (max-width: 639px) {
+    .book-card { min-height: 0; }
+  }
+</style>
