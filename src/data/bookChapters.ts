@@ -244,6 +244,22 @@ export const bookChapters: BookChapter[] = [
   },
   {
     number: 16,
+    title: "Case Study - SC 4.0.3 Self-Healing WordPress Malware",
+    slug: "sc-403-self-healing-malware-case-study",
+    shortDescription: "Follow a complete persistence-mesh investigation from static decoding and payload hashing through database confirmation and coordinated eradication.",
+    topics: [
+      "Map persistence across PHP startup, loaders, MU plugins, drop-ins, themes, ZIP archives, database rows, memory, and browsers",
+      "Decode substitution, Base64, and gzip layers offline without executing recovered PHP",
+      "Compare decoded SHA-256 hashes to prove that differently wrapped artifacts contain the same payload",
+      "Understand why path-derived loader, archive, service-worker, and database names differ between affected sites",
+      "Find stable SC options and payload transients using the site's real WordPress table prefix",
+      "Treat large hexadecimal option names as investigation candidates rather than automatic deletion targets",
+      "Coordinate file, database, process, credential, browser, and sibling-site cleanup in one maintenance window",
+      "Record bounded cron and administrator findings and retest the paths that previously restored the infection",
+    ],
+  },
+  {
+    number: 17,
     title: "Secure and Monitor a Recovered Site",
     slug: "secure-monitor-recovered-site",
     shortDescription: "Keep a recovered WordPress site secure, monitor attacks, and read logs for early warning signs.",
