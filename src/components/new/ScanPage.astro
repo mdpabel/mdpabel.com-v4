@@ -15,12 +15,22 @@ interface Props {
   eyebrow: string;
   intro: string;
   formId: string;
+  marketingOptIn?: string;
   checks: string[];
   faqs: { q: string; a: string }[];
 }
 
-const { title, description, path, eyebrow, intro, formId, checks, faqs } =
-  Astro.props;
+const {
+  title,
+  description,
+  path,
+  eyebrow,
+  intro,
+  formId,
+  marketingOptIn,
+  checks,
+  faqs,
+} = Astro.props;
 const contactFormVersion = CONTACT_FORM_7_VERSION;
 const linkedinUrl = 'https://www.linkedin.com/in/mdpabe1/';
 const tawkUrl =
@@ -161,6 +171,19 @@ const schema = [
               class='inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#17352c] px-5 py-3 font-bold text-white transition hover:bg-[#1f6b55]'
               >Request review <ArrowRight class='h-4 w-4' /></button
             >
+            {
+              marketingOptIn && (
+                <label class='flex items-start gap-3 text-xs leading-5 text-[#52665f]'>
+                  <input
+                    name='marketing-consent'
+                    type='checkbox'
+                    value={marketingOptIn}
+                    class='mt-0.5 h-4 w-4 shrink-0 accent-[#1f6b55]'
+                  />
+                  <span>{marketingOptIn}</span>
+                </label>
+              )
+            }
             <p class='text-center text-xs text-[#788780]'>
               Do not send passwords or private access details here.
             </p>
