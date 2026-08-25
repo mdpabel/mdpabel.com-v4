@@ -2,6 +2,11 @@
 
 # Format: /source /destination 301
 
+# --- Book URL Migrations ---
+
+/wordpress-malware-removal-book/ /books/wordpress-malware-removal/ 301
+/advanced-wordpress-malware-removal/ /books/advanced-wordpress-malware-removal/ 301
+
 # --- Main Navigation Redirects ---
 
 /explore /blog 301

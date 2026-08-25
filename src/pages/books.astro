@@ -75,18 +75,18 @@ const schema = [
   path={url}
   image='/images/book/wordpress-malware-removal-book-social.png'
   {schema}>
-  <section class='books-hero relative overflow-hidden border-b border-[#d7ddd7] py-16 md:py-24'>
-    <div class='books-grid pointer-events-none absolute inset-0'></div>
-    <div class='new-shell relative'>
+  <section class='relative py-16 md:py-24 border-[#d7ddd7] border-b overflow-hidden books-hero'>
+    <div class='absolute inset-0 books-grid pointer-events-none'></div>
+    <div class='relative new-shell'>
       <div class='max-w-4xl'>
-        <div class='inline-flex items-center gap-2 rounded-full border border-[#1f6b55]/15 bg-white/75 px-3.5 py-2 text-[11px] font-extrabold uppercase tracking-[0.14em] text-[#1f6b55] shadow-sm backdrop-blur'>
-          <BookOpen class='h-3.5 w-3.5' />
+        <div class='inline-flex items-center gap-2 bg-white/75 shadow-sm backdrop-blur px-3.5 py-2 border border-[#1f6b55]/15 rounded-full font-extrabold text-[#1f6b55] text-[11px] uppercase tracking-[0.14em]'>
+          <BookOpen class='w-3.5 h-3.5' />
           Books by MD Pabel
         </div>
-        <h1 class='editorial-heading mt-6 max-w-4xl font-semibold'>
+        <h1 class='mt-6 max-w-4xl font-semibold editorial-heading'>
           Practical WordPress security books for real incidents.
         </h1>
-        <p class='mt-6 max-w-3xl text-lg leading-8 text-[#52665f] md:text-xl'>
+        <p class='mt-6 max-w-3xl text-[#52665f] text-lg md:text-xl leading-8'>
           A growing catalog of field guides and focused case studies for investigating,
           cleaning, recovering, and verifying compromised WordPress websites.
         </p>
@@ -96,73 +96,73 @@ const schema = [
 
   <section aria-labelledby='published-books-title' class='py-16 md:py-24'>
     <div class='new-shell'>
-      <div class='flex flex-col gap-4 border-b border-[#d7ddd7] pb-7 sm:flex-row sm:items-end sm:justify-between'>
+      <div class='flex sm:flex-row flex-col sm:justify-between sm:items-end gap-4 pb-7 border-[#d7ddd7] border-b'>
         <div>
-          <p class='text-xs font-extrabold uppercase tracking-[0.16em] text-[#b84e31]'>
+          <p class='font-extrabold text-[#b84e31] text-xs uppercase tracking-[0.16em]'>
             The catalog
           </p>
-          <h2 id='published-books-title' class='editorial-heading mt-3 text-3xl font-semibold md:text-4xl'>
+          <h2 id='published-books-title' class='mt-3 font-semibold text-3xl md:text-4xl editorial-heading'>
             Published books
           </h2>
         </div>
-        <span class='w-fit rounded-full bg-[#dcece5] px-4 py-2 text-xs font-extrabold text-[#1f6b55]'>
+        <span class='bg-[#dcece5] px-4 py-2 rounded-full w-fit font-extrabold text-[#1f6b55] text-xs'>
           {books.length} {books.length === 1 ? 'title' : 'titles'}
         </span>
       </div>
 
-      <div class='book-catalog-grid mt-10 gap-7'>
+      <div class='gap-7 book-catalog-grid mt-10'>
         {
           books.map((book) => (
-            <article class='book-card flex min-w-0 flex-col overflow-hidden rounded-[2rem] border border-[#d7ddd7] bg-[#fffdf8] shadow-sm'>
+            <article class='flex flex-col bg-[#fffdf8] shadow-sm border border-[#d7ddd7] rounded-[2rem] min-w-0 overflow-hidden book-card'>
               <a
                 href={book.details}
-                class='book-cover-stage group grid min-h-80 place-items-center overflow-hidden p-8'
+                class='group place-items-center grid p-8 min-h-80 overflow-hidden book-cover-stage'
                 aria-label={`Explore ${book.title} ${book.subtitle}`}>
                 <img
                   src={book.cover}
                   alt={book.alt}
                   loading='lazy'
-                  class='h-auto max-h-[310px] w-auto max-w-[210px] rounded-sm shadow-2xl shadow-[#17352c]/25 transition duration-300 group-hover:-translate-y-1 group-hover:rotate-[-1deg]'
+                  class='shadow-[#17352c]/25 shadow-2xl rounded-sm w-auto max-w-[210px] h-auto max-h-[310px] group-hover:rotate-[-1deg] transition group-hover:-translate-y-1 duration-300'
                 />
               </a>
 
-              <div class='flex flex-1 flex-col p-6 md:p-8'>
-                <p class='text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#b84e31]'>
+              <div class='flex flex-col flex-1 p-6 md:p-8'>
+                <p class='font-extrabold text-[#b84e31] text-[10px] uppercase tracking-[0.16em]'>
                   {book.badge}
                 </p>
-                <h2 class='editorial-heading mt-3 text-3xl font-semibold leading-[1.04]'>
+                <h2 class='mt-3 font-semibold text-3xl leading-[1.04] editorial-heading'>
                   {book.title}
                 </h2>
-                <p class='mt-2 text-sm font-bold leading-6 text-[#1f6b55]'>{book.subtitle}</p>
-                <p class='mt-5 text-sm leading-7 text-[#52665f]'>{book.description}</p>
+                <p class='mt-2 font-bold text-[#1f6b55] text-sm leading-6'>{book.subtitle}</p>
+                <p class='mt-5 text-[#52665f] text-sm leading-7'>{book.description}</p>
 
-                <div class='mt-5 flex flex-wrap gap-2'>
+                <div class='flex flex-wrap gap-2 mt-5'>
                   {book.metrics.map((metric) => (
-                    <span class='rounded-full border border-[#cdd8d2] bg-[#f7f4ed] px-3 py-1.5 text-[11px] font-extrabold text-[#40574f]'>
+                    <span class='bg-[#f7f4ed] px-3 py-1.5 border border-[#cdd8d2] rounded-full font-extrabold text-[#40574f] text-[11px]'>
                       {metric}
                     </span>
                   ))}
                 </div>
 
-                <p class='mt-6 border-l-2 border-[#ed7655] pl-4 text-xs leading-6 text-[#52665f]'>
+                <p class='mt-6 pl-4 border-[#ed7655] border-l-2 text-[#52665f] text-xs leading-6'>
                   <strong class='text-[#17352c]'>Best for:</strong> {book.bestFor}
                 </p>
 
                 <div class='mt-auto pt-7'>
                   <a
                     href={book.details}
-                    class='group inline-flex items-center gap-2 rounded-full bg-[#1f6b55] px-5 py-3 text-xs font-extrabold text-white transition hover:-translate-y-0.5 hover:bg-[#164a3c]'>
+                    class='group inline-flex items-center gap-2 bg-[#1f6b55] hover:bg-[#164a3c] px-5 py-3 rounded-full font-extrabold text-white text-xs transition hover:-translate-y-0.5'>
                     View book details
-                    <ArrowRight class='h-4 w-4 transition group-hover:translate-x-0.5' />
+                    <ArrowRight class='w-4 h-4 transition group-hover:translate-x-0.5' />
                   </a>
-                  <div class='mt-4 flex flex-wrap gap-x-4 gap-y-2'>
+                  <div class='flex flex-wrap gap-x-4 gap-y-2 mt-4'>
                     {book.stores.map((store) => (
                       <a
                         href={store.href}
                         target='_blank'
                         rel='noopener'
-                        class='inline-flex items-center gap-1.5 text-xs font-extrabold text-[#52665f] transition hover:text-[#b84e31]'>
-                        {store.label} <ExternalLink class='h-3.5 w-3.5' />
+                        class='inline-flex items-center gap-1.5 font-extrabold text-[#52665f] hover:text-[#b84e31] text-xs transition'>
+                        {store.label} <ExternalLink class='w-3.5 h-3.5' />
                       </a>
                     ))}
                   </div>
@@ -177,14 +177,14 @@ const schema = [
 
   <section class='pb-16 md:pb-24'>
     <div class='new-shell'>
-      <div class='research-panel relative overflow-hidden rounded-[2rem] bg-[#17352c] p-8 text-white md:p-12'>
-        <div class='relative grid items-center gap-8 lg:grid-cols-[1.2fr_0.8fr]'>
+      <div class='relative bg-[#17352c] p-8 md:p-12 rounded-[2rem] overflow-hidden text-white research-panel'>
+        <div class='relative items-center gap-8 grid lg:grid-cols-[1.2fr_0.8fr]'>
           <div>
-            <Microscope class='h-8 w-8 text-[#ed7655]' />
-            <h2 class='editorial-heading mt-5 max-w-3xl text-4xl font-semibold md:text-5xl'>
+            <Microscope class='w-8 h-8 text-[#ed7655]' />
+            <h2 class='mt-5 max-w-3xl font-semibold text-4xl md:text-5xl editorial-heading'>
               Continue with the public evidence library.
             </h2>
-            <p class='mt-5 max-w-2xl leading-8 text-[#c9d9d2]'>
+            <p class='mt-5 max-w-2xl text-[#c9d9d2] leading-8'>
               Browse artifact-level reports, privacy-reviewed screenshots, stable
               indicators, limitations, and remediation context behind the field work.
             </p>
@@ -192,9 +192,9 @@ const schema = [
           <div class='lg:justify-self-end'>
             <a
               href='/malware-research/'
-              class='group inline-flex items-center gap-2 rounded-full bg-[#ed7655] px-6 py-3.5 text-sm font-extrabold text-white transition hover:-translate-y-0.5 hover:bg-[#d96142]'>
+              class='group inline-flex items-center gap-2 bg-[#ed7655] hover:bg-[#d96142] px-6 py-3.5 rounded-full font-extrabold text-white text-sm transition hover:-translate-y-0.5'>
               Browse malware research
-              <ArrowRight class='h-4 w-4 transition group-hover:translate-x-1' />
+              <ArrowRight class='w-4 h-4 transition group-hover:translate-x-1' />
             </a>
           </div>
         </div>

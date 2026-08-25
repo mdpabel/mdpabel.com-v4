@@ -26,7 +26,7 @@ export const books: BookListing[] = [
       'An end-to-end investigation and recovery method covering diagnosis, files, databases, hosting, redirects, SEO spam, hidden users, payment skimmers, suspensions, blacklists, reinfection, and monitoring.',
     cover: '/book-cover.png',
     alt: 'WordPress Malware Removal for Developers and Site Owners book cover',
-    details: '/wordpress-malware-removal-book/',
+    details: '/books/wordpress-malware-removal/',
     metrics: ['278 pages', '17 chapters', '81 screenshots and figures'],
     bestFor:
       'Developers, site owners, agencies, and responders who want the complete WordPress malware-removal workflow.',
@@ -50,7 +50,7 @@ export const books: BookListing[] = [
       'A focused forensic case study of SC 4.0.3 self-healing malware, including persistence mapping, safe static decoding, database investigation, coordinated cleanup, and recurrence testing.',
     cover: '/images/book/advanced-wordpress-malware-removal-cover.png',
     alt: 'Advanced WordPress Malware Removal book cover',
-    details: '/advanced-wordpress-malware-removal/',
+    details: '/books/advanced-wordpress-malware-removal/',
     metrics: ['31 pages', '11 incident screenshots', '1 complete case'],
     bestFor:
       'Developers, freelancers, and security professionals handling persistent or repeatedly returning WordPress malware.',
