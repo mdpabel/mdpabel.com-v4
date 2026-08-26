@@ -22,6 +22,7 @@ import bookCover from '../assets/wordpress-malware-removal-book-social.png';
 import NewHeader from '../components/new/NewHeader.astro';
 import NewFooter from '../components/new/NewFooter.astro';
 import TawkChat from '../components/new/TawkChat.astro';
+import Analytics from '../components/new/Analytics.astro';
 
 const services = [
   {
@@ -189,6 +190,7 @@ const homeSchema = {
       type='application/ld+json'
       set:html={JSON.stringify(homeSchema)}
     />
+    <Analytics />
   </head>
 
   <body>

@@ -3,6 +3,7 @@ import '../styles/global.css';
 import NewHeader from '../components/new/NewHeader.astro';
 import NewFooter from '../components/new/NewFooter.astro';
 import TawkChat from '../components/new/TawkChat.astro';
+import Analytics from '../components/new/Analytics.astro';
 
 interface Props {
   title: string;
@@ -60,6 +61,7 @@ const schemaGraph = schemaItems.length
     <meta name='twitter:image' content={socialImage} />
 
     {schemaGraph && <script is:inline type='application/ld+json' set:html={JSON.stringify(schemaGraph)} />}
+    <Analytics {enableLemonSqueezy} />
   </head>
   <body class='new-site bg-[#f7f4ed] text-[#17352c] antialiased'>
     <a

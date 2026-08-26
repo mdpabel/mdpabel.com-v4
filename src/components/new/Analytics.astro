@@ -1,0 +1,83 @@
+---
+interface Props {
+  enableLemonSqueezy?: boolean;
+}
+
+const { enableLemonSqueezy = false } = Astro.props;
+---
+
+<script
+  is:inline
+  defer
+  src='https://cloud.umami.is/script.js'
+  data-website-id='66ee6655-ac3b-447e-a17f-40d31f1c6fb8'
+  data-domains='mdpabel.com,www.mdpabel.com'></script>
+
+{
+  enableLemonSqueezy && (
+    <script is:inline>
+      {`
+        (() => {
+          const configurePurchaseTracking = () => {
+            if (!window.LemonSqueezy?.Setup) return false;
+            if (window.__mdPabelPurchaseTrackingReady) return true;
+
+            window.LemonSqueezy.Setup({
+              eventHandler: (event) => {
+                if (event?.event !== 'Checkout.Success') return;
+
+                const resource = event.data || {};
+                const order = resource.attributes || resource;
+                const product = order.first_order_item?.product_name || 'Digital book';
+
+                if (order.test_mode) {
+                  window.umami?.track('book-test-purchase', {
+                    product,
+                    platform: 'lemon-squeezy',
+                  });
+                  return;
+                }
+
+                const identifier = String(order.identifier || resource.id || '');
+                const storageKey = identifier ? 'mdpabel-umami-purchase-' + identifier : '';
+
+                try {
+                  if (storageKey && sessionStorage.getItem(storageKey)) return;
+                  if (storageKey) sessionStorage.setItem(storageKey, '1');
+                } catch {
+                  // Analytics should never interfere with a successful checkout.
+                }
+
+                const total = Number(order.total || 0);
+                const tax = Number(order.tax || 0);
+                const revenue = Math.max(0, total - tax) / 100;
+
+                if (!Number.isFinite(revenue) || revenue <= 0) return;
+
+                window.umami?.track('book-purchase', {
+                  revenue,
+                  currency: String(order.currency || 'USD').toUpperCase(),
+                  product,
+                  platform: 'lemon-squeezy',
+                });
+              },
+            });
+
+            window.__mdPabelPurchaseTrackingReady = true;
+            return true;
+          };
+
+          if (configurePurchaseTracking()) return;
+
+          let attempts = 0;
+          const timer = window.setInterval(() => {
+            attempts += 1;
+            if (configurePurchaseTracking() || attempts >= 100) {
+              window.clearInterval(timer);
+            }
+          }, 100);
+        })();
+      `}
+    </script>
+  )
+}
