@@ -35,7 +35,7 @@ export const books: BookListing[] = [
     numberOfPages: 278,
     price: '$14.99',
     checkoutUrl:
-      'https://checkout.mdpabel.com/checkout/buy/e5ebff5e-0903-433f-a892-bb6ef0dbdc3d?embed=1',
+      'https://mdpabel.lemonsqueezy.com/checkout/buy/e5ebff5e-0903-433f-a892-bb6ef0dbdc3d?embed=1',
     stores: [
       {
         label: 'Leanpub',
@@ -62,7 +62,7 @@ export const books: BookListing[] = [
     numberOfPages: 31,
     price: '$5.99',
     checkoutUrl:
-      'https://checkout.mdpabel.com/checkout/buy/4045e4df-32b8-408c-84c4-eab2f81d65d2?embed=1',
+      'https://mdpabel.lemonsqueezy.com/checkout/buy/4045e4df-32b8-408c-84c4-eab2f81d65d2?embed=1',
     stores: [
       {
         label: 'Leanpub',
