@@ -165,8 +165,7 @@ const schema = [
                       data-umami-event-product={`${book.title} ${book.subtitle}`}
                       data-umami-event-price={book.price.replace('$', '')}
                       data-umami-event-currency='USD'
-                      data-umami-event-placement='catalog'
-                      data-clarity-event={`book-catalog-buy-${book.details.split('/').filter(Boolean).at(-1)}`}>
+                      data-umami-event-placement='catalog'>
                       Buy now · {book.price}
                       <ArrowRight class='w-4 h-4 transition group-hover:translate-x-0.5' />
                     </a>
@@ -223,18 +222,6 @@ const schema = [
     </div>
   </section>
 
-  <script>
-    document.querySelectorAll<HTMLElement>('[data-clarity-event]').forEach((element) => {
-      element.addEventListener('click', () => {
-        const eventName = element.dataset.clarityEvent;
-        if (!eventName) return;
-        const clarityWindow = window as Window & {
-          clarity?: (command: 'event', name: string) => void;
-        };
-        clarityWindow.clarity?.('event', eventName);
-      });
-    });
-  </script>
 </NewLayout>
 
 <style>
