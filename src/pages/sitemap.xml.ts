@@ -6,6 +6,7 @@ const staticPaths = [
   '/',
   '/about/',
   '/hire-me/',
+  '/refund-policy/',
   '/services/',
   '/wordpress-malware-removal/',
   '/books/',

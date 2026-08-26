@@ -1,0 +1,82 @@
+---
+import { ArrowRight, Mail, Receipt, RotateCcw, ShieldCheck } from '@lucide/astro';
+
+import NewLayout from '../layouts/NewLayout.astro';
+
+const url = 'https://www.mdpabel.com/refund-policy/';
+const title = 'Refund Policy | MD Pabel';
+const description =
+  'Refund policy for digital books purchased directly from MD Pabel through Lemon Squeezy.';
+const updated = 'August 27, 2026';
+
+const schema = {
+  '@type': 'WebPage',
+  '@id': `${url}#webpage`,
+  url,
+  name: title,
+  description,
+  dateModified: '2026-08-27',
+};
+---
+
+<NewLayout {title} {description} path={url} {schema}>
+  <section class='policy-hero border-b border-[#d7ddd7] py-14 md:py-20'>
+    <div class='new-shell'>
+      <div class='max-w-3xl'>
+        <div class='inline-flex items-center gap-2 rounded-full border border-[#1f6b55]/15 bg-white/75 px-3.5 py-2 text-[11px] font-extrabold uppercase tracking-[0.14em] text-[#1f6b55] shadow-sm'>
+          <ShieldCheck class='h-3.5 w-3.5' /> Clear purchase support
+        </div>
+        <h1 class='editorial-heading mt-6 font-semibold'>Refund Policy</h1>
+        <p class='mt-6 max-w-2xl text-lg leading-8 text-[#52665f]'>
+          This policy applies to digital books purchased directly from mdpabel.com through Lemon Squeezy.
+        </p>
+        <p class='mt-4 text-xs font-bold uppercase tracking-[0.12em] text-[#788780]'>Last updated {updated}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class='py-14 md:py-20'>
+    <div class='new-shell grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:gap-16'>
+      <aside class='h-fit rounded-[2rem] bg-[#17352c] p-7 text-white md:p-9'>
+        <RotateCcw class='h-7 w-7 text-[#ed7655]' />
+        <h2 class='editorial-heading mt-5 text-3xl font-semibold'>30-day request window</h2>
+        <p class='mt-4 text-sm leading-7 text-[#c9d9d2]'>Refund requests are accepted within 30 calendar days of the original direct purchase.</p>
+        <a href='mailto:support@mdpabel.com' class='group mt-7 inline-flex items-center gap-2 rounded-full bg-[#ed7655] px-5 py-3 text-sm font-extrabold text-white transition hover:bg-[#d96142]'>
+          <Mail class='h-4 w-4' /> Request support <ArrowRight class='h-4 w-4 transition group-hover:translate-x-0.5' />
+        </a>
+      </aside>
+
+      <div class='grid gap-8'>
+        <section>
+          <h2 class='editorial-heading text-3xl font-semibold'>How to request a refund</h2>
+          <p class='mt-4 leading-8 text-[#52665f]'>Email <a href='mailto:support@mdpabel.com' class='font-bold text-[#1f6b55] underline'>support@mdpabel.com</a> from the address used at checkout. Include the book title, your order number when available, and a short explanation of the problem.</p>
+        </section>
+
+        <section class='border-t border-[#d7ddd7] pt-8'>
+          <h2 class='editorial-heading text-3xl font-semibold'>What happens next</h2>
+          <p class='mt-4 leading-8 text-[#52665f]'>Requests are reviewed using the order details and any relevant delivery or file issue. Approved refunds are processed through Lemon Squeezy. After a refund, access to the purchased files may be removed. Your bank or payment provider can take additional time to display the credit.</p>
+        </section>
+
+        <section class='border-t border-[#d7ddd7] pt-8'>
+          <h2 class='editorial-heading text-3xl font-semibold'>Marketplace purchases</h2>
+          <p class='mt-4 leading-8 text-[#52665f]'>Purchases completed through Leanpub or Gumroad are governed by that marketplace's order and refund process. Contact the platform where the purchase was made.</p>
+        </section>
+
+        <section class='rounded-2xl border border-[#cbd7d0] bg-[#dcece5] p-6'>
+          <div class='flex items-start gap-4'>
+            <Receipt class='mt-0.5 h-5 w-5 shrink-0 text-[#1f6b55]' />
+            <p class='text-sm leading-7 text-[#40574f]'>This policy does not limit any refund or consumer rights that apply under relevant law or Lemon Squeezy's responsibilities as the merchant of record.</p>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+</NewLayout>
+
+<style>
+  .policy-hero {
+    background:
+      radial-gradient(circle at 82% 26%, rgba(31, 107, 85, 0.14), transparent 30%),
+      linear-gradient(135deg, #f7f4ed, #fffdf8 58%, #eaf2ed);
+  }
+</style>
