@@ -1,0 +1,125 @@
+---
+import {
+  Download,
+  ExternalLink,
+  Library,
+  Mail,
+  Receipt,
+  RefreshCw,
+  ShieldCheck,
+} from '@lucide/astro';
+
+import NewLayout from '../../layouts/NewLayout.astro';
+
+const url = 'https://www.mdpabel.com/books/library/';
+const myOrdersUrl = 'https://app.lemonsqueezy.com/my-orders';
+const supportEmail = 'support@mdpabel.com';
+const title = 'My Library | Download Your MD Pabel Books';
+const description =
+  'Access books purchased from MD Pabel, download the latest available files, view receipts, and get purchase support.';
+
+const schema = {
+  '@type': 'WebPage',
+  '@id': `${url}#webpage`,
+  url,
+  name: title,
+  description,
+};
+---
+
+<NewLayout {title} {description} path={url} {schema}>
+  <section class='library-hero relative overflow-hidden border-b border-[#d7ddd7] py-16 md:py-24'>
+    <div class='library-grid pointer-events-none absolute inset-0'></div>
+    <div class='new-shell relative grid items-center gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:gap-16'>
+      <div>
+        <div class='inline-flex items-center gap-2 rounded-full border border-[#1f6b55]/15 bg-white/75 px-3.5 py-2 text-[11px] font-extrabold uppercase tracking-[0.14em] text-[#1f6b55] shadow-sm backdrop-blur'>
+          <Library class='h-3.5 w-3.5' /> Your purchased books
+        </div>
+        <h1 class='editorial-heading mt-6 max-w-3xl font-semibold'>My Library</h1>
+        <p class='mt-6 max-w-2xl text-lg leading-8 text-[#52665f]'>
+          Return anytime to download books bought through this website. Lemon Squeezy securely keeps your order history, receipts, and the latest files available to you.
+        </p>
+        <a
+          href={myOrdersUrl}
+          target='_blank'
+          rel='noopener'
+          data-clarity-event='book-library-open-orders'
+          class='group mt-8 inline-flex items-center gap-2 rounded-full bg-[#1f6b55] px-6 py-3.5 text-sm font-extrabold text-white shadow-lg shadow-[#17352c]/15 transition hover:-translate-y-0.5 hover:bg-[#164a3c]'>
+          Open My Orders
+          <ExternalLink class='h-4 w-4 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5' />
+        </a>
+        <p class='mt-4 text-xs font-semibold text-[#65766f]'>Use the same email address you entered at checkout.</p>
+      </div>
+
+      <div class='rounded-[2rem] border border-[#cbd7d0] bg-[#fffdf8] p-7 shadow-xl shadow-[#17352c]/8 md:p-9'>
+        <p class='text-xs font-extrabold uppercase tracking-[0.16em] text-[#b84e31]'>How access works</p>
+        <ol class='mt-6 grid gap-6'>
+          <li class='grid grid-cols-[auto_1fr] gap-4'>
+            <span class='grid h-9 w-9 place-items-center rounded-full bg-[#dcece5] font-extrabold text-[#1f6b55]'>1</span>
+            <div><strong class='block text-[#17352c]'>Enter your purchase email</strong><span class='mt-1 block text-sm leading-6 text-[#52665f]'>Open My Orders and use the email address from checkout.</span></div>
+          </li>
+          <li class='grid grid-cols-[auto_1fr] gap-4'>
+            <span class='grid h-9 w-9 place-items-center rounded-full bg-[#dcece5] font-extrabold text-[#1f6b55]'>2</span>
+            <div><strong class='block text-[#17352c]'>Check your inbox</strong><span class='mt-1 block text-sm leading-6 text-[#52665f]'>Lemon Squeezy sends a secure magic sign-in link.</span></div>
+          </li>
+          <li class='grid grid-cols-[auto_1fr] gap-4'>
+            <span class='grid h-9 w-9 place-items-center rounded-full bg-[#dcece5] font-extrabold text-[#1f6b55]'>3</span>
+            <div><strong class='block text-[#17352c]'>Download your book</strong><span class='mt-1 block text-sm leading-6 text-[#52665f]'>Choose the order to access its current files and receipt.</span></div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class='py-16 md:py-24'>
+    <div class='new-shell'>
+      <div class='grid gap-5 md:grid-cols-3'>
+        <article class='rounded-2xl border border-[#d7ddd7] bg-[#fffdf8] p-6'>
+          <Download class='h-6 w-6 text-[#1f6b55]' />
+          <h2 class='editorial-heading mt-5 text-2xl font-semibold'>Download again</h2>
+          <p class='mt-3 text-sm leading-7 text-[#52665f]'>Recover a book on a new device without creating a separate account on this website.</p>
+        </article>
+        <article class='rounded-2xl border border-[#d7ddd7] bg-[#fffdf8] p-6'>
+          <RefreshCw class='h-6 w-6 text-[#1f6b55]' />
+          <h2 class='editorial-heading mt-5 text-2xl font-semibold'>Get updated files</h2>
+          <p class='mt-3 text-sm leading-7 text-[#52665f]'>When a purchased edition is replaced with a newer file, the current download appears with your order.</p>
+        </article>
+        <article class='rounded-2xl border border-[#d7ddd7] bg-[#fffdf8] p-6'>
+          <Receipt class='h-6 w-6 text-[#1f6b55]' />
+          <h2 class='editorial-heading mt-5 text-2xl font-semibold'>Find your receipt</h2>
+          <p class='mt-3 text-sm leading-7 text-[#52665f]'>Review your Lemon Squeezy order details and purchase receipt from the same place.</p>
+        </article>
+      </div>
+
+      <div class='mt-10 grid gap-8 rounded-[2rem] bg-[#17352c] p-7 text-white md:grid-cols-[1fr_auto] md:items-center md:p-10'>
+        <div>
+          <div class='flex items-center gap-2 text-[#8ed0b5]'><ShieldCheck class='h-5 w-5' /><span class='text-xs font-extrabold uppercase tracking-[0.14em]'>Purchase support</span></div>
+          <h2 class='editorial-heading mt-4 text-3xl font-semibold'>Can’t find the email or download?</h2>
+          <p class='mt-4 max-w-2xl text-sm leading-7 text-[#c9d9d2]'>Check spam first, then contact us from the purchase email. For file or purchase problems, please write within 30 days and include your order number when available.</p>
+        </div>
+        <a href={`mailto:${supportEmail}`} class='inline-flex items-center justify-center gap-2 rounded-full bg-[#ed7655] px-6 py-3.5 text-sm font-extrabold text-white transition hover:-translate-y-0.5 hover:bg-[#d96142]'>
+          <Mail class='h-4 w-4' /> {supportEmail}
+        </a>
+      </div>
+
+      <p class='mt-8 text-center text-xs leading-6 text-[#65766f]'>Purchases made on Leanpub or Gumroad remain in those platforms’ libraries and are not shown in Lemon Squeezy My Orders.</p>
+    </div>
+  </section>
+</NewLayout>
+
+<style>
+  .library-hero {
+    background:
+      radial-gradient(circle at 78% 34%, rgba(31, 107, 85, 0.15), transparent 31%),
+      radial-gradient(circle at 20% 18%, rgba(237, 118, 85, 0.08), transparent 28%),
+      linear-gradient(135deg, #f7f4ed, #fffdf8 54%, #eaf2ed);
+  }
+  .library-grid {
+    opacity: 0.44;
+    background-image:
+      linear-gradient(rgba(31, 107, 85, 0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(31, 107, 85, 0.055) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: linear-gradient(to bottom, black, transparent 96%);
+  }
+</style>

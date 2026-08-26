@@ -1,0 +1,33 @@
+---
+import { ArrowRight, Download, Mail, Receipt, ShieldCheck } from '@lucide/astro';
+
+import NewLayout from '../../layouts/NewLayout.astro';
+
+const url = 'https://www.mdpabel.com/books/thank-you/';
+const myOrdersUrl = 'https://app.lemonsqueezy.com/my-orders';
+const title = 'Thank You for Your Purchase | MD Pabel Books';
+const description = 'Your MD Pabel book purchase is complete. Access your download, receipt, and future file updates.';
+---
+
+<NewLayout {title} {description} path={url} noindex>
+  <section class='py-16 md:py-24'>
+    <div class='new-shell'>
+      <div class='mx-auto max-w-3xl overflow-hidden rounded-[2rem] border border-[#d7ddd7] bg-[#fffdf8] shadow-xl shadow-[#17352c]/8'>
+        <div class='bg-[#17352c] px-7 py-10 text-center text-white md:px-12'>
+          <span class='mx-auto grid h-14 w-14 place-items-center rounded-full bg-[#dcece5] text-[#1f6b55]'><ShieldCheck class='h-7 w-7' /></span>
+          <p class='mt-6 text-xs font-extrabold uppercase tracking-[0.16em] text-[#8ed0b5]'>Purchase complete</p>
+          <h1 class='editorial-heading mt-3 font-semibold'>Thank you for supporting my work.</h1>
+          <p class='mx-auto mt-5 max-w-xl leading-8 text-[#c9d9d2]'>Lemon Squeezy will send your receipt and secure download link to the email address used at checkout.</p>
+        </div>
+        <div class='p-7 md:p-12'>
+          <div class='grid gap-5 sm:grid-cols-2'>
+            <div class='rounded-2xl bg-[#f7f4ed] p-5'><Download class='h-5 w-5 text-[#1f6b55]' /><strong class='mt-4 block'>Download your book</strong><p class='mt-2 text-sm leading-6 text-[#52665f]'>Use the link in your receipt or open My Library whenever you need the file again.</p></div>
+            <div class='rounded-2xl bg-[#f7f4ed] p-5'><Receipt class='h-5 w-5 text-[#1f6b55]' /><strong class='mt-4 block'>Keep your receipt</strong><p class='mt-2 text-sm leading-6 text-[#52665f]'>Your order history provides access to the latest file attached to your purchase.</p></div>
+          </div>
+          <a href={myOrdersUrl} target='_blank' rel='noopener' class='group mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#1f6b55] px-6 py-3.5 text-sm font-extrabold text-white transition hover:bg-[#164a3c]'>Open My Orders <ArrowRight class='h-4 w-4 transition group-hover:translate-x-0.5' /></a>
+          <p class='mt-6 text-center text-xs leading-6 text-[#65766f]'>No email after a few minutes? Check spam, then contact <a href='mailto:support@mdpabel.com' class='inline-flex items-center gap-1 font-bold text-[#1f6b55] underline'><Mail class='h-3.5 w-3.5' />support@mdpabel.com</a>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</NewLayout>

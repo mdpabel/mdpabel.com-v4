@@ -9,6 +9,7 @@ import {
   Compass,
   FileTerminal,
   HeartPulse,
+  Library,
   Menu,
   Microscope,
   ScanLine,
@@ -204,6 +205,11 @@ const isCurrent = (href: string) =>
 
     <div class='hidden lg:flex items-center gap-4'>
       <a
+        href='/books/library/'
+        class='inline-flex items-center gap-2 font-bold text-[#52665f] text-sm transition-colors hover:text-[#1f6b55]'>
+        <Library class='w-4 h-4' /> My Library
+      </a>
+      <a
         href='/free-wordpress-scan/'
         class='inline-flex items-center gap-2 font-bold text-[#52665f] text-sm transition-colors free-scan-link'>
         <ScanLine class='w-4 h-4' /> Free scan
@@ -226,6 +232,7 @@ const isCurrent = (href: string) =>
         aria-label='Mobile navigation'>
         <a href='/about/' class='mobile-top-link'>About</a>
         <a href='/books/' class='mobile-top-link'>Books</a>
+        <a href='/books/library/' class='mobile-top-link'>My Library</a>
         <details class='mobile-group'>
           <summary>Services <ChevronDown class='w-4 h-4' /></summary><div>
             {services.map((item) => <a href={item.href}>{item.label}</a>)}

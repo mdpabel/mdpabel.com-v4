@@ -45,6 +45,13 @@ const schema = [
         numberOfPages: book.numberOfPages,
         bookFormat: 'https://schema.org/EBook',
         inLanguage: 'en',
+        offers: {
+          '@type': 'Offer',
+          price: book.price.replace('$', ''),
+          priceCurrency: 'USD',
+          availability: 'https://schema.org/InStock',
+          url: book.checkoutUrl,
+        },
       },
     })),
   },
@@ -74,6 +81,7 @@ const schema = [
   {description}
   path={url}
   image='/images/book/wordpress-malware-removal-book-social.png'
+  enableLemonSqueezy
   {schema}>
   <section class='relative py-16 md:py-24 border-[#d7ddd7] border-b overflow-hidden books-hero'>
     <div class='absolute inset-0 books-grid pointer-events-none'></div>
@@ -149,12 +157,20 @@ const schema = [
                 </p>
 
                 <div class='mt-auto pt-7'>
-                  <a
-                    href={book.details}
-                    class='group inline-flex items-center gap-2 bg-[#1f6b55] hover:bg-[#164a3c] px-5 py-3 rounded-full font-extrabold text-white text-xs transition hover:-translate-y-0.5'>
-                    View book details
-                    <ArrowRight class='w-4 h-4 transition group-hover:translate-x-0.5' />
-                  </a>
+                  <div class='flex flex-wrap items-center gap-3'>
+                    <a
+                      href={book.checkoutUrl}
+                      class='lemonsqueezy-button group inline-flex items-center gap-2 bg-[#1f6b55] hover:bg-[#164a3c] px-5 py-3 rounded-full font-extrabold text-white text-xs transition hover:-translate-y-0.5'
+                      data-clarity-event={`book-catalog-buy-${book.details.split('/').filter(Boolean).at(-1)}`}>
+                      Buy now · {book.price}
+                      <ArrowRight class='w-4 h-4 transition group-hover:translate-x-0.5' />
+                    </a>
+                    <a
+                      href={book.details}
+                      class='font-extrabold text-[#1f6b55] hover:text-[#164a3c] text-xs transition'>
+                      View details
+                    </a>
+                  </div>
                   <div class='flex flex-wrap gap-x-4 gap-y-2 mt-4'>
                     {book.stores.map((store) => (
                       <a
@@ -201,6 +217,19 @@ const schema = [
       </div>
     </div>
   </section>
+
+  <script>
+    document.querySelectorAll<HTMLElement>('[data-clarity-event]').forEach((element) => {
+      element.addEventListener('click', () => {
+        const eventName = element.dataset.clarityEvent;
+        if (!eventName) return;
+        const clarityWindow = window as Window & {
+          clarity?: (command: 'event', name: string) => void;
+        };
+        clarityWindow.clarity?.('event', eventName);
+      });
+    });
+  </script>
 </NewLayout>
 
 <style>
