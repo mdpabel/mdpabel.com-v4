@@ -13,7 +13,6 @@ interface Props {
   type?: 'website' | 'article';
   schema?: Record<string, unknown> | Record<string, unknown>[];
   noindex?: boolean;
-  enableLemonSqueezy?: boolean;
 }
 
 const {
@@ -24,7 +23,6 @@ const {
   type = 'website',
   schema = [],
   noindex = false,
-  enableLemonSqueezy = false,
 } = Astro.props;
 
 const canonical = new URL(path, Astro.site).href;
@@ -61,12 +59,7 @@ const schemaGraph = schemaItems.length
     <meta name='twitter:image' content={socialImage} />
 
     {schemaGraph && <script is:inline type='application/ld+json' set:html={JSON.stringify(schemaGraph)} />}
-    {
-      enableLemonSqueezy && (
-        <script is:inline src='https://app.lemonsqueezy.com/js/lemon.js' defer></script>
-      )
-    }
-    <Analytics {enableLemonSqueezy} />
+    <Analytics />
   </head>
   <body class='new-site bg-[#f7f4ed] text-[#17352c] antialiased'>
     <a
