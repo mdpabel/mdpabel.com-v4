@@ -18,6 +18,51 @@ const { enableLemonSqueezy = false } = Astro.props;
     <script is:inline>
       {`
         (() => {
+          if (!window.__mdPabelCheckoutOverlayReady) {
+            window.__mdPabelCheckoutOverlayReady = true;
+
+            document.addEventListener(
+              'click',
+              (event) => {
+                const target = event.target;
+                if (!(target instanceof Element)) return;
+
+                const checkoutLink = target.closest('a.lemonsqueezy-button');
+                if (!(checkoutLink instanceof HTMLAnchorElement)) return;
+
+                const openCheckout = () => {
+                  if (!window.LemonSqueezy?.Url?.Open) return false;
+                  window.LemonSqueezy.Url.Open(checkoutLink.href);
+                  return true;
+                };
+
+                event.preventDefault();
+                event.stopImmediatePropagation();
+
+                if (openCheckout()) return;
+
+                checkoutLink.setAttribute('aria-busy', 'true');
+                let attempts = 0;
+                const timer = window.setInterval(() => {
+                  attempts += 1;
+
+                  if (openCheckout()) {
+                    checkoutLink.removeAttribute('aria-busy');
+                    window.clearInterval(timer);
+                    return;
+                  }
+
+                  if (attempts >= 100) {
+                    checkoutLink.removeAttribute('aria-busy');
+                    window.clearInterval(timer);
+                    window.alert('Secure checkout could not load. Please refresh this page and try again.');
+                  }
+                }, 50);
+              },
+              true,
+            );
+          }
+
           const configurePurchaseTracking = () => {
             if (!window.LemonSqueezy?.Setup) return false;
             if (window.__mdPabelPurchaseTrackingReady) return true;
