@@ -1,0 +1,106 @@
+---
+import { Sparkles } from '@lucide/astro';
+
+interface Props {
+  regularPrice: string;
+  launchPrice: string;
+  savings: string;
+  socialProof?: string;
+}
+
+const {
+  regularPrice,
+  launchPrice,
+  savings,
+  socialProof,
+} = Astro.props;
+
+const deadline = '2026-09-03T23:59:59+06:00';
+---
+
+<div
+  data-launch-offer
+  data-launch-deadline={deadline}
+  class='mt-8 max-w-2xl rounded-2xl border border-[#ed7655]/35 bg-[#fff3ed] p-4 shadow-sm sm:p-5'>
+  <div class='flex flex-wrap items-center justify-between gap-3'>
+    <span class='inline-flex items-center gap-2 rounded-full bg-[#ed7655] px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.14em] text-white'>
+      <Sparkles class='h-3.5 w-3.5' />7-day launch price
+    </span>
+    <span class='flex items-baseline gap-2'>
+      <s class='text-sm font-bold text-[#7b8984]'>{regularPrice}</s>
+      <strong class='editorial-heading text-3xl text-[#b84e31]'>{launchPrice}</strong>
+    </span>
+  </div>
+  <p class='mt-3 text-sm font-bold leading-6 text-[#713a2c]'>
+    Save {savings}. LAUNCH70 is applied automatically—claim the launch price before it ends.
+  </p>
+  <div class='mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-[#ed7655]/20 pt-3'>
+    <p class='text-[11px] font-extrabold uppercase tracking-[0.08em] text-[#b84e31]'>
+      Ends September 3 at 11:59 PM (Dhaka)
+    </p>
+    <p class='rounded-full bg-white/80 px-3 py-1.5 text-xs font-extrabold tabular-nums text-[#17352c]'>
+      <span class='sr-only'>Time remaining: </span><span data-launch-countdown>7d 00h 00m 00s</span>
+    </p>
+  </div>
+  {socialProof && (
+    <p class='mt-3 text-xs font-extrabold text-[#1f6b55]'>{socialProof}</p>
+  )}
+</div>
+
+<div
+  data-after-launch
+  hidden
+  class='mt-8 max-w-2xl rounded-2xl border border-[#cbd7d0] bg-white/75 p-4 text-sm font-bold text-[#52665f] shadow-sm sm:p-5'>
+  The seven-day launch offer has ended. The book is still available at its regular price of {regularPrice}.
+</div>
+
+<script is:inline>
+  (() => {
+    const offers = document.querySelectorAll('[data-launch-offer]');
+
+    offers.forEach((offer) => {
+      if (!(offer instanceof HTMLElement) || offer.dataset.countdownReady === 'true') return;
+      offer.dataset.countdownReady = 'true';
+
+      const deadline = Date.parse(offer.dataset.launchDeadline || '');
+      const output = offer.querySelector('[data-launch-countdown]');
+      let timer;
+
+      const finish = () => {
+        offer.hidden = true;
+        document.querySelectorAll('[data-launch-only]').forEach((element) => {
+          if (element instanceof HTMLElement) element.hidden = true;
+        });
+        document.querySelectorAll('[data-after-launch]').forEach((element) => {
+          if (element instanceof HTMLElement) element.hidden = false;
+        });
+        document.querySelectorAll('[data-launch-cta-label]').forEach((element) => {
+          if (element instanceof HTMLElement && element.dataset.regularLabel) {
+            element.textContent = element.dataset.regularLabel;
+          }
+        });
+        if (timer) window.clearInterval(timer);
+      };
+
+      const update = () => {
+        const remaining = deadline - Date.now();
+        if (!Number.isFinite(remaining) || remaining <= 0) {
+          finish();
+          return;
+        }
+
+        const totalSeconds = Math.floor(remaining / 1000);
+        const days = Math.floor(totalSeconds / 86400);
+        const hours = Math.floor((totalSeconds % 86400) / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+        if (output) {
+          output.textContent = `${days}d ${String(hours).padStart(2, '0')}h ${String(minutes).padStart(2, '0')}m ${String(seconds).padStart(2, '0')}s`;
+        }
+      };
+
+      update();
+      timer = window.setInterval(update, 1000);
+    });
+  })();
+</script>
