@@ -61,6 +61,11 @@ const schemaGraph = schemaItems.length
     <meta name='twitter:image' content={socialImage} />
 
     {schemaGraph && <script is:inline type='application/ld+json' set:html={JSON.stringify(schemaGraph)} />}
+    {
+      enableLemonSqueezy && (
+        <script is:inline src='https://app.lemonsqueezy.com/js/lemon.js' defer></script>
+      )
+    }
     <Analytics {enableLemonSqueezy} />
   </head>
   <body class='new-site bg-[#f7f4ed] text-[#17352c] antialiased'>
@@ -74,11 +79,6 @@ const schemaGraph = schemaItems.length
       <slot />
     </main>
     <NewFooter />
-    {
-      enableLemonSqueezy && (
-        <script is:inline src='https://assets.lemonsqueezy.com/lemon.js' defer></script>
-      )
-    }
     <script>
       document.addEventListener(
         'error',
