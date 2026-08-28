@@ -175,6 +175,14 @@ const schema = [
                       class='font-extrabold text-[#1f6b55] hover:text-[#164a3c] text-xs transition'>
                       View details
                     </a>
+                    <a
+                      href={`${book.details}#gift-copies`}
+                      class='font-extrabold text-[#b84e31] hover:text-[#8f3c28] text-xs transition'
+                      data-umami-event='book-gift-started'
+                      data-umami-event-product={`${book.title} ${book.subtitle}`}
+                      data-umami-event-placement='catalog'>
+                      Buy multiple or gift
+                    </a>
                   </div>
                   <p class='mt-3 text-xs font-bold text-[#b84e31]'>
                     Launch offer: 70% off automatically with code LAUNCH70.

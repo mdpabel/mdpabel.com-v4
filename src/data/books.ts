@@ -4,6 +4,7 @@ export interface BookStore {
 }
 
 export interface BookListing {
+  giftKey: string;
   badge: string;
   title: string;
   subtitle: string;
@@ -21,6 +22,7 @@ export interface BookListing {
 
 export const books: BookListing[] = [
   {
+    giftKey: 'wordpress-malware-removal',
     badge: 'Complete field guide',
     title: 'WordPress Malware Removal',
     subtitle: 'for Developers & Site Owners',
@@ -48,6 +50,7 @@ export const books: BookListing[] = [
     ],
   },
   {
+    giftKey: 'advanced-wordpress-malware-removal',
     badge: 'Focused advanced guide',
     title: 'Advanced WordPress Malware Removal',
     subtitle: 'Persistent Infections, Reinfection, and Recovery',

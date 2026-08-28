@@ -1,0 +1,277 @@
+---
+import {
+  ArrowRight,
+  Check,
+  Gift,
+  LockKeyhole,
+  MailCheck,
+  Minus,
+  Plus,
+} from '@lucide/astro';
+
+import {
+  CONTACT_FORM_7_VERSION,
+  WP_ARMOUR_FIELD_NAME,
+  WP_ARMOUR_FIELD_VALUE,
+} from '../../lib/contactForms';
+
+interface Props {
+  productKey: string;
+  productTitle: string;
+  unitPrice: number;
+  checkoutUrl: string;
+}
+
+const { productKey, productTitle, unitPrice, checkoutUrl } = Astro.props;
+const wpApiUrl = import.meta.env.PUBLIC_WORDPRESS_API_URL || 'https://cms.mdpabel.com';
+const formId = '1513';
+const inputClass =
+  'w-full rounded-xl border border-[#cbd4cf] bg-white px-4 py-3 text-sm text-[#17352c] outline-none transition focus:border-[#1f6b55] focus:ring-4 focus:ring-[#1f6b55]/10';
+---
+
+<section id='gift-copies' class='scroll-mt-24 border-b border-[#d7ddd7] bg-[#eef4ef] py-16 md:py-20'>
+  <div class='new-shell'>
+    <div class='grid items-start gap-9 lg:grid-cols-[0.72fr_1.28fr] lg:gap-14'>
+      <div class='lg:sticky lg:top-8'>
+        <div class='inline-flex items-center gap-2 rounded-full border border-[#1f6b55]/15 bg-white px-3.5 py-2 text-[11px] font-extrabold uppercase tracking-[0.14em] text-[#1f6b55] shadow-sm'>
+          <Gift class='h-3.5 w-3.5' /> Multiple-copy checkout
+        </div>
+        <h2 class='editorial-heading mt-5 text-4xl font-semibold md:text-5xl'>Keep one. Gift the rest.</h2>
+        <p class='mt-5 max-w-xl leading-8 text-[#52665f]'>
+          Select the total number of copies and add one colleague email for each gift. You pay once through Lemon Squeezy; MD Pabel sends the gift copies manually after confirming the order.
+        </p>
+        <div class='mt-7 grid gap-3 text-sm'>
+          <span class='flex gap-3 rounded-xl border border-[#d7ddd7] bg-white/75 p-4'><MailCheck class='h-5 w-5 shrink-0 text-[#1f6b55]' /><span><strong class='block text-[#17352c]'>Individual delivery</strong><small class='mt-1 block leading-5 text-[#65766f]'>Each colleague receives their own email.</small></span></span>
+          <span class='flex gap-3 rounded-xl border border-[#d7ddd7] bg-white/75 p-4'><LockKeyhole class='h-5 w-5 shrink-0 text-[#1f6b55]' /><span><strong class='block text-[#17352c]'>Payment stays secure</strong><small class='mt-1 block leading-5 text-[#65766f]'>No payment details are collected on this page.</small></span></span>
+        </div>
+      </div>
+
+      <div class='relative rounded-[2rem] border border-[#d7ddd7] bg-[#fffdf8] p-6 shadow-2xl shadow-[#17352c]/8 md:p-9'>
+        <div data-gift-success class='hidden absolute inset-0 z-10 flex-col items-center justify-center rounded-[2rem] bg-[#fffdf8] p-8 text-center'>
+          <span class='grid h-16 w-16 place-items-center rounded-full bg-[#dcece5] text-[#1f6b55]'><Check class='h-7 w-7' /></span>
+          <h3 class='editorial-heading mt-5 text-3xl font-semibold'>Gift request saved.</h3>
+          <p class='mt-3 max-w-md text-sm leading-7 text-[#52665f]'>Opening Lemon Squeezy so you can complete the matching payment.</p>
+          <a data-gift-checkout-fallback href='#' class='mt-6 inline-flex items-center gap-2 rounded-full bg-[#1f6b55] px-6 py-3.5 text-sm font-extrabold text-white'>Continue to checkout <ArrowRight class='h-4 w-4' /></a>
+        </div>
+
+        <div class='flex flex-wrap items-start justify-between gap-4 border-b border-[#d7ddd7] pb-6'>
+          <div>
+            <p class='text-[10px] font-extrabold uppercase tracking-[0.15em] text-[#b84e31]'>Mini cart</p>
+            <h3 class='editorial-heading mt-2 text-2xl font-semibold'>{productTitle}</h3>
+          </div>
+          <span class='rounded-full bg-[#dcece5] px-3 py-2 text-xs font-extrabold text-[#1f6b55]'>${unitPrice.toFixed(2)} each</span>
+        </div>
+
+        <form
+          data-gift-order-form
+          class='mt-6 grid gap-6'
+          data-product-key={productKey}
+          data-product-title={productTitle}
+          data-unit-price={unitPrice}
+          data-checkout-url={checkoutUrl}
+          data-wp-url={wpApiUrl}
+          data-form-id={formId}
+          data-cf7-version={CONTACT_FORM_7_VERSION}
+          data-wp-armour-field={WP_ARMOUR_FIELD_NAME}
+          data-wp-armour-value={WP_ARMOUR_FIELD_VALUE}>
+          <div class='grid gap-5 sm:grid-cols-2'>
+            <label class='grid gap-2 text-xs font-bold'>Your name
+              <input data-gift-buyer-name name='gift-buyer-name' class={inputClass} autocomplete='name' minlength='2' required />
+            </label>
+            <label class='grid gap-2 text-xs font-bold'>Your checkout email
+              <input data-gift-buyer-email name='gift-buyer-email' type='email' class={inputClass} autocomplete='email' required />
+            </label>
+          </div>
+
+          <fieldset class='rounded-2xl border border-[#d7ddd7] bg-[#f7f4ed] p-5'>
+            <legend class='px-1 text-xs font-bold'>Total copies</legend>
+            <div class='flex flex-wrap items-center justify-between gap-5'>
+              <div class='inline-flex items-center rounded-full border border-[#cbd4cf] bg-white p-1'>
+                <button data-gift-quantity-minus type='button' class='grid h-10 w-10 place-items-center rounded-full text-[#1f6b55] transition hover:bg-[#dcece5]' aria-label='Reduce quantity'><Minus class='h-4 w-4' /></button>
+                <output data-gift-quantity-output class='min-w-12 text-center text-lg font-extrabold text-[#17352c]' aria-live='polite'>3</output>
+                <input data-gift-quantity name='gift-quantity' type='hidden' value='3' />
+                <button data-gift-quantity-plus type='button' class='grid h-10 w-10 place-items-center rounded-full text-[#1f6b55] transition hover:bg-[#dcece5]' aria-label='Increase quantity'><Plus class='h-4 w-4' /></button>
+              </div>
+              <div class='text-right'>
+                <strong data-gift-subtotal class='block text-lg text-[#17352c]'>${(unitPrice * 3).toFixed(2)}</strong>
+                <span class='text-[11px] leading-5 text-[#65766f]'>Regular subtotal before tax<br />LAUNCH70 applied at checkout</span>
+              </div>
+            </div>
+          </fieldset>
+
+          <div>
+            <div class='flex flex-wrap items-end justify-between gap-3'>
+              <div><h4 class='text-sm font-extrabold text-[#17352c]'>Gift recipient emails</h4><p data-gift-recipient-summary class='mt-1 text-xs leading-6 text-[#65766f]'>Enter 2 recipient emails for the additional copies.</p></div>
+              <span class='rounded-full bg-[#dcece5] px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.1em] text-[#1f6b55]'>Manual delivery</span>
+            </div>
+            <div data-gift-recipients class='mt-4 grid gap-4'></div>
+          </div>
+
+          <label class='grid gap-2 text-xs font-bold'>Optional gift note
+            <textarea data-gift-note name='gift-note' class={`${inputClass} min-h-24 resize-y`} maxlength='500' placeholder='For example: Please mention this is a gift from me.'></textarea>
+          </label>
+
+          <label class='flex items-start gap-3 rounded-xl border border-[#d7ddd7] bg-white p-4 text-xs leading-6 text-[#52665f]'>
+            <input name='gift-consent' type='checkbox' class='mt-1 h-4 w-4 accent-[#1f6b55]' required />
+            <span>I have permission to provide these email addresses for delivering the purchased books.</span>
+          </label>
+
+          <div data-gift-error role='alert' aria-live='polite' class='hidden rounded-xl bg-[#fee5dc] p-3 text-sm text-[#9f432c]'></div>
+          <button data-gift-submit type='submit' class='group inline-flex items-center justify-center gap-2 rounded-full bg-[#1f6b55] px-6 py-3.5 text-sm font-extrabold text-white shadow-lg shadow-[#17352c]/10 transition hover:-translate-y-0.5 hover:bg-[#164a3c] disabled:cursor-wait disabled:opacity-70'>
+            Save recipients and continue to checkout <ArrowRight class='h-4 w-4 transition group-hover:translate-x-0.5' />
+          </button>
+          <p class='text-center text-[11px] leading-5 text-[#788780]'>Gift copies are sent after the Lemon Squeezy order is confirmed as paid, normally within one business day.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('[data-gift-order-form]').forEach((form) => {
+    if (form.dataset.initialized === 'true') return;
+    form.dataset.initialized = 'true';
+
+    const quantityInput = form.querySelector<HTMLInputElement>('[data-gift-quantity]');
+    const quantityOutput = form.querySelector<HTMLOutputElement>('[data-gift-quantity-output]');
+    const quantityMinus = form.querySelector<HTMLButtonElement>('[data-gift-quantity-minus]');
+    const quantityPlus = form.querySelector<HTMLButtonElement>('[data-gift-quantity-plus]');
+    const subtotal = form.querySelector<HTMLElement>('[data-gift-subtotal]');
+    const recipientsContainer = form.querySelector<HTMLElement>('[data-gift-recipients]');
+    const recipientSummary = form.querySelector<HTMLElement>('[data-gift-recipient-summary]');
+    const submitButton = form.querySelector<HTMLButtonElement>('[data-gift-submit]');
+    const errorMessage = form.querySelector<HTMLElement>('[data-gift-error]');
+    const card = form.closest<HTMLElement>('.relative');
+    const successMessage = card?.querySelector<HTMLElement>('[data-gift-success]');
+    const checkoutFallback = card?.querySelector<HTMLAnchorElement>('[data-gift-checkout-fallback]');
+    const unitPrice = Number(form.dataset.unitPrice || 0);
+
+    const getQuantity = () => Number(quantityInput?.value || 3);
+    const showError = (message: string) => {
+      if (!errorMessage) return;
+      errorMessage.textContent = message;
+      errorMessage.classList.remove('hidden');
+    };
+
+    const renderRecipients = () => {
+      if (!recipientsContainer) return;
+      const recipientCount = getQuantity() - 1;
+      const existingValues = Array.from(recipientsContainer.querySelectorAll<HTMLInputElement>('input')).map((input) => input.value);
+      recipientsContainer.replaceChildren();
+
+      for (let index = 0; index < recipientCount; index += 1) {
+        const label = document.createElement('label');
+        label.className = 'grid gap-2 text-xs font-bold';
+        label.textContent = `Recipient ${index + 1} email`;
+        const input = document.createElement('input');
+        input.type = 'email';
+        input.name = `gift-recipient-${index + 1}`;
+        input.autocomplete = 'email';
+        input.required = true;
+        input.placeholder = `colleague${index + 1}@company.com`;
+        input.className = 'w-full rounded-xl border border-[#cbd4cf] bg-white px-4 py-3 text-sm text-[#17352c] outline-none transition focus:border-[#1f6b55] focus:ring-4 focus:ring-[#1f6b55]/10';
+        input.value = existingValues[index] || '';
+        label.append(input);
+        recipientsContainer.append(label);
+      }
+
+      if (recipientSummary) recipientSummary.textContent = `Enter ${recipientCount} recipient ${recipientCount === 1 ? 'email' : 'emails'} for the additional copies.`;
+    };
+
+    const updateOrder = (nextQuantity = getQuantity()) => {
+      const quantity = Math.min(10, Math.max(2, nextQuantity));
+      if (quantityInput) quantityInput.value = String(quantity);
+      if (quantityOutput) quantityOutput.textContent = String(quantity);
+      if (subtotal) subtotal.textContent = `$${(unitPrice * quantity).toFixed(2)}`;
+      if (quantityMinus) quantityMinus.disabled = quantity <= 2;
+      if (quantityPlus) quantityPlus.disabled = quantity >= 10;
+      renderRecipients();
+    };
+
+    updateOrder(3);
+    quantityMinus?.addEventListener('click', () => updateOrder(getQuantity() - 1));
+    quantityPlus?.addEventListener('click', () => updateOrder(getQuantity() + 1));
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      errorMessage?.classList.add('hidden');
+      if (!form.reportValidity()) return;
+
+      const buyerName = form.querySelector<HTMLInputElement>('[data-gift-buyer-name]')?.value.trim();
+      const buyerEmail = form.querySelector<HTMLInputElement>('[data-gift-buyer-email]')?.value.trim().toLowerCase();
+      const note = form.querySelector<HTMLTextAreaElement>('[data-gift-note]')?.value.trim();
+      const quantity = getQuantity();
+      const recipientEmails = Array.from(recipientsContainer?.querySelectorAll<HTMLInputElement>('input[type="email"]') || []).map((input) => input.value.trim().toLowerCase());
+
+      if (!buyerName || !buyerEmail || recipientEmails.length !== quantity - 1) {
+        showError('Please complete the buyer and recipient details correctly.');
+        return;
+      }
+      const uniqueEmails = new Set(recipientEmails);
+      if (uniqueEmails.size !== recipientEmails.length || uniqueEmails.has(buyerEmail)) {
+        showError('Use a different email address for the buyer and for each gift recipient.');
+        return;
+      }
+
+      const randomPart = typeof crypto.randomUUID === 'function' ? crypto.randomUUID().split('-')[0].toUpperCase() : Math.random().toString(36).slice(2, 10).toUpperCase();
+      const requestId = `GIFT-${Date.now().toString(36).toUpperCase()}-${randomPart}`;
+      const productTitle = form.dataset.productTitle || 'Book';
+      const detailLines = [
+        'PENDING GIFT PURCHASE — VERIFY PAYMENT BEFORE DELIVERY',
+        `Request ID: ${requestId}`,
+        `Book: ${productTitle}`,
+        `Buyer: ${buyerName}`,
+        `Buyer checkout email: ${buyerEmail}`,
+        `Total copies: ${quantity}`,
+        `Gift copies: ${quantity - 1}`,
+        ...recipientEmails.map((email, index) => `Recipient ${index + 1}: ${email}`),
+        `Buyer note: ${note || 'None'}`,
+        '',
+        'Manual action: Find the paid Lemon Squeezy order using the buyer email, confirm the product and quantity, then send one copy to each recipient above.',
+      ];
+
+      const contactData = new FormData();
+      contactData.set('your-name', buyerName);
+      contactData.set('your-email', buyerEmail);
+      contactData.set('selected-service', 'other');
+      contactData.set('website-url', window.location.href);
+      contactData.set('budget', `${quantity} copies`);
+      contactData.set('description', detailLines.join('\n'));
+      contactData.set('from-url', window.location.pathname);
+      contactData.set('alt_s', '');
+      contactData.set(form.dataset.wpArmourField || '', form.dataset.wpArmourValue || '');
+      contactData.set('_wpcf7', form.dataset.formId || '');
+      contactData.set('_wpcf7_version', form.dataset.cf7Version || '');
+      contactData.set('_wpcf7_locale', 'en_US');
+      contactData.set('_wpcf7_unit_tag', `wpcf7-f${form.dataset.formId}-p0-o1`);
+
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = 'Saving gift request…';
+      }
+
+      try {
+        const response = await fetch(`${form.dataset.wpUrl}/wp-json/contact-form-7/v1/contact-forms/${form.dataset.formId}/feedback`, { method: 'POST', body: contactData });
+        if (!response.ok) throw new Error('The gift request service is unavailable right now.');
+        const result = await response.json();
+        if (result.status !== 'mail_sent') throw new Error(result.message || 'The gift request could not be saved.');
+
+        const finalCheckoutUrl = new URL(form.dataset.checkoutUrl || '');
+        finalCheckoutUrl.searchParams.set('quantity', String(quantity));
+        finalCheckoutUrl.searchParams.set('checkout[email]', buyerEmail);
+        finalCheckoutUrl.searchParams.set('checkout[name]', buyerName);
+        finalCheckoutUrl.searchParams.set('checkout[custom][gift_request_id]', requestId);
+        checkoutFallback?.setAttribute('href', finalCheckoutUrl.toString());
+        successMessage?.classList.remove('hidden');
+        successMessage?.classList.add('flex');
+        window.setTimeout(() => window.location.assign(finalCheckoutUrl.toString()), 650);
+      } catch (error) {
+        showError(error instanceof Error ? error.message : 'The gift request could not be saved.');
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = 'Save recipients and continue to checkout';
+        }
+      }
+    });
+  });
+</script>
