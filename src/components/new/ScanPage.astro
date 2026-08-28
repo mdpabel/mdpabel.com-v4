@@ -126,6 +126,17 @@ const schema = [
                 class='mt-2 w-full rounded-xl border border-[#c8d1cb] bg-white px-4 py-3 font-normal outline-none focus:ring-2 focus:ring-[#1f6b55]'
               /></label
             >
+            <label class='block text-sm font-bold'
+              >What makes you think your WordPress site is hacked or infected?
+              <textarea
+                name='symptoms'
+                maxlength='2000'
+                rows='4'
+                placeholder='For example: visitors are redirected, Google shows a warning, or you found an unfamiliar admin.'
+                aria-describedby='symptoms-help'
+                class='mt-2 w-full resize-y rounded-xl border border-[#c8d1cb] bg-white px-4 py-3 font-normal outline-none focus:ring-2 focus:ring-[#1f6b55]'></textarea>
+              <span id='symptoms-help' class='mt-1 block text-xs font-normal text-[#788780]'>Optional, but helpful for focusing the first review.</span>
+            </label>
             <div class='hidden' aria-hidden='true'>
               <label
                 >Leave this field blank<input
