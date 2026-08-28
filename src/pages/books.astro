@@ -158,16 +158,14 @@ const schema = [
                 <div class='mt-auto pt-7'>
                   <div class='flex flex-wrap items-center gap-3'>
                     <a
-                      href={book.checkoutUrl}
-                      target='_blank'
-                      rel='noopener'
+                      href={`${book.details}#gift-copies`}
                       class='group inline-flex items-center gap-2 bg-[#1f6b55] hover:bg-[#164a3c] px-5 py-3 rounded-full font-extrabold text-white text-xs transition hover:-translate-y-0.5'
-                      data-umami-event='book-checkout-started'
+                      data-umami-event='book-cart-opened'
                       data-umami-event-product={`${book.title} ${book.subtitle}`}
-                      data-umami-event-price={book.price.replace('$', '')}
+                      data-umami-event-price={book.launchPrice.replace('$', '')}
                       data-umami-event-currency='USD'
                       data-umami-event-placement='catalog'>
-                      Buy now · {book.price}
+                      Buy now · {book.launchPrice}
                       <ArrowRight class='w-4 h-4 transition group-hover:translate-x-0.5' />
                     </a>
                     <a
@@ -175,17 +173,9 @@ const schema = [
                       class='font-extrabold text-[#1f6b55] hover:text-[#164a3c] text-xs transition'>
                       View details
                     </a>
-                    <a
-                      href={`${book.details}#gift-copies`}
-                      class='font-extrabold text-[#b84e31] hover:text-[#8f3c28] text-xs transition'
-                      data-umami-event='book-gift-started'
-                      data-umami-event-product={`${book.title} ${book.subtitle}`}
-                      data-umami-event-placement='catalog'>
-                      Buy multiple or gift
-                    </a>
                   </div>
                   <p class='mt-3 text-xs font-bold text-[#b84e31]'>
-                    Launch offer: 70% off automatically with code LAUNCH70.
+                    Launch offer: <s class='text-[#788780]'>{book.price}</s> {book.launchPrice} · 70% off automatically.
                   </p>
                   <div class='flex flex-wrap gap-x-4 gap-y-2 mt-4'>
                     {book.stores.map((store) => (

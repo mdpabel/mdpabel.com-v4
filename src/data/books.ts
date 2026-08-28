@@ -16,6 +16,7 @@ export interface BookListing {
   bestFor: string;
   numberOfPages: number;
   price: string;
+  launchPrice: string;
   checkoutUrl: string;
   stores: BookStore[];
 }
@@ -36,6 +37,7 @@ export const books: BookListing[] = [
       'Developers, site owners, agencies, and responders who want the complete WordPress malware-removal workflow.',
     numberOfPages: 278,
     price: '$14.99',
+    launchPrice: '$4.50',
     checkoutUrl:
       'https://mdpabel.lemonsqueezy.com/checkout/buy/e5ebff5e-0903-433f-a892-bb6ef0dbdc3d?checkout%5Bdiscount_code%5D=LAUNCH70',
     stores: [
@@ -64,6 +66,7 @@ export const books: BookListing[] = [
       'Developers, freelancers, and security professionals handling persistent or repeatedly returning WordPress malware.',
     numberOfPages: 31,
     price: '$5.99',
+    launchPrice: '$1.80',
     checkoutUrl:
       'https://mdpabel.lemonsqueezy.com/checkout/buy/4045e4df-32b8-408c-84c4-eab2f81d65d2?checkout%5Bdiscount_code%5D=LAUNCH70',
     stores: [
