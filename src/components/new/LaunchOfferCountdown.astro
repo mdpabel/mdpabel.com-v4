@@ -5,6 +5,7 @@ interface Props {
   regularPrice: string;
   launchPrice: string;
   savings: string;
+  offerNote?: string;
   socialProof?: string;
 }
 
@@ -12,6 +13,7 @@ const {
   regularPrice,
   launchPrice,
   savings,
+  offerNote,
   socialProof,
 } = Astro.props;
 
@@ -32,7 +34,7 @@ const deadline = '2026-09-03T23:59:59+06:00';
     </span>
   </div>
   <p class='mt-3 text-sm font-bold leading-6 text-[#713a2c]'>
-    Save {savings}. LAUNCH70 is applied automatically—claim the launch price before it ends.
+    Save {savings}. {offerNote ?? 'LAUNCH70 is applied automatically—claim the launch price before it ends.'}
   </p>
   <div class='mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-[#ed7655]/20 pt-3'>
     <p class='text-[11px] font-extrabold uppercase tracking-[0.08em] text-[#b84e31]'>

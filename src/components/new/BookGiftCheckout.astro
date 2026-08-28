@@ -75,7 +75,7 @@ const inputClass =
               <div class='text-right'>
                 <s data-gift-regular-subtotal class='block text-xs text-[#788780]'>${unitPrice.toFixed(2)}</s>
                 <strong data-gift-subtotal class='block text-lg text-[#17352c]'>${launchPrice.toFixed(2)}</strong>
-                <span class='text-[11px] leading-5 text-[#65766f]'>Estimated launch total before tax<br />LAUNCH70 applied at checkout</span>
+                <span class='text-[11px] leading-5 text-[#65766f]'>Estimated offer total before tax<br />Discount code applied at checkout</span>
               </div>
             </div>
           </fieldset>
@@ -92,6 +92,22 @@ const inputClass =
 </section>
 
 <script>
+  const discountParameterNames = [
+    'checkout[discount_code]',
+    'discount_code',
+    'discount',
+    'code',
+  ];
+
+  const requestedDiscountCode = (() => {
+    const pageParameters = new URLSearchParams(window.location.search);
+    const value = discountParameterNames
+      .map((name) => pageParameters.get(name)?.trim())
+      .find(Boolean);
+
+    return value && /^[a-z0-9_-]{1,64}$/i.test(value) ? value : null;
+  })();
+
   document.querySelectorAll<HTMLFormElement>('[data-gift-order-form]').forEach((form) => {
     if (form.dataset.initialized === 'true') return;
     form.dataset.initialized = 'true';
@@ -142,6 +158,9 @@ const inputClass =
         return;
       }
       const finalCheckoutUrl = new URL(form.dataset.checkoutUrl || '');
+      if (requestedDiscountCode) {
+        finalCheckoutUrl.searchParams.set('checkout[discount_code]', requestedDiscountCode);
+      }
       finalCheckoutUrl.searchParams.set('quantity', String(quantity));
       finalCheckoutUrl.searchParams.set('checkout[email]', buyerEmail);
       finalCheckoutUrl.searchParams.set('checkout[name]', buyerName);

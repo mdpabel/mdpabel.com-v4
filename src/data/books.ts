@@ -36,10 +36,10 @@ export const books: BookListing[] = [
     bestFor:
       'Developers, site owners, agencies, and responders who want the complete WordPress malware-removal workflow.',
     numberOfPages: 278,
-    price: '$14.99',
-    launchPrice: '$4.50',
+    price: '$29.99',
+    launchPrice: '$19.99',
     checkoutUrl:
-      'https://mdpabel.lemonsqueezy.com/checkout/buy/e5ebff5e-0903-433f-a892-bb6ef0dbdc3d?checkout%5Bdiscount_code%5D=LAUNCH70',
+      'https://mdpabel.lemonsqueezy.com/checkout/buy/e5ebff5e-0903-433f-a892-bb6ef0dbdc3d?checkout%5Bdiscount_code%5D=Q5MZM5OQ',
     stores: [
       {
         label: 'Leanpub',
