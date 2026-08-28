@@ -25,7 +25,7 @@ interface Props {
 
 const { productKey, productTitle, unitPrice, launchPrice, checkoutUrl } = Astro.props;
 const wpApiUrl = import.meta.env.PUBLIC_WORDPRESS_API_URL || 'https://cms.mdpabel.com';
-const formId = '1513';
+const formId = '2848';
 const inputClass =
   'w-full rounded-xl border border-[#cbd4cf] bg-white px-4 py-3 text-sm text-[#17352c] outline-none transition focus:border-[#1f6b55] focus:ring-4 focus:ring-[#1f6b55]/10';
 ---
@@ -237,29 +237,15 @@ const inputClass =
       const requestId = `GIFT-${Date.now().toString(36).toUpperCase()}-${randomPart}`;
       finalCheckoutUrl.searchParams.set('checkout[custom][gift_request_id]', requestId);
       const productTitle = form.dataset.productTitle || 'Book';
-      const detailLines = [
-        'PENDING GIFT PURCHASE — VERIFY PAYMENT BEFORE DELIVERY',
-        `Request ID: ${requestId}`,
-        `Book: ${productTitle}`,
-        `Buyer: ${buyerName}`,
-        `Buyer checkout email: ${buyerEmail}`,
-        `Total copies: ${quantity}`,
-        `Gift copies: ${recipientEmails.length}`,
-        `Copies retained by buyer: ${quantity - recipientEmails.length}`,
-        ...recipientEmails.map((email, index) => `Recipient ${index + 1}: ${email}`),
-        ...(recipientEmails.length === 0 ? ['Recipients: None provided'] : []),
-        `Buyer note: ${note || 'None'}`,
-        '',
-        'Manual action: Find the paid Lemon Squeezy order using the buyer email, confirm the product and quantity, then send one copy to each recipient above.',
-      ];
 
       const contactData = new FormData();
-      contactData.set('your-name', buyerName);
-      contactData.set('your-email', buyerEmail);
-      contactData.set('selected-service', 'other');
-      contactData.set('website-url', window.location.href);
-      contactData.set('budget', `${quantity} copies`);
-      contactData.set('description', detailLines.join('\n'));
+      contactData.set('buyer-name', buyerName);
+      contactData.set('buyer-email', buyerEmail);
+      contactData.set('book-title', productTitle);
+      contactData.set('total-copies', String(quantity));
+      contactData.set('recipient-emails', recipientEmails.join(', '));
+      contactData.set('gift-note', note || '');
+      contactData.set('gift-request-id', requestId);
       contactData.set('from-url', window.location.pathname);
       contactData.set('alt_s', '');
       contactData.set(form.dataset.wpArmourField || '', form.dataset.wpArmourValue || '');
