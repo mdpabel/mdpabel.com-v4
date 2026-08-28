@@ -2,18 +2,10 @@
 import {
   ArrowRight,
   Check,
-  Gift,
   LockKeyhole,
-  MailCheck,
   Minus,
   Plus,
 } from '@lucide/astro';
-
-import {
-  CONTACT_FORM_7_VERSION,
-  WP_ARMOUR_FIELD_NAME,
-  WP_ARMOUR_FIELD_VALUE,
-} from '../../lib/contactForms';
 
 interface Props {
   productKey: string;
@@ -24,37 +16,28 @@ interface Props {
 }
 
 const { productKey, productTitle, unitPrice, launchPrice, checkoutUrl } = Astro.props;
-const wpApiUrl = import.meta.env.PUBLIC_WORDPRESS_API_URL || 'https://cms.mdpabel.com';
-const formId = '2848';
 const inputClass =
   'w-full rounded-xl border border-[#cbd4cf] bg-white px-4 py-3 text-sm text-[#17352c] outline-none transition focus:border-[#1f6b55] focus:ring-4 focus:ring-[#1f6b55]/10';
 ---
 
-<section id='gift-copies' class='scroll-mt-24 border-b border-[#d7ddd7] bg-[#eef4ef] py-16 md:py-20'>
+<section id='book-quantity' class='scroll-mt-24 border-b border-[#d7ddd7] bg-[#eef4ef] py-16 md:py-20'>
   <div class='new-shell'>
     <div class='grid items-start gap-9 lg:grid-cols-[0.72fr_1.28fr] lg:gap-14'>
       <div class='lg:sticky lg:top-8'>
         <div class='inline-flex items-center gap-2 rounded-full border border-[#1f6b55]/15 bg-white px-3.5 py-2 text-[11px] font-extrabold uppercase tracking-[0.14em] text-[#1f6b55] shadow-sm'>
-          <Gift class='h-3.5 w-3.5' /> Multiple-copy checkout
+          Multiple-copy checkout
         </div>
-        <h2 class='editorial-heading mt-5 text-4xl font-semibold md:text-5xl'>Keep one. Gift the rest.</h2>
+        <h2 class='editorial-heading mt-5 text-4xl font-semibold md:text-5xl'>Buy the number of copies you need.</h2>
         <p class='mt-5 max-w-xl leading-8 text-[#52665f]'>
-          Select the total number of copies and optionally add colleague emails for the copies you want to gift. You pay once through Lemon Squeezy; MD Pabel sends the gift copies manually after confirming the order.
+          Select your total quantity, see the discounted launch total, and complete one secure Lemon Squeezy checkout.
         </p>
         <div class='mt-7 grid gap-3 text-sm'>
-          <span class='flex gap-3 rounded-xl border border-[#d7ddd7] bg-white/75 p-4'><MailCheck class='h-5 w-5 shrink-0 text-[#1f6b55]' /><span><strong class='block text-[#17352c]'>Individual delivery</strong><small class='mt-1 block leading-5 text-[#65766f]'>Each colleague receives their own email.</small></span></span>
-          <span class='flex gap-3 rounded-xl border border-[#d7ddd7] bg-white/75 p-4'><LockKeyhole class='h-5 w-5 shrink-0 text-[#1f6b55]' /><span><strong class='block text-[#17352c]'>Payment stays secure</strong><small class='mt-1 block leading-5 text-[#65766f]'>No payment details are collected on this page.</small></span></span>
+          <span class='flex gap-3 rounded-xl border border-[#d7ddd7] bg-white/75 p-4'><Check class='h-5 w-5 shrink-0 text-[#1f6b55]' /><span><strong class='block text-[#17352c]'>Quantity discounts</strong><small class='mt-1 block leading-5 text-[#65766f]'>Buy multiple copies in one order with the launch price.</small></span></span>
+          <span class='flex gap-3 rounded-xl border border-[#d7ddd7] bg-white/75 p-4'><LockKeyhole class='h-5 w-5 shrink-0 text-[#1f6b55]' /><span><strong class='block text-[#17352c]'>Payment stays secure</strong><small class='mt-1 block leading-5 text-[#65766f]'>Payment is completed on Lemon Squeezy.</small></span></span>
         </div>
       </div>
 
       <div class='relative rounded-[2rem] border border-[#d7ddd7] bg-[#fffdf8] p-6 shadow-2xl shadow-[#17352c]/8 md:p-9'>
-        <div data-gift-success class='hidden absolute inset-0 z-10 flex-col items-center justify-center rounded-[2rem] bg-[#fffdf8] p-8 text-center'>
-          <span class='grid h-16 w-16 place-items-center rounded-full bg-[#dcece5] text-[#1f6b55]'><Check class='h-7 w-7' /></span>
-          <h3 class='editorial-heading mt-5 text-3xl font-semibold'>Gift request saved.</h3>
-          <p class='mt-3 max-w-md text-sm leading-7 text-[#52665f]'>Opening Lemon Squeezy so you can complete the matching payment.</p>
-          <a data-gift-checkout-fallback href='#' class='mt-6 inline-flex items-center gap-2 rounded-full bg-[#1f6b55] px-6 py-3.5 text-sm font-extrabold text-white'>Continue to checkout <ArrowRight class='h-4 w-4' /></a>
-        </div>
-
         <div class='flex flex-wrap items-start justify-between gap-4 border-b border-[#d7ddd7] pb-6'>
           <div>
             <p class='text-[10px] font-extrabold uppercase tracking-[0.15em] text-[#b84e31]'>Mini cart</p>
@@ -70,12 +53,7 @@ const inputClass =
           data-product-title={productTitle}
           data-unit-price={unitPrice}
           data-launch-price={launchPrice}
-          data-checkout-url={checkoutUrl}
-          data-wp-url={wpApiUrl}
-          data-form-id={formId}
-          data-cf7-version={CONTACT_FORM_7_VERSION}
-          data-wp-armour-field={WP_ARMOUR_FIELD_NAME}
-          data-wp-armour-value={WP_ARMOUR_FIELD_VALUE}>
+          data-checkout-url={checkoutUrl}>
           <div class='grid gap-5 sm:grid-cols-2'>
             <label class='grid gap-2 text-xs font-bold'>Your name
               <input data-gift-buyer-name name='gift-buyer-name' class={inputClass} autocomplete='name' minlength='2' required />
@@ -102,34 +80,11 @@ const inputClass =
             </div>
           </fieldset>
 
-          <div>
-            <div class='flex flex-wrap items-end justify-between gap-3'>
-              <div><h4 class='text-sm font-extrabold text-[#17352c]'>Gift recipient emails <span class='font-semibold text-[#788780]'>(optional)</span></h4><p data-gift-recipient-summary class='mt-1 text-xs leading-6 text-[#65766f]'>Increase the quantity to add gift recipients.</p></div>
-              <span class='rounded-full bg-[#dcece5] px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.1em] text-[#1f6b55]'>Manual delivery</span>
-            </div>
-            <textarea
-              data-gift-recipients
-              name='gift-recipients'
-              class={`${inputClass} mt-4 min-h-24 resize-y`}
-              placeholder='alice@company.com, bob@company.com'
-              aria-describedby={`gift-recipient-help-${productKey}`}></textarea>
-            <p id={`gift-recipient-help-${productKey}`} class='mt-2 text-[11px] leading-5 text-[#788780]'>Leave blank if you are buying all copies for yourself.</p>
-          </div>
-
-          <label class='grid gap-2 text-xs font-bold'>Optional gift note
-            <textarea data-gift-note name='gift-note' class={`${inputClass} min-h-24 resize-y`} maxlength='500' placeholder='For example: Please mention this is a gift from me.'></textarea>
-          </label>
-
-          <label class='flex items-start gap-3 rounded-xl border border-[#d7ddd7] bg-white p-4 text-xs leading-6 text-[#52665f]'>
-            <input data-gift-consent name='gift-consent' type='checkbox' class='mt-1 h-4 w-4 accent-[#1f6b55]' />
-            <span>If I provide recipient emails, I have permission to use them for delivering the purchased books.</span>
-          </label>
-
           <div data-gift-error role='alert' aria-live='polite' class='hidden rounded-xl bg-[#fee5dc] p-3 text-sm text-[#9f432c]'></div>
           <button data-gift-submit type='submit' class='group inline-flex items-center justify-center gap-2 rounded-full bg-[#1f6b55] px-6 py-3.5 text-sm font-extrabold text-white shadow-lg shadow-[#17352c]/10 transition hover:-translate-y-0.5 hover:bg-[#164a3c] disabled:cursor-wait disabled:opacity-70'>
             Continue to secure checkout <ArrowRight class='h-4 w-4 transition group-hover:translate-x-0.5' />
           </button>
-          <p class='text-center text-[11px] leading-5 text-[#788780]'>Gift copies are sent after the Lemon Squeezy order is confirmed as paid, normally within one business day.</p>
+          <p class='text-center text-[11px] leading-5 text-[#788780]'>You’ll complete payment securely on Lemon Squeezy after selecting your quantity.</p>
         </form>
       </div>
     </div>
@@ -147,13 +102,8 @@ const inputClass =
     const quantityPlus = form.querySelector<HTMLButtonElement>('[data-gift-quantity-plus]');
     const subtotal = form.querySelector<HTMLElement>('[data-gift-subtotal]');
     const regularSubtotal = form.querySelector<HTMLElement>('[data-gift-regular-subtotal]');
-    const recipientsInput = form.querySelector<HTMLTextAreaElement>('[data-gift-recipients]');
-    const recipientSummary = form.querySelector<HTMLElement>('[data-gift-recipient-summary]');
     const submitButton = form.querySelector<HTMLButtonElement>('[data-gift-submit]');
     const errorMessage = form.querySelector<HTMLElement>('[data-gift-error]');
-    const card = form.closest<HTMLElement>('.relative');
-    const successMessage = card?.querySelector<HTMLElement>('[data-gift-success]');
-    const checkoutFallback = card?.querySelector<HTMLAnchorElement>('[data-gift-checkout-fallback]');
     const unitPrice = Number(form.dataset.unitPrice || 0);
     const discountedUnitPrice = Number(form.dataset.launchPrice || 0);
 
@@ -172,11 +122,6 @@ const inputClass =
       if (subtotal) subtotal.textContent = `$${(discountedUnitPrice * quantity).toFixed(2)}`;
       if (quantityMinus) quantityMinus.disabled = quantity <= 1;
       if (quantityPlus) quantityPlus.disabled = quantity >= 10;
-      const maximumRecipients = quantity - 1;
-      if (recipientsInput) recipientsInput.disabled = maximumRecipients === 0;
-      if (recipientSummary) recipientSummary.textContent = maximumRecipients === 0
-        ? 'Increase the quantity to add gift recipients.'
-        : `Separate emails with commas. Add up to ${maximumRecipients} ${maximumRecipients === 1 ? 'recipient' : 'recipients'} for this quantity.`;
     };
 
     updateOrder(1);
@@ -190,92 +135,22 @@ const inputClass =
 
       const buyerName = form.querySelector<HTMLInputElement>('[data-gift-buyer-name]')?.value.trim();
       const buyerEmail = form.querySelector<HTMLInputElement>('[data-gift-buyer-email]')?.value.trim().toLowerCase();
-      const note = form.querySelector<HTMLTextAreaElement>('[data-gift-note]')?.value.trim();
-      const giftConsent = form.querySelector<HTMLInputElement>('[data-gift-consent]')?.checked;
       const quantity = getQuantity();
-      const recipientEmails = quantity > 1
-        ? (recipientsInput?.value || '').split(',').map((email) => email.trim().toLowerCase()).filter(Boolean)
-        : [];
 
       if (!buyerName || !buyerEmail) {
         showError('Please complete the buyer details correctly.');
         return;
       }
-      if (recipientEmails.length > quantity - 1) {
-        showError(`This order can include up to ${quantity - 1} gift recipient emails.`);
-        return;
-      }
-      if (recipientEmails.some((email) => !/^\S+@\S+\.\S+$/.test(email))) {
-        showError('Check the recipient emails and separate each address with a comma.');
-        return;
-      }
-      if (recipientEmails.length > 0 && !giftConsent) {
-        showError('Please confirm that the recipient emails can be used for gift delivery.');
-        return;
-      }
-      const uniqueEmails = new Set(recipientEmails);
-      if (uniqueEmails.size !== recipientEmails.length || uniqueEmails.has(buyerEmail)) {
-        showError('Use a different email address for the buyer and for each gift recipient.');
-        return;
-      }
-
       const finalCheckoutUrl = new URL(form.dataset.checkoutUrl || '');
       finalCheckoutUrl.searchParams.set('quantity', String(quantity));
       finalCheckoutUrl.searchParams.set('checkout[email]', buyerEmail);
       finalCheckoutUrl.searchParams.set('checkout[name]', buyerName);
 
-      if (recipientEmails.length === 0) {
-        if (submitButton) {
-          submitButton.disabled = true;
-          submitButton.textContent = 'Opening secure checkout…';
-        }
-        window.location.assign(finalCheckoutUrl.toString());
-        return;
-      }
-
-      const randomPart = typeof crypto.randomUUID === 'function' ? crypto.randomUUID().split('-')[0].toUpperCase() : Math.random().toString(36).slice(2, 10).toUpperCase();
-      const requestId = `GIFT-${Date.now().toString(36).toUpperCase()}-${randomPart}`;
-      finalCheckoutUrl.searchParams.set('checkout[custom][gift_request_id]', requestId);
-      const productTitle = form.dataset.productTitle || 'Book';
-
-      const contactData = new FormData();
-      contactData.set('buyer-name', buyerName);
-      contactData.set('buyer-email', buyerEmail);
-      contactData.set('book-title', productTitle);
-      contactData.set('total-copies', String(quantity));
-      contactData.set('recipient-emails', recipientEmails.join(', '));
-      contactData.set('gift-note', note || '');
-      contactData.set('gift-request-id', requestId);
-      contactData.set('from-url', window.location.pathname);
-      contactData.set('alt_s', '');
-      contactData.set(form.dataset.wpArmourField || '', form.dataset.wpArmourValue || '');
-      contactData.set('_wpcf7', form.dataset.formId || '');
-      contactData.set('_wpcf7_version', form.dataset.cf7Version || '');
-      contactData.set('_wpcf7_locale', 'en_US');
-      contactData.set('_wpcf7_unit_tag', `wpcf7-f${form.dataset.formId}-p0-o1`);
-
       if (submitButton) {
         submitButton.disabled = true;
-        submitButton.textContent = 'Saving gift request…';
+        submitButton.textContent = 'Opening secure checkout…';
       }
-
-      try {
-        const response = await fetch(`${form.dataset.wpUrl}/wp-json/contact-form-7/v1/contact-forms/${form.dataset.formId}/feedback`, { method: 'POST', body: contactData });
-        if (!response.ok) throw new Error('The gift request service is unavailable right now.');
-        const result = await response.json();
-        if (result.status !== 'mail_sent') throw new Error(result.message || 'The gift request could not be saved.');
-
-        checkoutFallback?.setAttribute('href', finalCheckoutUrl.toString());
-        successMessage?.classList.remove('hidden');
-        successMessage?.classList.add('flex');
-        window.setTimeout(() => window.location.assign(finalCheckoutUrl.toString()), 650);
-      } catch (error) {
-        showError(error instanceof Error ? error.message : 'The gift request could not be saved.');
-        if (submitButton) {
-          submitButton.disabled = false;
-          submitButton.textContent = 'Continue to secure checkout';
-        }
-      }
+      window.location.assign(finalCheckoutUrl.toString());
     });
   });
 </script>
