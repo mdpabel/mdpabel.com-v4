@@ -7,6 +7,7 @@ interface Props {
   savings: string;
   offerNote?: string;
   socialProof?: string;
+  discountSignals?: Array<{ code: string; percentOff: number }>;
 }
 
 const {
@@ -15,6 +16,7 @@ const {
   savings,
   offerNote,
   socialProof,
+  discountSignals = [],
 } = Astro.props;
 
 const deadline = '2026-09-03T23:59:59+06:00';
@@ -23,6 +25,8 @@ const deadline = '2026-09-03T23:59:59+06:00';
 <div
   data-launch-offer
   data-launch-deadline={deadline}
+  data-regular-price={regularPrice.replace('$', '')}
+  data-discount-signals={JSON.stringify(discountSignals)}
   class='mt-8 max-w-2xl rounded-2xl border border-[#ed7655]/35 bg-[#fff3ed] p-4 shadow-sm sm:p-5'>
   <div class='flex flex-wrap items-center justify-between gap-3'>
     <span class='inline-flex items-center gap-2 rounded-full bg-[#ed7655] px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.14em] text-white'>
@@ -30,10 +34,10 @@ const deadline = '2026-09-03T23:59:59+06:00';
     </span>
     <span class='flex items-baseline gap-2'>
       <s class='text-sm font-bold text-[#7b8984]'>{regularPrice}</s>
-      <strong class='editorial-heading text-3xl text-[#b84e31]'>{launchPrice}</strong>
+      <strong data-launch-price class='editorial-heading text-3xl text-[#b84e31]'>{launchPrice}</strong>
     </span>
   </div>
-  <p class='mt-3 text-sm font-bold leading-6 text-[#713a2c]'>
+  <p data-launch-copy class='mt-3 text-sm font-bold leading-6 text-[#713a2c]'>
     Save {savings}. {offerNote ?? 'LAUNCH70 is applied automatically—claim the launch price before it ends.'}
   </p>
   <div class='mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-[#ed7655]/20 pt-3'>
@@ -59,6 +63,58 @@ const deadline = '2026-09-03T23:59:59+06:00';
 <script is:inline>
   (() => {
     const offers = document.querySelectorAll('[data-launch-offer]');
+
+    const discountParameterNames = [
+      'checkout[discount_code]',
+      'discount_code',
+      'discount',
+      'code',
+    ];
+    const pageParameters = new URLSearchParams(window.location.search);
+    const discountCode = discountParameterNames
+      .map((name) => pageParameters.get(name)?.trim())
+      .find((value) => value && /^[a-z0-9_-]{1,64}$/i.test(value));
+
+    const applyDiscountSignal = (offer) => {
+      let signals = [];
+      try {
+        signals = JSON.parse(offer.dataset.discountSignals || '[]');
+      } catch {
+        signals = [];
+      }
+
+      const signal = signals.find(
+        (item) => item.code?.toUpperCase() === discountCode?.toUpperCase(),
+      );
+      if (!signal || typeof signal.percentOff !== 'number') return;
+
+      const regularPrice = Number(offer.dataset.regularPrice || 0);
+      const discountedPrice = Math.round(
+        (Math.round(regularPrice * 100) * (100 - signal.percentOff)) / 100,
+      ) / 100;
+      const savingsAmount = regularPrice - discountedPrice;
+      const price = offer.querySelector('[data-launch-price]');
+      const copy = offer.querySelector('[data-launch-copy]');
+      if (price) price.textContent = `$${discountedPrice.toFixed(2)}`;
+      if (copy) {
+        copy.textContent = copy.textContent.replace(
+          /Save\s+\$[0-9]+(?:\.[0-9]{2})?/i,
+          `Save $${savingsAmount.toFixed(2)}`,
+        );
+      }
+    };
+
+    const applyDiscountSignals = () => {
+      offers.forEach((offer) => {
+        if (offer instanceof HTMLElement) applyDiscountSignal(offer);
+      });
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', applyDiscountSignals, { once: true });
+    } else {
+      applyDiscountSignals();
+    }
 
     offers.forEach((offer) => {
       if (!(offer instanceof HTMLElement) || offer.dataset.countdownReady === 'true') return;

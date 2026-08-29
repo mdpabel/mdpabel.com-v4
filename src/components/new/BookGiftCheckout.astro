@@ -12,10 +12,18 @@ interface Props {
   productTitle: string;
   unitPrice: number;
   launchPrice: number;
+  discountSignals?: Array<{ code: string; percentOff: number }>;
   checkoutUrl: string;
 }
 
-const { productKey, productTitle, unitPrice, launchPrice, checkoutUrl } = Astro.props;
+const {
+  productKey,
+  productTitle,
+  unitPrice,
+  launchPrice,
+  discountSignals = [],
+  checkoutUrl,
+} = Astro.props;
 const inputClass =
   'w-full rounded-xl border border-[#cbd4cf] bg-white px-4 py-3 text-sm text-[#17352c] outline-none transition focus:border-[#1f6b55] focus:ring-4 focus:ring-[#1f6b55]/10';
 ---
@@ -43,7 +51,7 @@ const inputClass =
             <p class='text-[10px] font-extrabold uppercase tracking-[0.15em] text-[#b84e31]'>Mini cart</p>
             <h3 class='editorial-heading mt-2 text-2xl font-semibold'>{productTitle}</h3>
           </div>
-          <span class='rounded-full bg-[#dcece5] px-3 py-2 text-xs font-extrabold text-[#1f6b55]'><s class='mr-1 text-[#65766f]'>${unitPrice.toFixed(2)}</s> ${launchPrice.toFixed(2)} launch price</span>
+          <span data-gift-price-badge class='rounded-full bg-[#dcece5] px-3 py-2 text-xs font-extrabold text-[#1f6b55]'><s class='mr-1 text-[#65766f]'>${unitPrice.toFixed(2)}</s> ${launchPrice.toFixed(2)} launch price</span>
         </div>
 
         <form
@@ -53,6 +61,7 @@ const inputClass =
           data-product-title={productTitle}
           data-unit-price={unitPrice}
           data-launch-price={launchPrice}
+          data-discount-signals={JSON.stringify(discountSignals)}
           data-checkout-url={checkoutUrl}>
           <div class='grid gap-5 sm:grid-cols-2'>
             <label class='grid gap-2 text-xs font-bold'>Your name
@@ -72,10 +81,11 @@ const inputClass =
                 <input data-gift-quantity name='gift-quantity' type='hidden' value='1' />
                 <button data-gift-quantity-plus type='button' class='grid h-10 w-10 place-items-center rounded-full text-[#1f6b55] transition hover:bg-[#dcece5]' aria-label='Increase quantity'><Plus class='h-4 w-4' /></button>
               </div>
-              <div class='text-right'>
-                <s data-gift-regular-subtotal class='block text-xs text-[#788780]'>${unitPrice.toFixed(2)}</s>
-                <strong data-gift-subtotal class='block text-lg text-[#17352c]'>${launchPrice.toFixed(2)}</strong>
-                <span class='text-[11px] leading-5 text-[#65766f]'>Estimated offer total before tax<br />Discount code applied at checkout</span>
+              <div class='grid gap-1 text-right'>
+                <span class='text-xs text-[#788780]'>Subtotal <s data-gift-regular-subtotal>${unitPrice.toFixed(2)}</s></span>
+                <span data-gift-discount-row class='hidden text-xs text-[#b84e31]'>Discount <span data-gift-discount-code></span> <strong data-gift-discount-amount></strong></span>
+                <span class='text-sm text-[#17352c]'>Total <strong data-gift-subtotal class='text-lg'>${launchPrice.toFixed(2)}</strong></span>
+                <span data-gift-price-note class='text-[11px] leading-5 text-[#65766f]'>Estimated total before tax<br />Discount code applied at checkout</span>
               </div>
             </div>
           </fieldset>
@@ -118,10 +128,59 @@ const inputClass =
     const quantityPlus = form.querySelector<HTMLButtonElement>('[data-gift-quantity-plus]');
     const subtotal = form.querySelector<HTMLElement>('[data-gift-subtotal]');
     const regularSubtotal = form.querySelector<HTMLElement>('[data-gift-regular-subtotal]');
+    const discountRow = form.querySelector<HTMLElement>('[data-gift-discount-row]');
+    const discountCodeLabel = form.querySelector<HTMLElement>('[data-gift-discount-code]');
+    const discountAmount = form.querySelector<HTMLElement>('[data-gift-discount-amount]');
     const submitButton = form.querySelector<HTMLButtonElement>('[data-gift-submit]');
     const errorMessage = form.querySelector<HTMLElement>('[data-gift-error]');
     const unitPrice = Number(form.dataset.unitPrice || 0);
-    const discountedUnitPrice = Number(form.dataset.launchPrice || 0);
+    let discountedUnitPrice = Number(form.dataset.launchPrice || 0);
+    let signals: Array<{ code?: string; percentOff?: number }> = [];
+    try {
+      signals = JSON.parse(form.dataset.discountSignals || '[]');
+    } catch {
+      signals = [];
+    }
+
+    const signal = signals.find(
+      (item) => item.code?.toUpperCase() === requestedDiscountCode?.toUpperCase(),
+    );
+    if (signal && typeof signal.percentOff === 'number') {
+      const unitPriceInCents = Math.round(unitPrice * 100);
+      discountedUnitPrice = Math.round(
+        (unitPriceInCents * (100 - signal.percentOff)) / 100,
+      ) / 100;
+
+      const priceBadge = form.closest('section')?.querySelector<HTMLElement>('[data-gift-price-badge]');
+      if (priceBadge) {
+        priceBadge.innerHTML = `<s class='mr-1 text-[#65766f]'>$${unitPrice.toFixed(2)}</s> $${discountedUnitPrice.toFixed(2)} ${requestedDiscountCode} price`;
+      }
+      const priceNote = form.querySelector<HTMLElement>('[data-gift-price-note]');
+      if (priceNote) {
+        priceNote.innerHTML = `Estimated ${requestedDiscountCode} total before tax<br />Discount applied at checkout; final total may include tax`;
+      }
+      discountRow?.classList.remove('hidden');
+      if (discountCodeLabel) discountCodeLabel.textContent = requestedDiscountCode;
+
+      document.querySelectorAll<HTMLElement>('[data-launch-cta-label]').forEach((label) => {
+        label.textContent = `Get the ${requestedDiscountCode} price \u00b7 $${discountedUnitPrice.toFixed(2)}`;
+      });
+      document
+        .querySelectorAll<HTMLElement>('[data-umami-event="book-cart-opened"]')
+        .forEach((button) => {
+          button.dataset.umamiEventPrice = discountedUnitPrice.toFixed(2);
+        });
+      const savingsAmount = unitPrice - discountedUnitPrice;
+      document.querySelectorAll<HTMLElement>('[data-book-offer-copy]').forEach((copy) => {
+        copy.textContent = copy.textContent.replace(
+          /Save\s+\$[0-9]+(?:\.[0-9]{2})?/i,
+          `Save $${savingsAmount.toFixed(2)}`,
+        );
+      });
+      document.querySelectorAll<HTMLElement>('[data-book-offer-price]').forEach((price) => {
+        price.textContent = `$${discountedUnitPrice.toFixed(2)}`;
+      });
+    }
 
     const getQuantity = () => Number(quantityInput?.value || 1);
     const showError = (message: string) => {
@@ -136,6 +195,9 @@ const inputClass =
       if (quantityOutput) quantityOutput.textContent = String(quantity);
       if (regularSubtotal) regularSubtotal.textContent = `$${(unitPrice * quantity).toFixed(2)}`;
       if (subtotal) subtotal.textContent = `$${(discountedUnitPrice * quantity).toFixed(2)}`;
+      if (discountAmount) {
+        discountAmount.textContent = `-$${((unitPrice - discountedUnitPrice) * quantity).toFixed(2)}`;
+      }
       if (quantityMinus) quantityMinus.disabled = quantity <= 1;
       if (quantityPlus) quantityPlus.disabled = quantity >= 10;
     };

@@ -3,6 +3,11 @@ export interface BookStore {
   href: string;
 }
 
+export interface BookDiscountSignal {
+  code: string;
+  percentOff: number;
+}
+
 export interface BookListing {
   giftKey: string;
   badge: string;
@@ -17,6 +22,7 @@ export interface BookListing {
   numberOfPages: number;
   price: string;
   launchPrice: string;
+  discountSignals: BookDiscountSignal[];
   checkoutUrl: string;
   stores: BookStore[];
 }
@@ -38,6 +44,7 @@ export const books: BookListing[] = [
     numberOfPages: 278,
     price: '$29.99',
     launchPrice: '$19.99',
+    discountSignals: [{ code: 'LAUNCH70', percentOff: 70 }],
     checkoutUrl:
       'https://mdpabel.lemonsqueezy.com/checkout/buy/e5ebff5e-0903-433f-a892-bb6ef0dbdc3d?checkout%5Bdiscount_code%5D=Q5MZM5OQ',
     stores: [
@@ -67,6 +74,7 @@ export const books: BookListing[] = [
     numberOfPages: 31,
     price: '$5.99',
     launchPrice: '$1.80',
+    discountSignals: [{ code: 'LAUNCH70', percentOff: 70 }],
     checkoutUrl:
       'https://mdpabel.lemonsqueezy.com/checkout/buy/4045e4df-32b8-408c-84c4-eab2f81d65d2?checkout%5Bdiscount_code%5D=LAUNCH70',
     stores: [

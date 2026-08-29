@@ -120,7 +120,11 @@ const schema = [
       <div class='gap-7 book-catalog-grid mt-10'>
         {
           books.map((book) => (
-            <article class='flex flex-col bg-[#fffdf8] shadow-sm border border-[#d7ddd7] rounded-[2rem] min-w-0 overflow-hidden book-card'>
+            <article
+              class='flex flex-col bg-[#fffdf8] shadow-sm border border-[#d7ddd7] rounded-[2rem] min-w-0 overflow-hidden book-card'
+              data-book-card
+              data-regular-price={book.price.replace('$', '')}
+              data-discount-signals={JSON.stringify(book.discountSignals)}>
               <a
                 href={book.details}
                 data-discount-forward
@@ -166,7 +170,8 @@ const schema = [
                       data-umami-event-product={`${book.title} ${book.subtitle}`}
                       data-umami-event-price={book.launchPrice.replace('$', '')}
                       data-umami-event-currency='USD'
-                      data-umami-event-placement='catalog'>
+                      data-umami-event-placement='catalog'
+                      data-book-buy>
                       Buy now · {book.launchPrice}
                       <ArrowRight class='w-4 h-4 transition group-hover:translate-x-0.5' />
                     </a>
@@ -177,7 +182,7 @@ const schema = [
                       View details
                     </a>
                   </div>
-                  <p class='mt-3 text-xs font-bold text-[#b84e31]'>
+                  <p class='mt-3 text-xs font-bold text-[#b84e31]' data-book-offer>
                     Launch offer: <s class='text-[#788780]'>{book.price}</s> {book.launchPrice} · Limited-time price.
                   </p>
                   <div class='flex flex-wrap gap-x-4 gap-y-2 mt-4'>
@@ -219,6 +224,31 @@ const schema = [
         link.href = destination.toString();
       });
     }
+
+    document.querySelectorAll<HTMLElement>('[data-book-card]').forEach((card) => {
+      let signals: Array<{ code?: string; percentOff?: number }> = [];
+      try {
+        signals = JSON.parse(card.dataset.discountSignals || '[]');
+      } catch {
+        signals = [];
+      }
+
+      const signal = signals.find(
+        (item) => item.code?.toUpperCase() === discountCode?.toUpperCase(),
+      );
+      if (!signal || typeof signal.percentOff !== 'number') return;
+
+      const regularPrice = Number(card.dataset.regularPrice || 0);
+      const discountedPrice = Math.round(regularPrice * (100 - signal.percentOff)) / 100;
+      const formattedPrice = `$${discountedPrice.toFixed(2)}`;
+      const buyLink = card.querySelector<HTMLElement>('[data-book-buy]');
+      if (buyLink?.firstChild) buyLink.firstChild.textContent = `Buy now \u00b7 ${formattedPrice}`;
+      const offer = card.querySelector<HTMLElement>('[data-book-offer]');
+      if (offer) {
+        offer.innerHTML = `${discountCode} price: <s class='text-[#788780]'>${card.dataset.regularPrice ? `$${Number(card.dataset.regularPrice).toFixed(2)}` : ''}</s> ${formattedPrice} \u00b7 Discount applied at checkout.`;
+      }
+      if (buyLink) buyLink.dataset.umamiEventPrice = discountedPrice.toFixed(2);
+    });
   </script>
 
   <section class='pb-16 md:pb-24'>
