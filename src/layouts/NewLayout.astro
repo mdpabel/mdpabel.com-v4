@@ -127,6 +127,27 @@ const schemaGraph = schemaItems.length
     text-wrap: balance;
   }
 
+  :where(.article-prose, .research-prose) {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  :where(.article-prose, .research-prose) :where(p, li, a, td, th) {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  :where(.article-prose, .research-prose) code:not(pre code) {
+    display: inline;
+    max-width: 100%;
+    white-space: pre-wrap !important;
+    overflow-wrap: anywhere !important;
+    word-break: break-all !important;
+  }
+
   @media (max-width: 640px) {
     .new-shell {
       width: min(100% - 28px, 1180px);

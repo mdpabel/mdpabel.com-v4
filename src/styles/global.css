@@ -227,3 +227,7 @@ ul {
 li::marker {
   color: #17352c;
 }
+
+code {
+  word-wrap: anywhere;
+}

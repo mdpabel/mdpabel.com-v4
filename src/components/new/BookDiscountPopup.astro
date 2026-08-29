@@ -1,0 +1,347 @@
+---
+import { ArrowRight, Check, LockKeyhole, Mail, X } from '@lucide/astro';
+import {
+  CONTACT_FORM_7_VERSION,
+  WP_ARMOUR_FIELD_NAME,
+  WP_ARMOUR_FIELD_VALUE,
+} from '../../lib/contactForms';
+
+const wpApiUrl = import.meta.env.PUBLIC_WORDPRESS_API_URL;
+const formId = '2831';
+const discountCode = 'LAUNCH70';
+const bookUrl =
+  '/books/wordpress-malware-removal/?checkout%5Bdiscount_code%5D=LAUNCH70&utm_source=malware-research&utm_medium=popup&utm_campaign=sc-403-book-discount';
+---
+
+<div
+  id='book-discount-popup'
+  class='book-discount-popup fixed inset-0 z-[120] grid place-items-center overflow-y-auto bg-[#071b16]/85 p-3 backdrop-blur-sm sm:p-6'
+  role='dialog'
+  aria-modal='true'
+  aria-labelledby='book-discount-popup-title'
+  hidden>
+  <button
+    type='button'
+    class='absolute inset-0 cursor-default'
+    data-book-popup-close
+    aria-label='Close book offer'></button>
+
+  <section class='book-discount-card relative my-auto grid w-full max-w-5xl overflow-hidden rounded-[1.75rem] bg-[#fffdf8] shadow-2xl lg:grid-cols-[0.82fr_1.18fr]'>
+    <button
+      type='button'
+      data-book-popup-close
+      class='absolute right-3 top-3 z-20 grid h-10 w-10 place-items-center rounded-full border border-white/20 bg-[#17352c] text-white shadow-lg transition hover:bg-[#244c40] focus:outline-none focus:ring-4 focus:ring-[#ed7655]/40'
+      aria-label='Close book offer'>
+      <X class='h-5 w-5' />
+    </button>
+
+    <div class='book-discount-visual relative hidden min-h-[560px] overflow-hidden bg-[#17352c] p-8 lg:flex lg:flex-col lg:justify-between'>
+      <div class='book-discount-grid absolute inset-0'></div>
+      <div class='relative z-10'>
+        <p class='text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#8ed0b5]'>Research reader offer</p>
+        <p class='editorial-heading mt-3 max-w-xs text-3xl font-semibold leading-tight text-white'>The field guide behind this investigation.</p>
+      </div>
+      <img
+        src='/images/book/book-cover.png'
+        alt='WordPress Malware Removal for Developers and Site Owners book cover'
+        width='800'
+        height='1000'
+        loading='lazy'
+        decoding='async'
+        class='book-discount-cover relative z-10 mx-auto w-[72%] max-w-[280px] object-contain'
+      />
+      <p class='relative z-10 text-xs leading-6 text-[#c8d8d1]'>278 pages · 17 chapters · 81 real screenshots and figures</p>
+    </div>
+
+    <div class='p-5 sm:p-8 lg:p-10'>
+      <div class='pr-10'>
+        <span class='inline-flex rounded-full bg-[#fee5dc] px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#a9442d]'>Private 70% discount</span>
+        <h2 id='book-discount-popup-title' class='editorial-heading mt-4 text-3xl font-semibold leading-tight text-[#17352c] sm:text-4xl'>Want the complete WordPress malware removal playbook?</h2>
+      </div>
+      <p class='mt-4 text-sm leading-7 text-[#52665f] sm:text-base'>This SC 4.0.3 report is one investigation. The book turns the same evidence-first process into a reusable workflow for files, databases, persistence, hidden users, redirects, checkout attacks, and recovery verification.</p>
+
+      <div class='mt-6 flex flex-wrap items-end gap-x-4 gap-y-2 border-y border-[#d7ddd7] py-5'>
+        <div>
+          <span class='block text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#788780]'>Your research-reader price</span>
+          <div class='mt-1 flex items-baseline gap-3'>
+            <s class='text-lg font-bold text-[#788780]'>$29.99</s>
+            <strong class='text-4xl font-black tracking-tight text-[#17352c]'>$9.00</strong>
+          </div>
+        </div>
+        <span class='mb-1 rounded-full bg-[#dcece5] px-3 py-1.5 text-xs font-extrabold text-[#1f6b55]'>{discountCode} · Save $20.99</span>
+      </div>
+
+      <form
+        id='book-discount-form'
+        class='mt-6'
+        data-wp-url={wpApiUrl}
+        data-form-id={formId}
+        data-cf7-version={CONTACT_FORM_7_VERSION}
+        data-book-url={bookUrl}>
+        <label for='book-discount-email' class='text-xs font-extrabold text-[#17352c]'>Where should we send your private link?</label>
+        <div class='mt-2 flex flex-col gap-3 sm:flex-row'>
+          <div class='relative min-w-0 flex-1'>
+            <Mail class='pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#65766f]' />
+            <input
+              id='book-discount-email'
+              name='your-email'
+              type='email'
+              autocomplete='email'
+              required
+              placeholder='you@example.com'
+              class='w-full rounded-full border border-[#bfcac4] bg-white py-3.5 pl-11 pr-4 text-sm text-[#17352c] outline-none transition placeholder:text-[#91a099] focus:border-[#1f6b55] focus:ring-4 focus:ring-[#1f6b55]/10'
+            />
+          </div>
+          <button
+            id='book-discount-submit'
+            type='submit'
+            data-umami-event='book-discount-requested'
+            data-umami-event-placement='sc-403-research-popup'
+            class='inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-[#ed7655] px-6 py-3.5 text-sm font-extrabold text-[#17352c] shadow-lg shadow-[#ed7655]/20 transition hover:-translate-y-0.5 hover:bg-[#ff8a68] disabled:cursor-wait disabled:opacity-70'>
+            Email my discount <ArrowRight class='h-4 w-4' />
+          </button>
+        </div>
+        <label class='mt-3 flex items-start gap-2 text-[11px] leading-5 text-[#65766f]'>
+          <input name='book-consent' type='checkbox' value='Yes' required class='mt-1 h-4 w-4 shrink-0 accent-[#1f6b55]' />
+          <span>Email me this discount link and occasional updates about the book. Unsubscribe at any time.</span>
+        </label>
+        <input type='hidden' name='discount-code' value={discountCode} />
+        <input type='hidden' name='discount-url' value={bookUrl} />
+        <input type='hidden' name='campaign' value='sc-403-book-discount' />
+        <input type='hidden' name={WP_ARMOUR_FIELD_NAME} value={WP_ARMOUR_FIELD_VALUE} />
+        <p id='book-discount-error' class='mt-3 hidden rounded-xl bg-[#fee5dc] p-3 text-xs font-semibold leading-5 text-[#9f432c]' role='alert'></p>
+      </form>
+
+      <div id='book-discount-success' class='mt-6 hidden rounded-2xl border border-[#b7cbc1] bg-[#eef6f1] p-5' aria-live='polite'>
+        <p class='flex items-center gap-2 font-extrabold text-[#17352c]'><Check class='h-5 w-5 text-[#1f6b55]' /> Your private price is unlocked.</p>
+        <p class='mt-2 text-xs leading-6 text-[#52665f]'>Check your inbox, or use the secure link below now. The <strong>LAUNCH70</strong> code is included in the link.</p>
+        <a
+          href={bookUrl}
+          class='mt-3 block break-all rounded-xl border border-[#c4d8ce] bg-white/80 px-3 py-2 text-[11px] font-bold leading-5 text-[#1f6b55] underline decoration-[#ed7655] underline-offset-2'>
+          mdpabel.com/books/wordpress-malware-removal/?checkout%5Bdiscount_code%5D=LAUNCH70
+        </a>
+        <a
+          href={bookUrl}
+          data-umami-event='book-discount-opened'
+          data-umami-event-placement='sc-403-research-popup-success'
+          class='mt-4 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#1f6b55] px-6 py-3.5 text-sm font-extrabold text-white transition hover:bg-[#164a3c]'>
+          Get the book for $9.00 <ArrowRight class='h-4 w-4' />
+        </a>
+      </div>
+
+      <div id='book-discount-fallback' class='mt-4 hidden text-center'>
+        <a href={bookUrl} class='text-xs font-extrabold text-[#1f6b55] underline decoration-[#ed7655] underline-offset-4'>Use the $9.00 discount link now instead</a>
+      </div>
+
+      <div class='mt-5 flex flex-wrap items-center justify-between gap-3 text-[10px] font-semibold uppercase tracking-[0.08em] text-[#788780]'>
+        <span class='flex items-center gap-1.5'><LockKeyhole class='h-3.5 w-3.5' /> No payment details here</span>
+        <button type='button' data-book-popup-close class='normal-case tracking-normal underline decoration-[#b7c2bc] underline-offset-4 hover:text-[#17352c]'>No thanks, continue reading</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  const popup = document.getElementById('book-discount-popup');
+  const form = document.getElementById('book-discount-form') as HTMLFormElement | null;
+  const emailInput = document.getElementById('book-discount-email') as HTMLInputElement | null;
+  const submitButton = document.getElementById('book-discount-submit') as HTMLButtonElement | null;
+  const successMessage = document.getElementById('book-discount-success');
+  const errorMessage = document.getElementById('book-discount-error');
+  const fallbackLink = document.getElementById('book-discount-fallback');
+  const closeButtons = popup?.querySelectorAll<HTMLButtonElement>('[data-book-popup-close]');
+  const sessionKey = 'mdp-book-discount-sc403-seen';
+  const suppressionKey = 'mdp-book-discount-sc403-suppressed-until';
+  const dismissForDays = 14;
+  const successForDays = 90;
+  let isOpen = false;
+  let previousOverflow = '';
+  let triggerTimer: number | undefined;
+
+  const track = (event: string) => {
+    const umami = (window as Window & { umami?: { track?: (name: string, data?: Record<string, string>) => void } }).umami;
+    umami?.track?.(event, { placement: 'sc-403-research-popup', discount: 'LAUNCH70' });
+  };
+
+  const getSuppressedUntil = () => {
+    try {
+      return Number(localStorage.getItem(suppressionKey) || 0);
+    } catch {
+      return 0;
+    }
+  };
+
+  const suppressFor = (days: number) => {
+    try {
+      localStorage.setItem(suppressionKey, String(Date.now() + days * 24 * 60 * 60 * 1000));
+    } catch {
+      // The popup still works when storage is blocked.
+    }
+  };
+
+  const hasAppearedThisSession = () => {
+    try {
+      return sessionStorage.getItem(sessionKey) === '1';
+    } catch {
+      return false;
+    }
+  };
+
+  const markSessionSeen = () => {
+    try {
+      sessionStorage.setItem(sessionKey, '1');
+    } catch {
+      // Session limiting is optional when storage is blocked.
+    }
+  };
+
+  const stopTriggers = () => {
+    window.removeEventListener('scroll', handleScroll);
+    if (triggerTimer) window.clearTimeout(triggerTimer);
+  };
+
+  const openPopup = () => {
+    if (!popup || isOpen || hasAppearedThisSession() || getSuppressedUntil() > Date.now()) return;
+    isOpen = true;
+    markSessionSeen();
+    stopTriggers();
+    previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    popup.hidden = false;
+    emailInput?.focus({ preventScroll: true });
+    track('book-discount-popup-shown');
+  };
+
+  const closePopup = () => {
+    if (!popup || !isOpen) return;
+    isOpen = false;
+    popup.hidden = true;
+    document.body.style.overflow = previousOverflow;
+    suppressFor(dismissForDays);
+    track('book-discount-popup-dismissed');
+  };
+
+  function handleScroll() {
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    if (scrollable > 0 && window.scrollY / scrollable >= 0.25) openPopup();
+  }
+
+  if (popup && !hasAppearedThisSession() && getSuppressedUntil() <= Date.now()) {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    triggerTimer = window.setTimeout(openPopup, 20000);
+  }
+
+  closeButtons?.forEach((button) => button.addEventListener('click', closePopup));
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && isOpen) closePopup();
+  });
+
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    errorMessage?.classList.add('hidden');
+    fallbackLink?.classList.add('hidden');
+
+    const formData = new FormData(form);
+    formData.delete('book-consent');
+    const apiUrl = form.dataset.wpUrl;
+    const currentFormId = form.dataset.formId;
+    const contactFormVersion = form.dataset.cf7Version;
+
+    if (!apiUrl || !currentFormId || !contactFormVersion) {
+      if (errorMessage) {
+        errorMessage.textContent = 'Email delivery is unavailable right now. Your discount link still works below.';
+        errorMessage.classList.remove('hidden');
+      }
+      fallbackLink?.classList.remove('hidden');
+      return;
+    }
+
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = 'Sending your link...';
+    }
+    formData.append('_wpcf7', currentFormId);
+    formData.append('_wpcf7_version', contactFormVersion);
+    formData.append('_wpcf7_locale', 'en_US');
+    formData.append('_wpcf7_unit_tag', `wpcf7-f${currentFormId}-p0-o2`);
+    formData.append('from-url', window.location.pathname);
+
+    try {
+      const response = await fetch(
+        `${apiUrl}/wp-json/contact-form-7/v1/contact-forms/${currentFormId}/feedback`,
+        { method: 'POST', body: formData },
+      );
+      if (!response.ok) throw new Error('Email delivery is unavailable right now.');
+      const result = await response.json();
+      if (result.status !== 'mail_sent') throw new Error(result.message || 'The email could not be sent.');
+      form.classList.add('hidden');
+      successMessage?.classList.remove('hidden');
+      suppressFor(successForDays);
+      track('book-discount-popup-submitted');
+    } catch (error) {
+      if (errorMessage) {
+        errorMessage.textContent = `${error instanceof Error ? error.message : 'The email could not be sent.'} Your discount link still works below.`;
+        errorMessage.classList.remove('hidden');
+      }
+      fallbackLink?.classList.remove('hidden');
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Email my discount';
+      }
+    }
+  });
+</script>
+
+<style>
+  .book-discount-popup[hidden] {
+    display: none;
+  }
+
+  .book-discount-card {
+    animation: book-popup-enter 360ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+
+  .book-discount-grid {
+    background-image:
+      linear-gradient(rgba(142, 208, 181, 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(142, 208, 181, 0.08) 1px, transparent 1px),
+      radial-gradient(circle at 70% 52%, rgba(237, 118, 85, 0.22), transparent 35%);
+    background-size: 28px 28px, 28px 28px, auto;
+  }
+
+  .book-discount-cover {
+    filter: drop-shadow(0 26px 24px rgba(0, 0, 0, 0.34));
+    transform: rotate(-3deg);
+  }
+
+  @keyframes book-popup-enter {
+    from {
+      opacity: 0;
+      transform: translateY(20px) scale(0.985);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .book-discount-popup {
+      align-items: end;
+      padding: 0;
+    }
+
+    .book-discount-card {
+      max-height: 94dvh;
+      overflow-y: auto;
+      border-radius: 1.5rem 1.5rem 0 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .book-discount-card {
+      animation: none;
+    }
+  }
+</style>
