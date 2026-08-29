@@ -12,7 +12,6 @@ import {
 } from "@lucide/astro";
 import { render, type CollectionEntry } from "astro:content";
 import Breadcrumbs from "../new/Breadcrumbs.astro";
-import BookDiscountPopup from "../new/BookDiscountPopup.astro";
 import NewLayout from "../../layouts/NewLayout.astro";
 import { getResearchSlug } from "../../lib/research";
 
@@ -25,7 +24,6 @@ const { entry, relatedEntries = [] } = Astro.props;
 const { Content } = await render(entry);
 const data = entry.data;
 const slug = getResearchSlug(entry);
-const showBookDiscountPopup = slug === "sc-403-self-healing-wordpress-malware";
 const path = `/malware-research/${slug}/`;
 const url = `https://www.mdpabel.com${path}`;
 const imageUrls = data.screenshots.map((screenshot) => `https://www.mdpabel.com${screenshot.src}`);
@@ -262,7 +260,6 @@ const formattedReviewDate = data.lastReviewed
       )}
     </aside>
   </div>
-  {showBookDiscountPopup && <BookDiscountPopup />}
 </NewLayout>
 
 <style is:global>

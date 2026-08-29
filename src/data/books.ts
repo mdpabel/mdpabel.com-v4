@@ -20,6 +20,9 @@ export interface BookListing {
   metrics: string[];
   bestFor: string;
   numberOfPages: number;
+  pricingType?: 'standard' | 'pwyw';
+  minimumPrice?: number;
+  suggestedPrice?: number;
   price: string;
   launchPrice: string;
   discountSignals: BookDiscountSignal[];
@@ -42,11 +45,14 @@ export const books: BookListing[] = [
     bestFor:
       'Developers, site owners, agencies, and responders who want the complete WordPress malware-removal workflow.',
     numberOfPages: 278,
-    price: '$29.99',
-    launchPrice: '$19.99',
-    discountSignals: [{ code: 'LAUNCH70', percentOff: 70 }],
+    pricingType: 'pwyw',
+    minimumPrice: 9.99,
+    suggestedPrice: 19.99,
+    price: '$9.99',
+    launchPrice: '$9.99',
+    discountSignals: [],
     checkoutUrl:
-      'https://mdpabel.lemonsqueezy.com/checkout/buy/e5ebff5e-0903-433f-a892-bb6ef0dbdc3d?checkout%5Bdiscount_code%5D=Q5MZM5OQ',
+      'https://mdpabel.lemonsqueezy.com/checkout/buy/e5ebff5e-0903-433f-a892-bb6ef0dbdc3d',
     stores: [
       {
         label: 'Leanpub',
