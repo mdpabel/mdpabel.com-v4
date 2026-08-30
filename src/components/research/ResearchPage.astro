@@ -12,6 +12,7 @@ import {
 } from "@lucide/astro";
 import { render, type CollectionEntry } from "astro:content";
 import Breadcrumbs from "../new/Breadcrumbs.astro";
+import BookDiscountPopup from "../new/BookDiscountPopup.astro";
 import NewLayout from "../../layouts/NewLayout.astro";
 import { getResearchSlug } from "../../lib/research";
 
@@ -260,6 +261,7 @@ const formattedReviewDate = data.lastReviewed
       )}
     </aside>
   </div>
+  <BookDiscountPopup />
 </NewLayout>
 
 <style is:global>

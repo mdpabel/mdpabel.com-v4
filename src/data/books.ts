@@ -78,11 +78,14 @@ export const books: BookListing[] = [
     bestFor:
       'Developers, freelancers, and security professionals handling persistent or repeatedly returning WordPress malware.',
     numberOfPages: 31,
-    price: '$5.99',
-    launchPrice: '$1.80',
-    discountSignals: [{ code: 'LAUNCH70', percentOff: 70 }],
+    pricingType: 'pwyw',
+    minimumPrice: 2.99,
+    suggestedPrice: 9.99,
+    price: '$2.99',
+    launchPrice: '$2.99',
+    discountSignals: [],
     checkoutUrl:
-      'https://mdpabel.lemonsqueezy.com/checkout/buy/4045e4df-32b8-408c-84c4-eab2f81d65d2?checkout%5Bdiscount_code%5D=LAUNCH70',
+      'https://mdpabel.lemonsqueezy.com/checkout/buy/4045e4df-32b8-408c-84c4-eab2f81d65d2',
     stores: [
       {
         label: 'Leanpub',
