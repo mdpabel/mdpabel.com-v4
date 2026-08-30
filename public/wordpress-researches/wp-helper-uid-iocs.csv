@@ -1,0 +1,15 @@
+indicator,type,confidence,context
+4bbeaed0845bcd965c92902a1dfb314d4afd79e48029dc22bf5fa7597a0d93cb,SHA-256,higher,Exact recovered wp-content/admin-helper.php
+0cbe6a757abcfe7c8968ae169929164d978f120847c05ca91f5e09c44293c4f3,SHA-256,higher,Exact recovered wp-content/mu-plugins/boot-loader.php
+0b9c43c85cb18fd31e0ab224cfd3f31c,MD5,higher,Exact recovered wp-content/admin-helper.php
+2779c65ee9b83a09ea170d284d558605,MD5,higher,Exact recovered wp-content/mu-plugins/boot-loader.php
+wp_helper_uid,WordPress option,higher,Shared coordination option used by both samples
+"Widget cache bootstrap, ver b2ccbcd25e",Code marker,higher,Fake header in admin-helper.php
+Runtime dependencies bootstrap 9b66554fd3,Code marker,higher,Fake header in boot-loader.php
+wp_179e4b,Code probe,higher,Use with wp_4bb239 and wp_4960ab rather than alone
+wp_4bb239,Code probe,higher,Use with wp_179e4b and wp_4960ab rather than alone
+wp_4960ab,Code probe,higher,Use with wp_179e4b and wp_4bb239 rather than alone
+8e753f173a5c428fe6c44646cddb0da04952628bcd098400d6fe9fcd3f3bb435,Withheld-secret SHA-256,higher,Hash only; direct-endpoint gate value is not published
+b6efe58fb91fb0bb9d11fce3b6eb42bcc1b8822deacc39facc657d17cffb1bf5,Withheld-secret SHA-256,higher,Hash only; MU-plugin gate value is not published
+wp-content/admin-helper.php,Observed path,contextual,Validate content or hash before removal
+wp-content/mu-plugins/boot-loader.php,Observed path,contextual,Validate content or hash before removal
