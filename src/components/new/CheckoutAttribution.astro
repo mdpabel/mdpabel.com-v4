@@ -1,0 +1,139 @@
+<script is:inline>
+  (() => {
+    const storageKey = 'mdp-checkout-attribution-v1';
+    const campaignKeys = [
+      'utm_source',
+      'utm_medium',
+      'utm_campaign',
+      'utm_content',
+      'utm_term',
+      'fbclid',
+    ];
+    const maximumValueLength = 500;
+
+    const clean = (value) => {
+      if (typeof value !== 'string') return '';
+      return value.trim().slice(0, maximumValueLength);
+    };
+
+    const readStoredAttribution = () => {
+      try {
+        const value = JSON.parse(localStorage.getItem(storageKey) || '{}');
+        return value && typeof value === 'object' ? value : {};
+      } catch {
+        return {};
+      }
+    };
+
+    const saveAttribution = (attribution) => {
+      try {
+        localStorage.setItem(storageKey, JSON.stringify(attribution));
+      } catch {
+        // Checkout attribution still works for the current page when storage is unavailable.
+      }
+    };
+
+    const readCookie = (name) => {
+      const prefix = `${name}=`;
+      const item = document.cookie
+        .split(';')
+        .map((part) => part.trim())
+        .find((part) => part.startsWith(prefix));
+      return item ? clean(decodeURIComponent(item.slice(prefix.length))) : '';
+    };
+
+    const getPageAttribution = () => {
+      const parameters = new URLSearchParams(window.location.search);
+      const incoming = {};
+      campaignKeys.forEach((key) => {
+        const value = clean(parameters.get(key));
+        if (value) incoming[key] = value;
+      });
+
+      const hasIncomingCampaign = campaignKeys.some((key) => incoming[key]);
+      const isDedicatedMetaPage = window.location.pathname === '/books/wordpress-malware-removal-meta/';
+      let attribution = readStoredAttribution();
+
+      if (hasIncomingCampaign || (isDedicatedMetaPage && !attribution.utm_source)) {
+        attribution = {
+          ...(isDedicatedMetaPage
+            ? {
+                utm_source: 'meta',
+                utm_medium: 'paid_social',
+                utm_campaign: 'book_sales_purchase_tier1_video',
+                utm_content: 'video_01',
+              }
+            : {}),
+          ...incoming,
+          landing_page: window.location.pathname,
+          attribution_captured_at: new Date().toISOString(),
+        };
+
+        const referrer = clean(document.referrer);
+        if (referrer) attribution.referrer = referrer;
+        saveAttribution(attribution);
+      }
+
+      const fbp = readCookie('_fbp');
+      const fbc = readCookie('_fbc');
+      if (fbp) attribution.fbp = fbp;
+      if (fbc) attribution.fbc = fbc;
+
+      return attribution;
+    };
+
+    const addCheckoutAttribution = (checkoutUrl, extra = {}) => {
+      const checkout = checkoutUrl instanceof URL ? checkoutUrl : new URL(checkoutUrl, window.location.href);
+      if (checkout.hostname !== 'mdpabel.lemonsqueezy.com') return checkout;
+
+      const attribution = {
+        ...getPageAttribution(),
+        checkout_page: window.location.pathname,
+        ...extra,
+      };
+
+      Object.entries(attribution).forEach(([key, rawValue]) => {
+        const value = clean(String(rawValue ?? ''));
+        if (value) checkout.searchParams.set(`checkout[custom][${key}]`, value);
+      });
+
+      // Lemon Squeezy only persists values passed through checkout[custom].
+      campaignKeys.forEach((key) => checkout.searchParams.delete(key));
+      return checkout;
+    };
+
+    window.mdpApplyCheckoutAttribution = addCheckoutAttribution;
+
+    const prepareCheckoutLink = (link) => {
+      if (!(link instanceof HTMLAnchorElement)) return;
+      if (!link.href.includes('mdpabel.lemonsqueezy.com/checkout/')) return;
+      const placement = clean(link.dataset.umamiEventPlacement || link.dataset.checkoutPlacement || '');
+      const checkout = addCheckoutAttribution(link.href, {
+        ...(placement ? { checkout_placement: placement } : {}),
+      });
+      link.href = checkout.toString();
+    };
+
+    const prepareAllCheckoutLinks = () => {
+      document
+        .querySelectorAll('a[href*="mdpabel.lemonsqueezy.com/checkout/"]')
+        .forEach(prepareCheckoutLink);
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', prepareAllCheckoutLinks, { once: true });
+    } else {
+      prepareAllCheckoutLinks();
+    }
+
+    document.addEventListener(
+      'click',
+      (event) => {
+        const target = event.target;
+        if (!(target instanceof Element)) return;
+        prepareCheckoutLink(target.closest('a'));
+      },
+      true,
+    );
+  })();
+</script>

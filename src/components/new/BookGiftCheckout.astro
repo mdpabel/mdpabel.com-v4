@@ -227,11 +227,23 @@ const inputClass =
       finalCheckoutUrl.searchParams.set('checkout[email]', buyerEmail);
       finalCheckoutUrl.searchParams.set('checkout[name]', buyerName);
 
+      const attributionWindow = window as typeof window & {
+        mdpApplyCheckoutAttribution?: (
+          checkoutUrl: URL,
+          extra?: Record<string, string>,
+        ) => URL;
+      };
+      const attributedCheckoutUrl = attributionWindow.mdpApplyCheckoutAttribution
+        ? attributionWindow.mdpApplyCheckoutAttribution(finalCheckoutUrl, {
+            checkout_placement: 'gift-checkout',
+          })
+        : finalCheckoutUrl;
+
       if (submitButton) {
         submitButton.disabled = true;
         submitButton.textContent = 'Opening secure checkout…';
       }
-      window.location.assign(finalCheckoutUrl.toString());
+      window.location.assign(attributedCheckoutUrl.toString());
     });
   });
 </script>
