@@ -12,6 +12,7 @@ const staticPaths = [
   '/books/',
   '/books/library/',
   '/books/wordpress-malware-removal/',
+  '/books/wordpress-malware-removal/changelog/',
   '/books/advanced-wordpress-malware-removal/',
   '/wordpress-maintenance/',
   '/wordpress-error-fixing/',
