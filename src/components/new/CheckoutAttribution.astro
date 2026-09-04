@@ -84,7 +84,7 @@
 
     const addCheckoutAttribution = (checkoutUrl, extra = {}) => {
       const checkout = checkoutUrl instanceof URL ? checkoutUrl : new URL(checkoutUrl, window.location.href);
-      if (checkout.hostname !== 'mdpabel.lemonsqueezy.com') return checkout;
+      if (checkout.hostname !== 'checkout.mdpabel.com') return checkout;
 
       const attribution = {
         ...getPageAttribution(),
@@ -106,7 +106,7 @@
 
     const prepareCheckoutLink = (link) => {
       if (!(link instanceof HTMLAnchorElement)) return;
-      if (!link.href.includes('mdpabel.lemonsqueezy.com/checkout/')) return;
+      if (!link.href.includes('checkout.mdpabel.com/checkout/')) return;
       const placement = clean(link.dataset.umamiEventPlacement || link.dataset.checkoutPlacement || '');
       const checkout = addCheckoutAttribution(link.href, {
         ...(placement ? { checkout_placement: placement } : {}),
@@ -116,7 +116,7 @@
 
     const prepareAllCheckoutLinks = () => {
       document
-        .querySelectorAll('a[href*="mdpabel.lemonsqueezy.com/checkout/"]')
+        .querySelectorAll('a[href*="checkout.mdpabel.com/checkout/"]')
         .forEach(prepareCheckoutLink);
     };
 

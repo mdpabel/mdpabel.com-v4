@@ -52,7 +52,7 @@ export const books: BookListing[] = [
     launchPrice: '$9.99',
     discountSignals: [],
     checkoutUrl:
-      'https://mdpabel.lemonsqueezy.com/checkout/buy/e5ebff5e-0903-433f-a892-bb6ef0dbdc3d',
+      'https://checkout.mdpabel.com/checkout/buy/e5ebff5e-0903-433f-a892-bb6ef0dbdc3d',
     stores: [
       {
         label: 'Leanpub',
@@ -85,7 +85,7 @@ export const books: BookListing[] = [
     launchPrice: '$2.99',
     discountSignals: [],
     checkoutUrl:
-      'https://mdpabel.lemonsqueezy.com/checkout/buy/4045e4df-32b8-408c-84c4-eab2f81d65d2',
+      'https://checkout.mdpabel.com/checkout/buy/4045e4df-32b8-408c-84c4-eab2f81d65d2',
     stores: [
       {
         label: 'Leanpub',
