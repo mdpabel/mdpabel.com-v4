@@ -164,16 +164,16 @@ const schema = [
                 <div class='mt-auto pt-7'>
                   <div class='flex flex-wrap items-center gap-3'>
                     <a
-                      href={book.pricingType === 'pwyw' ? book.checkoutUrl : `${book.details}#book-quantity`}
+                      href={book.details}
                       data-discount-forward
                       class='group inline-flex items-center gap-2 bg-[#1f6b55] hover:bg-[#164a3c] px-5 py-3 rounded-full font-extrabold text-white text-xs transition hover:-translate-y-0.5'
-                      data-umami-event='book-cart-opened'
+                      data-umami-event='book-details-opened'
                       data-umami-event-product={`${book.title} ${book.subtitle}`}
                       data-umami-event-price={String(book.minimumPrice ?? Number(book.launchPrice.replace('$', '')))}
                       data-umami-event-currency='USD'
                       data-umami-event-placement='catalog'
                       data-book-buy>
-                      {book.pricingType === 'pwyw' ? `Get the book · $${book.minimumPrice?.toFixed(2)}+` : `Buy now · ${book.launchPrice}`}
+                      {book.giftKey === 'wordpress-malware-removal' ? 'Review book & free chapter' : 'Review guide & free research'}
                       <ArrowRight class='w-4 h-4 transition group-hover:translate-x-0.5' />
                     </a>
                     <a
