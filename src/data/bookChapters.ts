@@ -272,4 +272,18 @@ export const bookChapters: BookChapter[] = [
       "Watch for changes that should trigger an investigation",
     ],
   },
+  {
+    number: 18,
+    title: "Freelancing with WordPress Malware Removal",
+    slug: "freelancing-with-wordpress-malware-removal",
+    shortDescription: "Turn malware-removal knowledge into a carefully scoped professional service built on evidence, authorization, and trust.",
+    topics: [
+      "Understand the scale of WordPress attacks without overstating demand or earnings",
+      "Use AI as an investigation assistant rather than proof",
+      "Compare visible Fiverr service categories responsibly",
+      "Write an evidence-led Upwork proposal for a redirect-malware job",
+      "Use LinkedIn and a symptom-focused portfolio to build trust",
+      "Scope client work safely and practise before accepting production risk",
+    ],
+  },
 ];

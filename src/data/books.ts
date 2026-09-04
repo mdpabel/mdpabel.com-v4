@@ -41,10 +41,10 @@ export const books: BookListing[] = [
     cover: '/book-cover.png',
     alt: 'WordPress Malware Removal for Developers and Site Owners book cover',
     details: '/books/wordpress-malware-removal/',
-    metrics: ['278 pages', '17 chapters', '81 screenshots and figures'],
+    metrics: ['293 pages', '18 chapters', '86 screenshots and figures'],
     bestFor:
       'Developers, site owners, agencies, and responders who want the complete WordPress malware-removal workflow.',
-    numberOfPages: 278,
+    numberOfPages: 293,
     pricingType: 'pwyw',
     minimumPrice: 9.99,
     suggestedPrice: 19.99,
