@@ -1,0 +1,39 @@
+---
+interface Props {
+  trackPurchase?: boolean;
+}
+
+const { trackPurchase = false } = Astro.props;
+const googleAdsId = 'AW-18431952050';
+const purchaseConversionId = 'AW-18431952050/NzQrCKbB9e4cELKJhdVE';
+---
+
+<script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${googleAdsId}`}></script>
+<script is:inline>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+  gtag('config', 'AW-18431952050');
+</script>
+
+{
+  trackPurchase && (
+    <script is:inline define:vars={{ purchaseConversionId }}>
+      const purchaseParameters = new URLSearchParams(window.location.search);
+      const transactionId =
+        purchaseParameters.get('order_id') ||
+        purchaseParameters.get('order_identifier') ||
+        purchaseParameters.get('transaction_id') ||
+        '';
+
+      gtag('event', 'conversion', {
+        send_to: purchaseConversionId,
+        value: 1.0,
+        currency: 'USD',
+        transaction_id: transactionId,
+      });
+    </script>
+  )
+}

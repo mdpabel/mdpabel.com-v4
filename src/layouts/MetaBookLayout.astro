@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import Analytics from '../components/new/Analytics.astro';
+import GoogleAdsTracking from '../components/new/GoogleAdsTracking.astro';
 import MetaAdsTracking from '../components/new/MetaAdsTracking.astro';
 
 interface Props {
@@ -43,6 +44,7 @@ const socialImage = new URL(image, Astro.site).href;
     <meta name='twitter:title' content={title} />
     <meta name='twitter:description' content={description} />
     <meta name='twitter:image' content={socialImage} />
+    <GoogleAdsTracking />
     <Analytics />
     <MetaAdsTracking />
     <script is:inline>
