@@ -28,6 +28,15 @@ const consentId = `meta-book-${mode}-consent`;
   data-download-url={caseStudyUrl}
   data-discount-code={discountCode}
   class='grid gap-4'>
+  {isCheckout && (
+    <div class='flex flex-wrap justify-between items-center gap-2 bg-[#fff4ef] px-4 py-3 border border-[#f2c7b9] rounded-xl'>
+      <span class='font-extrabold text-[#b84e31] text-sm'>75% off $19.99 for 2 days</span>
+      <span class='bg-white px-3 py-1.5 border border-[#ed7655] rounded-full font-extrabold text-[#9f432c] text-xs tracking-[0.08em]'>
+        Code: {discountCode}
+      </span>
+    </div>
+  )}
+
   <label for={emailId} class='grid gap-2 font-extrabold text-sm text-[#17352c]'>
     {isCheckout ? 'Your email for checkout' : 'Enter your email to unlock the case study'}
     <span class='relative block'>
@@ -43,6 +52,9 @@ const consentId = `meta-book-${mode}-consent`;
         class='bg-white py-3.5 pr-4 pl-11 border border-[#bfcac4] focus:border-[#1f6b55] rounded-xl outline-none focus:ring-4 focus:ring-[#1f6b55]/10 w-full font-medium text-[#17352c] text-base transition placeholder:text-[#91a099]'
       />
     </span>
+    {isCheckout && (
+      <span class='font-semibold text-[#65766f] text-xs leading-5'>Your email and discount code will be filled in automatically at checkout.</span>
+    )}
   </label>
 
   <label for={consentId} class='flex items-start gap-3 text-[#52665f] text-sm leading-6'>
