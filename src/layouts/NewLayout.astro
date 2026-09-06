@@ -25,7 +25,7 @@ const {
   type = 'website',
   schema = [],
   noindex = false,
-  googleAdsPurchase = false,
+  googleAdsPurchase = true,
 } = Astro.props;
 
 const canonical = new URL(path, Astro.site).href;
@@ -47,7 +47,12 @@ const schemaGraph = schemaItems.length
     <link rel='canonical' href={canonical} />
     <link rel='icon' type='image/png' href='/icon.png' />
     <link rel='sitemap' href='/sitemap.xml' />
-    <link rel='alternate' type='application/rss+xml' title='MD Pabel WordPress Security' href='/rss.xml' />
+    <link
+      rel='alternate'
+      type='application/rss+xml'
+      title='MD Pabel WordPress Security'
+      href='/rss.xml'
+    />
     {noindex && <meta name='robots' content='noindex,follow' />}
 
     <meta property='og:type' content={type} />
@@ -61,14 +66,22 @@ const schemaGraph = schemaItems.length
     <meta name='twitter:description' content={description} />
     <meta name='twitter:image' content={socialImage} />
 
-    {schemaGraph && <script is:inline type='application/ld+json' set:html={JSON.stringify(schemaGraph)} />}
+    {
+      schemaGraph && (
+        <script
+          is:inline
+          type='application/ld+json'
+          set:html={JSON.stringify(schemaGraph)}
+        />
+      )
+    }
     {googleAdsPurchase && <GoogleAdsTracking trackPurchase />}
     <Analytics />
   </head>
-  <body class='new-site bg-[#f7f4ed] text-[#17352c] antialiased'>
+  <body class='bg-[#f7f4ed] text-[#17352c] antialiased new-site'>
     <a
       href='#main-content'
-      class='fixed left-3 top-3 z-[100] -translate-y-24 rounded-lg bg-[#17352c] px-4 py-2 font-semibold text-white transition-transform focus:translate-y-0'>
+      class='top-3 left-3 z-[100] fixed bg-[#17352c] px-4 py-2 rounded-lg font-semibold text-white transition-transform -translate-y-24 focus:translate-y-0'>
       Skip to content
     </a>
     <NewHeader />
@@ -112,11 +125,18 @@ const schemaGraph = schemaItems.length
   }
 
   body {
-    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-family:
+      Inter,
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      sans-serif;
   }
 
   .editorial-heading {
-    font-family: "Source Serif 4 Variable", Georgia, serif;
+    font-family: 'Source Serif 4 Variable', Georgia, serif;
     letter-spacing: -0.04em;
   }
 
