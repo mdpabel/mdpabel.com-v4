@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import Analytics from '../components/new/Analytics.astro';
+import CheckoutAttribution from '../components/new/CheckoutAttribution.astro';
 import GoogleAdsTracking from '../components/new/GoogleAdsTracking.astro';
 import MetaAdsTracking from '../components/new/MetaAdsTracking.astro';
 
@@ -47,6 +48,7 @@ const socialImage = new URL(image, Astro.site).href;
     <GoogleAdsTracking />
     <Analytics />
     <MetaAdsTracking />
+    <CheckoutAttribution />
     <script is:inline>
       (function (c, l, a, r, i, t, y) {
         c[a] =

@@ -1,0 +1,230 @@
+---
+import { ArrowRight, Check, Download, LockKeyhole, Mail } from '@lucide/astro';
+
+interface Props {
+  mode: 'case-study' | 'checkout';
+  checkoutUrl?: string;
+  caseStudyUrl?: string;
+  discountCode?: string;
+}
+
+const {
+  mode,
+  checkoutUrl = '',
+  caseStudyUrl = '',
+  discountCode = 'EARLYREADER75',
+} = Astro.props;
+const isCheckout = mode === 'checkout';
+const formId = `meta-book-${mode}-form`;
+const emailId = `meta-book-${mode}-email`;
+const consentId = `meta-book-${mode}-consent`;
+---
+
+<form
+  id={formId}
+  data-meta-book-lead-form
+  data-mode={mode}
+  data-checkout-url={checkoutUrl}
+  data-download-url={caseStudyUrl}
+  data-discount-code={discountCode}
+  class='grid gap-4'>
+  <label for={emailId} class='grid gap-2 font-extrabold text-sm text-[#17352c]'>
+    {isCheckout ? 'Your email for checkout' : 'Enter your email to unlock the case study'}
+    <span class='relative block'>
+      <Mail class='top-1/2 left-4 absolute w-4 h-4 text-[#65766f] -translate-y-1/2 pointer-events-none' />
+      <input
+        id={emailId}
+        data-meta-book-email
+        name='email'
+        type='email'
+        autocomplete='email'
+        required
+        placeholder='you@example.com'
+        class='bg-white py-3.5 pr-4 pl-11 border border-[#bfcac4] focus:border-[#1f6b55] rounded-xl outline-none focus:ring-4 focus:ring-[#1f6b55]/10 w-full font-medium text-[#17352c] text-base transition placeholder:text-[#91a099]'
+      />
+    </span>
+  </label>
+
+  <label for={consentId} class='flex items-start gap-3 text-[#52665f] text-sm leading-6'>
+    <input
+      id={consentId}
+      data-meta-book-consent
+      name='marketingConsent'
+      type='checkbox'
+      value='true'
+      required
+      class='mt-1 shrink-0 accent-[#1f6b55] w-4 h-4'
+    />
+    <span>
+      You may email me occasional WordPress security research, book updates, and special offers. I can unsubscribe at any time.
+    </span>
+  </label>
+
+  <label class='hidden' aria-hidden='true'>Website
+    <input data-meta-book-honeypot name='website' type='text' tabindex='-1' autocomplete='off' />
+  </label>
+
+  <p data-meta-book-form-error class='hidden bg-[#fee5dc] p-3 rounded-xl font-semibold text-[#9f432c] text-sm leading-6' role='alert'></p>
+
+  <button
+    data-meta-book-submit
+    type='submit'
+    data-umami-event={isCheckout ? 'book-lead-checkout-submitted' : 'book-case-study-email-submitted'}
+    data-umami-event-placement={isCheckout ? 'meta-offer-checkout' : 'meta-case-study-gate'}
+    class:list={[
+      'group inline-flex items-center justify-center gap-2 rounded-full px-5 py-3.5 font-extrabold text-sm transition hover:-translate-y-0.5 disabled:cursor-wait disabled:opacity-70',
+      isCheckout
+        ? 'bg-[#1f6b55] text-white shadow-lg shadow-[#17352c]/10 hover:bg-[#164a3c]'
+        : 'bg-[#ed7655] text-white hover:bg-[#ff8868]',
+    ]}>
+    <span data-meta-book-submit-label>
+      {isCheckout ? 'Save email & continue to checkout' : 'Reveal the case study link'}
+    </span>
+    {isCheckout ? <ArrowRight class='w-4 h-4 transition group-hover:translate-x-0.5' /> : <Download class='w-4 h-4 transition group-hover:translate-y-0.5' />}
+  </button>
+
+  {isCheckout && (
+    <p class='flex justify-center items-center gap-2 text-[#65766f] text-xs text-center leading-5'>
+      <LockKeyhole class='shrink-0 w-3.5 h-3.5 text-[#1f6b55]' /> No payment details here. The next step is secure Lemon Squeezy checkout.
+    </p>
+  )}
+
+  {!isCheckout && (
+    <div data-meta-book-download-success class='hidden bg-[#eef6f1] p-4 border border-[#b7cbc1] rounded-xl' aria-live='polite'>
+      <p class='flex items-center gap-2 font-extrabold text-[#17352c] text-sm'>
+        <Check class='w-5 h-5 text-[#1f6b55]' /> Your free case study is ready.
+      </p>
+      <a
+        href={caseStudyUrl}
+        target='_blank'
+        rel='noopener'
+        data-preview-link
+        data-preview-type='case-study'
+        data-umami-event='book-case-study-downloaded'
+        data-umami-event-sample='sc-403-case-study'
+        data-umami-event-placement='meta-email-gate-success'
+        class='group inline-flex justify-center items-center gap-2 bg-[#ed7655] hover:bg-[#ff8868] mt-4 px-5 py-3 rounded-full w-full font-extrabold text-white text-sm transition'>
+        Open the case study PDF <Download class='w-4 h-4 transition group-hover:translate-y-0.5' />
+      </a>
+    </div>
+  )}
+</form>
+
+<script>
+  const savedEmailKey = 'mdp-meta-book-experiment-email';
+
+  const readSavedEmail = () => {
+    try {
+      return localStorage.getItem(savedEmailKey) || '';
+    } catch {
+      return '';
+    }
+  };
+
+  const saveEmail = (email: string) => {
+    try {
+      localStorage.setItem(savedEmailKey, email);
+    } catch {
+      // Prefill convenience is optional when browser storage is unavailable.
+    }
+  };
+
+  document.querySelectorAll<HTMLFormElement>('[data-meta-book-lead-form]').forEach((form) => {
+    if (form.dataset.initialized === 'true') return;
+    form.dataset.initialized = 'true';
+
+    const emailInput = form.querySelector<HTMLInputElement>('[data-meta-book-email]');
+    const consentInput = form.querySelector<HTMLInputElement>('[data-meta-book-consent]');
+    const honeypot = form.querySelector<HTMLInputElement>('[data-meta-book-honeypot]');
+    const submitButton = form.querySelector<HTMLButtonElement>('[data-meta-book-submit]');
+    const submitLabel = form.querySelector<HTMLElement>('[data-meta-book-submit-label]');
+    const errorMessage = form.querySelector<HTMLElement>('[data-meta-book-form-error]');
+    const successMessage = form.querySelector<HTMLElement>('[data-meta-book-download-success]');
+    const originalLabel = submitLabel?.textContent?.trim() || 'Continue';
+    const storedEmail = readSavedEmail();
+    if (storedEmail && emailInput && !emailInput.value) emailInput.value = storedEmail;
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      errorMessage?.classList.add('hidden');
+      if (!form.reportValidity()) return;
+
+      const email = emailInput?.value.trim().toLowerCase() || '';
+      if (!email) return;
+      if (submitButton) submitButton.disabled = true;
+      if (submitLabel) submitLabel.textContent = 'Saving your email…';
+
+      try {
+        const pageParameters = new URLSearchParams(window.location.search);
+        const response = await fetch('/api/book-leads', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            email,
+            marketingConsent: Boolean(consentInput?.checked),
+            leadType: form.dataset.mode,
+            landingPage: window.location.pathname,
+            website: honeypot?.value || '',
+            attribution: {
+              utm_source: pageParameters.get('utm_source') || '',
+              utm_medium: pageParameters.get('utm_medium') || '',
+              utm_campaign: pageParameters.get('utm_campaign') || '',
+              utm_content: pageParameters.get('utm_content') || '',
+              fbclid: pageParameters.get('fbclid') || '',
+            },
+          }),
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok || !result.ok) {
+          throw new Error(result.error || 'Your email could not be saved. Please try again.');
+        }
+
+        saveEmail(email);
+
+        if (form.dataset.mode === 'checkout') {
+          const checkout = new URL(form.dataset.checkoutUrl || '');
+          checkout.searchParams.set('checkout[email]', email);
+          checkout.searchParams.set('checkout[discount_code]', form.dataset.discountCode || 'EARLYREADER75');
+
+          const attributionWindow = window as typeof window & {
+            mdpApplyCheckoutAttribution?: (checkoutUrl: URL, extra?: Record<string, string>) => URL;
+          };
+          const finalCheckout = attributionWindow.mdpApplyCheckoutAttribution
+            ? attributionWindow.mdpApplyCheckoutAttribution(checkout, {
+                checkout_placement: 'meta-75-email-capture',
+                lead_captured: 'yes',
+              })
+            : checkout;
+
+          const trackingWindow = window as typeof window & {
+            fbq?: (action: string, event: string, data: Record<string, unknown>) => void;
+          };
+          if (typeof trackingWindow.fbq === 'function') {
+            trackingWindow.fbq('track', 'InitiateCheckout', {
+              content_ids: ['wordpress-malware-removal'],
+              content_name: 'WordPress Malware Removal for Developers & Site Owners',
+              content_type: 'product',
+              num_items: 1,
+              value: 4.99,
+              currency: 'USD',
+            });
+          }
+          window.location.assign(finalCheckout.toString());
+          return;
+        }
+
+        successMessage?.classList.remove('hidden');
+        if (submitButton) submitButton.classList.add('hidden');
+        emailInput?.setAttribute('readonly', 'true');
+      } catch (error) {
+        if (errorMessage) {
+          errorMessage.textContent = error instanceof Error ? error.message : 'Your email could not be saved. Please try again.';
+          errorMessage.classList.remove('hidden');
+        }
+      } finally {
+        if (submitButton && form.dataset.mode === 'checkout') submitButton.disabled = false;
+        if (submitLabel) submitLabel.textContent = originalLabel;
+      }
+    });
+  });
+</script>

@@ -51,7 +51,9 @@
       });
 
       const hasIncomingCampaign = campaignKeys.some((key) => incoming[key]);
-      const isDedicatedMetaPage = window.location.pathname === '/books/wordpress-malware-removal-meta/';
+      const isMetaOfferPage = window.location.pathname === '/books/wordpress-malware-removal-meta-offer/';
+      const isDedicatedMetaPage =
+        isMetaOfferPage || window.location.pathname === '/books/wordpress-malware-removal-meta/';
       let attribution = readStoredAttribution();
 
       if (hasIncomingCampaign || (isDedicatedMetaPage && !attribution.utm_source)) {
@@ -60,7 +62,9 @@
             ? {
                 utm_source: 'meta',
                 utm_medium: 'paid_social',
-                utm_campaign: 'book_sales_purchase_tier1_video',
+                utm_campaign: isMetaOfferPage
+                  ? 'book_sales_purchase_tier1_video_75_offer'
+                  : 'book_sales_purchase_tier1_video',
                 utm_content: 'video_01',
               }
             : {}),

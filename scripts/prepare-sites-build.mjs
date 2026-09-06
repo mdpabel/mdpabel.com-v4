@@ -1,4 +1,4 @@
-import { copyFile, mkdir, writeFile } from 'node:fs/promises';
+import { copyFile, cp, mkdir, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 const projectRoot = resolve(import.meta.dirname, '..');
@@ -8,10 +8,22 @@ const hostingDirectory = resolve(projectRoot, 'dist/.openai');
 await mkdir(serverDirectory, { recursive: true });
 await mkdir(hostingDirectory, { recursive: true });
 
+await copyFile(
+  resolve(projectRoot, 'server/bookLeadHandler.js'),
+  resolve(serverDirectory, 'bookLeadHandler.js'),
+);
+
 await writeFile(
   resolve(serverDirectory, 'index.js'),
-  `export default {
+  `import { handleBookLead } from './bookLeadHandler.js';
+
+export default {
   async fetch(request, env) {
+    const url = new URL(request.url);
+    if (url.pathname === '/api/book-leads') {
+      return handleBookLead(request, env);
+    }
+
     if (env?.ASSETS?.fetch) {
       return env.ASSETS.fetch(request);
     }
@@ -29,6 +41,12 @@ await writeFile(
 await copyFile(
   resolve(projectRoot, '.openai/hosting.json'),
   resolve(hostingDirectory, 'hosting.json'),
+);
+
+await cp(
+  resolve(projectRoot, 'drizzle'),
+  resolve(hostingDirectory, 'drizzle'),
+  { recursive: true },
 );
 
 console.log('Prepared Astro static output for Sites hosting.');
