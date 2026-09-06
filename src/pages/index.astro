@@ -23,6 +23,7 @@ import NewHeader from '../components/new/NewHeader.astro';
 import NewFooter from '../components/new/NewFooter.astro';
 import TawkChat from '../components/new/TawkChat.astro';
 import Analytics from '../components/new/Analytics.astro';
+import GoogleAdsTracking from '../components/new/GoogleAdsTracking.astro';
 
 const services = [
   {
@@ -190,6 +191,7 @@ const homeSchema = {
       type='application/ld+json'
       set:html={JSON.stringify(homeSchema)}
     />
+    <GoogleAdsTracking />
     <Analytics />
   </head>
 
