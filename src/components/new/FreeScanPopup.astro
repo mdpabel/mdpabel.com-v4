@@ -2,7 +2,7 @@
 import { ArrowRight, BookOpen, ScanLine, ShieldCheck, X } from '@lucide/astro';
 
 const bookDiscountCode = 'EXTRA15';
-const bookCheckoutUrl = `https://checkout.mdpabel.com/checkout/buy/e5ebff5e-0903-433f-a892-bb6ef0dbdc3d?checkout%5Bdiscount_code%5D=${bookDiscountCode}&utm_source=content-popup&utm_medium=site&utm_campaign=malware-research-book-discount`;
+const bookPageUrl = `/books/wordpress-malware-removal/?discount_code=${bookDiscountCode}&utm_source=content-popup&utm_medium=site&utm_campaign=malware-research-book-discount`;
 ---
 
 <aside
@@ -25,9 +25,10 @@ const bookCheckoutUrl = `https://checkout.mdpabel.com/checkout/buy/e5ebff5e-0903
         <span class='flex items-center justify-between gap-3 font-extrabold text-[#17352c]'>Need malware cleaned? <ShieldCheck class='h-4 w-4 text-[#1f6b55]' /></span>
         <span class='mt-1 block text-xs leading-5 text-[#52665f]'>Get hands-on WordPress malware removal and recovery help.</span>
       </a>
-      <a href={bookCheckoutUrl} data-content-popup-choice='book' data-book-discount-code={bookDiscountCode} class='group rounded-xl border border-[#f2c7b9] bg-[#fff3ed] p-4 transition hover:-translate-y-0.5 hover:border-[#ed7655]'>
-        <span class='flex items-center justify-between gap-3 font-extrabold text-[#17352c]'><span class='flex items-center gap-2'><BookOpen class='h-4 w-4 text-[#b84e31]' />Learn malware removal</span><ArrowRight class='h-4 w-4 transition group-hover:translate-x-1' /></span>
-        <span class='mt-1 block text-xs leading-5 text-[#52665f]'>Get the book with code <strong class='text-[#9f432c]'>{bookDiscountCode}</strong>.</span>
+      <a href={bookPageUrl} data-content-popup-choice='book' data-book-discount-code={bookDiscountCode} aria-label={`Open the WordPress Malware Removal book page with ${bookDiscountCode} attached`} class='group relative overflow-hidden rounded-xl border-2 border-[#ed7655] bg-[#17352c] p-4 text-white shadow-lg shadow-[#ed7655]/20 transition hover:-translate-y-0.5 hover:shadow-xl'>
+        <span class='absolute right-3 top-3 rounded-full bg-[#ed7655] px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.12em] text-[#17352c]'>Reader offer</span>
+        <span class='flex items-center justify-between gap-3 pr-24 font-extrabold'><span class='flex items-center gap-2'><BookOpen class='h-4 w-4 text-[#ffb09a]' />Learn malware removal</span><ArrowRight class='h-4 w-4 transition group-hover:translate-x-1' /></span>
+        <span class='mt-2 block text-xs leading-5 text-[#dce7e2]'>Open the complete book page and use code <strong class='rounded bg-white/10 px-1.5 py-0.5 text-[#ffb09a]'>{bookDiscountCode}</strong> for the reader discount.</span>
       </a>
       <a href='/free-wordpress-scan/' data-content-popup-choice='scan' class='group rounded-xl border border-[#d7ddd7] bg-white p-4 transition hover:-translate-y-0.5 hover:border-[#1f6b55]'>
         <span class='flex items-center justify-between gap-3 font-extrabold text-[#17352c]'>Want a free scan first? <ScanLine class='h-4 w-4 text-[#1f6b55]' /></span>
