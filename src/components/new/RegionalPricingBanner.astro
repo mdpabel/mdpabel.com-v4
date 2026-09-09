@@ -1,0 +1,281 @@
+---
+import { ArrowRight, Gift, X } from '@lucide/astro';
+
+interface Props {
+  checkoutUrl: string;
+  minimumPrice: number;
+  productId: string;
+}
+
+const { checkoutUrl, minimumPrice, productId } = Astro.props;
+---
+
+<section
+  data-regional-pricing-banner
+  hidden
+  aria-label='Regional pricing offer'
+  class='bg-[#17352c] text-white'>
+  <div
+    class='relative flex flex-col sm:flex-row justify-between sm:items-center gap-3 py-3 pr-10 meta-book-shell'>
+    <div class='flex items-start sm:items-center gap-3'>
+      <span
+        class='place-items-center hidden sm:grid bg-[#ed7655] rounded-full w-9 h-9 shrink-0'
+        aria-hidden='true'>
+        <Gift class='w-4 h-4' />
+      </span>
+      <p class='text-sm leading-6'>
+        <strong data-regional-pricing-title class='font-extrabold'
+          >A reader discount for you</strong
+        >
+        <span data-regional-pricing-copy class='ml-1 text-[#d8e6e0]'
+          >Get 15% off this field guide. Your discount is applied automatically.</span
+        >
+      </p>
+    </div>
+    <a
+      href={checkoutUrl}
+      data-checkout-link
+      data-regional-pricing-checkout
+      data-umami-event='book-checkout-started'
+      data-umami-event-placement='meta-regional-pricing-bar'
+      data-umami-event-pricing='regional-15'
+      data-umami-event-minimum-price={String(minimumPrice)}
+      class='group inline-flex items-center gap-1.5 self-start sm:self-auto font-extrabold text-[#fff4ef] text-sm whitespace-nowrap underline decoration-[#ed7655] decoration-2 underline-offset-4'>
+      <span data-regional-pricing-action>Get 15% off</span>
+      <ArrowRight class='w-4 h-4 transition group-hover:translate-x-0.5' />
+    </a>
+    <button
+      type='button'
+      data-regional-pricing-dismiss
+      aria-label='Dismiss regional pricing message'
+      class='top-1/2 right-0 absolute place-items-center grid hover:bg-white/10 rounded-full w-8 h-8 text-[#d8e6e0] transition -translate-y-1/2'>
+      <X class='w-4 h-4' />
+    </button>
+  </div>
+</section>
+
+<script
+  is:inline
+  define:vars={{ minimumPrice, productId }}>
+  (() => {
+    const DISCOUNT_PARAMETER = 'checkout[discount_code]';
+    const COUNTRY_CACHE_KEY = 'mdp-visitor-country-v1';
+    const DISMISSED_KEY = `mdp-regional-pricing-dismissed-${productId}`;
+
+    // World Bank-style income bands. Keep the lists explicit so the offer can
+    // be reviewed and adjusted without relying on a third-party pricing script.
+    const sixtyPercentCountries = new Set(
+      'AF AO BD BJ BF BI BT BO KH CM KM CG CI DJ EG ET SZ GM GH GN HT HN IN KE KI KG LA LS LR MG MW MR MA MZ MM NA NP NE NI NG PK PG PH RW ST SN SL SB LK TJ TZ TL TG UG UZ VU VN PS ZM ZW'.split(
+        ' ',
+      ),
+    );
+    const fortyPercentCountries = new Set(
+      'AL DZ AR AM AZ BY BZ BA BW BR CV CN CO DM DO EC SV GQ FJ GA GE GD GT ID JM KZ XK MY MV MH MU MX MD MN ME MK PY PE WS RS ZA LC VC SR TH TO TR TM TV UA VE'.split(
+        ' ',
+      ),
+    );
+    const twentyPercentCountries = new Set(
+      'AG BS BB BG BN CL CR HR CY CZ EE GR HU LV LT MT OM PA PL PT RO SC SK SI TT UY'.split(
+        ' ',
+      ),
+    );
+    const unsupportedCheckoutCountries = new Set(
+      'CF CU CD ER GW IR IQ LB LY ML KP RU SO SS SD SY YE'.split(' '),
+    );
+
+    const tiers = [
+      { percentage: 60, code: 'AZMTIYMG', countries: sixtyPercentCountries },
+      { percentage: 40, code: 'AXMZYXNQ', countries: fortyPercentCountries },
+      { percentage: 20, code: 'K4MZK0MA', countries: twentyPercentCountries },
+    ];
+    const defaultTier = { percentage: 15, code: 'EXTRA15' };
+
+    const normalizeCountry = (value) => {
+      const country = String(value || '').trim().toUpperCase();
+      return /^[A-Z]{2}$/.test(country) && country !== 'XX' ? country : '';
+    };
+
+    const getCountryName = (countryCode) => {
+      if (!countryCode) return '';
+      try {
+        return new Intl.DisplayNames([navigator.language || 'en'], {
+          type: 'region',
+        }).of(countryCode) || countryCode;
+      } catch {
+        return countryCode;
+      }
+    };
+
+    const getTier = (countryCode) => {
+      if (!countryCode) return defaultTier;
+      return (
+        tiers.find((tier) => tier.countries.has(countryCode)) || defaultTier
+      );
+    };
+
+    const readCachedCountry = () => {
+      try {
+        return normalizeCountry(sessionStorage.getItem(COUNTRY_CACHE_KEY));
+      } catch {
+        return '';
+      }
+    };
+
+    const cacheCountry = (countryCode) => {
+      if (!countryCode) return;
+      try {
+        sessionStorage.setItem(COUNTRY_CACHE_KEY, countryCode);
+      } catch {
+        // Regional pricing still works when browser storage is unavailable.
+      }
+    };
+
+    const detectCountry = async () => {
+      const pageParameters = new URLSearchParams(window.location.search);
+      const testCountry = normalizeCountry(pageParameters.get('country'));
+      if (testCountry) return testCountry;
+
+      const cachedCountry = readCachedCountry();
+      if (cachedCountry) return cachedCountry;
+
+      const controller = new AbortController();
+      const timeout = window.setTimeout(() => controller.abort(), 3000);
+      try {
+        const response = await fetch('/cdn-cgi/trace', {
+          cache: 'no-store',
+          signal: controller.signal,
+        });
+        if (!response.ok) return '';
+        const trace = await response.text();
+        const locationLine = trace
+          .split(/\r?\n/)
+          .find((line) => line.startsWith('loc='));
+        const countryCode = normalizeCountry(locationLine?.slice(4));
+        cacheCountry(countryCode);
+        return countryCode;
+      } catch {
+        return '';
+      } finally {
+        window.clearTimeout(timeout);
+      }
+    };
+
+    const wasDismissed = () => {
+      try {
+        return sessionStorage.getItem(DISMISSED_KEY) === 'true';
+      } catch {
+        return false;
+      }
+    };
+
+    const applyDiscountToCheckoutLinks = (tier) => {
+      const discountedMinimum = Number(
+        (minimumPrice * (1 - tier.percentage / 100)).toFixed(2),
+      );
+
+      document.querySelectorAll('[data-checkout-link]').forEach((link) => {
+        if (!(link instanceof HTMLAnchorElement)) return;
+        const checkout = new URL(link.href, window.location.href);
+        if (checkout.hostname !== 'checkout.mdpabel.com') return;
+        checkout.searchParams.set(DISCOUNT_PARAMETER, tier.code);
+        link.href = checkout.toString();
+        link.dataset.umamiEventPricing = `regional-${tier.percentage}`;
+        link.dataset.umamiEventMinimumPrice = String(discountedMinimum);
+        link.dataset.checkoutValue = String(discountedMinimum);
+        link.dataset.regionalDiscount = String(tier.percentage);
+      });
+
+      return discountedMinimum;
+    };
+
+    const updateDisplayedPrices = (tier, discountedMinimum) => {
+      const discountedPrice = `$${discountedMinimum.toFixed(2)}`;
+      const regularPrice = `$${minimumPrice.toFixed(2)}`;
+
+      document.querySelectorAll('[data-regional-price]').forEach((element) => {
+        element.textContent = discountedPrice;
+      });
+
+      document
+        .querySelectorAll('[data-regional-price-label]')
+        .forEach((element) => {
+          element.textContent = 'Regional minimum';
+        });
+
+      document
+        .querySelectorAll('[data-regional-price-note]')
+        .forEach((element) => {
+          element.textContent = `${tier.percentage}% off · `;
+          const originalPrice = document.createElement('span');
+          originalPrice.className = 'line-through';
+          originalPrice.textContent = regularPrice;
+          element.append(originalPrice, ' regular minimum');
+        });
+    };
+
+    const showBanner = (countryCode, tier, discountedMinimum) => {
+      const banner = document.querySelector('[data-regional-pricing-banner]');
+      if (!(banner instanceof HTMLElement) || wasDismissed()) return;
+
+      const countryName = getCountryName(countryCode);
+      const title = banner.querySelector('[data-regional-pricing-title]');
+      const copy = banner.querySelector('[data-regional-pricing-copy]');
+      const action = banner.querySelector('[data-regional-pricing-action]');
+
+      if (title) {
+        title.textContent = countryName
+          ? `Regional pricing for ${countryName}`
+          : 'A reader discount for you';
+      }
+      if (copy) {
+        copy.textContent = countryName
+          ? `We want this field guide to be affordable wherever you work. Get ${tier.percentage}% off—automatically applied at checkout.`
+          : `Get ${tier.percentage}% off this field guide. Your discount is applied automatically at checkout.`;
+      }
+      if (action) {
+        action.textContent = `Get ${tier.percentage}% off · From $${discountedMinimum.toFixed(2)}`;
+      }
+
+      banner.hidden = false;
+    };
+
+    const initializeRegionalPricing = async () => {
+      const countryCode = await detectCountry();
+
+      // Do not advertise a checkout that Lemon Squeezy cannot serve.
+      if (countryCode && unsupportedCheckoutCountries.has(countryCode)) return;
+
+      const tier = getTier(countryCode);
+      const discountedMinimum = applyDiscountToCheckoutLinks(tier);
+      updateDisplayedPrices(tier, discountedMinimum);
+      showBanner(countryCode, tier, discountedMinimum);
+
+      if (typeof window.clarity === 'function') {
+        window.clarity('set', 'book_regional_country', countryCode || 'unknown');
+        window.clarity('set', 'book_regional_discount', String(tier.percentage));
+        window.clarity('event', 'book-regional-pricing-shown');
+      }
+    };
+
+    const dismissButton = document.querySelector(
+      '[data-regional-pricing-dismiss]',
+    );
+    dismissButton?.addEventListener('click', () => {
+      const banner = document.querySelector('[data-regional-pricing-banner]');
+      if (banner instanceof HTMLElement) banner.hidden = true;
+      try {
+        sessionStorage.setItem(DISMISSED_KEY, 'true');
+      } catch {
+        // Dismissal remains effective for the current page without storage.
+      }
+    });
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initializeRegionalPricing, {
+        once: true,
+      });
+    } else {
+      initializeRegionalPricing();
+    }
+  })();
+</script>
