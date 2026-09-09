@@ -13,7 +13,7 @@ const { checkoutUrl, minimumPrice, productId } = Astro.props;
 <section
   data-regional-pricing-banner
   hidden
-  aria-label='Regional pricing offer'
+  aria-label='Reader discount offer'
   class='bg-[#17352c] text-white'>
   <div
     class='relative flex flex-col sm:flex-row justify-between sm:items-center gap-3 py-3 pr-10 meta-book-shell'>
@@ -37,8 +37,8 @@ const { checkoutUrl, minimumPrice, productId } = Astro.props;
       data-checkout-link
       data-regional-pricing-checkout
       data-umami-event='book-checkout-started'
-      data-umami-event-placement='meta-regional-pricing-bar'
-      data-umami-event-pricing='regional-15'
+      data-umami-event-placement='meta-reader-discount-bar'
+      data-umami-event-pricing='reader-discount-15'
       data-umami-event-minimum-price={String(minimumPrice)}
       class='group inline-flex items-center gap-1.5 self-start sm:self-auto font-extrabold text-[#fff4ef] text-sm whitespace-nowrap underline decoration-[#ed7655] decoration-2 underline-offset-4'>
       <span data-regional-pricing-action>Get 15% off</span>
@@ -59,7 +59,6 @@ const { checkoutUrl, minimumPrice, productId } = Astro.props;
   define:vars={{ minimumPrice, productId }}>
   (() => {
     const DISCOUNT_PARAMETER = 'checkout[discount_code]';
-    const COUNTRY_CACHE_KEY = 'mdp-visitor-country-v1';
     const DISMISSED_KEY = `mdp-regional-pricing-dismissed-${productId}`;
 
     // World Bank-style income bands. Keep the lists explicit so the offer can
@@ -95,17 +94,6 @@ const { checkoutUrl, minimumPrice, productId } = Astro.props;
       return /^[A-Z]{2}$/.test(country) && country !== 'XX' ? country : '';
     };
 
-    const getCountryName = (countryCode) => {
-      if (!countryCode) return '';
-      try {
-        return new Intl.DisplayNames([navigator.language || 'en'], {
-          type: 'region',
-        }).of(countryCode) || countryCode;
-      } catch {
-        return countryCode;
-      }
-    };
-
     const getTier = (countryCode) => {
       if (!countryCode) return defaultTier;
       return (
@@ -113,30 +101,16 @@ const { checkoutUrl, minimumPrice, productId } = Astro.props;
       );
     };
 
-    const readCachedCountry = () => {
-      try {
-        return normalizeCountry(sessionStorage.getItem(COUNTRY_CACHE_KEY));
-      } catch {
-        return '';
-      }
-    };
-
-    const cacheCountry = (countryCode) => {
-      if (!countryCode) return;
-      try {
-        sessionStorage.setItem(COUNTRY_CACHE_KEY, countryCode);
-      } catch {
-        // Regional pricing still works when browser storage is unavailable.
-      }
-    };
-
     const detectCountry = async () => {
       const pageParameters = new URLSearchParams(window.location.search);
-      const testCountry = normalizeCountry(pageParameters.get('country'));
-      if (testCountry) return testCountry;
-
-      const cachedCountry = readCachedCountry();
-      if (cachedCountry) return cachedCountry;
+      const isLocalPreview =
+        window.location.hostname === 'localhost' ||
+        window.location.hostname === '127.0.0.1' ||
+        window.location.hostname === '[::1]';
+      if (isLocalPreview) {
+        const testCountry = normalizeCountry(pageParameters.get('country'));
+        if (testCountry) return testCountry;
+      }
 
       const controller = new AbortController();
       const timeout = window.setTimeout(() => controller.abort(), 3000);
@@ -150,9 +124,7 @@ const { checkoutUrl, minimumPrice, productId } = Astro.props;
         const locationLine = trace
           .split(/\r?\n/)
           .find((line) => line.startsWith('loc='));
-        const countryCode = normalizeCountry(locationLine?.slice(4));
-        cacheCountry(countryCode);
-        return countryCode;
+        return normalizeCountry(locationLine?.slice(4));
       } catch {
         return '';
       } finally {
@@ -179,7 +151,7 @@ const { checkoutUrl, minimumPrice, productId } = Astro.props;
         if (checkout.hostname !== 'checkout.mdpabel.com') return;
         checkout.searchParams.set(DISCOUNT_PARAMETER, tier.code);
         link.href = checkout.toString();
-        link.dataset.umamiEventPricing = `regional-${tier.percentage}`;
+        link.dataset.umamiEventPricing = `reader-discount-${tier.percentage}`;
         link.dataset.umamiEventMinimumPrice = String(discountedMinimum);
         link.dataset.checkoutValue = String(discountedMinimum);
         link.dataset.regionalDiscount = String(tier.percentage);
@@ -199,7 +171,7 @@ const { checkoutUrl, minimumPrice, productId } = Astro.props;
       document
         .querySelectorAll('[data-regional-price-label]')
         .forEach((element) => {
-          element.textContent = 'Regional minimum';
+          element.textContent = 'Discounted minimum';
         });
 
       document
@@ -213,24 +185,19 @@ const { checkoutUrl, minimumPrice, productId } = Astro.props;
         });
     };
 
-    const showBanner = (countryCode, tier, discountedMinimum) => {
+    const showBanner = (tier, discountedMinimum) => {
       const banner = document.querySelector('[data-regional-pricing-banner]');
       if (!(banner instanceof HTMLElement) || wasDismissed()) return;
 
-      const countryName = getCountryName(countryCode);
       const title = banner.querySelector('[data-regional-pricing-title]');
       const copy = banner.querySelector('[data-regional-pricing-copy]');
       const action = banner.querySelector('[data-regional-pricing-action]');
 
       if (title) {
-        title.textContent = countryName
-          ? `Regional pricing for ${countryName}`
-          : 'A reader discount for you';
+        title.textContent = 'A reader discount for you';
       }
       if (copy) {
-        copy.textContent = countryName
-          ? `We want this field guide to be affordable wherever you work. Get ${tier.percentage}% off—automatically applied at checkout.`
-          : `Get ${tier.percentage}% off this field guide. Your discount is applied automatically at checkout.`;
+        copy.textContent = `Get ${tier.percentage}% off this field guide. Your discount is applied automatically at checkout.`;
       }
       if (action) {
         action.textContent = `Get ${tier.percentage}% off · From $${discountedMinimum.toFixed(2)}`;
@@ -248,7 +215,7 @@ const { checkoutUrl, minimumPrice, productId } = Astro.props;
       const tier = getTier(countryCode);
       const discountedMinimum = applyDiscountToCheckoutLinks(tier);
       updateDisplayedPrices(tier, discountedMinimum);
-      showBanner(countryCode, tier, discountedMinimum);
+      showBanner(tier, discountedMinimum);
 
       if (typeof window.clarity === 'function') {
         window.clarity('set', 'book_regional_country', countryCode || 'unknown');
