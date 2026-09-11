@@ -18,7 +18,7 @@ const advancedBookCheckoutUrl =
 
 <div
   id='book-discount-popup'
-  class='book-discount-popup fixed inset-0 z-[120] grid place-items-center overflow-y-auto bg-[#071b16]/85 p-3 backdrop-blur-sm sm:p-6'
+  class='z-[120] fixed inset-0 place-items-center grid bg-[#071b16]/85 backdrop-blur-sm p-3 sm:p-6 overflow-y-auto book-discount-popup'
   role='dialog'
   aria-modal='true'
   aria-labelledby='book-discount-popup-title'
@@ -29,22 +29,22 @@ const advancedBookCheckoutUrl =
     data-book-popup-close
     aria-label='Close book offer'></button>
 
-  <section class='book-discount-card relative my-auto grid w-full max-w-5xl overflow-hidden rounded-[1.75rem] bg-[#fffdf8] shadow-2xl lg:grid-cols-[0.82fr_1.18fr]'>
+  <section class='relative grid lg:grid-cols-[0.82fr_1.18fr] bg-[#fffdf8] shadow-2xl my-auto rounded-[1.75rem] w-full max-w-5xl overflow-hidden book-discount-card'>
     <button
       type='button'
       data-book-popup-close
-      class='absolute right-3 top-3 z-20 grid h-10 w-10 place-items-center rounded-full border border-white/20 bg-[#17352c] text-white shadow-lg transition hover:bg-[#244c40] focus:outline-none focus:ring-4 focus:ring-[#ed7655]/40'
+      class='top-3 right-3 z-20 absolute place-items-center grid bg-[#17352c] hover:bg-[#244c40] shadow-lg border border-white/20 rounded-full focus:outline-none focus:ring-[#ed7655]/40 focus:ring-4 w-10 h-10 text-white transition'
       aria-label='Close book offer'>
-      <X class='h-5 w-5' />
+      <X class='w-5 h-5' />
     </button>
 
-    <div class='book-discount-visual relative hidden min-h-[590px] overflow-hidden bg-[#17352c] p-8 lg:flex lg:flex-col lg:justify-between'>
-      <div class='book-discount-grid absolute inset-0'></div>
-      <div class='relative z-10'>
-        <p class='text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#8ed0b5]'>Research reader offer</p>
-        <p class='editorial-heading mt-3 max-w-xs text-3xl font-semibold leading-tight text-white'>Take the investigation into the field.</p>
+    <div class='hidden relative lg:flex lg:flex-col lg:justify-between bg-[#17352c] p-8 min-h-[590px] overflow-hidden book-discount-visual'>
+      <div class='absolute inset-0 book-discount-grid'></div>
+      <div class='z-10 relative'>
+        <p class='font-extrabold text-[#8ed0b5] text-[10px] uppercase tracking-[0.2em]'>Research reader offer</p>
+        <p class='mt-3 max-w-xs font-semibold text-white text-3xl leading-tight editorial-heading'>Take the investigation into the field.</p>
       </div>
-      <div class='book-discount-covers relative z-10 mx-auto flex w-full max-w-[330px] items-end justify-center'>
+      <div class='z-10 relative flex justify-center items-end mx-auto w-full max-w-[330px] book-discount-covers'>
         <img
           src='/book-cover.png'
           alt='WordPress Malware Removal for Developers and Site Owners book cover'
@@ -52,7 +52,7 @@ const advancedBookCheckoutUrl =
           height='2700'
           loading='lazy'
           decoding='async'
-          class='book-discount-cover book-discount-cover-complete w-[58%] rounded-sm object-contain'
+          class='rounded-sm w-[58%] object-contain book-discount-cover book-discount-cover-complete'
         />
         <img
           src='/images/book/advanced-wordpress-malware-removal-cover.png'
@@ -61,27 +61,27 @@ const advancedBookCheckoutUrl =
           height='2700'
           loading='lazy'
           decoding='async'
-          class='book-discount-cover book-discount-cover-advanced -ml-10 w-[48%] rounded-sm object-contain'
+          class='-ml-10 rounded-sm w-[48%] object-contain book-discount-cover book-discount-cover-advanced'
         />
       </div>
-      <p class='relative z-10 text-xs leading-6 text-[#c8d8d1]'>Two evidence-led WordPress malware removal guides · Secure PDF delivery</p>
+      <p class='z-10 relative text-[#c8d8d1] text-xs leading-6'>Two evidence-led WordPress malware removal guides · Secure PDF delivery</p>
     </div>
 
     <div class='p-5 sm:p-8 lg:p-10'>
       <div class='pr-10'>
-        <span class='inline-flex rounded-full bg-[#fee5dc] px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#a9442d]'>Extra 15% research-reader discount</span>
-        <h2 id='book-discount-popup-title' class='editorial-heading mt-4 text-3xl font-semibold leading-tight text-[#17352c] sm:text-4xl'>Want a practical malware-removal field guide?</h2>
+        <span class='inline-flex bg-[#fee5dc] px-3 py-1.5 rounded-full font-extrabold text-[#a9442d] text-[10px] uppercase tracking-[0.14em]'>Extra 15% research-reader discount</span>
+        <h2 id='book-discount-popup-title' class='mt-4 font-semibold text-[#17352c] text-3xl sm:text-4xl leading-tight editorial-heading'>Want a practical malware-removal field guide?</h2>
       </div>
-      <p class='mt-4 text-sm leading-7 text-[#52665f] sm:text-base'>Unlock an extra 15% off either WordPress malware removal book. Choose the complete 293-page playbook or the focused advanced case guide after submitting the form.</p>
+      <p class='mt-4 text-[#52665f] text-sm sm:text-base leading-7'>Unlock an extra 15% off either WordPress malware removal book. Choose the complete 293-page playbook or the focused advanced case guide after submitting the form.</p>
 
-      <div class='mt-6 grid gap-3 border-y border-[#d7ddd7] py-5 sm:grid-cols-2'>
-        <div class='rounded-xl bg-[#eef6f1] p-4'>
-          <span class='flex items-center gap-2 text-xs font-extrabold text-[#17352c]'><BookOpen class='h-4 w-4 text-[#1f6b55]' /> Complete field guide</span>
-          <span class='mt-2 block text-[11px] leading-5 text-[#65766f]'>293 pages · 18 chapters · 86 figures</span>
+      <div class='gap-3 grid sm:grid-cols-2 mt-6 py-5 border-[#d7ddd7] border-y'>
+        <div class='bg-[#eef6f1] p-4 rounded-xl'>
+          <span class='flex items-center gap-2 font-extrabold text-[#17352c] text-xs'><BookOpen class='w-4 h-4 text-[#1f6b55]' /> Complete field guide</span>
+          <span class='block mt-2 text-[#65766f] text-[11px] leading-5'>293 pages · 18 chapters · 86 figures</span>
         </div>
-        <div class='rounded-xl bg-[#fff3ed] p-4'>
-          <span class='flex items-center gap-2 text-xs font-extrabold text-[#17352c]'><BookOpen class='h-4 w-4 text-[#b84e31]' /> Advanced case guide</span>
-          <span class='mt-2 block text-[11px] leading-5 text-[#65766f]'>31 pages · Persistent infections · Recovery</span>
+        <div class='bg-[#fff3ed] p-4 rounded-xl'>
+          <span class='flex items-center gap-2 font-extrabold text-[#17352c] text-xs'><BookOpen class='w-4 h-4 text-[#b84e31]' /> Advanced case guide</span>
+          <span class='block mt-2 text-[#65766f] text-[11px] leading-5'>31 pages · Persistent infections · Recovery</span>
         </div>
       </div>
 
@@ -92,10 +92,10 @@ const advancedBookCheckoutUrl =
         data-form-id={formId}
         data-cf7-version={CONTACT_FORM_7_VERSION}
         data-campaign={campaign}>
-        <label for='book-discount-email' class='text-xs font-extrabold text-[#17352c]'>Enter your email to reveal the discount code</label>
-        <div class='mt-2 flex flex-col gap-3 sm:flex-row'>
-          <div class='relative min-w-0 flex-1'>
-            <Mail class='pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#65766f]' />
+        <label for='book-discount-email' class='font-extrabold text-[#17352c] text-xs'>Enter your email to reveal the discount code</label>
+        <div class='flex sm:flex-row flex-col gap-3 mt-2'>
+          <div class='relative flex-1 min-w-0'>
+            <Mail class='top-1/2 left-4 absolute w-4 h-4 text-[#65766f] -translate-y-1/2 pointer-events-none' />
             <input
               id='book-discount-email'
               name='your-email'
@@ -103,7 +103,7 @@ const advancedBookCheckoutUrl =
               autocomplete='email'
               required
               placeholder='you@example.com'
-              class='w-full rounded-full border border-[#bfcac4] bg-white py-3.5 pl-11 pr-4 text-sm text-[#17352c] outline-none transition placeholder:text-[#91a099] focus:border-[#1f6b55] focus:ring-4 focus:ring-[#1f6b55]/10'
+              class='bg-white py-3.5 pr-4 pl-11 border border-[#bfcac4] focus:border-[#1f6b55] rounded-full outline-none focus:ring-[#1f6b55]/10 focus:ring-4 w-full text-[#17352c] placeholder:text-[#91a099] text-sm transition'
             />
           </div>
           <button
@@ -111,61 +111,61 @@ const advancedBookCheckoutUrl =
             type='submit'
             data-umami-event='book-discount-requested'
             data-umami-event-placement='malware-research-popup'
-            class='inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-[#ed7655] px-6 py-3.5 text-sm font-extrabold text-[#17352c] shadow-lg shadow-[#ed7655]/20 transition hover:-translate-y-0.5 hover:bg-[#ff8a68] disabled:cursor-wait disabled:opacity-70'>
-            Reveal my code <ArrowRight class='h-4 w-4' />
+            class='inline-flex justify-center items-center gap-2 bg-[#ed7655] hover:bg-[#ff8a68] disabled:opacity-70 shadow-[#ed7655]/20 shadow-lg px-6 py-3.5 rounded-full font-extrabold text-[#17352c] text-sm transition hover:-translate-y-0.5 disabled:cursor-wait shrink-0'>
+            Reveal my code <ArrowRight class='w-4 h-4' />
           </button>
         </div>
-        <label class='mt-3 flex items-start gap-2 text-[11px] leading-5 text-[#65766f]'>
-          <input name='book-consent' type='checkbox' value='Yes' required class='mt-1 h-4 w-4 shrink-0 accent-[#1f6b55]' />
+        <label class='flex items-start gap-2 mt-3 text-[#65766f] text-[11px] leading-5'>
+          <input name='book-consent' type='checkbox' value='Yes' required class='mt-1 w-4 h-4 accent-[#1f6b55] shrink-0' />
           <span>Email me occasional WordPress security research, book updates, and offers. I can unsubscribe at any time.</span>
         </label>
         <input type='hidden' name='discount-code' value={discountCode} />
         <input type='hidden' name='discount-url' value={completeBookCheckoutUrl} />
         <input type='hidden' name='advanced-discount-url' value={advancedBookCheckoutUrl} />
         <input type='hidden' name={WP_ARMOUR_FIELD_NAME} value={WP_ARMOUR_FIELD_VALUE} />
-        <p id='book-discount-error' class='mt-3 hidden rounded-xl bg-[#fee5dc] p-3 text-xs font-semibold leading-5 text-[#9f432c]' role='alert'></p>
+        <p id='book-discount-error' class='hidden bg-[#fee5dc] mt-3 p-3 rounded-xl font-semibold text-[#9f432c] text-xs leading-5' role='alert'></p>
       </form>
 
-      <div id='book-discount-success' class='mt-6 hidden rounded-2xl border border-[#b7cbc1] bg-[#eef6f1] p-5' aria-live='polite'>
-        <p class='flex items-center gap-2 font-extrabold text-[#17352c]'><Check class='h-5 w-5 text-[#1f6b55]' /> Your extra 15% discount is unlocked.</p>
-        <p class='mt-2 text-xs leading-6 text-[#52665f]'>Use this code at checkout. It is already applied to both purchase links below.</p>
-        <div class='mt-4 flex items-center justify-between gap-4 rounded-xl border border-dashed border-[#1f6b55] bg-white px-4 py-3'>
+      <div id='book-discount-success' class='hidden bg-[#eef6f1] mt-6 p-5 border border-[#b7cbc1] rounded-2xl' aria-live='polite'>
+        <p class='flex items-center gap-2 font-extrabold text-[#17352c]'><Check class='w-5 h-5 text-[#1f6b55]' /> Your extra 15% discount is unlocked.</p>
+        <p class='mt-2 text-[#52665f] text-xs leading-6'>Use this code at checkout. It is already applied to both purchase links below.</p>
+        <div class='flex justify-between items-center gap-4 bg-white mt-4 px-4 py-3 border border-[#1f6b55] border-dashed rounded-xl'>
           <div>
-            <span class='block text-[9px] font-extrabold uppercase tracking-[0.16em] text-[#65766f]'>Discount code</span>
-            <strong id='book-discount-code' class='mt-1 block text-2xl font-black tracking-[0.12em] text-[#17352c]'>{discountCode}</strong>
+            <span class='block font-extrabold text-[#65766f] text-[9px] uppercase tracking-[0.16em]'>Discount code</span>
+            <strong id='book-discount-code' class='block mt-1 font-black text-[#17352c] text-2xl tracking-[0.12em]'>{discountCode}</strong>
           </div>
           <button
             id='book-discount-copy'
             type='button'
             data-code={discountCode}
-            class='inline-flex items-center gap-2 rounded-full border border-[#b7cbc1] bg-[#eef6f1] px-4 py-2 text-xs font-extrabold text-[#1f6b55] transition hover:bg-[#dcece5]'>
-            <Copy class='h-4 w-4' /> <span data-copy-label>Copy code</span>
+            class='inline-flex items-center gap-2 bg-[#eef6f1] hover:bg-[#dcece5] px-4 py-2 border border-[#b7cbc1] rounded-full font-extrabold text-[#1f6b55] text-xs transition'>
+            <Copy class='w-4 h-4' /> <span data-copy-label>Copy code</span>
           </button>
         </div>
-        <div class='mt-4 grid gap-3 sm:grid-cols-2'>
+        <div class='gap-3 grid sm:grid-cols-2 mt-4'>
           <a
             href={completeBookCheckoutUrl}
             data-umami-event='book-discount-opened'
             data-umami-event-product='WordPress Malware Removal for Developers & Site Owners'
             data-umami-event-placement='malware-research-popup-success'
-            class='inline-flex items-center justify-center gap-2 rounded-full bg-[#1f6b55] px-5 py-3.5 text-center text-xs font-extrabold text-white transition hover:bg-[#164a3c]'>
-            Buy the complete book <ArrowRight class='h-4 w-4' />
+            class='inline-flex justify-center items-center gap-2 bg-[#1f6b55] hover:bg-[#164a3c] px-5 py-3.5 rounded-full font-extrabold text-white text-xs text-center transition'>
+            Buy the complete book <ArrowRight class='w-4 h-4' />
           </a>
           <a
             href={advancedBookCheckoutUrl}
             data-umami-event='book-discount-opened'
             data-umami-event-product='Advanced WordPress Malware Removal'
             data-umami-event-placement='malware-research-popup-success'
-            class='inline-flex items-center justify-center gap-2 rounded-full bg-[#ed7655] px-5 py-3.5 text-center text-xs font-extrabold text-[#17352c] transition hover:bg-[#ff8a68]'>
-            Buy the advanced guide <ArrowRight class='h-4 w-4' />
+            class='inline-flex justify-center items-center gap-2 bg-[#ed7655] hover:bg-[#ff8a68] px-5 py-3.5 rounded-full font-extrabold text-[#17352c] text-xs text-center transition'>
+            Buy the advanced guide <ArrowRight class='w-4 h-4' />
           </a>
         </div>
-        <p class='mt-4 text-center text-[11px] leading-5 text-[#65766f]'>You are viewing the free technical research. Please confirm the book is right for you before checkout; digital-product refunds are limited to the eligible reasons in the <a href='/refund-policy/' class='font-bold text-[#1f6b55] underline'>7-day refund policy</a>.</p>
+        <p class='mt-4 text-[#65766f] text-[11px] text-center leading-5'>You are viewing the free technical research. Please confirm the book is right for you before checkout; digital-product refunds are limited to the eligible reasons in the <a href='/refund-policy/' class='font-bold text-[#1f6b55] underline'>7-day refund policy</a>.</p>
       </div>
 
-      <div class='mt-5 flex flex-wrap items-center justify-between gap-3 text-[10px] font-semibold uppercase tracking-[0.08em] text-[#788780]'>
-        <span class='flex items-center gap-1.5'><LockKeyhole class='h-3.5 w-3.5' /> No payment details here</span>
-        <button type='button' data-book-popup-close class='normal-case tracking-normal underline decoration-[#b7c2bc] underline-offset-4 hover:text-[#17352c]'>No thanks, continue reading</button>
+      <div class='flex flex-wrap justify-between items-center gap-3 mt-5 font-semibold text-[#788780] text-[10px] uppercase tracking-[0.08em]'>
+        <span class='flex items-center gap-1.5'><LockKeyhole class='w-3.5 h-3.5' /> No payment details here</span>
+        <button type='button' data-book-popup-close class='hover:text-[#17352c] decoration-[#b7c2bc] underline underline-offset-4 normal-case tracking-normal'>No thanks, continue reading</button>
       </div>
     </div>
   </section>
@@ -243,7 +243,7 @@ const advancedBookCheckoutUrl =
     document.body.style.overflow = 'hidden';
     popup.hidden = false;
     emailInput?.focus({ preventScroll: true });
-    track('book-discount-popup-shown');
+    // track('book-discount-popup-shown');
   };
 
   const closePopup = () => {
@@ -252,7 +252,7 @@ const advancedBookCheckoutUrl =
     popup.hidden = true;
     document.body.style.overflow = previousOverflow;
     suppressFor(dismissForDays);
-    track('book-discount-popup-dismissed');
+    // track('book-discount-popup-dismissed');
   };
 
   function handleScroll() {
