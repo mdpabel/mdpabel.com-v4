@@ -12,7 +12,9 @@ import {
 } from "@lucide/astro";
 import { render, type CollectionEntry } from "astro:content";
 import Breadcrumbs from "../new/Breadcrumbs.astro";
+import ArticleUtilityRail from "../new/ArticleUtilityRail.astro";
 import BookDiscountPopup from "../new/BookDiscountPopup.astro";
+import SupportResearch from "../new/SupportResearch.astro";
 import NewLayout from "../../layouts/NewLayout.astro";
 import { getResearchSlug } from "../../lib/research";
 
@@ -117,7 +119,8 @@ const formattedReviewDate = data.lastReviewed
     </div>
   </section>
 
-  <div class="new-shell grid max-w-6xl items-start gap-10 py-12 lg:grid-cols-[minmax(0,1fr)_300px] lg:py-16">
+  <div class="new-shell relative grid max-w-6xl items-start gap-10 py-12 lg:grid-cols-[minmax(0,1fr)_300px] lg:py-16">
+    <ArticleUtilityRail title={data.h1} url={url} compactGap />
     <article class="min-w-0">
       <section class="grid gap-3 rounded-2xl border border-[#cbd6cf] bg-[#fffdf8] p-5 sm:grid-cols-3" aria-label="Research classification">
         <div>
@@ -212,6 +215,7 @@ const formattedReviewDate = data.lastReviewed
       <div class="research-prose mt-10">
         <Content />
       </div>
+      <SupportResearch placement="malware-research" />
     </article>
 
     <aside class="space-y-5 lg:sticky lg:top-24">
@@ -264,11 +268,14 @@ const formattedReviewDate = data.lastReviewed
   <BookDiscountPopup />
 </NewLayout>
 
+
 <style is:global>
   .research-prose {
-    color: #3f554d;
-    font-size: 1.04rem;
-    line-height: 1.85;
+    color: #111111;
+    font-size: 1.25rem;
+    font-weight: 450;
+    line-height: 1.78;
+    -webkit-font-smoothing: auto;
   }
 
   .research-prose > :first-child {
@@ -391,7 +398,8 @@ const formattedReviewDate = data.lastReviewed
 
   @media (max-width: 640px) {
     .research-prose {
-      font-size: 1rem;
+      font-size: 1.25rem;
+      line-height: 1.72;
     }
 
     .research-prose h2 {

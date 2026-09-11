@@ -1,0 +1,43 @@
+---
+import { ArrowRight, BookOpen, ShieldCheck } from '@lucide/astro';
+
+interface Props {
+  context: 'blog' | 'case-studies' | 'guides';
+}
+
+const { context } = Astro.props;
+const prompt = context === 'case-studies'
+  ? 'Dealing with a similar WordPress security problem?'
+  : 'Need help with a WordPress security problem?';
+---
+
+<aside
+  class='mb-10 rounded-2xl border border-[#cbd6cf] bg-[#eef6f1] p-4 sm:flex sm:items-center sm:justify-between sm:gap-5'
+  aria-label='WordPress security help and learning options'
+>
+  <p class='flex items-center gap-2 text-base font-bold text-[#17352c]'>
+    <ShieldCheck class='h-4 w-4 shrink-0 text-[#1f6b55]' /> {prompt}
+  </p>
+  <div class='mt-3 flex flex-wrap gap-2 sm:mt-0 sm:shrink-0'>
+    <a
+      href='/wordpress-malware-removal/'
+      data-umami-event='content-promo-opened'
+      data-umami-event-choice='service'
+      data-umami-event-context={context}
+      data-umami-event-placement='article-top'
+      class='inline-flex items-center gap-2 rounded-full bg-[#17352c] px-4 py-2.5 text-sm font-extrabold text-white transition hover:bg-[#1f6b55]'
+    >
+      Get expert help <ArrowRight class='h-3.5 w-3.5' />
+    </a>
+    <a
+      href='/books/wordpress-malware-removal/'
+      data-umami-event='content-promo-opened'
+      data-umami-event-choice='book'
+      data-umami-event-context={context}
+      data-umami-event-placement='article-top'
+      class='inline-flex items-center gap-2 rounded-full border border-[#9eb7ab] bg-white px-4 py-2.5 text-sm font-extrabold text-[#17352c] transition hover:border-[#1f6b55]'
+    >
+      <BookOpen class='h-3.5 w-3.5 text-[#b74e32]' /> Read the book
+    </a>
+  </div>
+</aside>

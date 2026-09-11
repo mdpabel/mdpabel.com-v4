@@ -1,0 +1,108 @@
+---
+import { Coffee, ScanLine } from '@lucide/astro';
+import chatgptIcon from '../../assets/icons/chatgpt.png';
+import geminiIcon from '../../assets/icons/gemini.webp';
+import claudeIcon from '../../assets/icons/claude.png';
+
+interface Props {
+  title: string;
+  url: string;
+  compactGap?: boolean;
+}
+
+const { title, url, compactGap = false } = Astro.props;
+const encodedUrl = encodeURIComponent(url);
+const encodedTitle = encodeURIComponent(title);
+const prompt = `Read this article and summarize its key points for me: ${title} - ${url}`;
+const encodedPrompt = encodeURIComponent(prompt);
+const buttonClass = 'group relative grid h-9 w-9 place-items-center rounded-full text-[#17352c] transition hover:bg-[#dcece5] hover:text-[#155642] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1f6b55]';
+---
+
+<aside class:list={['absolute inset-y-0 right-full hidden w-12 xl:block', compactGap ? 'mr-4 2xl:mr-8' : 'mr-8']} aria-label='Article tools'>
+  <div class='sticky top-24 flex flex-col items-center rounded-full border border-[#d7ddd7] bg-[#fffdf8]/95 px-1.5 py-3 shadow-[0_12px_35px_rgba(23,53,44,0.12)] backdrop-blur'>
+    <span class='mb-1 text-[8px] font-extrabold uppercase tracking-[0.12em] text-[#65766f]'>Share</span>
+
+    <a class={buttonClass} href={`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`} target='_blank' rel='nofollow noopener noreferrer' aria-label='Share on Facebook' data-umami-event='article-share' data-umami-event-platform='facebook'>
+      <span class='font-sans text-lg font-black leading-none' aria-hidden='true'>f</span>
+      <span class='utility-tooltip'>Share on Facebook</span>
+    </a>
+    <a class={buttonClass} href={`https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`} target='_blank' rel='nofollow noopener noreferrer' aria-label='Share on X' data-umami-event='article-share' data-umami-event-platform='x'>
+      <span class='text-sm font-black leading-none' aria-hidden='true'>X</span>
+      <span class='utility-tooltip'>Share on X</span>
+    </a>
+    <a class={buttonClass} href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`} target='_blank' rel='nofollow noopener noreferrer' aria-label='Share on LinkedIn' data-umami-event='article-share' data-umami-event-platform='linkedin'>
+      <span class='font-sans text-[11px] font-black leading-none' aria-hidden='true'>in</span>
+      <span class='utility-tooltip'>Share on LinkedIn</span>
+    </a>
+
+    <span class='my-2 h-px w-6 bg-[#d7ddd7]' aria-hidden='true'></span>
+    <span class='mb-1 text-[8px] font-extrabold uppercase tracking-[0.12em] text-[#65766f]'>Read</span>
+
+    <a class={buttonClass} href={`https://chatgpt.com/?q=${encodedPrompt}`} target='_blank' rel='nofollow noopener noreferrer' aria-label='Read with ChatGPT' data-ai-reader data-ai-prompt={prompt} data-umami-event='article-read-with-ai' data-umami-event-platform='chatgpt'>
+      <img src={chatgptIcon.src} width='20' height='20' alt='' class='h-5 w-5 rounded-[5px] object-contain' aria-hidden='true' />
+      <span class='utility-tooltip'>Read with ChatGPT</span>
+    </a>
+    <a class={buttonClass} href={`https://gemini.google.com/app?q=${encodedPrompt}`} target='_blank' rel='nofollow noopener noreferrer' aria-label='Read with Gemini' data-ai-reader data-ai-prompt={prompt} data-umami-event='article-read-with-ai' data-umami-event-platform='gemini'>
+      <img src={geminiIcon.src} width='20' height='20' alt='' class='h-5 w-5 object-contain' aria-hidden='true' />
+      <span class='utility-tooltip'>Read with Gemini</span>
+    </a>
+    <a class={buttonClass} href={`https://claude.ai/new?q=${encodedPrompt}`} target='_blank' rel='nofollow noopener noreferrer' aria-label='Read with Claude' data-ai-reader data-ai-prompt={prompt} data-umami-event='article-read-with-ai' data-umami-event-platform='claude'>
+      <img src={claudeIcon.src} width='20' height='20' alt='' class='h-5 w-5 rounded-[5px] object-contain' aria-hidden='true' />
+      <span class='utility-tooltip'>Read with Claude</span>
+    </a>
+
+    <span class='my-2 h-px w-6 bg-[#d7ddd7]' aria-hidden='true'></span>
+    <a class={buttonClass} href='/free-wordpress-scan/?utm_source=article&utm_medium=floating-rail&utm_campaign=free-scan-leads' aria-label='Free WordPress scan' data-umami-event='free-scan-floating-cta-clicked' data-umami-event-placement='article-rail'>
+      <ScanLine class='h-5 w-5' aria-hidden='true' />
+      <span class='utility-tooltip'>Free WordPress scan</span>
+    </a>
+    <a class={`${buttonClass} bg-[#fee5dc] text-[#9c3c27] hover:bg-[#fbd4c7] hover:text-[#7b2c1d]`} href='https://pabelcraft.gumroad.com/coffee' target='_blank' rel='noopener noreferrer' aria-label='Buy me a coffee' data-umami-event='buy-me-a-coffee-clicked' data-umami-event-placement='article-rail'>
+      <Coffee class='h-[18px] w-[18px]' aria-hidden='true' />
+      <span class='utility-tooltip'>Buy me a coffee</span>
+    </a>
+  </div>
+</aside>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-ai-reader]').forEach((link) => {
+    link.addEventListener('click', () => {
+      const prompt = link.dataset.aiPrompt;
+      if (prompt && navigator.clipboard?.writeText) {
+        navigator.clipboard.writeText(prompt).catch(() => undefined);
+      }
+    });
+  });
+</script>
+
+<style>
+  .utility-tooltip {
+    pointer-events: none;
+    position: absolute;
+    left: calc(100% + 0.65rem);
+    top: 50%;
+    z-index: 30;
+    width: max-content;
+    max-width: 12rem;
+    transform: translateY(-50%) translateX(-0.2rem);
+    border-radius: 0.45rem;
+    background: #17352c;
+    padding: 0.35rem 0.55rem;
+    color: #ffffff;
+    font-size: 0.68rem;
+    font-weight: 700;
+    line-height: 1rem;
+    opacity: 0;
+    transition: opacity 150ms ease, transform 150ms ease;
+    white-space: nowrap;
+  }
+
+  .group:hover .utility-tooltip,
+  .group:focus-visible .utility-tooltip {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .utility-tooltip { transition: none; }
+  }
+</style>

@@ -1,0 +1,38 @@
+---
+import { ArrowUpRight, Coffee } from '@lucide/astro';
+
+interface Props {
+  placement?: 'article' | 'malware-research';
+}
+
+const { placement = 'article' } = Astro.props;
+---
+
+<section
+  class='mt-14 overflow-hidden rounded-3xl border border-[#e4c8bb] bg-[#fff7f1]'
+  aria-labelledby='support-wordpress-security-research'
+>
+  <div class='grid gap-6 p-6 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:items-center sm:p-8'>
+    <span class='grid h-12 w-12 place-items-center rounded-2xl bg-[#f8dfd3] text-[#b74e32]' aria-hidden='true'>
+      <Coffee class='h-6 w-6' />
+    </span>
+    <div>
+      <h2 id='support-wordpress-security-research' class='editorial-heading text-2xl font-semibold text-[#17352c]'>
+        Support My WordPress Security Research ☕
+      </h2>
+      <p class='mt-2 max-w-2xl text-sm leading-6 text-[#52665f]'>
+        If this work helped you and you would like to support future malware investigations and practical guides, you can buy me a coffee. It is completely optional—everything remains free to read.
+      </p>
+    </div>
+    <a
+      href='https://pabelcraft.gumroad.com/coffee'
+      target='_blank'
+      rel='noopener noreferrer'
+      data-umami-event='research-support-opened'
+      data-umami-event-placement={placement}
+      class='inline-flex items-center justify-center gap-2 rounded-full bg-[#17352c] px-5 py-3 text-sm font-extrabold text-white transition hover:bg-[#1f6b55]'
+    >
+      Buy me a coffee <ArrowUpRight class='h-4 w-4' />
+    </a>
+  </div>
+</section>
