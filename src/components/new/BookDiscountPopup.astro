@@ -1,5 +1,13 @@
 ---
-import { ArrowRight, BookOpen, Check, Copy, LockKeyhole, Mail, X } from '@lucide/astro';
+import {
+  ArrowRight,
+  BookOpen,
+  Check,
+  Copy,
+  LockKeyhole,
+  Mail,
+  X,
+} from '@lucide/astro';
 import {
   CONTACT_FORM_7_VERSION,
   WP_ARMOUR_FIELD_NAME,
@@ -29,7 +37,8 @@ const advancedBookCheckoutUrl =
     data-book-popup-close
     aria-label='Close book offer'></button>
 
-  <section class='relative grid lg:grid-cols-[0.82fr_1.18fr] bg-[#fffdf8] shadow-2xl my-auto rounded-[1.75rem] w-full max-w-5xl overflow-hidden book-discount-card'>
+  <section
+    class='relative grid lg:grid-cols-[0.82fr_1.18fr] bg-[#fffdf8] shadow-2xl my-auto rounded-[1.75rem] w-full max-w-5xl overflow-hidden book-discount-card'>
     <button
       type='button'
       data-book-popup-close
@@ -38,13 +47,21 @@ const advancedBookCheckoutUrl =
       <X class='w-5 h-5' />
     </button>
 
-    <div class='hidden relative lg:flex lg:flex-col lg:justify-between bg-[#17352c] p-8 min-h-[590px] overflow-hidden book-discount-visual'>
+    <div
+      class='hidden relative lg:flex lg:flex-col lg:justify-between bg-[#17352c] p-8 min-h-[590px] overflow-hidden book-discount-visual'>
       <div class='absolute inset-0 book-discount-grid'></div>
       <div class='z-10 relative'>
-        <p class='font-extrabold text-[#8ed0b5] text-[10px] uppercase tracking-[0.2em]'>Research reader offer</p>
-        <p class='mt-3 max-w-xs font-semibold text-white text-3xl leading-tight editorial-heading'>Take the investigation into the field.</p>
+        <p
+          class='font-extrabold text-[#8ed0b5] text-[10px] uppercase tracking-[0.2em]'>
+          Research reader offer
+        </p>
+        <p
+          class='mt-3 max-w-xs font-semibold text-white text-3xl leading-tight editorial-heading'>
+          Take the investigation into the field.
+        </p>
       </div>
-      <div class='z-10 relative flex justify-center items-end mx-auto w-full max-w-[330px] book-discount-covers'>
+      <div
+        class='z-10 relative flex justify-center items-end mx-auto w-full max-w-[330px] book-discount-covers'>
         <img
           src='/book-cover.png'
           alt='WordPress Malware Removal for Developers and Site Owners book cover'
@@ -64,24 +81,48 @@ const advancedBookCheckoutUrl =
           class='-ml-10 rounded-sm w-[48%] object-contain book-discount-cover book-discount-cover-advanced'
         />
       </div>
-      <p class='z-10 relative text-[#c8d8d1] text-xs leading-6'>Two evidence-led WordPress malware removal guides · Secure PDF delivery</p>
+      <p class='z-10 relative text-[#c8d8d1] text-xs leading-6'>
+        Two evidence-led WordPress malware removal guides · Secure PDF delivery
+      </p>
     </div>
 
     <div class='p-5 sm:p-8 lg:p-10'>
       <div class='pr-10'>
-        <span class='inline-flex bg-[#fee5dc] px-3 py-1.5 rounded-full font-extrabold text-[#a9442d] text-[10px] uppercase tracking-[0.14em]'>Extra 15% research-reader discount</span>
-        <h2 id='book-discount-popup-title' class='mt-4 font-semibold text-[#17352c] text-3xl sm:text-4xl leading-tight editorial-heading'>Want a practical malware-removal field guide?</h2>
+        <span
+          class='inline-flex bg-[#fee5dc] px-3 py-1.5 rounded-full font-extrabold text-[#a9442d] text-[10px] uppercase tracking-[0.14em]'
+          >Extra 15% research-reader discount</span
+        >
+        <h2
+          id='book-discount-popup-title'
+          class='mt-4 font-semibold text-[#17352c] text-3xl sm:text-4xl leading-tight editorial-heading'>
+          Want a practical malware-removal field guide?
+        </h2>
       </div>
-      <p class='mt-4 text-[#52665f] text-sm sm:text-base leading-7'>Unlock an extra 15% off either WordPress malware removal book. Choose the complete 293-page playbook or the focused advanced case guide after submitting the form.</p>
+      <p class='mt-4 text-[#52665f] text-sm sm:text-base leading-7'>
+        Unlock an extra 15% off either WordPress malware removal book. Choose
+        the complete 293-page playbook or the focused advanced case guide after
+        submitting the form.
+      </p>
 
-      <div class='gap-3 grid sm:grid-cols-2 mt-6 py-5 border-[#d7ddd7] border-y'>
+      <div
+        class='gap-3 grid sm:grid-cols-2 mt-6 py-5 border-[#d7ddd7] border-y'>
         <div class='bg-[#eef6f1] p-4 rounded-xl'>
-          <span class='flex items-center gap-2 font-extrabold text-[#17352c] text-xs'><BookOpen class='w-4 h-4 text-[#1f6b55]' /> Complete field guide</span>
-          <span class='block mt-2 text-[#65766f] text-[11px] leading-5'>293 pages · 18 chapters · 86 figures</span>
+          <span
+            class='flex items-center gap-2 font-extrabold text-[#17352c] text-xs'
+            ><BookOpen class='w-4 h-4 text-[#1f6b55]' /> Complete field guide</span
+          >
+          <span class='block mt-2 text-[#65766f] text-[11px] leading-5'
+            >293 pages · 18 chapters · 86 figures</span
+          >
         </div>
         <div class='bg-[#fff3ed] p-4 rounded-xl'>
-          <span class='flex items-center gap-2 font-extrabold text-[#17352c] text-xs'><BookOpen class='w-4 h-4 text-[#b84e31]' /> Advanced case guide</span>
-          <span class='block mt-2 text-[#65766f] text-[11px] leading-5'>31 pages · Persistent infections · Recovery</span>
+          <span
+            class='flex items-center gap-2 font-extrabold text-[#17352c] text-xs'
+            ><BookOpen class='w-4 h-4 text-[#b84e31]' /> Advanced case guide</span
+          >
+          <span class='block mt-2 text-[#65766f] text-[11px] leading-5'
+            >31 pages · Persistent infections · Recovery</span
+          >
         </div>
       </div>
 
@@ -92,10 +133,16 @@ const advancedBookCheckoutUrl =
         data-form-id={formId}
         data-cf7-version={CONTACT_FORM_7_VERSION}
         data-campaign={campaign}>
-        <label for='book-discount-email' class='font-extrabold text-[#17352c] text-xs'>Enter your email to reveal the discount code</label>
+        <label
+          for='book-discount-email'
+          class='font-extrabold text-[#17352c] text-xs'
+          >Enter your email to reveal the discount code</label
+        >
         <div class='flex sm:flex-row flex-col gap-3 mt-2'>
           <div class='relative flex-1 min-w-0'>
-            <Mail class='top-1/2 left-4 absolute w-4 h-4 text-[#65766f] -translate-y-1/2 pointer-events-none' />
+            <Mail
+              class='top-1/2 left-4 absolute w-4 h-4 text-[#65766f] -translate-y-1/2 pointer-events-none'
+            />
             <input
               id='book-discount-email'
               name='your-email'
@@ -115,31 +162,74 @@ const advancedBookCheckoutUrl =
             Reveal my code <ArrowRight class='w-4 h-4' />
           </button>
         </div>
-        <label class='flex items-start gap-2 mt-3 text-[#65766f] text-[11px] leading-5'>
-          <input name='book-consent' type='checkbox' value='Yes' required class='mt-1 w-4 h-4 accent-[#1f6b55] shrink-0' />
-          <span>Email me occasional WordPress security research, book updates, and offers. I can unsubscribe at any time.</span>
+        <label
+          class='flex items-start gap-2 mt-3 text-[#65766f] text-[11px] leading-5'>
+          <input
+            name='book-consent'
+            type='checkbox'
+            value='Yes'
+            required
+            class='mt-1 w-4 h-4 accent-[#1f6b55] shrink-0'
+          />
+          <span
+            >Email me occasional WordPress security research, book updates, and
+            offers. I can unsubscribe at any time.</span
+          >
         </label>
         <input type='hidden' name='discount-code' value={discountCode} />
-        <input type='hidden' name='discount-url' value={completeBookCheckoutUrl} />
-        <input type='hidden' name='advanced-discount-url' value={advancedBookCheckoutUrl} />
-        <input type='hidden' name={WP_ARMOUR_FIELD_NAME} value={WP_ARMOUR_FIELD_VALUE} />
-        <p id='book-discount-error' class='hidden bg-[#fee5dc] mt-3 p-3 rounded-xl font-semibold text-[#9f432c] text-xs leading-5' role='alert'></p>
+        <input
+          type='hidden'
+          name='discount-url'
+          value={completeBookCheckoutUrl}
+        />
+        <input
+          type='hidden'
+          name='advanced-discount-url'
+          value={advancedBookCheckoutUrl}
+        />
+        <input
+          type='hidden'
+          name={WP_ARMOUR_FIELD_NAME}
+          value={WP_ARMOUR_FIELD_VALUE}
+        />
+        <p
+          id='book-discount-error'
+          class='hidden bg-[#fee5dc] mt-3 p-3 rounded-xl font-semibold text-[#9f432c] text-xs leading-5'
+          role='alert'>
+        </p>
       </form>
 
-      <div id='book-discount-success' class='hidden bg-[#eef6f1] mt-6 p-5 border border-[#b7cbc1] rounded-2xl' aria-live='polite'>
-        <p class='flex items-center gap-2 font-extrabold text-[#17352c]'><Check class='w-5 h-5 text-[#1f6b55]' /> Your extra 15% discount is unlocked.</p>
-        <p class='mt-2 text-[#52665f] text-xs leading-6'>Use this code at checkout. It is already applied to both purchase links below.</p>
-        <div class='flex justify-between items-center gap-4 bg-white mt-4 px-4 py-3 border border-[#1f6b55] border-dashed rounded-xl'>
+      <div
+        id='book-discount-success'
+        class='hidden bg-[#eef6f1] mt-6 p-5 border border-[#b7cbc1] rounded-2xl'
+        aria-live='polite'>
+        <p class='flex items-center gap-2 font-extrabold text-[#17352c]'>
+          <Check class='w-5 h-5 text-[#1f6b55]' /> Your extra 15% discount is unlocked.
+        </p>
+        <p class='mt-2 text-[#52665f] text-xs leading-6'>
+          Use this code at checkout. It is already applied to both purchase
+          links below.
+        </p>
+        <div
+          class='flex justify-between items-center gap-4 bg-white mt-4 px-4 py-3 border border-[#1f6b55] border-dashed rounded-xl'>
           <div>
-            <span class='block font-extrabold text-[#65766f] text-[9px] uppercase tracking-[0.16em]'>Discount code</span>
-            <strong id='book-discount-code' class='block mt-1 font-black text-[#17352c] text-2xl tracking-[0.12em]'>{discountCode}</strong>
+            <span
+              class='block font-extrabold text-[#65766f] text-[9px] uppercase tracking-[0.16em]'
+              >Discount code</span
+            >
+            <strong
+              id='book-discount-code'
+              class='block mt-1 font-black text-[#17352c] text-2xl tracking-[0.12em]'
+              >{discountCode}</strong
+            >
           </div>
           <button
             id='book-discount-copy'
             type='button'
             data-code={discountCode}
             class='inline-flex items-center gap-2 bg-[#eef6f1] hover:bg-[#dcece5] px-4 py-2 border border-[#b7cbc1] rounded-full font-extrabold text-[#1f6b55] text-xs transition'>
-            <Copy class='w-4 h-4' /> <span data-copy-label>Copy code</span>
+            <Copy class='w-4 h-4' />
+            <span data-copy-label>Copy code</span>
           </button>
         </div>
         <div class='gap-3 grid sm:grid-cols-2 mt-4'>
@@ -160,12 +250,27 @@ const advancedBookCheckoutUrl =
             Buy the advanced guide <ArrowRight class='w-4 h-4' />
           </a>
         </div>
-        <p class='mt-4 text-[#65766f] text-[11px] text-center leading-5'>You are viewing the free technical research. Please confirm the book is right for you before checkout; digital-product refunds are limited to the eligible reasons in the <a href='/refund-policy/' class='font-bold text-[#1f6b55] underline'>7-day refund policy</a>.</p>
+        <p class='mt-4 text-[#65766f] text-[11px] text-center leading-5'>
+          You are viewing the free technical research. Please confirm the book
+          is right for you before checkout; digital-product refunds are limited
+          to the eligible reasons in the <a
+            href='/refund-policy/'
+            class='font-bold text-[#1f6b55] underline'>7-day refund policy</a
+          >.
+        </p>
       </div>
 
-      <div class='flex flex-wrap justify-between items-center gap-3 mt-5 font-semibold text-[#788780] text-[10px] uppercase tracking-[0.08em]'>
-        <span class='flex items-center gap-1.5'><LockKeyhole class='w-3.5 h-3.5' /> No payment details here</span>
-        <button type='button' data-book-popup-close class='hover:text-[#17352c] decoration-[#b7c2bc] underline underline-offset-4 normal-case tracking-normal'>No thanks, continue reading</button>
+      <div
+        class='flex flex-wrap justify-between items-center gap-3 mt-5 font-semibold text-[#788780] text-[10px] uppercase tracking-[0.08em]'>
+        <span class='flex items-center gap-1.5'
+          ><LockKeyhole class='w-3.5 h-3.5' /> No payment details here</span
+        >
+        <button
+          type='button'
+          data-book-popup-close
+          class='hover:text-[#17352c] decoration-[#b7c2bc] underline underline-offset-4 normal-case tracking-normal'
+          >No thanks, continue reading</button
+        >
       </div>
     </div>
   </section>
@@ -173,13 +278,23 @@ const advancedBookCheckoutUrl =
 
 <script>
   const popup = document.getElementById('book-discount-popup');
-  const form = document.getElementById('book-discount-form') as HTMLFormElement | null;
-  const emailInput = document.getElementById('book-discount-email') as HTMLInputElement | null;
-  const submitButton = document.getElementById('book-discount-submit') as HTMLButtonElement | null;
+  const form = document.getElementById(
+    'book-discount-form',
+  ) as HTMLFormElement | null;
+  const emailInput = document.getElementById(
+    'book-discount-email',
+  ) as HTMLInputElement | null;
+  const submitButton = document.getElementById(
+    'book-discount-submit',
+  ) as HTMLButtonElement | null;
   const successMessage = document.getElementById('book-discount-success');
   const errorMessage = document.getElementById('book-discount-error');
-  const copyButton = document.getElementById('book-discount-copy') as HTMLButtonElement | null;
-  const closeButtons = popup?.querySelectorAll<HTMLButtonElement>('[data-book-popup-close]');
+  const copyButton = document.getElementById(
+    'book-discount-copy',
+  ) as HTMLButtonElement | null;
+  const closeButtons = popup?.querySelectorAll<HTMLButtonElement>(
+    '[data-book-popup-close]',
+  );
   const sessionKey = 'mdp-book-discount-malware-research-seen';
   const suppressionKey = 'mdp-book-discount-malware-research-suppressed-until';
   const dismissForDays = 14;
@@ -189,7 +304,13 @@ const advancedBookCheckoutUrl =
   let triggerTimer: number | undefined;
 
   const track = (event: string) => {
-    const umami = (window as Window & { umami?: { track?: (name: string, data?: Record<string, string>) => void } }).umami;
+    const umami = (
+      window as Window & {
+        umami?: {
+          track?: (name: string, data?: Record<string, string>) => void;
+        };
+      }
+    ).umami;
     umami?.track?.(event, {
       placement: 'malware-research-popup',
       discount: 'EXTRA15',
@@ -207,7 +328,10 @@ const advancedBookCheckoutUrl =
 
   const suppressFor = (days: number) => {
     try {
-      localStorage.setItem(suppressionKey, String(Date.now() + days * 24 * 60 * 60 * 1000));
+      localStorage.setItem(
+        suppressionKey,
+        String(Date.now() + days * 24 * 60 * 60 * 1000),
+      );
     } catch {
       // The popup still works when storage is blocked.
     }
@@ -235,7 +359,13 @@ const advancedBookCheckoutUrl =
   };
 
   const openPopup = () => {
-    if (!popup || isOpen || hasAppearedThisSession() || getSuppressedUntil() > Date.now()) return;
+    if (
+      !popup ||
+      isOpen ||
+      hasAppearedThisSession() ||
+      getSuppressedUntil() > Date.now()
+    )
+      return;
     isOpen = true;
     markSessionSeen();
     stopTriggers();
@@ -256,16 +386,23 @@ const advancedBookCheckoutUrl =
   };
 
   function handleScroll() {
-    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollable =
+      document.documentElement.scrollHeight - window.innerHeight;
     if (scrollable > 0 && window.scrollY / scrollable >= 0.25) openPopup();
   }
 
-  if (popup && !hasAppearedThisSession() && getSuppressedUntil() <= Date.now()) {
+  if (
+    popup &&
+    !hasAppearedThisSession() &&
+    getSuppressedUntil() <= Date.now()
+  ) {
     window.addEventListener('scroll', handleScroll, { passive: true });
     triggerTimer = window.setTimeout(openPopup, 20000);
   }
 
-  closeButtons?.forEach((button) => button.addEventListener('click', closePopup));
+  closeButtons?.forEach((button) =>
+    button.addEventListener('click', closePopup),
+  );
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && isOpen) closePopup();
   });
@@ -303,12 +440,14 @@ const advancedBookCheckoutUrl =
     const apiUrl = form.dataset.wpUrl;
     const currentFormId = form.dataset.formId;
     const contactFormVersion = form.dataset.cf7Version;
-    const campaignName = form.dataset.campaign || 'malware-research-book-discount';
+    const campaignName =
+      form.dataset.campaign || 'malware-research-book-discount';
     const researchPageUrl = window.location.href;
 
     if (!apiUrl || !currentFormId || !contactFormVersion) {
       if (errorMessage) {
-        errorMessage.textContent = 'The discount form is unavailable right now. Please try again shortly.';
+        errorMessage.textContent =
+          'The discount form is unavailable right now. Please try again shortly.';
         errorMessage.classList.remove('hidden');
       }
       return;
@@ -331,16 +470,21 @@ const advancedBookCheckoutUrl =
         `${apiUrl}/wp-json/contact-form-7/v1/contact-forms/${currentFormId}/feedback`,
         { method: 'POST', body: formData },
       );
-      if (!response.ok) throw new Error('The discount form is unavailable right now.');
+      if (!response.ok)
+        throw new Error('The discount form is unavailable right now.');
       const result = await response.json();
-      if (result.status !== 'mail_sent') throw new Error(result.message || 'The form could not be submitted.');
+      if (result.status !== 'mail_sent')
+        throw new Error(result.message || 'The form could not be submitted.');
       form.classList.add('hidden');
       successMessage?.classList.remove('hidden');
       suppressFor(successForDays);
       track('book-discount-popup-submitted');
     } catch (error) {
       if (errorMessage) {
-        errorMessage.textContent = error instanceof Error ? error.message : 'The form could not be submitted. Please try again.';
+        errorMessage.textContent =
+          error instanceof Error
+            ? error.message
+            : 'The form could not be submitted. Please try again.';
         errorMessage.classList.remove('hidden');
       }
     } finally {
@@ -365,8 +509,15 @@ const advancedBookCheckoutUrl =
     background-image:
       linear-gradient(rgba(142, 208, 181, 0.08) 1px, transparent 1px),
       linear-gradient(90deg, rgba(142, 208, 181, 0.08) 1px, transparent 1px),
-      radial-gradient(circle at 70% 52%, rgba(237, 118, 85, 0.22), transparent 35%);
-    background-size: 28px 28px, 28px 28px, auto;
+      radial-gradient(
+        circle at 70% 52%,
+        rgba(237, 118, 85, 0.22),
+        transparent 35%
+      );
+    background-size:
+      28px 28px,
+      28px 28px,
+      auto;
   }
 
   .book-discount-cover {

@@ -30,6 +30,7 @@ _content
 _malware_dump
 _review
 .private-evidence/
+research/malw/
 
 old/
 
@@ -41,3 +42,4 @@ malware-returning-again-and-again/
 service-worker/
 
 mdpabel-content-archive/
+research/
